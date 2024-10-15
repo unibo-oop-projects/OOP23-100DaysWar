@@ -11,19 +11,21 @@ public interface Combatant {
      */
     int currentHealth();
     /**
-     * Setter for the health of the object.
+     * Change the health of the object.
      * 
-     * @param health the new health of the object.
+     * @param health the new health of the object
       */
     void setHealth(int health);
     /** 
      * Make the object take damage.
      * 
-     * @param damage the amount of damage to take.
+     * @param damage the amount of damage to take
      */
     void takeDamage(int damage);
     /** 
      * Perform the attack of the object.
+     * 
+     * @throws IllegalArgumentException if the attack is not allowed
      */
     void performAttack();
 }

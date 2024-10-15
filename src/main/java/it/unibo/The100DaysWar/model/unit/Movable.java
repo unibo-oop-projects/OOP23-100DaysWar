@@ -6,6 +6,8 @@ package it.unibo.the100dayswar.model.unit;
 public interface Movable {
     /**
      * Move the object to a new cell.
+     * 
+     * @throws IllegalStateException if the move is not allowed
      */
     void move();
 }

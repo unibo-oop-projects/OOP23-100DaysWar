@@ -81,12 +81,11 @@ public abstract class Unit implements Buyable, Combatant {
      * {@inheritDoc}
      */
     @Override
-    public boolean upgrade() {
-        if (canUpgrade()) {
-            this.level++;
-            return true;
+    public void upgrade() {
+        if (!canUpgrade()) {
+            throw new IllegalStateException();
         }
-        return false;
+        this.level++;
     }
     /** 
      * {@inheritDoc}

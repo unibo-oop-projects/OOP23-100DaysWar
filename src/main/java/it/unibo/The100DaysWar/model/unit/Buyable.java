@@ -7,29 +7,29 @@ public interface Buyable {
     /**
      * This method returns the cost to buy the object.
      * 
-     * @return the cost to buy the specific object.
+     * @return the cost to buy
      */
     int costToBuy();
     /**
-     * This method returns the cost to upgrade the object.
+     * This method returns the cost to upgrade of the object.
      * 
-     * @return the cost to upgrade the specific object.
+     * @return the cost to upgrade
      */
     int costToUpgrade();
     /**
      * This method returns the level of the object.
      * 
-     * @return the level of the specific object.
+     * @return the level
      */
     int level();
     /**
-     * This method upgrades the object if it is possible.
+     * Upgrade the object if it is possible.
      * 
-     * @return true if the object has been upgraded, false otherwise.
+     * @throws IllegalStateException if it is not possible upgrade the object
      */
-    boolean upgrade();
+    void upgrade();
     /**
-     * This method downgrades the object if it is possible otherwise it will destroy it.
+     * Downgrade the object if it is possible otherwise it will destroy it.
      */
     void downgrade();
 }

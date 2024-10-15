@@ -19,7 +19,7 @@ public interface BankAccount {
     /**
      * Spends a specific amount of resources from the player's bank account.
      *
-     * @param buyable the amount of resources to spend
+     * @param amount the amount of resources to spend
      * @throws IllegalStateException if the player does not have enough resources
      */
     void buy(int amount);
