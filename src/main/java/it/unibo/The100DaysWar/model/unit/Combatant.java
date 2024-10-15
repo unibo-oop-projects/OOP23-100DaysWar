@@ -10,6 +10,12 @@ public interface Combatant {
      * @return the health of the object.
      */
     int currentHealth();
+    /**
+     * Setter for the health of the object.
+     * 
+     * @param health the new health of the object.
+      */
+    void setHealth(int health);
     /** 
      * Make the object take damage.
      * 
