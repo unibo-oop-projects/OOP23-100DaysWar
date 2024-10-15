@@ -1,6 +1,8 @@
 package it.unibo.the100dayswar.commons.utilities;
+
+import java.util.Objects;
 /**
- * Class that model the concept of the postion
+ * Class that model the concept of the postion.
  */
 public class PositionImpl implements Position {
 
@@ -25,7 +27,7 @@ public class PositionImpl implements Position {
         this.x = position.getX();
         this.y = position.getY();
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -46,17 +48,16 @@ public class PositionImpl implements Position {
      * {@inheritDoc}
      */
     @Override
-    public void setX(int x) {
-        this.x=x;
-        
+    public void setX(final int x) {
+        this.x = x;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void setY(int y) {
-        this.y=y;
+    public void setY(final int y) {
+        this.y = y;
     }
 
     /**
@@ -89,6 +90,11 @@ public class PositionImpl implements Position {
         return "(" + this.getX() + ", " + this.getY() + ")";
     }
 
-
-
+     /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(x, y);
+    } 
 }
