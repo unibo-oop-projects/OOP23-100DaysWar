@@ -1,7 +1,7 @@
 package it.unibo.the100dayswar.commons.patterns;
 
 /**
- * Interface that represents the a generic command.
+ * Interface that represents a generic command.
  * Implementing this interface allows to create a concrete command
  * for different classes.
  */
