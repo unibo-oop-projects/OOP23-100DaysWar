@@ -8,8 +8,4 @@ public interface Turn {
     * A function executing an action made by player.
     */
     void executeAction();
-    /**
-    * A function changing the player turn.
-    */
-    void changeTurn();
 }
