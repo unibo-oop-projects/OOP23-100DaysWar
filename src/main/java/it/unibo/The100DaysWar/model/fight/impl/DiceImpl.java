@@ -3,11 +3,17 @@ package it.unibo.the100dayswar.model.fight.impl;
 import java.util.Random;
 import it.unibo.the100dayswar.model.fight.api.Dice;
 
+/**
+ * Implementation of the {@link Dice} interface that simulates a six-sided die.
+ * 
+ * This class uses a {@link Random} number generator to produce random integers between 1 and 6,
+ * emulating the roll of a traditional die.
+ */
 public class DiceImpl implements Dice {
     /**
      * Random number generator used to simulate the die roll.
      */
-    private static final Random random = new Random();
+    private final Random random = new Random();
 
     /**
      * Number of faces on the die.
