@@ -27,13 +27,6 @@ public class Soldier extends Unit implements Movable {
      * {@inheritDoc}
      */
     @Override
-    public void takeDamage(final int damage) {
-        setHealth(this.currentHealth() - damage);
-    }
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public void performAttack() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'performAttack'");
