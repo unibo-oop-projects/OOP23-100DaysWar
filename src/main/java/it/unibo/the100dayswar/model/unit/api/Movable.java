@@ -1,4 +1,4 @@
-package it.unibo.the100dayswar.model.unit;
+package it.unibo.the100dayswar.model.unit.api;
 
 /**
  * An interface for the objects that can move around the map.

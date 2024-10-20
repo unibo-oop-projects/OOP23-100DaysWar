@@ -1,4 +1,6 @@
-package it.unibo.the100dayswar.model.unit;
+package it.unibo.the100dayswar.model.unit.impl;
+
+import it.unibo.the100dayswar.model.unit.api.Movable;
 
 /**
  * The phisical structure that can move around the map, attack other soldiers, towers and conquer territories.

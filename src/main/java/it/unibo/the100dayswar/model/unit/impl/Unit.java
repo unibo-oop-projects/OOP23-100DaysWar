@@ -1,4 +1,7 @@
-package it.unibo.the100dayswar.model.unit;
+package it.unibo.the100dayswar.model.unit.impl;
+
+import it.unibo.the100dayswar.model.unit.api.Buyable;
+import it.unibo.the100dayswar.model.unit.api.Combatant;
 
 /**
  * An abstract object that contains all the common features of the game units.
