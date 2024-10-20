@@ -10,7 +10,6 @@ public abstract class Tower {
     private int level;
     private final int price;
     private final TowerType towerType;
-
     public static final int PRICE_ERROR = 0;
 
     /**
@@ -20,7 +19,7 @@ public abstract class Tower {
      * @param level     the level of the tower
      * @param towerType the type of the tower
      */
-    public Tower(Position position, int level, TowerType towerType) {
+    public Tower(final Position position, final int level, final TowerType towerType) {
         if (position == null) {
             throw new IllegalArgumentException("Position cannot be null");
         }
