@@ -10,7 +10,7 @@ import it.unibo.the100dayswar.model.fight.api.Dice;
 /**
  * Test class for {@link DiceImpl}.
  */
-public class DiceImplTest {
+class DiceImplTest {
     private static final int MAX = 6;
     private static final int MIN = 1;
     private static final int REPETITIONS = 100;
@@ -19,9 +19,9 @@ public class DiceImplTest {
      * Test that the dice roll returns values between 1 and 6.
      */
     @Test
-    public void testDiceRollRange() {
-        Dice dice = new DiceImpl();
-        int result = dice.roll();
+    void testDiceRollRange() {
+        final Dice dice = new DiceImpl();
+        final int result = dice.roll();
         assertTrue(result >= MIN && result <= MAX, "The result should be between 1 and 6");
     }
 
@@ -29,11 +29,11 @@ public class DiceImplTest {
      * Test that the dice produces all possible values over multiple rolls.
      */
     @RepeatedTest(REPETITIONS)
-    public void testDiceProducesAllValues() {
-        Dice dice = new DiceImpl();
-        boolean[] results = new boolean[MAX];
+    void testDiceProducesAllValues() {
+        final Dice dice = new DiceImpl();
+        final boolean[] results = new boolean[MAX];
         for (int i = 0; i < REPETITIONS; i++) {
-            int roll = dice.roll();
+            final int roll = dice.roll();
             results[roll - 1] = true;
         }
         for (int i = 0; i < results.length; i++) {

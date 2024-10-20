@@ -3,18 +3,18 @@ package it.unibo.the100dayswar.model.map.impl;
 import it.unibo.the100dayswar.commons.utilities.api.Position;
 import it.unibo.the100dayswar.model.map.api.Cell;
 /**
- *Class that model the concept of a generic cell.
+ * Class that model the concept of a generic cell.
  */
-public class CellImpl implements Cell {
+public abstract class CellAbs implements Cell {
 
     private final int x;
     private final int y;
 
     /**
      * Constructor from coordinates.
-     * @param coords coordinates to identify the cell in the map.
+     * @param coordinate coordinates to identify the cell in the map.
      */
-    public CellImpl(final Position coordinate) {
+    public CellAbs(final Position coordinate) {
         this.x = coordinate.getX();
         this.y = coordinate.getY();
     }
