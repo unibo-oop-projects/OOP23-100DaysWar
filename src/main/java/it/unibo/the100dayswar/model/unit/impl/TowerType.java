@@ -7,25 +7,27 @@ package it.unibo.the100dayswar.model.unit.impl;
 public class TowerType {
     private final TypeName typeName;
     private final int price;
-    
+    private static final int BASIC_PRICE = 3;
+    private static final int ADVANCED_PRICE = 5;
+
     /**
      * Constructs a TowerType with the specified typeName and price.
      * 
      * @param typeName
      */
     public TowerType(final TypeName typeName) {
-        if (typeName == null){
+        if (typeName == null) {
             throw new IllegalArgumentException("The type of the tower can't be null");
-        }else if (typeName != TypeName.BASIC || typeName != TypeName.ADVANCED) {
+        } else if (typeName != TypeName.BASIC || typeName != TypeName.ADVANCED) {
             throw new IllegalArgumentException("The type of the tower can't be null");
         }
 
         this.typeName = typeName;
 
         if (typeName == TypeName.BASIC) {
-            this.price = 3;
-        }else {
-            this.price = 5;
+            this.price = BASIC_PRICE;
+        } else {
+            this.price = ADVANCED_PRICE;
         }
     }
 
@@ -41,7 +43,7 @@ public class TowerType {
     /**
      * Gets the price of the level. 
      * 
-     * @return price the price of a tower  
+     * @return price the price of a tower
      */
     public int getPrice() {
         return price;
