@@ -1,6 +1,8 @@
-package it.unibo.the100dayswar.commons.utilities;
+package it.unibo.the100dayswar.commons.utilities.impl;
 
 import java.util.Objects;
+
+import it.unibo.the100dayswar.commons.utilities.api.Position;
 /**
  * Class that model the concept of the postion.
  */
