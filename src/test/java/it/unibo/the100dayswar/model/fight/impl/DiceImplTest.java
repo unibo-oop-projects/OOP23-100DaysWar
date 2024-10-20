@@ -1,4 +1,4 @@
-package it.unibo.The100DaysWar.model.fight.impl;
+package it.unibo.the100dayswar.model.fight.impl;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -6,7 +6,6 @@ import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
 import it.unibo.the100dayswar.model.fight.api.Dice;
-import it.unibo.the100dayswar.model.fight.impl.DiceImpl;
 
 /**
  * Test class for {@link DiceImpl}.
