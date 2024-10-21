@@ -1,4 +1,4 @@
-package it.unibo.the100dayswar.model.turn;
+package it.unibo.the100dayswar.model.turn.api;
 
 /** 
  * An interface for the day in the game.

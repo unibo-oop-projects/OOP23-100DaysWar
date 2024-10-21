@@ -1,4 +1,4 @@
-package it.unibo.the100dayswar.model.turn;
+package it.unibo.the100dayswar.model.turn.api;
 
 /**
  * An interface rappresenting the turn of a player.

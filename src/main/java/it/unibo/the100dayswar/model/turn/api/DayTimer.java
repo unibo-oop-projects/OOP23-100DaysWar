@@ -1,9 +1,8 @@
-package it.unibo.the100dayswar.model.turn;
-
+package it.unibo.the100dayswar.model.turn.api;
 /**
- * Interface for the timer in a turn.
+ * Interface for the timer for the day.
  */
-public interface TurnTimer {
+public interface DayTimer {
     /**
      * function for starting the timer.
      */
