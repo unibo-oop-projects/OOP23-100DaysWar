@@ -1,4 +1,4 @@
-package it.unibo.the100dayswar.model.unit.impl;
+package it.unibo.the100dayswar.model.unit.api;
 
 import it.unibo.the100dayswar.commons.utilities.api.Position;
 import it.unibo.the100dayswar.commons.utilities.impl.PositionImpl;
@@ -50,7 +50,7 @@ public abstract class Tower {
         this.position = new PositionImpl(position);
         this.level = level;
         this.towerType = towerType;
-        this.price = computePrice();
+        this.price = towerType.getPrice();
 
         if (this.price == PRICE_ERROR) {
             throw new IllegalStateException("Invalid price for TowerType " + towerType);
@@ -61,6 +61,11 @@ public abstract class Tower {
      * Performs the attack action of the tower.
      */
     public abstract void attack();
+
+    /**
+     * Performs the defence of the tower.
+     */
+    public abstract void defend();
 
     /**
      * Gets a copy of the position of the tower.
@@ -103,14 +108,5 @@ public abstract class Tower {
      */
     public int getPrice() {
         return price;
-    }
-
-    /**
-     * Computes the price of the tower based on its type.
-     *
-     * @return the price of the tower
-     */
-    private int computePrice() {
-        return towerType.getPrice();
     }
 }
