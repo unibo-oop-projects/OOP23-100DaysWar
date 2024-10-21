@@ -9,6 +9,7 @@ public abstract class CellAbs implements Cell {
 
     private final int x;
     private final int y;
+    private boolean isOccupied;
 
     /**
      * Constructor from coordinates.
@@ -32,5 +33,21 @@ public abstract class CellAbs implements Cell {
     @Override
     public int getY() {
         return y;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isOccupied() {
+        return isOccupied;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setOccupation(final boolean occupation) {
+        this.isOccupied = occupation;
     }
 }

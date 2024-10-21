@@ -14,4 +14,15 @@ public interface Cell {
     * @return the vrtical position in te map.
     */
     int getY(); 
+
+    /**
+     * @return true if the cell il occupied by a soldier or a tower.
+     */
+    boolean isOccupied();
+
+    /**
+     * setter of the attribute isOccupied.
+     * @param occupation is true if the cell is occupated.
+     */
+    void setOccupation(boolean occupation);
 }
