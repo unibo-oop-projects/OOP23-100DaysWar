@@ -1,4 +1,6 @@
-package it.unibo.the100dayswar.model.player;
+package it.unibo.the100dayswar.model.player.impl;
+
+import it.unibo.the100dayswar.model.player.api.BankAccount;
 
 /**
  * The implementation of a bank account for managing a player's resources.
@@ -11,6 +13,14 @@ public class BankAccountImpl implements BankAccount {
      */
     public BankAccountImpl() {
         this.balance = 0;
+    }
+    /**
+     * Constructor for a bank account from the given bank account.
+     * 
+     * @param bankAccount the bank account to copy
+     */
+    public BankAccountImpl(final BankAccount bankAccount) {
+        this.balance = bankAccount.getBalance();
     }
     /** 
      * {@inheritDoc}

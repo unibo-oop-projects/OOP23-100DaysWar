@@ -1,4 +1,4 @@
-package it.unibo.the100dayswar.model.player;
+package it.unibo.the100dayswar.model.player.api;
 
 /**
  * Interface to define the behavior of a bank account for managing a player's resources.
