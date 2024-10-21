@@ -7,20 +7,13 @@ import it.unibo.the100dayswar.model.player.api.BankAccount;
  */
 public class BankAccountImpl implements BankAccount {
 
+    private static final int INITIAL_BALANCE = 1000;
     private int balance;
     /** 
      * Constructor for a bank account.
      */
     public BankAccountImpl() {
-        this.balance = 0;
-    }
-    /**
-     * Constructor for a bank account from the given bank account.
-     * 
-     * @param bankAccount the bank account to copy
-     */
-    public BankAccountImpl(final BankAccount bankAccount) {
-        this.balance = bankAccount.getBalance();
+        this.balance = INITIAL_BALANCE;
     }
     /** 
      * {@inheritDoc}
@@ -30,6 +23,23 @@ public class BankAccountImpl implements BankAccount {
         return this.balance;
     }
     /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public void earn(final int amount) {
+        setBalance(this.balance + amount);
+    }
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public void purchase(final int amount) {
+        if (!canAfford(amount)) {
+            throw new IllegalStateException();
+        }
+        setBalance(this.balance - amount);
+    }
+    /** 
      * Change the balance of the bank account.
      * 
      * @param newBalance the new balance to set
@@ -37,40 +47,13 @@ public class BankAccountImpl implements BankAccount {
     private void setBalance(final int newBalance) {
         this.balance = newBalance;
     }
-    /** 
-     * {@inheritDoc}
-     */
-    @Override
-    public void addResources(final int amount) {
-        setBalance(this.balance + amount);
-    }
-    /** 
-     * {@inheritDoc}
-     */
-    @Override
-    public void buy(final int amount) {
-        if (!spendResources(amount)) {
-            throw new IllegalStateException();
-        }
-    }
     /**
-     * A method to spend some resources.
+     * Checks if the current bank account can spend an amount of resources.
      * 
-     * @param amount the amount to spend
+     * @param amount the amount of resources to check
      * @return true if the player can afford the amount, false otherwise
      */
-    private boolean spendResources(final int amount) {
-        if (canAfford(amount)) {
-            setBalance(this.balance - amount);
-            return true;
-        }
-        return false;
-    }
-    /** 
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean canAfford(final int amount) {
+    private boolean canAfford(final int amount) {
         return this.getBalance() >= amount;
     }
 }

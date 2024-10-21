@@ -1,8 +1,8 @@
 package it.unibo.the100dayswar.model.player.impl;
 
 import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import it.unibo.the100dayswar.model.player.api.BankAccount;
@@ -17,7 +17,7 @@ import it.unibo.the100dayswar.model.unit.api.Unit;
 public abstract class PlayerAbs implements Player {
 
     private final String username;
-    private final List<Unit> units;
+    private final Set<Unit> units;
     private final BankAccount bankAccount;
 
     /**
@@ -28,7 +28,7 @@ public abstract class PlayerAbs implements Player {
     public PlayerAbs(final String username) {
         this.username = username;
         this.bankAccount = new BankAccountImpl();
-        this.units = new LinkedList<>();
+        this.units = new HashSet<>();
     }
     /** 
      * {@inheritDoc}
@@ -49,29 +49,22 @@ public abstract class PlayerAbs implements Player {
      * {@inheritDoc}
      */
     @Override
-    public BankAccount getBankAccount() {
-        return new BankAccountImpl(this.bankAccount);
-    }
-    /** 
-     * {@inheritDoc}
-     */
-    @Override
     public String getUsername() {
         return this.username;
     }
     /**
      * {@inheritDoc}
      */
-    public List<Unit> getUnits() {
-        return Collections.unmodifiableList(units);
+    public Set<Unit> getUnits() {
+        return Collections.unmodifiableSet(units);
     }
     /**
      * {@inheritDoc}
      */
-    public List<Unit> getSoldiers() {
+    public Set<Unit> getSoldiers() {
         return units.stream()
                     .filter(u -> u instanceof Soldier)
-                    .collect(Collectors.toUnmodifiableList());
+                    .collect(Collectors.toUnmodifiableSet());
     }
     /**
      * {@inheritDoc}
@@ -84,5 +77,11 @@ public abstract class PlayerAbs implements Player {
      */
     public void removeUnit(final Unit unit) {
         units.remove(unit);
+    }
+    /**
+     * {@inheritDoc}
+     */
+    public void addResources(final int amount) {
+        bankAccount.earn(amount);
     }
 }

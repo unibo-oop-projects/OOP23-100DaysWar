@@ -15,19 +15,12 @@ public interface BankAccount {
      *
      * @param amount the amount of resources to add
      */
-    void addResources(int amount);
+    void earn(int amount);
     /**
      * Spends a specific amount of resources from the player's bank account.
      *
      * @param amount the amount of resources to spend
      * @throws IllegalStateException if the player does not have enough resources
      */
-    void buy(int amount);
-    /**
-     * Checks if the bank account has enough resources for a specified amount.
-     *
-     * @param amount the amount of resources needed
-     * @return true if the player has enough resources, false otherwise
-     */
-    boolean canAfford(int amount);
+    void purchase(int amount);
 }

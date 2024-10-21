@@ -1,5 +1,7 @@
 package it.unibo.the100dayswar.model.player.api;
 
+import java.util.Set;
+
 import it.unibo.the100dayswar.model.map.api.Cell;
 import it.unibo.the100dayswar.model.unit.api.Movable;
 import it.unibo.the100dayswar.model.unit.api.Unit;
@@ -31,11 +33,17 @@ public interface Player {
      */
     void moveUnit(Movable unit);
     /**
-     * Retrieves the player's bank account, which manages its available resources.
+     * Adds a unit to the player's army.
      *
-     * @return the player's bank account
+     * @param unit the unit to add
      */
-    BankAccount getBankAccount();
+    void addUnit(Unit unit);
+    /**
+     * Removes a unit from the player's army.
+     *
+     * @param unit the unit to remove
+     */
+    void removeUnit(Unit unit);
     /**
      * Returns the spawn point of player's units.
      *
@@ -43,9 +51,33 @@ public interface Player {
      */
     Cell getSpawnPoint();
     /**
-     * Returns the player's name or identifier.
+     * Returns the player's name.
      *
      * @return the username of the player
      */
     String getUsername();
+    /**
+     * Adds resources to the player's bank account.
+     *
+     * @param amount the amount of resources to add
+     */
+    void earnResources(int amount);
+    /**
+     * The units owned by the player.
+     * 
+     * @return the units owned by the player
+     */
+    Set<Unit> getUnits();
+    /**
+     * The soldiers owned by the player.
+     * 
+     * @return the soldiers owned by the player
+     */
+    Set<Unit> getSoldiers();
+    /**
+     * Adds resources to the player's bank account.
+     *
+     * @param amount the amount of resources to add
+     */
+    void addResources(int amount);
 }
