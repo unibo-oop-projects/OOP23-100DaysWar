@@ -1,12 +1,12 @@
 package it.unibo.the100dayswar.model.unit.impl;
 
-import it.unibo.the100dayswar.model.unit.api.Buyable;
-import it.unibo.the100dayswar.model.unit.api.Combatant;
+import it.unibo.the100dayswar.model.player.api.Player;
+import it.unibo.the100dayswar.model.unit.api.Unit;
 
 /**
- * An abstract object that contains all the common features of the game units.
+ * An abstract implementation that contains all the common features of the game units.
  */
-public abstract class Unit implements Buyable, Combatant {
+public abstract class UnitImpl implements Unit {
 
     private static final int DEFAULT_HEALTH = 100;
     private static final int DEFAULT_LEVEL = 1;
@@ -16,15 +16,18 @@ public abstract class Unit implements Buyable, Combatant {
     private final int costToBuy;
     private final int costToUpgrade;
     private final int maxLevel;
+    private final Player owner;
 
     /**
      * Constructor from the given parameters for a generic Unit.
      * 
+     * @param owner the player that owns this unit
      * @param costToBuy cost to buy
      * @param costToUpgrade cost to upgrade
      * @param maxLevel maximum level
       */
-    public Unit(final int costToBuy, final int costToUpgrade, final int maxLevel) {
+    public UnitImpl(final Player owner, final int costToBuy, final int costToUpgrade, final int maxLevel) {
+        this.owner = owner;
         this.health = DEFAULT_HEALTH;
         this.level = DEFAULT_LEVEL;
         this.costToBuy = costToBuy;
@@ -105,5 +108,12 @@ public abstract class Unit implements Buyable, Combatant {
       */
     private boolean canUpgrade() {
         return this.level < this.maxLevel;
+    }
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public Player getOwner() {
+        return this.owner;
     }
 }
