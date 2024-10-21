@@ -1,15 +1,35 @@
 package it.unibo.the100dayswar.model.unit.impl;
 
 import it.unibo.the100dayswar.commons.utilities.api.Position;
+import it.unibo.the100dayswar.commons.utilities.impl.PositionImpl;
 
 /**
  * Abstract class representing a Tower in the game.
  */
 public abstract class Tower {
+    /**
+     * The position of the tower on the game map.
+     */
     private final Position position;
+
+    /**
+     * The current level of the tower.
+     */
     private int level;
+
+    /**
+     * The price of the tower.
+     */
     private final int price;
+
+    /**
+     * The type of the tower.
+     */
     private final TowerType towerType;
+
+    /**
+     * The price that represents an error.
+     */
     public static final int PRICE_ERROR = 0;
 
     /**
@@ -27,7 +47,7 @@ public abstract class Tower {
             throw new IllegalArgumentException("TowerType cannot be null");
         }
 
-        this.position = position;
+        this.position = new PositionImpl(position);
         this.level = level;
         this.towerType = towerType;
         this.price = computePrice();
@@ -38,21 +58,17 @@ public abstract class Tower {
     }
 
     /**
-     * Computes the price of the tower based on its type.
-     *
-     * @return the price of the tower
+     * Performs the attack action of the tower.
      */
-    private int computePrice() {
-        return towerType.getPrice();
-    }
+    public abstract void attack();
 
     /**
-     * Gets the position of the tower.
+     * Gets a copy of the position of the tower.
      *
-     * @return the position of the tower
+     * @return a copy of the position of the tower
      */
     public Position getPosition() {
-        return position;
+        return new PositionImpl(position);
     }
 
     /**
@@ -87,5 +103,14 @@ public abstract class Tower {
      */
     public int getPrice() {
         return price;
+    }
+
+    /**
+     * Computes the price of the tower based on its type.
+     *
+     * @return the price of the tower
+     */
+    private int computePrice() {
+        return towerType.getPrice();
     }
 }
