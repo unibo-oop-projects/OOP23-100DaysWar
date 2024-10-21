@@ -1,6 +1,6 @@
 package it.unibo.the100dayswar.model.map.api;
 /**
- * Interface a model a  cell.
+ * Interface that model a cell.
  */
 public interface Cell {
     /**
@@ -11,7 +11,7 @@ public interface Cell {
 
     /**
     * getter y postion.
-    * @return the vrtical position in te map.
+    * @return the vertical position in te map.
     */
     int getY(); 
 
@@ -25,4 +25,9 @@ public interface Cell {
      * @param occupation is true if the cell is occupated.
      */
     void setOccupation(boolean occupation);
+
+    /**
+     * @return true if is a spawn cell;
+     */
+    boolean isSpawn();
 }

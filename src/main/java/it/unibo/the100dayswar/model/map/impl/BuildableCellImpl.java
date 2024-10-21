@@ -11,15 +11,18 @@ import it.unibo.the100dayswar.model.map.api.BuildableCell;
 public class BuildableCellImpl extends CellAbs  implements BuildableCell {
 
     private boolean isBuildable;
+    private final boolean isSpawn;
 
     /**
      * Constructor from coordinates.
      * @param coordinate coordinates x,y.
      * @param isBuildable is true if cell is buildable.
+     * @param isSpawn is true if is a spawn's cell.
      */
-    public BuildableCellImpl(final Position coordinate, final boolean isBuildable) {
+    public BuildableCellImpl(final Position coordinate, final boolean isBuildable, final boolean isSpawn) {
         super(coordinate);
         this.isBuildable = isBuildable;
+        this.isSpawn = isSpawn;
     }
 
    /**
@@ -36,5 +39,13 @@ public class BuildableCellImpl extends CellAbs  implements BuildableCell {
     @Override
     public void setState(final boolean isBuildable) {
         this.isBuildable = isBuildable;
+    }
+
+    /**
+    * {@inheritDoc}
+    */
+    @Override
+    public boolean isSpawn() {
+        return this.isSpawn;
     }
 }
