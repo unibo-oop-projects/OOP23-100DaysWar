@@ -23,7 +23,7 @@ public abstract class CellAbs implements Cell {
      * Constructor from a cell.
      * @param cell  identify the cell in the map.
      */
-    public CellAbs(final Cell cell){
+    public CellAbs(final Cell cell) {
         this.x = cell.getX();
         this.y = cell.getY();
 
