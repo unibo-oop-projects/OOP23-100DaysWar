@@ -4,6 +4,7 @@ import java.util.Set;
 import java.util.Collections;
 
 import it.unibo.the100dayswar.model.map.api.BuildableCell;
+import it.unibo.the100dayswar.model.map.impl.BuildableCellImpl;
 import it.unibo.the100dayswar.model.player.api.BankAccount;
 import it.unibo.the100dayswar.model.player.api.Player;
 import it.unibo.the100dayswar.model.unit.api.Unit;
@@ -48,7 +49,7 @@ public final class ImmutablePlayer implements Player {
      */
     @Override
     public BuildableCell getSpawnPoint() {
-        return this.spawnPoint;
+        return new BuildableCellImpl(this.spawnPoint);
     }
     /** 
      * {@inheritDoc}

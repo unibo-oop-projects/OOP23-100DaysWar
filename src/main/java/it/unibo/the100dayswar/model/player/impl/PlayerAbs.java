@@ -6,6 +6,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import it.unibo.the100dayswar.model.map.api.BuildableCell;
+import it.unibo.the100dayswar.model.map.impl.BuildableCellImpl;
 import it.unibo.the100dayswar.model.player.api.BankAccount;
 import it.unibo.the100dayswar.model.player.api.MutablePlayer;
 import it.unibo.the100dayswar.model.unit.api.Movable;
@@ -32,7 +33,7 @@ public abstract class PlayerAbs implements MutablePlayer {
         this.username = username;
         this.bankAccount = new BankAccountImpl();
         this.units = new HashSet<>();
-        this.spawnPoint = spawnPoint;
+        this.spawnPoint = new BuildableCellImpl(spawnPoint);
     }
     /** 
      * {@inheritDoc}
@@ -92,7 +93,7 @@ public abstract class PlayerAbs implements MutablePlayer {
      */
     @Override
     public BuildableCell getSpawnPoint() {
-        return this.spawnPoint;
+        return new BuildableCellImpl(this.spawnPoint);
     }
     /**
      * {@inheritDoc}
