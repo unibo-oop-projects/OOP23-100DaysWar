@@ -9,6 +9,7 @@ import it.unibo.the100dayswar.model.map.api.BuildableCell;
 import it.unibo.the100dayswar.model.map.impl.BuildableCellImpl;
 import it.unibo.the100dayswar.model.player.api.BankAccount;
 import it.unibo.the100dayswar.model.player.api.MutablePlayer;
+import it.unibo.the100dayswar.model.unit.api.Buyable;
 import it.unibo.the100dayswar.model.unit.api.Movable;
 import it.unibo.the100dayswar.model.unit.api.Soldier;
 import it.unibo.the100dayswar.model.unit.api.Unit;
@@ -39,7 +40,7 @@ public abstract class PlayerAbs implements MutablePlayer {
      * {@inheritDoc}
      */
     @Override
-    public abstract void buyUnit(Unit unit);
+    public abstract void buyUnit(Buyable unit);
     /** 
      * {@inheritDoc}
      */

@@ -2,6 +2,7 @@ package it.unibo.the100dayswar.model.player.api;
 
 import java.util.Set;
 
+import it.unibo.the100dayswar.model.unit.api.Buyable;
 import it.unibo.the100dayswar.model.unit.api.Movable;
 import it.unibo.the100dayswar.model.unit.api.Unit;
 import it.unibo.the100dayswar.model.unit.api.Soldier;
@@ -18,7 +19,7 @@ public interface MutablePlayer extends Player {
      * @param unit the unit to buy
      * @throws IllegalStateException if the player does not have enough resources
      */
-    void buyUnit(Unit unit);
+    void buyUnit(Buyable unit);
     /**
      * Removes a unit from the player's army.
      *
