@@ -1,6 +1,7 @@
 package it.unibo.the100dayswar.model.unit.impl;
 
 import it.unibo.the100dayswar.model.player.api.Player;
+import it.unibo.the100dayswar.model.player.impl.ImmutablePlayer;
 import it.unibo.the100dayswar.model.unit.api.Unit;
 
 /**
@@ -21,12 +22,13 @@ public abstract class UnitImpl implements Unit {
      * Constructor from the given parameters for a generic Unit.
      * 
      * @param owner the player that owns this unit
+     * @param health health points
      * @param costToBuy cost to buy
      * @param costToUpgrade cost to upgrade
      * @param maxLevel maximum level
       */
     public UnitImpl(final Player owner, final int health, final int costToBuy, final int costToUpgrade, final int maxLevel) {
-        this.owner = owner;
+        this.owner = new ImmutablePlayer(owner);
         this.health = health;
         this.level = DEFAULT_LEVEL;
         this.costToBuy = costToBuy;

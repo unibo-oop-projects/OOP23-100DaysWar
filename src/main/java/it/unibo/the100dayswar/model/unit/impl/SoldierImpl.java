@@ -12,8 +12,7 @@ public class SoldierImpl extends UnitImpl implements Soldier {
     private static final int DEFAULT_COST_TO_UPGRADE = 30;
     private static final int MAX_LEVEL = 3;
     private static final int DEFAULT_HEALTH = 100;
-    
-    private Cell position;
+    private final Cell position;
     /**
      * Constructor for the soldier.
      * 
@@ -36,24 +35,21 @@ public class SoldierImpl extends UnitImpl implements Soldier {
      */
     @Override
     public void move(final Cell cell) {
-        if (this.canMove(cell)) {
-            this.position = cell;
-        }
         throw new IllegalStateException("The move is not allowed");
     }
     /**
      * {@inheritDoc}
      */
     @Override
-    public Cell getPosition() {
-        return this.position;
+    public boolean canMove(final Cell cell) {
+        return this.getPosition().getX() == 0;
     }
     /**
-     * {@inheritDoc}
+     * A method that returns the current position of the soldier.
+     * 
+     * @return the current position of the soldier
      */
-    @Override
-    public boolean canMove(Cell cell) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'canMove'");
+    private Cell getPosition() {
+        return this.position;
     }
 }

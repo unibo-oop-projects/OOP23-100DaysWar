@@ -15,6 +15,14 @@ public class BankAccountImpl implements BankAccount {
     public BankAccountImpl() {
         this.balance = INITIAL_BALANCE;
     }
+    /**
+     * Constructor for a bank account with a given balance.
+     * 
+     * @param bankAccount the bank account to copy
+     */
+    public BankAccountImpl(final BankAccount bankAccount) {
+        this.balance = bankAccount.getBalance();
+    }
     /** 
      * {@inheritDoc}
      */
