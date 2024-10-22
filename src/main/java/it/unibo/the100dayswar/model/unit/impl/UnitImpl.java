@@ -102,19 +102,19 @@ public abstract class UnitImpl implements Unit {
         }
         this.level--;
     }
-    /**
-     * Method that checks if the object can be upgraded.
-     * 
-     * @return true if the object can be upgraded, false otherwise.
-      */
-    private boolean canUpgrade() {
-        return this.level < this.maxLevel;
-    }
     /** 
      * {@inheritDoc}
      */
     @Override
     public Player getOwner() {
         return this.owner;
+    }
+    /**
+     * Method that checks if the object can be upgraded.
+     * 
+     * @return true if the object can be upgraded, false otherwise.
+      */
+      private boolean canUpgrade() {
+        return this.level < this.maxLevel;
     }
 }
