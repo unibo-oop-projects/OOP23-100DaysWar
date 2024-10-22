@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 import it.unibo.the100dayswar.model.player.api.BankAccount;
 import it.unibo.the100dayswar.model.player.api.Player;
 import it.unibo.the100dayswar.model.unit.api.Movable;
-import it.unibo.the100dayswar.model.unit.impl.Soldier;
+import it.unibo.the100dayswar.model.unit.api.Soldier;
 import it.unibo.the100dayswar.model.unit.api.Unit;
 
 /**

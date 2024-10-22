@@ -18,5 +18,12 @@ public interface Movable {
      * 
      * @return the current cell
      */
-    Cell getCell();
+    Cell getPosition();
+    /**
+     * Check if the object can move to a specific cell.
+     * 
+     * @param cell the cell to check
+     * @return true if the object can move to the cell, false otherwise
+     */
+    boolean canMove(Cell cell);
 }

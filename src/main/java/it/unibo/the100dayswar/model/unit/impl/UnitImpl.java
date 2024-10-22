@@ -8,7 +8,6 @@ import it.unibo.the100dayswar.model.unit.api.Unit;
  */
 public abstract class UnitImpl implements Unit {
 
-    private static final int DEFAULT_HEALTH = 100;
     private static final int DEFAULT_LEVEL = 1;
 
     private int health;
@@ -26,9 +25,9 @@ public abstract class UnitImpl implements Unit {
      * @param costToUpgrade cost to upgrade
      * @param maxLevel maximum level
       */
-    public UnitImpl(final Player owner, final int costToBuy, final int costToUpgrade, final int maxLevel) {
+    public UnitImpl(final Player owner, final int health, final int costToBuy, final int costToUpgrade, final int maxLevel) {
         this.owner = owner;
-        this.health = DEFAULT_HEALTH;
+        this.health = health;
         this.level = DEFAULT_LEVEL;
         this.costToBuy = costToBuy;
         this.costToUpgrade = costToUpgrade;
