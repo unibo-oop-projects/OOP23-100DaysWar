@@ -21,12 +21,6 @@ public interface MutablePlayer extends Player {
      */
     void buyUnit(Buyable unit);
     /**
-     * Removes a unit from the player's army.
-     *
-     * @param unit the unit to remove
-     */
-    void removeUnit(Unit unit);
-    /**
      * Upgrades a given unit to increase its power, at the cost of resources.
      *
      * @param unit the unit to upgrade

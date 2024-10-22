@@ -79,13 +79,6 @@ public abstract class PlayerAbs implements MutablePlayer {
      * {@inheritDoc}
      */
     @Override
-    public void removeUnit(final Unit unit) {
-        units.remove(unit);
-    }
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public BankAccount getBankAccount() {
         return new BankAccountImpl(this.bankAccount);
     }
