@@ -25,6 +25,17 @@ public class BuildableCellImpl extends CellAbs  implements BuildableCell {
         this.isSpawn = isSpawn;
     }
 
+    /**
+     * Constructor from coordinates.
+     * @param cell is the cell that will be created.
+     */
+    public BuildableCellImpl(final BuildableCell cell){
+        super(cell);
+        this.isBuildable = cell.isBuildable();
+        this.isSpawn = cell.isSpawn();
+
+    }
+
    /**
     * {@inheritDoc}
     */

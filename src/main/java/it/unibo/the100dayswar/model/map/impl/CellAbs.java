@@ -20,6 +20,15 @@ public abstract class CellAbs implements Cell {
         this.y = coordinate.getY();
     }
     /**
+     * Constructor from a cell.
+     * @param cell  identify the cell in the map.
+     */
+    public CellAbs(final Cell cell){
+        this.x = cell.getX();
+        this.y = cell.getY();
+
+    }
+    /**
      * {@inheritDoc}
      */
     @Override
