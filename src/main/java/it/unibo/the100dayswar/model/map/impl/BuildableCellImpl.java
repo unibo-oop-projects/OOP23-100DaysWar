@@ -1,7 +1,10 @@
 package it.unibo.the100dayswar.model.map.impl;
 
+import java.util.Optional;
+
 import it.unibo.the100dayswar.commons.utilities.api.Position;
 import it.unibo.the100dayswar.model.map.api.BuildableCell;
+import it.unibo.the100dayswar.model.unit.api.Unit;
 
 
 /**
@@ -12,6 +15,7 @@ public class BuildableCellImpl extends CellAbs  implements BuildableCell {
 
     private boolean isBuildable;
     private final boolean isSpawn;
+    private Optional<Unit> currentUnit;
 
     /**
      * Constructor from coordinates.
@@ -23,6 +27,7 @@ public class BuildableCellImpl extends CellAbs  implements BuildableCell {
         super(coordinate);
         this.isBuildable = isBuildable;
         this.isSpawn = isSpawn;
+        this.currentUnit = Optional.empty();
     }
 
     /**
@@ -58,5 +63,21 @@ public class BuildableCellImpl extends CellAbs  implements BuildableCell {
     @Override
     public boolean isSpawn() {
         return this.isSpawn;
+    }
+
+    /**
+    * {@inheritDoc}
+    */
+    @Override
+    public Optional<Unit> getUnit() {
+        return Optional.of(this.currentUnit.get());
+    }
+
+    /**
+    * {@inheritDoc}
+    */
+    @Override
+    public void onUnitMoved(final Optional<Unit> unit) {
+        this.currentUnit = unit;
     }
 }
