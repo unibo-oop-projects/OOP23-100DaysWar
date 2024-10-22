@@ -7,7 +7,7 @@ import it.unibo.the100dayswar.model.unit.api.Buyable;
 /**
  * An implementations of the command pattern that represents the purchase of a buyable unit.
  */
-public class BuyCommand implements Command {
+public class PurchaseUnitCommand implements Command {
     private final MutablePlayer player;
     private final Buyable unit;
     /**
@@ -16,7 +16,7 @@ public class BuyCommand implements Command {
      * @param player the player that buys the unit
      * @param unit the unit to be bought
      */
-    public BuyCommand(MutablePlayer player, Buyable unit) {
+    public PurchaseUnitCommand(MutablePlayer player, Buyable unit) {
         this.player = player;
         this.unit = unit;
     }
