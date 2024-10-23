@@ -1,0 +1,29 @@
+package it.unibo.the100dayswar.commons.utilities.impl;
+
+import it.unibo.the100dayswar.commons.patterns.Observer;
+import it.unibo.the100dayswar.commons.utilities.api.ResourceGenerator;
+import it.unibo.the100dayswar.model.player.api.MutablePlayer;
+
+/**
+ * ResourceDistributor
+ */
+public class ResourceDistributor implements Observer<MutablePlayer> {
+
+    private final ResourceGenerator generator;
+
+    /**
+     * Constructor for the ResourceDistributor from the given parameters.
+     * 
+     * @param generator the generator of the resources
+     */
+    public ResourceDistributor(final ResourceGenerator generator) {
+        this.generator = generator;
+    }
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void update(MutablePlayer source) {
+        source.earnResources(generator.getAmount());
+    }
+}
