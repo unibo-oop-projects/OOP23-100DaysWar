@@ -16,7 +16,7 @@ public class PurchaseUnitCommand implements Command {
      * @param player the player that buys the unit
      * @param unit the unit to be bought
      */
-    public PurchaseUnitCommand(MutablePlayer player, Buyable unit) {
+    public PurchaseUnitCommand(final MutablePlayer player, final Buyable unit) {
         this.player = player;
         this.unit = unit;
     }
