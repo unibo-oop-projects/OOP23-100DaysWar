@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 import it.unibo.the100dayswar.model.map.api.BuildableCell;
 import it.unibo.the100dayswar.model.map.impl.BuildableCellImpl;
 import it.unibo.the100dayswar.model.player.api.BankAccount;
-import it.unibo.the100dayswar.model.player.api.MutablePlayer;
+import it.unibo.the100dayswar.model.player.api.Player;
 import it.unibo.the100dayswar.model.unit.api.Buyable;
 import it.unibo.the100dayswar.model.unit.api.Movable;
 import it.unibo.the100dayswar.model.unit.api.Soldier;
@@ -17,7 +17,7 @@ import it.unibo.the100dayswar.model.unit.api.Unit;
 /**
  * An abstract class that implements the Player interface.
  */
-public abstract class PlayerAbs implements MutablePlayer {
+public abstract class PlayerAbs implements Player {
 
     private final String username;
     private final BankAccount bankAccount;
@@ -95,5 +95,16 @@ public abstract class PlayerAbs implements MutablePlayer {
     @Override
     public void earnResources(final int amount) {
         this.bankAccount.earn(amount);
+    }
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Player copy() {
+        try {
+            return (Player) this.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new IllegalStateException("Clone not supported", e);
+        }
     }
 }
