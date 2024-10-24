@@ -1,6 +1,7 @@
 package it.unibo.the100dayswar.commons.utilities.api;
 
 import it.unibo.the100dayswar.commons.patterns.Observable;
+import it.unibo.the100dayswar.commons.patterns.Observer;
 import it.unibo.the100dayswar.model.player.api.Player;
 
 /**
@@ -13,4 +14,24 @@ public interface ResourceGenerator extends Observable<Player> {
      * @return the amount of resources generated
      */
     int getAmount();
+    /**
+     * Add an observer to the object.
+     * 
+     * @param observer
+     */
+    @Override
+    void attach(Observer<Player> observer);
+    /**
+     * Remove an observer from the object.
+     * 
+     * @param observer 
+     */
+    @Override
+    void detach(Observer<Player> observer);
+    /**
+     * Notify the observers that the object has generated resources.
+     * 
+     * @param player the player that will receive the resources
+     */
+    void notify(Player player);
 }
