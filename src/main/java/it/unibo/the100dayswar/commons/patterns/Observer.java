@@ -1,5 +1,7 @@
 package it.unibo.the100dayswar.commons.patterns;
 
+import it.unibo.the100dayswar.commons.utilities.impl.GameEvent;
+
 /**
  * An interface for a simple Observer pattern.
  *
@@ -12,5 +14,5 @@ public interface Observer<T> {
      *
      * @param source the source of the event
      */
-    void update(T source);
+    void update(GameEvent event, T source);
 }
