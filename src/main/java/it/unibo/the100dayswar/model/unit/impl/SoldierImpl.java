@@ -39,12 +39,8 @@ public class SoldierImpl extends UnitImpl implements Soldier {
         if(this.canMove(cell)) {
             this.position = cell;
             
-            if(cell instanceof BonusCell) {
-                try {
-                    ((BonusCell) cell).activateBonus(this.getOwner());
-                } catch (CloneNotSupportedException e) {
-                    throw new IllegalStateException(e);
-                }
+            if(cell instanceof BonusCell) {    
+                ((BonusCell) cell).activateBonus(this.getOwner());
             }
         }
     }
