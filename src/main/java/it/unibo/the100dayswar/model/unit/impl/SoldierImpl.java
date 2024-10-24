@@ -1,5 +1,6 @@
 package it.unibo.the100dayswar.model.unit.impl;
 
+import it.unibo.the100dayswar.model.map.api.BonusCell;
 import it.unibo.the100dayswar.model.map.api.Cell;
 import it.unibo.the100dayswar.model.player.api.Player;
 import it.unibo.the100dayswar.model.unit.api.Soldier;
@@ -12,7 +13,7 @@ public class SoldierImpl extends UnitImpl implements Soldier {
     private static final int DEFAULT_COST_TO_UPGRADE = 30;
     private static final int MAX_LEVEL = 3;
     private static final int DEFAULT_HEALTH = 100;
-    private final Cell position;
+    private Cell position;
     /**
      * Constructor for the soldier.
      * 
@@ -35,14 +36,24 @@ public class SoldierImpl extends UnitImpl implements Soldier {
      */
     @Override
     public void move(final Cell cell) {
-        throw new IllegalStateException("The move is not allowed");
+        if(this.canMove(cell)) {
+            this.position = cell;
+            
+            if(cell instanceof BonusCell) {
+                try {
+                    ((BonusCell) cell).activateBonus(this.getOwner());
+                } catch (CloneNotSupportedException e) {
+                    throw new IllegalStateException(e);
+                }
+            }
+        }
     }
     /**
      * {@inheritDoc}
      */
     @Override
-    public boolean canMove(final Cell cell) {
-        return this.getPosition().getX() == 0;
+    public boolean canMove(final Cell target) {
+        return this.getPosition().isFree() && target.isFree();
     }
     /**
      * A method that returns the current position of the soldier.
