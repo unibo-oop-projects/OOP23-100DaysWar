@@ -1,7 +1,6 @@
 package it.unibo.the100dayswar.model.map.impl;
 
 import it.unibo.the100dayswar.commons.utilities.impl.PositionImpl;
-import it.unibo.the100dayswar.model.map.api.BuildableCell;
 import it.unibo.the100dayswar.model.map.api.Cell;
 import it.unibo.the100dayswar.model.map.api.GameMap;
 import it.unibo.the100dayswar.model.map.api.GameMapBuilder;
@@ -47,8 +46,10 @@ public class GameMapBuilderImpl implements GameMapBuilder {
      */
     @Override
     public GameMapBuilder addSpawnCells() {
-        grid[0][0] = new BuildableCellImpl(new PositionImpl(0, 0), true, true);
-        grid[width - 1][height - 1] = new BuildableCellImpl(new PositionImpl(width - 1, height - 1), true, true);
+        final int Spawn1 = random.nextInt(width);
+        final int Spawn2 = random.nextInt(width);
+        grid[0][Spawn1] = new BuildableCellImpl(new PositionImpl(0, Spawn1), true, true);
+        grid[height - 1][Spawn2] = new BuildableCellImpl(new PositionImpl(width - 1, Spawn2), true, true);
         return this;
     }
 
@@ -64,7 +65,7 @@ public class GameMapBuilderImpl implements GameMapBuilder {
             final int x = random.nextInt(width);
             final int y = random.nextInt(height);
 
-            if (grid[x][y] instanceof BuildableCell) { 
+            if (!grid[x][y].isSpawn()) { 
                 grid[x][y] = new BuildableCellImpl(new PositionImpl(x, y), false, false);
                 obstaclesAdded++;
             }

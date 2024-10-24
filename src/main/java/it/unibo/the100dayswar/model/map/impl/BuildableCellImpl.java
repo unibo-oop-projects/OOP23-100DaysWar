@@ -48,15 +48,7 @@ public class BuildableCellImpl extends CellAbs  implements BuildableCell {
     public boolean isBuildable() {
         return isBuildable;
     }
-
-    /**
-    * {@inheritDoc}
-    */
-    @Override
-    public void setState(final boolean isBuildable) {
-        this.isBuildable = isBuildable;
-    }
-
+    
     /**
     * {@inheritDoc}
     */
@@ -76,8 +68,11 @@ public class BuildableCellImpl extends CellAbs  implements BuildableCell {
     /**
     * {@inheritDoc}
     */
+
     @Override
-    public void onUnitMoved(final Optional<Unit> unit) {
-        this.currentUnit = unit;
+    public boolean isFree() {
+        return this.getUnit().isEmpty() && this.isBuildable();
     }
+
+    
 }

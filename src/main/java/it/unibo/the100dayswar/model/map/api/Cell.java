@@ -2,29 +2,20 @@ package it.unibo.the100dayswar.model.map.api;
 /**
  * Interface that model a cell.
  */
+
+import it.unibo.the100dayswar.commons.utilities.api.Position;
+
 public interface Cell {
     /**
-     * getter x postion.
-     * @return the orizontal position in te map.
+     * 
+     * @return the position of the cell in the map
     */
-    int getX();
-
-    /**
-    * getter y postion.
-    * @return the vertical position in te map.
-    */
-    int getY(); 
+    Position getPosition();
 
     /**
      * @return true if the cell il occupied by a soldier or a tower.
      */
-    boolean isOccupied();
-
-    /**
-     * setter of the attribute isOccupied.
-     * @param occupation is true if the cell is occupated.
-     */
-    void setOccupation(boolean occupation);
+    boolean isFree();
 
     /**
      * @return true if is a spawn cell;
