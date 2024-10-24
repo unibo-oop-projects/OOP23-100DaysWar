@@ -13,6 +13,7 @@ public interface Observer<T> {
      * source.
      *
      * @param source the source of the event
+     * @param event the event that occurred
      */
     void update(GameEvent event, T source);
 }
