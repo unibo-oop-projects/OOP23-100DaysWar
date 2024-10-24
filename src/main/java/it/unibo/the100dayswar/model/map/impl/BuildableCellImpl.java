@@ -13,9 +13,9 @@ import it.unibo.the100dayswar.model.unit.api.Unit;
 
 public class BuildableCellImpl extends CellAbs  implements BuildableCell {
 
-    private boolean isBuildable;
+    private final boolean isBuildable;
     private final boolean isSpawn;
-    private Optional<Unit> currentUnit;
+    private final Optional<Unit> currentUnit;
 
     /**
      * Constructor from coordinates.
@@ -38,7 +38,7 @@ public class BuildableCellImpl extends CellAbs  implements BuildableCell {
         super(cell);
         this.isBuildable = cell.isBuildable();
         this.isSpawn = cell.isSpawn();
-
+        this.currentUnit = Optional.empty();
     }
 
    /**
@@ -48,7 +48,7 @@ public class BuildableCellImpl extends CellAbs  implements BuildableCell {
     public boolean isBuildable() {
         return isBuildable;
     }
-    
+
     /**
     * {@inheritDoc}
     */
@@ -73,6 +73,4 @@ public class BuildableCellImpl extends CellAbs  implements BuildableCell {
     public boolean isFree() {
         return this.getUnit().isEmpty() && this.isBuildable();
     }
-
-    
 }

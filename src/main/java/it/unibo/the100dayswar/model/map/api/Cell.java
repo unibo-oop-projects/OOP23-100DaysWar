@@ -1,10 +1,10 @@
 package it.unibo.the100dayswar.model.map.api;
-/**
- * Interface that model a cell.
- */
 
 import it.unibo.the100dayswar.commons.utilities.api.Position;
 
+/**
+ * Interface that model a cell.
+ */
 public interface Cell {
     /**
      * 

@@ -36,10 +36,9 @@ public class SoldierImpl extends UnitImpl implements Soldier {
      */
     @Override
     public void move(final Cell cell) {
-        if(this.canMove(cell)) {
+        if (this.canMove(cell)) {
             this.position = cell;
-            
-            if(cell instanceof BonusCell) {    
+            if (cell instanceof BonusCell) {
                 ((BonusCell) cell).activateBonus(this.getOwner());
             }
         }

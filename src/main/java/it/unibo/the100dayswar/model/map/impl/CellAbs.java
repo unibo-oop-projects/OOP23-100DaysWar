@@ -9,13 +9,13 @@ import it.unibo.the100dayswar.model.map.api.Cell;
 public abstract class CellAbs implements Cell {
 
     private final Position position;
-    
+
     /**
      * Constructor from coordinates.
      * @param coordinate coordinates to identify the cell in the map.
      */
     public CellAbs(final Position coordinate) {
-        this.position = coordinate;
+        this.position = new PositionImpl(coordinate);
     }
     /**
      * Constructor from a cell.

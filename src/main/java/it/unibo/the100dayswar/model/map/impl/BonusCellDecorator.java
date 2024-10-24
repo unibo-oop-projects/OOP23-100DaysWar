@@ -15,7 +15,7 @@ import it.unibo.the100dayswar.model.player.api.Player;
 public class BonusCellDecorator extends BuildableCellImpl implements BonusCell, ResourceGenerator {
     private final Set<Observer<Player>> players;
     private static final int BONUS = 100;
-    private boolean bonusActive;
+    private final boolean bonusActive;
     /**
      * Constructor of a cell that give a bonus to the player by a Buildable Cell given.
      * 
@@ -62,7 +62,11 @@ public class BonusCellDecorator extends BuildableCellImpl implements BonusCell, 
         return this.bonusActive && !this.getUnit().isEmpty();
     }
 
-    public void activateBonus(Player player) {
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public void activateBonus(final Player player) {
         notify(player);
     }
 }

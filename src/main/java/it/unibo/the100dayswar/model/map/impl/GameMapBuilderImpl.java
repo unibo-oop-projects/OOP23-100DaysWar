@@ -46,10 +46,10 @@ public class GameMapBuilderImpl implements GameMapBuilder {
      */
     @Override
     public GameMapBuilder addSpawnCells() {
-        final int Spawn1 = random.nextInt(width);
-        final int Spawn2 = random.nextInt(width);
-        grid[0][Spawn1] = new BuildableCellImpl(new PositionImpl(0, Spawn1), true, true);
-        grid[height - 1][Spawn2] = new BuildableCellImpl(new PositionImpl(width - 1, Spawn2), true, true);
+        final int spawn1 = random.nextInt(width);
+        final int spawn2 = random.nextInt(width);
+        grid[0][spawn1] = new BuildableCellImpl(new PositionImpl(0, spawn1), true, true);
+        grid[height - 1][spawn2] = new BuildableCellImpl(new PositionImpl(width - 1, spawn2), true, true);
         return this;
     }
 
