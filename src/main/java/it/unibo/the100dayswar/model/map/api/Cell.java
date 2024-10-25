@@ -13,7 +13,7 @@ public interface Cell {
     Position getPosition();
 
     /**
-     * @return true if the cell il occupied by a soldier or a tower.
+     * @return true if the cell is not occupied by a soldier or a tower and is Buildable.
      */
     boolean isFree();
 

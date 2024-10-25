@@ -25,6 +25,13 @@ public interface GameMapBuilder {
     GameMapBuilder addObstacles(int numberOfObstacles);
 
     /**
+     * Add a specified number of bonus cells randomly on the map.
+     * @param numberOfBonusCell The number of bonus cells to add.
+     * @return The current instance of the builder.
+     */
+    GameMapBuilder addBonusCell(int numberOfBonusCell);
+
+    /**
      * Complete the map construction and return the final game map.
      * @return The constructed GameMap.
      */

@@ -73,6 +73,26 @@ public class GameMapBuilderImpl implements GameMapBuilder {
         return this;
     }
 
+     /**
+     * {@inheritDoc}
+     * @return the map 
+     */
+    @Override
+    public GameMapBuilder addBonusCell(final int numberOfBonusCell) {
+         int bonusCellAdded = 0;
+
+        while (bonusCellAdded < numberOfBonusCell) {
+            final int x = random.nextInt(width);
+            final int y = random.nextInt(height);
+
+            if (!grid[x][y].isSpawn() && grid[x][y].isFree()) { 
+                grid[x][y] = new BonusCellDecorator(new BuildableCellImpl(new PositionImpl(x, y), true, false));
+                bonusCellAdded++;
+            }
+        }
+        return this;
+    }
+
     /**
      * {@inheritDoc}
      * @return the map 
