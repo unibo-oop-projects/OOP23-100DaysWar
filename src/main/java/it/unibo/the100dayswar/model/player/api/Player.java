@@ -4,7 +4,7 @@ package it.unibo.the100dayswar.model.player.api;
 import java.util.Set;
 
 import it.unibo.the100dayswar.commons.patterns.Observer;
-import it.unibo.the100dayswar.commons.utilities.impl.GameEvent;
+import it.unibo.the100dayswar.commons.utilities.api.ResourceGenerator;
 import it.unibo.the100dayswar.model.map.api.BuildableCell;
 import it.unibo.the100dayswar.model.unit.api.Buyable;
 import it.unibo.the100dayswar.model.unit.api.Movable;
@@ -16,7 +16,7 @@ import it.unibo.the100dayswar.model.unit.api.Soldier;
  * This interface extends the basic Player interface by defining methods corresponding to the actions 
  * that a player can perform.
  */
-public interface Player extends Observer<Player> {
+public interface Player extends Observer<ResourceGenerator> {
     /**
      * Returns the username of the player.
      *
@@ -82,11 +82,10 @@ public interface Player extends Observer<Player> {
      */
     Player copy() throws CloneNotSupportedException;
     /**
-     * Method that updates the player based on the event that occurred.
+     * Method that updates the bank account player with the resource generated.
      * 
-     * @param event is the event that occurred.
-     * @param player is the player that will be updated.
+     * @param generator is the that generate the resource earned.
      */
     @Override
-    void update(GameEvent event, Player player);
+    void update(ResourceGenerator generator);
 }

@@ -5,17 +5,15 @@ import java.util.Set;
 
 import it.unibo.the100dayswar.commons.patterns.Observer;
 import it.unibo.the100dayswar.commons.utilities.api.ResourceGenerator;
-import it.unibo.the100dayswar.commons.utilities.impl.GameEvent;
 import it.unibo.the100dayswar.model.map.api.BonusCell;
-import it.unibo.the100dayswar.model.player.api.Player;
 
 /**
  * Implementation of the BonusCell interface.
  */
-public class BonusCellDecorator extends BuildableCellImpl implements BonusCell, ResourceGenerator {
-    private final Set<Observer<Player>> players;
+public class BonusCellDecorator extends BuildableCellImpl implements BonusCell {
+    private final Set<Observer<ResourceGenerator>> observers;
     private static final int BONUS = 100;
-    private final boolean bonusActive;
+    private boolean bonusActive;
     /**
      * Constructor of a cell that give a bonus to the player by a Buildable Cell given.
      * 
@@ -23,7 +21,7 @@ public class BonusCellDecorator extends BuildableCellImpl implements BonusCell, 
      */
     public BonusCellDecorator(final BuildableCellImpl decoratedCell) {
         super(decoratedCell);
-        this.players = new HashSet<>();
+        this.observers = new HashSet<>();
         this.bonusActive = true;
     }
     /** 
@@ -37,22 +35,25 @@ public class BonusCellDecorator extends BuildableCellImpl implements BonusCell, 
      * {@inheritDoc}
      */
     @Override
-    public void attach(final Observer<Player> observer) {
-        players.add(observer);
+    public void attach(final Observer<ResourceGenerator> observer) {
+        observers.add(observer);
     }
     /** 
      * {@inheritDoc}
      */
     @Override
-    public void detach(final Observer<Player> observer) {
-        players.remove(observer);
+    public void detach(final Observer<ResourceGenerator> observer) {
+        observers.remove(observer);
     }
     /** 
      * {@inheritDoc}
      */
     @Override
-    public void notify(final Player player) {
-        player.update(GameEvent.INCOME, player);
+    public void notify(final Observer<ResourceGenerator> observer) {
+        if (isBonusActive()) {
+            observers.stream().filter(observer::equals).forEach(p -> p.update(this));
+            setBonusActive(false);
+        }
     }
     /** 
      * {@inheritDoc}
@@ -61,12 +62,11 @@ public class BonusCellDecorator extends BuildableCellImpl implements BonusCell, 
     public boolean isBonusActive() {
         return this.bonusActive && !this.getUnit().isEmpty();
     }
-
     /** 
      * {@inheritDoc}
      */
     @Override
-    public void activateBonus(final Player player) {
-        notify(player);
+    public void setBonusActive(final boolean bonusActive) {
+        this.bonusActive = bonusActive;
     }
 }

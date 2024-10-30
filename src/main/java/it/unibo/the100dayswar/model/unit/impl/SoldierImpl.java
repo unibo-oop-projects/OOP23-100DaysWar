@@ -1,6 +1,5 @@
 package it.unibo.the100dayswar.model.unit.impl;
 
-import it.unibo.the100dayswar.model.map.api.BonusCell;
 import it.unibo.the100dayswar.model.map.api.Cell;
 import it.unibo.the100dayswar.model.player.api.Player;
 import it.unibo.the100dayswar.model.unit.api.Soldier;
@@ -38,9 +37,6 @@ public class SoldierImpl extends UnitImpl implements Soldier {
     public void move(final Cell cell) {
         if (this.canMove(cell)) {
             this.position = cell;
-            if (cell instanceof BonusCell) {
-                ((BonusCell) cell).activateBonus(this.getOwner());
-            }
         }
     }
     /**

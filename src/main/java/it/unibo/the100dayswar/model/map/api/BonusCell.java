@@ -1,20 +1,19 @@
 package it.unibo.the100dayswar.model.map.api;
 
-import it.unibo.the100dayswar.model.player.api.Player;
+import it.unibo.the100dayswar.commons.utilities.api.ResourceGenerator;
 
 /**
  * Interface that represents a cell that can give a bonus to a player.
  */
-public interface BonusCell extends BuildableCell {
+public interface BonusCell extends BuildableCell, ResourceGenerator {
     /**
      * 
      * @return true if the bonus can be given, false otherwise.
      */
     boolean isBonusActive();
     /**
-     * Method that gives the bonus to the player.
      * 
-     * @param player is the player that will receive the bonus.
+     * @param bonusActive the new value of the bonus.
      */
-    void activateBonus(Player player);
+    void setBonusActive(boolean bonusActive);
 }

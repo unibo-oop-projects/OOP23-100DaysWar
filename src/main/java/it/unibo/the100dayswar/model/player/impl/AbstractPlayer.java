@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import it.unibo.the100dayswar.commons.utilities.api.ResourceGenerator;
 import it.unibo.the100dayswar.model.map.api.BuildableCell;
 import it.unibo.the100dayswar.model.map.impl.BuildableCellImpl;
 import it.unibo.the100dayswar.model.player.api.BankAccount;
@@ -17,7 +18,7 @@ import it.unibo.the100dayswar.model.unit.api.Unit;
 /**
  * An abstract class that implements the Player interface.
  */
-public abstract class PlayerAbs implements Player {
+public abstract class AbstractPlayer implements Player {
 
     private final String username;
     private final BankAccount bankAccount;
@@ -30,7 +31,7 @@ public abstract class PlayerAbs implements Player {
      * @param username the username of the player
      * @param spawnPoint the spawn point of the player
       */
-    public PlayerAbs(final String username, final BuildableCell spawnPoint) {
+    public AbstractPlayer(final String username, final BuildableCell spawnPoint) {
         this.username = username;
         this.bankAccount = new BankAccountImpl();
         this.units = new HashSet<>();
@@ -102,9 +103,16 @@ public abstract class PlayerAbs implements Player {
     @Override
     public Player copy() {
         try {
-            return (Player) this.clone();
+            return (AbstractPlayer) super.clone();
         } catch (CloneNotSupportedException e) {
             throw new IllegalStateException("Clone not supported", e);
         }
+    }
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void update(final ResourceGenerator generator) {
+        this.earnResources(generator.getAmount());
     }
 }
