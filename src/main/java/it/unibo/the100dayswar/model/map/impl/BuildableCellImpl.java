@@ -15,7 +15,7 @@ public class BuildableCellImpl extends CellAbs  implements BuildableCell {
 
     private final boolean isBuildable;
     private final boolean isSpawn;
-    private final Optional<Unit> currentUnit;
+    private  Optional<Unit> currentUnit;
 
     /**
      * Constructor from coordinates.
@@ -68,9 +68,16 @@ public class BuildableCellImpl extends CellAbs  implements BuildableCell {
     /**
     * {@inheritDoc}
     */
-
     @Override
     public boolean isFree() {
         return this.getUnit().isEmpty() && this.isBuildable();
+    }
+
+    /**
+    * {@inheritDoc}
+    */
+    @Override
+    public void setOccupation(final Optional<Unit> unit) {
+       this.currentUnit = unit;
     }
 }

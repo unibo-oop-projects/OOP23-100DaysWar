@@ -20,4 +20,10 @@ public interface BuildableCell extends Cell {
      * @return the unit in the cell.
      */
     Optional<Unit> getUnit();
+
+    /**
+     * Setter of the occupation the cell.
+     * @param unit is the unit on the cell.
+     */
+    void setOccupation(Optional<Unit> unit);
 }
