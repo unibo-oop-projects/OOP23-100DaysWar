@@ -44,4 +44,38 @@ public abstract class CellAbs implements Cell {
      */
     @Override
     public abstract boolean isSpawn();
+
+    /**
+     * 
+     * @param pos is the postion that will be checked.
+     * @return true if the cell is in diagonal rather than the actusl cell.
+     */
+    private boolean isDiagonal(final Position pos) {
+        final Position actualPos = this.getPosition();
+        return (pos.getX() == actualPos.getX() - 1 && pos.getY() == actualPos.getY() - 1) 
+                || (pos.getX() == actualPos.getX() + 1 && pos.getY() == actualPos.getY() + 1) 
+                || (pos.getX() == actualPos.getX() - 1 && pos.getY() == actualPos.getY() + 1) 
+                || (pos.getX() == actualPos.getX() + 1 && pos.getY() == actualPos.getY() - 1);
+    }
+
+    /**
+     * @param pos is the postion that will be checked.
+     * @return true if the cell is in cross rather than the actusl cell.
+     */
+    private boolean isCross(final Position pos) {
+        final Position actualPos = this.getPosition();
+        return (pos.getX() == actualPos.getX() && pos.getY() == actualPos.getY() - 1) 
+                || (pos.getX() == actualPos.getX() && pos.getY() == actualPos.getY() + 1) 
+                || (pos.getX() == actualPos.getX() - 1 && pos.getY() == actualPos.getY()) 
+                || (pos.getX() == actualPos.getX() + 1 && pos.getY() == actualPos.getY());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isAdiacent(final Cell cell) {
+        final Position checkPos = cell.getPosition();
+        return this.isCross(checkPos) || this.isDiagonal(checkPos);
+    }
 }

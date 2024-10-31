@@ -21,4 +21,10 @@ public interface Cell {
      * @return true if is a spawn cell;
      */
     boolean isSpawn();
+
+     /**
+     * @return true if the cell in param is adiacent to the actual cell.
+     * @param cell il the cell that will be checked.
+     */
+    boolean isAdiacent(Cell cell);
 }
