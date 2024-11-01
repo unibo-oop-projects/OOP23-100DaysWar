@@ -1,6 +1,7 @@
 package it.unibo.the100dayswar.model.map.api;
 
 import it.unibo.the100dayswar.commons.utilities.api.Position;
+import it.unibo.the100dayswar.model.cell.api.Cell;
 
 import java.awt.Dimension;
 

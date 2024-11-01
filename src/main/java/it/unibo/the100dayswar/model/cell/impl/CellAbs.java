@@ -1,8 +1,8 @@
-package it.unibo.the100dayswar.model.map.impl;
+package it.unibo.the100dayswar.model.cell.impl;
 
 import it.unibo.the100dayswar.commons.utilities.api.Position;
 import it.unibo.the100dayswar.commons.utilities.impl.PositionImpl;
-import it.unibo.the100dayswar.model.map.api.Cell;
+import it.unibo.the100dayswar.model.cell.api.Cell;
 /**
  * Class that model the concept of a generic cell.
  */

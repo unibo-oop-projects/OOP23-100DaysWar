@@ -1,4 +1,4 @@
-package it.unibo.the100dayswar.model.map.api;
+package it.unibo.the100dayswar.model.cell.api;
 
 import java.util.Optional;
 

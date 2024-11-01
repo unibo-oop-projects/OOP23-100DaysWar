@@ -1,9 +1,9 @@
-package it.unibo.the100dayswar.model.map.impl;
+package it.unibo.the100dayswar.model.cell.impl;
 
 import java.util.Optional;
 
 import it.unibo.the100dayswar.commons.utilities.api.Position;
-import it.unibo.the100dayswar.model.map.api.BuildableCell;
+import it.unibo.the100dayswar.model.cell.api.BuildableCell;
 import it.unibo.the100dayswar.model.unit.api.Unit;
 
 

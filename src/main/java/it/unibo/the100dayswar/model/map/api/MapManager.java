@@ -2,6 +2,7 @@ package it.unibo.the100dayswar.model.map.api;
 
 
 import it.unibo.the100dayswar.commons.patterns.Observer;
+import it.unibo.the100dayswar.model.cell.api.Cell;
 import it.unibo.the100dayswar.model.unit.api.Soldier;
 
 /**

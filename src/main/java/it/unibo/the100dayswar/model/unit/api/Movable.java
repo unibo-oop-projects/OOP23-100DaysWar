@@ -1,6 +1,6 @@
 package it.unibo.the100dayswar.model.unit.api;
 
-import it.unibo.the100dayswar.model.map.api.Cell;
+import it.unibo.the100dayswar.model.cell.api.Cell;
 
 /**
  * An interface for the objects that can move around the map.

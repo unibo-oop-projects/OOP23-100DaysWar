@@ -2,9 +2,10 @@ package it.unibo.the100dayswar.model.map.impl;
 
 import java.util.Optional;
 
-import it.unibo.the100dayswar.model.map.api.BonusCell;
-import it.unibo.the100dayswar.model.map.api.BuildableCell;
-import it.unibo.the100dayswar.model.map.api.Cell;
+import it.unibo.the100dayswar.model.cell.api.BonusCell;
+import it.unibo.the100dayswar.model.cell.api.BuildableCell;
+import it.unibo.the100dayswar.model.cell.api.Cell;
+import it.unibo.the100dayswar.model.cell.impl.BuildableCellImpl;
 import it.unibo.the100dayswar.model.map.api.GameMap;
 import it.unibo.the100dayswar.model.map.api.GameMapBuilder;
 import it.unibo.the100dayswar.model.map.api.MapManager;

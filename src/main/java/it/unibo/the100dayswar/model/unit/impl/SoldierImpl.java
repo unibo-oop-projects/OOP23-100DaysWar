@@ -1,6 +1,6 @@
 package it.unibo.the100dayswar.model.unit.impl;
 
-import it.unibo.the100dayswar.model.map.api.Cell;
+import it.unibo.the100dayswar.model.cell.api.Cell;
 import it.unibo.the100dayswar.model.player.api.Player;
 import it.unibo.the100dayswar.model.unit.api.Soldier;
 

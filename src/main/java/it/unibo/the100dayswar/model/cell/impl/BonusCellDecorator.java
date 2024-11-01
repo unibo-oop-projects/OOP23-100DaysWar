@@ -1,11 +1,11 @@
-package it.unibo.the100dayswar.model.map.impl;
+package it.unibo.the100dayswar.model.cell.impl;
 
 import java.util.HashSet;
 import java.util.Set;
 
 import it.unibo.the100dayswar.commons.patterns.Observer;
 import it.unibo.the100dayswar.commons.utilities.api.ResourceGenerator;
-import it.unibo.the100dayswar.model.map.api.BonusCell;
+import it.unibo.the100dayswar.model.cell.api.BonusCell;
 
 /**
  * Implementation of the BonusCell interface.

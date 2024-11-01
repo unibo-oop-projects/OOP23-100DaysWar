@@ -1,4 +1,4 @@
-package it.unibo.the100dayswar.model.map.api;
+package it.unibo.the100dayswar.model.cell.api;
 
 import it.unibo.the100dayswar.commons.utilities.api.ResourceGenerator;
 
