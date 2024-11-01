@@ -1,9 +1,11 @@
 package it.unibo.the100dayswar.model.turn.api;
 
+import it.unibo.the100dayswar.commons.utilities.api.ResourceGenerator;
+
 /** 
  * An interface for the day in the game.
  */
-public interface GameDay {
+public interface GameDay extends ResourceGenerator {
     /**
      * Increase the counter of the day.
      */
@@ -15,8 +17,15 @@ public interface GameDay {
      * 
      */
     int getCurrentDay();
+
     /**
-     * Increase the resources owned by the players each day.
+     * notify the observers.
      */
-    void addIncome();
+    void notifyObservers();
+
+    /**
+     * retun the max day in a Game.
+     * @return return the max day
+     */
+    int getMaxDay();
 }
