@@ -69,6 +69,19 @@ public interface Player extends Observer<ResourceGenerator> {
      */
     void earnResources(int amount);
     /**
+     * Spends resources from the player's bank account.
+     *
+     * @param amount the amount of resources to spend
+     * @throws IllegalStateException if the player does not have enough resources
+     */
+    void spendResources(int amount);
+    /**
+     * Adds a unit to the player's units.
+     *
+     * @param unit the unit to add
+     */
+    void addUnit(Unit unit);
+    /**
      * Returns the soldiers owned by the player.
      *
      * @return the soldiers owned by the player
