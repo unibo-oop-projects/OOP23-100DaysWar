@@ -101,6 +101,20 @@ public abstract class AbstractPlayer implements Player {
      * {@inheritDoc}
      */
     @Override
+    public void addUnit(final Unit unit) {
+        this.units.add(unit);
+    }
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void spendResources(final int amount) {
+        this.bankAccount.purchase(amount);
+    }
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public Player copy() {
         try {
             return (AbstractPlayer) super.clone();

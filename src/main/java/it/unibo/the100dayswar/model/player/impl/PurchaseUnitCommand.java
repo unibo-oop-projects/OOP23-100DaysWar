@@ -8,23 +8,20 @@ import it.unibo.the100dayswar.model.unit.api.Unit;
  * An implementations of the command pattern that represents the purchase of a buyable unit.
  */
 public class PurchaseUnitCommand implements PurchaseCommand<Unit> {
-    private final Player player;
     private final Unit unit;
     /**
-     * Constructor for the BuyCommand.
+     * Constructor for the class by the given unit to buy.
      * 
-     * @param player the player that buys the unit
      * @param unit the unit to be bought
      */
-    public PurchaseUnitCommand(final Player player, final Unit unit) {
-        this.player = player;
+    public PurchaseUnitCommand(final Unit unit) {
         this.unit = unit;
     }
     /**
      * {@inheritDoc}
      */
     @Override
-    public void execute() {
+    public void execute(final Player player) {
         player.spendResources(unit.costToBuy());
         player.addUnit(unit);
     }

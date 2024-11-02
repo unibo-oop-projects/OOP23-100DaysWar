@@ -27,7 +27,11 @@ public abstract class UnitImpl implements Unit {
      * @param maxLevel maximum level
       */
     public UnitImpl(final Player owner, final int health, final int costToBuy, final int costToUpgrade, final int maxLevel) {
-        this.owner = owner;
+        try {
+            this.owner = owner.copy();
+        } catch (CloneNotSupportedException e) {
+            throw new IllegalStateException("Clone not supported", e);
+        }
         this.health = health;
         this.level = DEFAULT_LEVEL;
         this.costToBuy = costToBuy;
