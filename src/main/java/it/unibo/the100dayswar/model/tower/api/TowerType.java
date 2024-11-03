@@ -1,4 +1,4 @@
-package it.unibo.the100dayswar.model.unit.api;
+package it.unibo.the100dayswar.model.tower.api;
 
 /**
  * Enum which represents the different types of towers and their cost.
