@@ -17,34 +17,53 @@ public abstract class AbstractTower extends UnitImpl implements Tower {
     /**
      * Constructs a Tower with the specified position, level, and tower type.
      *
-     * @param position  the position of the tower
-     * @param level     the level of the tower
      * @param towerType the type of the tower
+     * @param owner the owner of the tower
+     * @param health the health of the tower
+     * @param position the position of the tower
+     * @param costToBuy the cost to buy the tower
+     * @param costToUpgrade the cost to upgrade the tower
      */
-    public AbstractTower(final TowerType towerType, final Player owner, final int health, final Cell position, final int costToBuy, final int costToUpgrade) {
+    public AbstractTower(
+        final TowerType towerType, 
+        final Player owner, 
+        final int health,
+        final Cell position,
+        final int costToBuy,
+        final int costToUpgrade
+        ) {
         super(owner, health, costToBuy, costToUpgrade, MAX_LEVEL);
         this.position = position;
         this.towerType = towerType;
     }
 
+    /**
+     * {@inheritDoc}}
+     */
     @Override
     public void performAttack() {
         // TODO Auto-generated method stub
-        
     }
 
+    /**
+     * {@inheritDoc}}
+     */
     @Override
     public Cell getCell() {
         return this.position;
     }
 
+    /**
+     * {@inheritDoc}}
+     */
     @Override
     public abstract int getDamage();
 
+    /**
+     * {@inheritDoc}}
+     */
     @Override
     public TowerType getTowerType() {
         return this.towerType;
     }
-
-    
 }

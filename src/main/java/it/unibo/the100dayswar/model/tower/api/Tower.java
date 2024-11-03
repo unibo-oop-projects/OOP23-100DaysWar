@@ -23,7 +23,7 @@ public interface Tower extends Unit {
     Cell getCell();
 
     /**
-     * Method that return the type of the tower
+     * Method that return the type of the tower.
      * 
      * @return the tower type
      */
