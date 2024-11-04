@@ -1,6 +1,5 @@
 package it.unibo.the100dayswar.model.tower.api;
 
-import it.unibo.the100dayswar.model.cell.api.Cell;
 import it.unibo.the100dayswar.model.unit.api.Unit;
 
 /**
@@ -14,13 +13,6 @@ public interface Tower extends Unit {
      * @return the damage
      */
     int getDamage();
-
-    /**
-     * Method that returns the position in the map of the tower.
-     * 
-     * @return the position
-     */
-    Cell getCell();
 
     /**
      * Method that return the type of the tower.
