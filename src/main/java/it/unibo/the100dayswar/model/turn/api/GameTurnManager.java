@@ -46,5 +46,9 @@ public interface GameTurnManager {
     /**
      * start the timer for the day.
      */
-    void dayTimer();
+    void startTimer();
+    /**
+     * stop the timer for the day.
+     */
+    void stopTimer();
 }

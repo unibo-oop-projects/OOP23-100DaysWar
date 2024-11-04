@@ -22,6 +22,7 @@ public class GameTurnManagerImpl implements GameTurnManager {
     private boolean gameEnd;
     private final GameDay gameDay;
     private final Timer timer;
+    private final TimerTask dayTimer;
 
     /**
      * Constructor of GameTurnManagerImpl.
@@ -38,7 +39,14 @@ public class GameTurnManagerImpl implements GameTurnManager {
         this.gameDay = new GameDayImpl();
         gameDay.attach(players.get(0));
         gameDay.attach(players.get(1));
-        timer = new Timer();
+        this.timer = new Timer();
+        this.dayTimer = new TimerTask() {
+            @Override
+            public void run() {
+                onDayPassed();
+            }
+        };
+
     }
     /**
      * get the current player.
@@ -72,7 +80,7 @@ public class GameTurnManagerImpl implements GameTurnManager {
      */
     @Override
     public void switchTurn() {
-        currentPlayerIndex = (currentPlayerIndex == 0) ? 1 : 0;
+        this.currentPlayerIndex = (this.currentPlayerIndex == 0) ? 1 : 0;
         increaseTurn();
         playerStartTurn();
     }
@@ -108,22 +116,23 @@ public class GameTurnManagerImpl implements GameTurnManager {
         if (daysNoMove >= MAX_TURN_WITH_NO_MOVE) {
             switchTurn();
         }
-        if (gameDay.getCurrentDay() >= gameDay.getMaxDay()) {
-            gameEnd = true;
-            timer.cancel();
+        if (this.gameDay.getCurrentDay() >= this.gameDay.getMaxDay()) {
+            this.gameEnd = true;
+            stopTimer();
         }
     }
     /**
      * start the timer for the day.
      */
     @Override
-    public void dayTimer() {
-        final TimerTask dayTimer = new TimerTask() {
-            @Override
-            public void run() {
-                onDayPassed();
-            }
-        };
+    public void startTimer() {
         timer.schedule(dayTimer, 0, PERIOD);
+    }
+    /**
+     * stop the timer for the day.
+     */
+    @Override
+    public void stopTimer() {
+        this.timer.cancel();
     }
 }
