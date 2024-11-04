@@ -2,13 +2,14 @@ package it.unibo.the100dayswar.model.tower.impl;
 
 import it.unibo.the100dayswar.model.cell.api.Cell;
 import it.unibo.the100dayswar.model.player.api.Player;
+import it.unibo.the100dayswar.model.tower.api.AdvancedTower;
 import it.unibo.the100dayswar.model.tower.api.TowerType;
 
 /**
  * Class that implements an advanced type of tower extending 
  * AbstractTower.
  */
-public class AdvancedTowerImpl extends AbstractTower {
+public class AdvancedTowerImpl extends AbstractTower implements AdvancedTower {
     private static final int HEALTH_MULTYPLIER_ADVANCED = 12;
     private static final int UPGRADE_MULTYPLIER_ADVANCED = 2;
 
