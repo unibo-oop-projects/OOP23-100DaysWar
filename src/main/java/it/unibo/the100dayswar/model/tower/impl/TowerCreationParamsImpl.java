@@ -1,7 +1,7 @@
 package it.unibo.the100dayswar.model.tower.impl;
 
 import it.unibo.the100dayswar.model.cell.api.Cell;
-import it.unibo.the100dayswar.model.cell.impl.CellAbs;
+import it.unibo.the100dayswar.model.cell.impl.CellImpl;
 import it.unibo.the100dayswar.model.player.api.Player;
 import it.unibo.the100dayswar.model.player.impl.PlayerImpl;
 import it.unibo.the100dayswar.model.tower.api.TowerCreationParams;
@@ -25,8 +25,8 @@ public class TowerCreationParamsImpl implements TowerCreationParams {
      * @param towerType The type of tower to be constructed.
      */
     public TowerCreationParamsImpl(final Player player, final Cell cell, final TowerType towerType) {
-        this.player = player;
-        this.cell = cell;
+        this.player = new PlayerImpl(player);
+        this.cell = new CellImpl(cell);
         this.towerType = towerType;
     }
 
@@ -47,7 +47,7 @@ public class TowerCreationParamsImpl implements TowerCreationParams {
      */
     @Override
     public Cell getCell() {
-        return new CellAbs(this.cell);
+        return new CellImpl(cell);
     }
 
     /**
