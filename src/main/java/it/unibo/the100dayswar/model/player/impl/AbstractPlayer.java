@@ -37,6 +37,7 @@ public abstract class AbstractPlayer implements Player {
         this.units = new HashSet<>();
         this.spawnPoint = new BuildableCellImpl(spawnPoint);
     }
+
     /** 
      * {@inheritDoc}
      */

@@ -7,6 +7,8 @@ import it.unibo.the100dayswar.model.unit.api.Unit;
  * Interface that rapresent a generic tower.
  */
 public interface Tower extends Unit, Serializable {
+    static final long serialVersionUID = 1L;
+    
     /**
      * Method that returns the damage that the tower inflicts
      * to another unit. 
