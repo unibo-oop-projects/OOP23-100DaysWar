@@ -48,12 +48,14 @@ public class MapManagerImpl implements MapManager {
     public void handleUnitMovement(final Soldier soldier, final Cell targetPosition) {
         final BuildableCellImpl targetCell = (BuildableCellImpl) targetPosition;
         final BuildableCell currentCell = (BuildableCellImpl) soldier.getCell();
-        soldier.move(targetPosition);
-        currentCell.setOccupation(Optional.empty());
-        targetCell.setOccupation(Optional.of(soldier));
-        if (targetCell instanceof BonusCell) {
-            ((BonusCell) targetCell).notify(soldier.getOwner());
+        if (currentCell.isAdiacent(targetCell) && targetCell.isFree()) {
+            soldier.move(targetPosition);
+            currentCell.setOccupation(Optional.empty());
+            targetCell.setOccupation(Optional.of(soldier));
+            if (targetCell instanceof BonusCell) {
+                ((BonusCell) targetCell).notify(soldier.getOwner());
+            }
+            map.getSize();
         }
-        map.getSize();
     }
 }
