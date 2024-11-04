@@ -25,8 +25,8 @@ public class TowerFactoryImpl implements TowerFactory {
      * {@inheritDoc}}
      */
     @Override
-    public AbstractTower buildTower(Player owner, TowerType towerType, Cell position) {
-        BiFunction<Player, Cell, AbstractTower> towerConstructor = TOWER_CREATORS.get(towerType);
+    public AbstractTower buildTower(final Player owner, final TowerType towerType, final Cell position) {
+        final BiFunction<Player, Cell, AbstractTower> towerConstructor = TOWER_CREATORS.get(towerType);
 
         if (towerConstructor == null) {
             throw new IllegalArgumentException("Unknown Tower Type: " + towerType);

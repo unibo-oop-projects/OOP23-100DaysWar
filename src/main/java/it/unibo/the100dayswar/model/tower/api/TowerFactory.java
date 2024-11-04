@@ -17,5 +17,5 @@ public interface TowerFactory {
      * 
      * @return a new tower
      */
-    public AbstractTower buildTower(final Player owner, final TowerType towerType, final Cell position);
+    AbstractTower buildTower(Player owner, TowerType towerType, Cell position);
 }

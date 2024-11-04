@@ -4,6 +4,10 @@ import it.unibo.the100dayswar.model.cell.api.Cell;
 import it.unibo.the100dayswar.model.player.api.Player;
 import it.unibo.the100dayswar.model.tower.api.TowerType;
 
+/**
+ * Class that implements an advanced type of tower extending 
+ * AbstractTower.
+ */
 public class AdvancedTowerImpl extends AbstractTower {
     private static final int HEALTH_MULTYPLIER_ADVANCED = 12;
     private static final int UPGRADE_MULTYPLIER_ADVANCED = 2;
@@ -23,12 +27,11 @@ public class AdvancedTowerImpl extends AbstractTower {
     }
 
     /**
-     * {@inheritDoc}}
+     * {@inheritDoc}
      */
     @Override
     public int getDamage() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getDamage'");
     }
-    
 }
