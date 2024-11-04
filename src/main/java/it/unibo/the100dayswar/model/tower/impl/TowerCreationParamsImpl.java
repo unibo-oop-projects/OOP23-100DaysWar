@@ -1,8 +1,9 @@
 package it.unibo.the100dayswar.model.tower.impl;
 
 import it.unibo.the100dayswar.model.cell.api.Cell;
+import it.unibo.the100dayswar.model.cell.impl.CellAbs;
 import it.unibo.the100dayswar.model.player.api.Player;
-import it.unibo.the100dayswar.model.player.impl.AbstractPlayer;
+import it.unibo.the100dayswar.model.player.impl.PlayerImpl;
 import it.unibo.the100dayswar.model.tower.api.TowerCreationParams;
 import it.unibo.the100dayswar.model.tower.api.TowerType;
 
@@ -36,12 +37,7 @@ public class TowerCreationParamsImpl implements TowerCreationParams {
      */
     @Override
     public Player getPlayer() {
-        /* TODO return new PlayerImpl(player) => Serve implementare
-         * una classe concreta per potere istanziare una copia difensiva
-         * di player. 
-         *
-         */
-        throw new UnsupportedOperationException("Unimplemented method 'getPlayer'");
+        return new PlayerImpl(this.player);
     }
 
     /**
@@ -51,7 +47,7 @@ public class TowerCreationParamsImpl implements TowerCreationParams {
      */
     @Override
     public Cell getCell() {
-        return cell;
+        return new CellAbs(this.cell);
     }
 
     /**

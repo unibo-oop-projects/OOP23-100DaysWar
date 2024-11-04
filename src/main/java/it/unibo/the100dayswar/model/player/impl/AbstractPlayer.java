@@ -30,12 +30,24 @@ public abstract class AbstractPlayer implements Player {
      * 
      * @param username the username of the player
      * @param spawnPoint the spawn point of the player
-      */
+     */
     public AbstractPlayer(final String username, final BuildableCell spawnPoint) {
         this.username = username;
         this.bankAccount = new BankAccountImpl();
         this.units = new HashSet<>();
         this.spawnPoint = new BuildableCellImpl(spawnPoint);
+    }
+
+    /**
+     * Constructor for the human player from the given player.
+     * 
+     * @param player player to copy
+     */
+    public AbstractPlayer(final Player player) {
+        this.username = player.getUsername();
+        this.bankAccount = player.getBankAccount();
+        this.units = player.getUnits();
+        this.spawnPoint = player.getSpawnPoint();
     }
 
     /** 
