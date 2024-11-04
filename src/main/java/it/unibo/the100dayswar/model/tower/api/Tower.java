@@ -1,11 +1,12 @@
 package it.unibo.the100dayswar.model.tower.api;
 
+import it.unibo.the100dayswar.model.cell.api.Cell;
 import it.unibo.the100dayswar.model.unit.api.Unit;
 
 /**
  * Interface that rapresent a generic tower.
  */
-public interface Tower extends Unit {
+public interface Tower extends Unit, Serializable {
     /**
      * Method that returns the damage that the tower inflicts
      * to another unit. 
