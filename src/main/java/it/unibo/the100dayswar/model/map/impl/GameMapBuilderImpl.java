@@ -1,5 +1,6 @@
 package it.unibo.the100dayswar.model.map.impl;
 
+import it.unibo.the100dayswar.commons.utilities.api.Position;
 import it.unibo.the100dayswar.commons.utilities.impl.PositionImpl;
 import it.unibo.the100dayswar.model.cell.api.Cell;
 import it.unibo.the100dayswar.model.cell.impl.BonusCellDecorator;
@@ -7,6 +8,8 @@ import it.unibo.the100dayswar.model.cell.impl.BuildableCellImpl;
 import it.unibo.the100dayswar.model.map.api.GameMap;
 import it.unibo.the100dayswar.model.map.api.GameMapBuilder;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 /**
  * The implementation of the gameBuilder.
@@ -102,5 +105,29 @@ public class GameMapBuilderImpl implements GameMapBuilder {
     @Override
     public GameMap build() {
         return new GameMapImpl(width, height, grid);
+    }
+    /**
+     * method to get the adiacent cell's at given position.
+     * @param position is the position analyzed.
+     * @return the list with the "neighbors" of position.
+     */
+    private List<Position> getNeighbors(final Position position) {
+       final List<Position> neighbors = new ArrayList<>();
+       final int x = position.getX();
+       final int y = position.getY();
+
+        if (x > 0) {
+            neighbors.add(new PositionImpl(x - 1, y)); 
+        }
+        if (x < width - 1) {
+            neighbors.add(new PositionImpl(x + 1, y)); 
+        }
+        if (y > 0) {
+            neighbors.add(new PositionImpl(x, y - 1)); 
+        }
+        if (y < height - 1) {
+            neighbors.add(new PositionImpl(x, y + 1)); 
+        }
+        return neighbors;
     }
 }
