@@ -19,7 +19,7 @@ public class GameDataImpl implements GameData {
      */
     public GameDataImpl(final PlayerData playerData1, final PlayerData playerData2) {
         if (playerData1.equals(playerData2)) {
-            throw new IllegalArgumentException("player1 and player2 must be different");
+            throw new IllegalArgumentException("playerData1 and playerData2 must be different");
         }
 
         this.playerData1 = playerData1;

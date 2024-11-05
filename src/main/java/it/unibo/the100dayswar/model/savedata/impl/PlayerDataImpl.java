@@ -36,6 +36,51 @@ public class PlayerDataImpl implements PlayerData {
     }
 
     /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((player == null) ? 0 : player.hashCode());
+        result = prime * result + ((towers == null) ? 0 : towers.hashCode());
+        return result;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean equals(final Object obj) {
+        if (this == obj) {
+            return true;
+        } else if (obj == null) {
+            return false;
+        } else if (getClass() != obj.getClass()) {
+            return false;
+        }
+
+        final PlayerDataImpl other = (PlayerDataImpl) obj;
+        if (player == null) {
+            if (other.player != null) {
+                return false;
+            }
+        } else if (!player.equals(other.player)) {
+            return false;
+        }
+
+        if (towers == null) {
+            if (other.towers != null) {
+                return false;
+            }
+        } else if (!towers.equals(other.towers)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
      * Gets the player.
      * 
      * @return the player
