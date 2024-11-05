@@ -163,4 +163,27 @@ public class GameMapBuilderImpl implements GameMapBuilder {
         return false;
     }
 
+    /**
+     * Method to verify if exist a path between the 2 spawn cells, using pathfinding(BFS).
+     * @return true if the path exist.
+     */
+    private boolean isPathAvailable() {
+
+        Position spawn1 = null;
+        Position spawn2 = null;
+
+        for (int i = 0; i < width; i++) {
+            if (grid[0][i].isSpawn()) {
+                spawn1 = grid[0][i].getPosition();
+            }
+            if (grid[height - 1][i].isSpawn()) {
+                spawn2 = grid[height - 1][i].getPosition();
+            }
+        }
+        if (spawn1 == null || spawn2 == null) {
+            return false; 
+        }
+        return breadthFirstSearch(spawn1, spawn2);
+    }
+
 }
