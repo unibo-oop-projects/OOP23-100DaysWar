@@ -1,11 +1,13 @@
 package it.unibo.the100dayswar.model.cell.api;
 
+import java.io.Serializable;
+
 import it.unibo.the100dayswar.commons.utilities.api.Position;
 
 /**
  * Interface that model a cell.
  */
-public interface Cell {
+public interface Cell extends Serializable {
     /**
      * 
      * @return the position of the cell in the map

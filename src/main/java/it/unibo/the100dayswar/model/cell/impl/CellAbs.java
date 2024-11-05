@@ -7,6 +7,7 @@ import it.unibo.the100dayswar.model.cell.api.Cell;
  * Class that model the concept of a generic cell.
  */
 public abstract class CellAbs implements Cell {
+    private static final long serialVersionUID = 1L;
 
     private final Position position;
 

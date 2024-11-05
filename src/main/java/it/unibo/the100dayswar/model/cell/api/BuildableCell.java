@@ -16,8 +16,8 @@ public interface BuildableCell extends Cell {
     boolean isBuildable();
 
     /**
-     * 
-     * @return the unit in the cell.
+     * Getter for unit.
+     * @return the the unit in the cell
      */
     Optional<Unit> getUnit();
 
