@@ -9,7 +9,9 @@ import it.unibo.the100dayswar.model.map.api.GameMap;
 import it.unibo.the100dayswar.model.map.api.GameMapBuilder;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 import java.util.Random;
 /**
  * The implementation of the gameBuilder.
@@ -130,4 +132,35 @@ public class GameMapBuilderImpl implements GameMapBuilder {
         }
         return neighbors;
     }
+
+    /**
+     * BFS between 2 cells.
+     * @param start the start's cell.
+     * @param goal the goal's cell.
+     * @return true if the path exist.
+     */
+    private boolean breadthFirstSearch(final Position start, final Position goal) {
+       final boolean[][] visited = new boolean[height][width];
+       final Queue<Position> queue = new LinkedList<>();
+        queue.add(start);
+        visited[start.getY()][start.getX()] = true;
+
+        while (!queue.isEmpty()) {
+           final Position current = queue.poll();
+
+            if (current.equals(goal)) {
+                return true;
+            }
+
+            for (final Position neighbor : getNeighbors(current)) {
+                if (!visited[neighbor.getY()][neighbor.getX()]
+                    && ((BuildableCellImpl) grid[neighbor.getY()][neighbor.getX()]).isBuildable()) {
+                        visited[neighbor.getY()][neighbor.getX()] = true;
+                        queue.add(neighbor);
+                    }
+            }
+        }
+        return false;
+    }
+
 }
