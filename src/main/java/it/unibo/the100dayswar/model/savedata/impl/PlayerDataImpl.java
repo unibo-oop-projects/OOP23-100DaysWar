@@ -11,6 +11,7 @@ import it.unibo.the100dayswar.model.tower.api.Tower;
  * needed data of a player to save the game.
  */
 public class PlayerDataImpl implements PlayerData {
+    private static final long serialVersionUID = 1L;
     private final Player player;
     private final List<Tower> towers;
 

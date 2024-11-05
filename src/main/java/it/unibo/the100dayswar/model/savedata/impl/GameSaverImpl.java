@@ -14,6 +14,7 @@ import it.unibo.the100dayswar.model.savedata.api.GameSaver;
  * storing them in a custom path or in a default one.
  */
 public class GameSaverImpl implements GameSaver {
+    private static final long serialVersionUID = 1L;
     private static final Logger LOGGER = Logger.getLogger(GameSaverImpl.class.getName());
     private static final String PATH = System.getProperty("user.home") + "/saved_game.ser";
     private final String customPath;
@@ -31,7 +32,7 @@ public class GameSaverImpl implements GameSaver {
         this.customPath = customPath;
         this.optionalCustomPath = Optional.ofNullable(this.customPath);
     }
-    
+
     /**
     * Constructor that initializes the class without a custom path.
     * The location of the saving file will be set to the default PATH.
@@ -49,7 +50,7 @@ public class GameSaverImpl implements GameSaver {
      */
     @Override
     public void saveGame() {
-        if (optionalCustomPath.isPresent()){
+        if (optionalCustomPath.isPresent()) {
             saveGameAtCustomPath();
         } else {
             saveGameAtDefaultPath();

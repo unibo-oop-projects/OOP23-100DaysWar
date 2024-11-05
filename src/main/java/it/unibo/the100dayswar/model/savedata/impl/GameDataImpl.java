@@ -7,6 +7,7 @@ import it.unibo.the100dayswar.model.savedata.api.PlayerData;
  * Class that saves all the data that need to be serialized.
  */
 public class GameDataImpl implements GameData {
+    private static final long serialVersionUID = 1L;
     private final PlayerData playerData1;
     private final PlayerData playerData2;
 
