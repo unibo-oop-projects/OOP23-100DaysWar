@@ -67,15 +67,23 @@ public class GameMapBuilderImpl implements GameMapBuilder {
     @Override
     public GameMapBuilder addObstacles(final int numberOfObstacles) {
         int obstaclesAdded = 0;
-
         while (obstaclesAdded < numberOfObstacles) {
             final int x = random.nextInt(width);
             final int y = random.nextInt(height);
 
-            if (!grid[x][y].isSpawn()) { 
-                grid[x][y] = new BuildableCellImpl(new PositionImpl(x, y), false, false);
-                obstaclesAdded++;
+            if (grid[x][y].isSpawn()) { 
+                continue;
             }
+           final BuildableCellImpl tempObstacle = new BuildableCellImpl(new PositionImpl(x, y), false, false);
+           final BuildableCellImpl originalCell = (BuildableCellImpl) grid[x][y];
+            grid[x][y] = tempObstacle;
+
+            if (isPathAvailable()) {
+                obstaclesAdded++;
+            } else {
+                grid[x][y] = originalCell;
+            }
+
         }
         return this;
     }
