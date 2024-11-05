@@ -12,7 +12,7 @@ import it.unibo.the100dayswar.model.tower.api.Tower;
  */
 public class PlayerDataImpl implements PlayerData {
     private final Player player;
-    private final List <Tower> towers;
+    private final List<Tower> towers;
 
     /**
      * Constructor of PlayerDataImpl, initializes the object
@@ -21,20 +21,39 @@ public class PlayerDataImpl implements PlayerData {
      * @param player the player to save
      * @param towers the towers of the player to save
      */
-    public PlayerDataImpl(Player player, List<Tower> towers) {
-        if(!towers.stream().allMatch(tower -> tower.getOwner().equals(player) )) {
+    public PlayerDataImpl(final Player player, final List<Tower> towers) {
+        if (!towers.stream().allMatch(tower -> tower.getOwner().equals(player))) {
             throw new IllegalArgumentException("Every tower in tower must belong to player");
         }
 
-        this.player = player;
-        this.towers = towers;
+        try {
+            this.player = player.copy();
+        } catch (CloneNotSupportedException e) {
+            throw new IllegalStateException("Clone not supported", e);
+        }
+
+        this.towers = List.copyOf(towers);
     }
 
+    /**
+     * Gets the player.
+     * 
+     * @return the player
+     */
     public Player getPlayer() {
-        return player;
+        try {
+            return player.copy();
+        } catch (CloneNotSupportedException e) {
+            throw new IllegalStateException("Clone not supported", e);
+        }
     }
 
+    /**
+     * Gets the list of towers of the player.
+     * 
+     * @return the list of towers of the player.
+     */
     public List<Tower> getTowers() {
-        return towers;
+        return List.copyOf(towers);
     }
 }

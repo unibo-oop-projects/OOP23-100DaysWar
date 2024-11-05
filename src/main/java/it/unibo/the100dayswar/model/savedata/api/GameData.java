@@ -5,5 +5,4 @@ package it.unibo.the100dayswar.model.savedata.api;
  * to load the game.
  */
 public interface GameData {
-    
 }

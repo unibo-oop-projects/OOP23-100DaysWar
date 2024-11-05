@@ -38,7 +38,7 @@ public abstract class AbstractTower extends UnitImpl implements Tower {
     }
 
     /**
-     * {@inheritDoc}}
+     * {@inheritDoc}
      */
     @Override
     public void performAttack() {
@@ -46,21 +46,21 @@ public abstract class AbstractTower extends UnitImpl implements Tower {
     }
 
     /**
-     * {@inheritDoc}}
+     * {@inheritDoc}
      */
     @Override
-    public Cell getCell() {
+    public Cell getPosition() {
         return this.position;
     }
 
     /**
-     * {@inheritDoc}}
+     * {@inheritDoc}
      */
     @Override
     public abstract int getDamage();
 
     /**
-     * {@inheritDoc}}
+     * {@inheritDoc}
      */
     @Override
     public TowerType getTowerType() {
@@ -68,20 +68,10 @@ public abstract class AbstractTower extends UnitImpl implements Tower {
     }
 
     /**
-     * {@inheritDoc}}
+     * Gets the MAX_LEVEL of the tower.
+     * 
+     * @return the MAX_LEVEL of the tower
      */
-    @Override
-    public Player getOwner(){
-        return this.getOwner();
-    }
-
-    /**
-     * {@inheritDoc}}
-     */
-    public Cell getPosition(){
-        return position;
-    }
-
     public static int getMaxLevel() {
         return MAX_LEVEL;
     }

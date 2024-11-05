@@ -47,7 +47,7 @@ public class MapManagerImpl implements MapManager {
     @Override
     public void handleUnitMovement(final Soldier soldier, final Cell targetPosition) {
         final BuildableCellImpl targetCell = (BuildableCellImpl) targetPosition;
-        final BuildableCell currentCell = (BuildableCellImpl) soldier.getCell();
+        final BuildableCell currentCell = (BuildableCellImpl) soldier.getPosition();
         if (currentCell.isAdiacent(targetCell) && targetCell.isFree()) {
             soldier.move(targetPosition);
             currentCell.setOccupation(Optional.empty());

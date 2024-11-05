@@ -44,13 +44,13 @@ public class SoldierImpl extends UnitImpl implements Soldier {
      */
     @Override
     public boolean canMove(final Cell target) {
-        return this.getCell().isAdiacent(target) && target.isFree();
+        return this.getPosition().isAdiacent(target) && target.isFree();
     }
     /**
      * {@inheritDoc}
      */
     @Override
-    public Cell getCell() {
+    public Cell getPosition() {
         return this.position;
     }
 }

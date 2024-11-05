@@ -14,9 +14,9 @@ public interface Unit extends Buyable, Combatant {
    */
   Player getOwner();
   /**
-   * This method return the cell of the map where the unit is located.
-   * 
-   * @return the cell where the unit is located
-   */
-  Cell getCell();
+  * This method return the cell of the map where the unit is located
+  *
+  * @return the current cell of the unit.
+  */
+  Cell getPosition();
 }
