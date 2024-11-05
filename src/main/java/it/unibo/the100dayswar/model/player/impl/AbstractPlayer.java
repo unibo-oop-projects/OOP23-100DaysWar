@@ -24,7 +24,6 @@ public abstract class AbstractPlayer implements Player {
     private final BankAccount bankAccount;
     private final Set<Unit> units;
     private final BuildableCell spawnPoint;
-
     /**
      * Constructor for the human player from the given parameters.
      * 
@@ -37,7 +36,6 @@ public abstract class AbstractPlayer implements Player {
         this.units = new HashSet<>();
         this.spawnPoint = new BuildableCellImpl(spawnPoint);
     }
-
     /**
      * Constructor for the human player from the given player.
      * 
@@ -49,7 +47,6 @@ public abstract class AbstractPlayer implements Player {
         this.units = player.getUnits();
         this.spawnPoint = player.getSpawnPoint();
     }
-
     /** 
      * {@inheritDoc}
      */
