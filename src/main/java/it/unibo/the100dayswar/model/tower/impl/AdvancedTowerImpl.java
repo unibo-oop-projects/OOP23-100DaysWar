@@ -10,6 +10,8 @@ import it.unibo.the100dayswar.model.tower.api.TowerType;
  * AbstractTower.
  */
 public class AdvancedTowerImpl extends AbstractTower implements AdvancedTower {
+    private static final long serialVersionUID = 1L;
+
     private static final int HEALTH_MULTYPLIER_ADVANCED = 12;
     private static final int UPGRADE_MULTYPLIER_ADVANCED = 2;
 

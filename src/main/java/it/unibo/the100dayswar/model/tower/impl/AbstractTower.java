@@ -10,6 +10,8 @@ import it.unibo.the100dayswar.model.unit.impl.UnitImpl;
  * Abstract class representing a Tower in the game.
  */
 public abstract class AbstractTower extends UnitImpl implements Tower {
+    private static final long serialVersionUID = 1L;
+
     private static final int MAX_LEVEL = 4;
     private final TowerType towerType;
     private final Cell position;

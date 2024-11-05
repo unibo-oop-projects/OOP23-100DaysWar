@@ -14,7 +14,6 @@ import it.unibo.the100dayswar.model.savedata.api.GameSaver;
  * storing them in a custom path or in a default one.
  */
 public class GameSaverImpl implements GameSaver {
-    private static final long serialVersionUID = 1L;
     private static final Logger LOGGER = Logger.getLogger(GameSaverImpl.class.getName());
     private static final String PATH = System.getProperty("user.home") + "/saved_game.ser";
     private final String customPath;

@@ -8,6 +8,8 @@ import it.unibo.the100dayswar.model.unit.api.Soldier;
  * A concrete implementation of the Soldier interface.
  */
 public class SoldierImpl extends UnitImpl implements Soldier {
+    private static final long serialVersionUID = 1L;
+
     private static final int DEFAULT_COST = 50;
     private static final int DEFAULT_COST_TO_UPGRADE = 30;
     private static final int MAX_LEVEL = 3;

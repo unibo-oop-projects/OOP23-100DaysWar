@@ -19,7 +19,6 @@ import it.unibo.the100dayswar.model.unit.api.Unit;
  * An abstract class that implements the Player interface.
  */
 public abstract class AbstractPlayer implements Player {
-
     private final String username;
     private final BankAccount bankAccount;
     private final Set<Unit> units;
