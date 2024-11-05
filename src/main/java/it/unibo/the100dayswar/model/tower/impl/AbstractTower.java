@@ -66,4 +66,23 @@ public abstract class AbstractTower extends UnitImpl implements Tower {
     public TowerType getTowerType() {
         return this.towerType;
     }
+
+    /**
+     * {@inheritDoc}}
+     */
+    @Override
+    public Player getOwner(){
+        return this.getOwner();
+    }
+
+    /**
+     * {@inheritDoc}}
+     */
+    public Cell getPosition(){
+        return position;
+    }
+
+    public static int getMaxLevel() {
+        return MAX_LEVEL;
+    }
 }

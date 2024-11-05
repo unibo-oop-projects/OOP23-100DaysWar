@@ -9,6 +9,10 @@ public class GameDataImpl implements GameData {
     private PlayerData player2;
     
     public GameDataImpl(PlayerData player1, PlayerData player2) {
+        if(player1.equals(player2)){
+            throw new IllegalArgumentException("player1 and player2 must be different");
+        }
+        
         this.player1 = player1;
         this.player2 = player2;
     }
@@ -24,5 +28,4 @@ public class GameDataImpl implements GameData {
     public void setPlayer2(PlayerData player2) {
         this.player2 = player2;
     }
-    
 }
