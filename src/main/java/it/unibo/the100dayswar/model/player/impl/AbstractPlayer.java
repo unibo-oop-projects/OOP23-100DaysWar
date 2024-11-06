@@ -9,6 +9,7 @@ import it.unibo.the100dayswar.commons.utilities.api.ResourceGenerator;
 import it.unibo.the100dayswar.model.bankaccount.api.BankAccount;
 import it.unibo.the100dayswar.model.bankaccount.impl.BankAccountImpl;
 import it.unibo.the100dayswar.model.cell.api.BuildableCell;
+import it.unibo.the100dayswar.model.cell.api.Cell;
 import it.unibo.the100dayswar.model.cell.impl.BuildableCellImpl;
 import it.unibo.the100dayswar.model.player.api.Player;
 import it.unibo.the100dayswar.model.unit.api.Buyable;
@@ -53,17 +54,17 @@ public abstract class AbstractPlayer implements Player {
      * {@inheritDoc}
      */
     @Override
-    public abstract void buyUnit(Buyable unit);
+    public abstract void buyUnit(Unit unit);
     /** 
      * {@inheritDoc}
      */
     @Override
-    public abstract void upgradeUnit(Unit unit);
+    public abstract void upgradeUnit(Buyable unit);
     /** 
      * {@inheritDoc}
      */
     @Override
-    public abstract void moveUnit(Movable unit);
+    public abstract void moveUnit(Movable unit, Cell destination);
     /** 
      * {@inheritDoc}
      */

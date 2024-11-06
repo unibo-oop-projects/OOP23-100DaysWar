@@ -7,6 +7,7 @@ import it.unibo.the100dayswar.commons.patterns.Observer;
 import it.unibo.the100dayswar.commons.utilities.api.ResourceGenerator;
 import it.unibo.the100dayswar.model.bankaccount.api.BankAccount;
 import it.unibo.the100dayswar.model.cell.api.BuildableCell;
+import it.unibo.the100dayswar.model.cell.api.Cell;
 import it.unibo.the100dayswar.model.unit.api.Buyable;
 import it.unibo.the100dayswar.model.unit.api.Movable;
 import it.unibo.the100dayswar.model.unit.api.Unit;
@@ -48,21 +49,22 @@ public interface Player extends Observer<ResourceGenerator> {
      * @param unit the unit to buy
      * @throws IllegalStateException if the player does not have enough resources
      */
-    void buyUnit(Buyable unit);
+    void buyUnit(Unit unit);
     /**
      * Upgrades a given unit to increase its power, at the cost of resources.
      *
      * @param unit the unit to upgrade
      * @throws IllegalStateException if the player does not have enough resources to upgrade
      */
-    void upgradeUnit(Unit unit);
+    void upgradeUnit(Buyable unit);
     /**
      * Moves a unit from one cell to another on the game map.
      *
      * @param unit the unit to move
+     * @param destination the cell to move the unit to
      * @throws IllegalArgumentException if the move is not allowed
      */
-    void moveUnit(Movable unit);
+    void moveUnit(Movable unit, Cell destination);
     /**
      * Adds resources to the player's bank account.
      *
