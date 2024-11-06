@@ -6,9 +6,10 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import it.unibo.the100dayswar.commons.utilities.api.ResourceGenerator;
+import it.unibo.the100dayswar.model.bankaccount.api.BankAccount;
+import it.unibo.the100dayswar.model.bankaccount.impl.BankAccountImpl;
 import it.unibo.the100dayswar.model.cell.api.BuildableCell;
 import it.unibo.the100dayswar.model.cell.impl.BuildableCellImpl;
-import it.unibo.the100dayswar.model.player.api.BankAccount;
 import it.unibo.the100dayswar.model.player.api.Player;
 import it.unibo.the100dayswar.model.unit.api.Buyable;
 import it.unibo.the100dayswar.model.unit.api.Movable;

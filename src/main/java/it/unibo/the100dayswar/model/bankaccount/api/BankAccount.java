@@ -1,4 +1,4 @@
-package it.unibo.the100dayswar.model.player.api;
+package it.unibo.the100dayswar.model.bankaccount.api;
 
 import java.io.Serializable;
 

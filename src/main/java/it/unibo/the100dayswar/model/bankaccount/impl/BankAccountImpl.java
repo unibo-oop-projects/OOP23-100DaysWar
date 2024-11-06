@@ -1,6 +1,6 @@
-package it.unibo.the100dayswar.model.player.impl;
+package it.unibo.the100dayswar.model.bankaccount.impl;
 
-import it.unibo.the100dayswar.model.player.api.BankAccount;
+import it.unibo.the100dayswar.model.bankaccount.api.BankAccount;
 
 /**
  * The implementation of a bank account for managing a player's resources.
