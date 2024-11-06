@@ -19,6 +19,7 @@ public class SoldierImpl extends UnitImpl implements Soldier {
     private static final int DEFAULT_COST_TO_UPGRADE = 30;
     private static final int MAX_LEVEL = 3;
     private static final int DEFAULT_HEALTH = 100;
+
     private final List<Observer<Pair<Soldier, Cell>>> observers;
     private Cell position;
     /**
@@ -29,8 +30,7 @@ public class SoldierImpl extends UnitImpl implements Soldier {
     public SoldierImpl(final Player owner) {
         super(owner, DEFAULT_COST, DEFAULT_HEALTH, DEFAULT_COST_TO_UPGRADE, MAX_LEVEL);
         observers = new ArrayList<>();
-        this.position = null;
-        this.movementRequest(owner.getSpawnPoint());
+        this.position = owner.getSpawnPoint();
     }
     /**
      * {@inheritDoc}
@@ -60,21 +60,21 @@ public class SoldierImpl extends UnitImpl implements Soldier {
      * {@inheritDoc}
      */
     @Override
-    public void movementRequest(Cell target) {
+    public void movementRequest(final Cell target) {
         notifyObservers(target);
     }
     /**
      * {@inheritDoc}
      */
     @Override
-    public void attach(Observer<Pair<Soldier, Cell>> observer) {
+    public void attach(final Observer<Pair<Soldier, Cell>> observer) {
         this.observers.add(observer);
     }
     /**
      * {@inheritDoc}
      */
     @Override
-    public void detach(Observer<Pair<Soldier, Cell>> observer) {
+    public void detach(final Observer<Pair<Soldier, Cell>> observer) {
         this.observers.remove(observer);
     }
     /**
@@ -82,9 +82,7 @@ public class SoldierImpl extends UnitImpl implements Soldier {
      */
     @Override
     public void notifyObservers(final Cell target) {
-        for (Observer<Pair<Soldier, Cell>> observer : this.observers) {
-            observer.update(new Pair<>(this, target));
-        }
+        observers.forEach(observer -> observer.update(new Pair<>(this, target)));
     }
     /**
      * {@inheritDoc}

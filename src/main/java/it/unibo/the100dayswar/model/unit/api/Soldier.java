@@ -8,7 +8,7 @@ import it.unibo.the100dayswar.model.cell.api.Cell;
 /**
  * Interface that defines a soldier unit.
  */
-public interface Soldier extends Unit, Movable, Observable<Pair<Soldier,Cell>> {
+public interface Soldier extends Unit, Movable, Observable<Pair<Soldier, Cell>> {
     /**
      * Requests the movement of the soldier to the specified target cell.
      *
@@ -36,5 +36,5 @@ public interface Soldier extends Unit, Movable, Observable<Pair<Soldier,Cell>> {
      * 
      * @param target the cell the Soldier has moved to
      */
-    void notifyObservers(final Cell target);
+    void notifyObservers(Cell target);
 }
