@@ -1,4 +1,5 @@
 package it.unibo.the100dayswar.commons.utilities.api;
+
 /**
  * Interface that rapresent the postion of an object in the game map.
  */

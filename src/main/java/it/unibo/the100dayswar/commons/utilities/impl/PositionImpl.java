@@ -7,7 +7,6 @@ import it.unibo.the100dayswar.commons.utilities.api.Position;
  * Class that model the concept of the postion.
  */
 public class PositionImpl implements Position {
-
     private int x;
     private int y;
 

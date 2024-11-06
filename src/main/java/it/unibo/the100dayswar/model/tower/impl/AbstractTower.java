@@ -10,6 +10,8 @@ import it.unibo.the100dayswar.model.unit.impl.UnitImpl;
  * Abstract class representing a Tower in the game.
  */
 public abstract class AbstractTower extends UnitImpl implements Tower {
+    private static final long serialVersionUID = 1L;
+
     private static final int MAX_LEVEL = 4;
     private final TowerType towerType;
     private final Cell position;
@@ -38,7 +40,7 @@ public abstract class AbstractTower extends UnitImpl implements Tower {
     }
 
     /**
-     * {@inheritDoc}}
+     * {@inheritDoc}
      */
     @Override
     public void performAttack() {
@@ -46,24 +48,33 @@ public abstract class AbstractTower extends UnitImpl implements Tower {
     }
 
     /**
-     * {@inheritDoc}}
+     * {@inheritDoc}
      */
     @Override
-    public Cell getCell() {
+    public Cell getPosition() {
         return this.position;
     }
 
     /**
-     * {@inheritDoc}}
+     * {@inheritDoc}
      */
     @Override
     public abstract int getDamage();
 
     /**
-     * {@inheritDoc}}
+     * {@inheritDoc}
      */
     @Override
     public TowerType getTowerType() {
         return this.towerType;
+    }
+
+    /**
+     * Gets the MAX_LEVEL of the tower.
+     * 
+     * @return the MAX_LEVEL of the tower
+     */
+    public static int getMaxLevel() {
+        return MAX_LEVEL;
     }
 }

@@ -1,9 +1,11 @@
 package it.unibo.the100dayswar.model.player.api;
 
+import java.io.Serializable;
+
 /**
  * Interface to define the behavior of a bank account for managing a player's resources.
  */
-public interface BankAccount {
+public interface BankAccount extends Serializable {
     /**
      * Retrieves the current balance of the bank account.
      *

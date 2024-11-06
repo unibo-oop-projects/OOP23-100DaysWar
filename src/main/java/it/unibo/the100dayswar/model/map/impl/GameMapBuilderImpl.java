@@ -1,5 +1,6 @@
 package it.unibo.the100dayswar.model.map.impl;
 
+import it.unibo.the100dayswar.commons.utilities.api.Position;
 import it.unibo.the100dayswar.commons.utilities.impl.PositionImpl;
 import it.unibo.the100dayswar.model.cell.api.Cell;
 import it.unibo.the100dayswar.model.cell.impl.BonusCellDecorator;
@@ -7,6 +8,10 @@ import it.unibo.the100dayswar.model.cell.impl.BuildableCellImpl;
 import it.unibo.the100dayswar.model.map.api.GameMap;
 import it.unibo.the100dayswar.model.map.api.GameMapBuilder;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
 import java.util.Random;
 /**
  * The implementation of the gameBuilder.
@@ -62,15 +67,23 @@ public class GameMapBuilderImpl implements GameMapBuilder {
     @Override
     public GameMapBuilder addObstacles(final int numberOfObstacles) {
         int obstaclesAdded = 0;
-
         while (obstaclesAdded < numberOfObstacles) {
             final int x = random.nextInt(width);
             final int y = random.nextInt(height);
 
-            if (!grid[x][y].isSpawn()) { 
-                grid[x][y] = new BuildableCellImpl(new PositionImpl(x, y), false, false);
-                obstaclesAdded++;
+            if (grid[x][y].isSpawn()) { 
+                continue;
             }
+           final BuildableCellImpl tempObstacle = new BuildableCellImpl(new PositionImpl(x, y), false, false);
+           final BuildableCellImpl originalCell = (BuildableCellImpl) grid[x][y];
+            grid[x][y] = tempObstacle;
+
+            if (isPathAvailable()) {
+                obstaclesAdded++;
+            } else {
+                grid[x][y] = originalCell;
+            }
+
         }
         return this;
     }
@@ -103,4 +116,82 @@ public class GameMapBuilderImpl implements GameMapBuilder {
     public GameMap build() {
         return new GameMapImpl(width, height, grid);
     }
+    /**
+     * method to get the adiacent cell's at given position.
+     * @param position is the position analyzed.
+     * @return the list with the "neighbors" of position.
+     */
+    private List<Position> getNeighbors(final Position position) {
+       final List<Position> neighbors = new ArrayList<>();
+       final int x = position.getX();
+       final int y = position.getY();
+
+        if (x > 0) {
+            neighbors.add(new PositionImpl(x - 1, y)); 
+        }
+        if (x < width - 1) {
+            neighbors.add(new PositionImpl(x + 1, y)); 
+        }
+        if (y > 0) {
+            neighbors.add(new PositionImpl(x, y - 1)); 
+        }
+        if (y < height - 1) {
+            neighbors.add(new PositionImpl(x, y + 1)); 
+        }
+        return neighbors;
+    }
+
+    /**
+     * BFS between 2 cells.
+     * @param start the start's cell.
+     * @param goal the goal's cell.
+     * @return true if the path exist.
+     */
+    private boolean breadthFirstSearch(final Position start, final Position goal) {
+       final boolean[][] visited = new boolean[height][width];
+       final Queue<Position> queue = new LinkedList<>();
+        queue.add(start);
+        visited[start.getY()][start.getX()] = true;
+
+        while (!queue.isEmpty()) {
+           final Position current = queue.poll();
+
+            if (current.equals(goal)) {
+                return true;
+            }
+
+            for (final Position neighbor : getNeighbors(current)) {
+                if (!visited[neighbor.getY()][neighbor.getX()]
+                    && ((BuildableCellImpl) grid[neighbor.getY()][neighbor.getX()]).isBuildable()) {
+                        visited[neighbor.getY()][neighbor.getX()] = true;
+                        queue.add(neighbor);
+                    }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Method to verify if exist a path between the 2 spawn cells, using pathfinding(BFS).
+     * @return true if the path exist.
+     */
+    private boolean isPathAvailable() {
+
+        Position spawn1 = null;
+        Position spawn2 = null;
+
+        for (int i = 0; i < width; i++) {
+            if (grid[0][i].isSpawn()) {
+                spawn1 = grid[0][i].getPosition();
+            }
+            if (grid[height - 1][i].isSpawn()) {
+                spawn2 = grid[height - 1][i].getPosition();
+            }
+        }
+        if (spawn1 == null || spawn2 == null) {
+            return false; 
+        }
+        return breadthFirstSearch(spawn1, spawn2);
+    }
+
 }

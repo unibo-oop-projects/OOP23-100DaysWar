@@ -22,13 +22,13 @@ public class GameMapImpl implements GameMap {
      * The constructor of the map.
      * @param width is the width.
      * @param height is the height.
-     * @param map is the matrix of Cells.
+     * @param grid is the matrix of Cells.
      */
-    public GameMapImpl(final int width, final int height, final Cell[][] map) {
+    public GameMapImpl(final int width, final int height, final Cell[][] grid) {
         this.size = new Dimension(width, height);
-        this.map = new Cell[map.length][];
-        for (int i = 0; i < map.length; i++) {
-            this.map[i] = Arrays.copyOf(map[i], map[i].length);
+        this.map = new Cell[grid.length][];
+        for (int i = 0; i < grid.length; i++) {
+            this.map[i] = Arrays.copyOf(grid[i], grid[i].length);
         }
     }
 

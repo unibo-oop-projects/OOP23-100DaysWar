@@ -2,13 +2,16 @@ package it.unibo.the100dayswar.model.tower.impl;
 
 import it.unibo.the100dayswar.model.cell.api.Cell;
 import it.unibo.the100dayswar.model.player.api.Player;
+import it.unibo.the100dayswar.model.tower.api.BasicTower;
 import it.unibo.the100dayswar.model.tower.api.TowerType;
 
 /**
  * Class that implements a basic type of tower extending 
  * AbstractTower.
  */
-public class BasicTowerImpl extends AbstractTower {
+public class BasicTowerImpl extends AbstractTower implements BasicTower {
+    private static final long serialVersionUID = 1L;
+
     private static final int HEALTH_MULTYPLIER_BASIC = 10;
     private static final int UPGRADE_MULTYPLIER_BASIC = 2;
 

@@ -6,6 +6,7 @@ import it.unibo.the100dayswar.model.player.api.BankAccount;
  * The implementation of a bank account for managing a player's resources.
  */
 public class BankAccountImpl implements BankAccount {
+    private static final long serialVersionUID = 1L;
 
     private static final int INITIAL_BALANCE = 1000;
     private int balance;

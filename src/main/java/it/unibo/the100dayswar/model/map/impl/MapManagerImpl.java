@@ -10,7 +10,7 @@ import it.unibo.the100dayswar.model.map.api.GameMap;
 import it.unibo.the100dayswar.model.map.api.GameMapBuilder;
 import it.unibo.the100dayswar.model.map.api.MapManager;
 import it.unibo.the100dayswar.model.unit.api.Soldier;
-import it.unibo.the100dayswar.model.unit.api.Unit;
+
 
 /**
  * the implementation of the MapManager.
@@ -42,27 +42,20 @@ public class MapManagerImpl implements MapManager {
 
     /**
      *{@inheritDoc}
+     * map.getsize for fixing intermediate error by the unusing of map object.
      */
     @Override
     public void handleUnitMovement(final Soldier soldier, final Cell targetPosition) {
         final BuildableCellImpl targetCell = (BuildableCellImpl) targetPosition;
-        if (targetCell instanceof BonusCell) {
-            ((BonusCell) targetCell).notify(soldier.getOwner());
-        }
-        soldier.move(targetPosition);
-        update(targetCell);
-    }
-
-    /**
-     *{@inheritDoc} 
-     * map.getsize() for fixing error.
-     */
-    @Override
-    public void update(final Cell cell) {
-            if (cell instanceof BuildableCellImpl && ((BuildableCell) cell).isFree()) {
-                 final Unit unit = ((BuildableCell) cell).getUnit().get();
-                ((BuildableCell) cell).setOccupation(Optional.of(unit));
+        final BuildableCell currentCell = (BuildableCellImpl) soldier.getPosition();
+        if (currentCell.isAdiacent(targetCell) && targetCell.isFree()) {
+            soldier.move(targetPosition);
+            currentCell.setOccupation(Optional.empty());
+            targetCell.setOccupation(Optional.of(soldier));
+            if (targetCell instanceof BonusCell) {
+                ((BonusCell) targetCell).notify(soldier.getOwner());
             }
-        map.getSize(); 
+            map.getSize();
+        }
     }
 }

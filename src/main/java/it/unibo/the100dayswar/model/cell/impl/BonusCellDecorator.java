@@ -11,6 +11,8 @@ import it.unibo.the100dayswar.model.cell.api.BonusCell;
  * Implementation of the BonusCell interface.
  */
 public class BonusCellDecorator extends BuildableCellImpl implements BonusCell {
+    private static final long serialVersionUID = 1L;
+
     private final Set<Observer<ResourceGenerator>> observers;
     private static final int BONUS = 100;
     private boolean bonusActive;

@@ -4,7 +4,6 @@ package it.unibo.the100dayswar.model.tower.api;
  * Enum which represents the different types of towers and their cost.
  */
 public enum TowerType {
-
     /**
      * Basic tower type, which has a price of 3.
      */

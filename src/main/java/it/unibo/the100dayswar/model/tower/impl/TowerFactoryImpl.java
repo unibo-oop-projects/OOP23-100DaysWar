@@ -12,7 +12,6 @@ import it.unibo.the100dayswar.model.tower.api.TowerType;
  * Class that implements a factory pattern for all differents kind of towers.
  */
 public class TowerFactoryImpl implements TowerFactory {
-
     /**
      * Contains the tower type associated with its constructor.
      */
@@ -22,7 +21,7 @@ public class TowerFactoryImpl implements TowerFactory {
     );
 
     /**
-     * {@inheritDoc}}
+     * {@inheritDoc}
      */
     @Override
     public AbstractTower buildTower(final Player owner, final TowerType towerType, final Cell position) {
