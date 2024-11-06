@@ -47,7 +47,7 @@ public class BuildableCellImpl extends CellAbs implements BuildableCell {
      */
     @Override
     public boolean isBuildable() {
-        return isBuildable;
+        return this.isBuildable;
     }
 
     /**
@@ -63,7 +63,7 @@ public class BuildableCellImpl extends CellAbs implements BuildableCell {
      */
     @Override
     public Optional<Unit> getUnit() {
-        return Optional.ofNullable(currentUnit);
+        return Optional.ofNullable(this.currentUnit);
     }
 
     /**
@@ -71,7 +71,7 @@ public class BuildableCellImpl extends CellAbs implements BuildableCell {
      */
     @Override
     public boolean isFree() {
-        return currentUnit == null && isBuildable;
+        return this.currentUnit == null && this.isBuildable;
     }
 
     /**
