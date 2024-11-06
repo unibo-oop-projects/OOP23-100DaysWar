@@ -14,6 +14,7 @@ import it.unibo.the100dayswar.model.map.api.GameMap;
  * The implementation of the map.
  */
 public class GameMapImpl implements GameMap {
+    private static final long serialVersionUID = 1L;
 
     private final Dimension size;
     private final Cell[][] map;

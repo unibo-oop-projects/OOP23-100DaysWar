@@ -4,12 +4,13 @@ import it.unibo.the100dayswar.commons.utilities.api.Position;
 import it.unibo.the100dayswar.model.cell.api.Cell;
 
 import java.awt.Dimension;
+import java.io.Serializable;
 
 
 /**
  * Interface that model the game map.
  */
-public interface GameMap {
+public interface GameMap extends Serializable {
 
     /**
      * Get the cell at the given coordinates.

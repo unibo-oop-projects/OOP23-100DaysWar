@@ -82,10 +82,9 @@ public class PlayerDataImpl implements PlayerData {
     }
 
     /**
-     * Gets the player.
-     * 
-     * @return the player
+     * {@inheritDoc}
      */
+    @Override
     public Player getPlayer() {
         try {
             return player.copy();
@@ -95,10 +94,9 @@ public class PlayerDataImpl implements PlayerData {
     }
 
     /**
-     * Gets the list of towers of the player.
-     * 
-     * @return the list of towers of the player.
+     * {@inheritDoc}
      */
+    @Override
     public List<Tower> getTowers() {
         return List.copyOf(towers);
     }
