@@ -1,5 +1,10 @@
 package it.unibo.the100dayswar.model.unit.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import it.unibo.the100dayswar.commons.patterns.Observer;
+import it.unibo.the100dayswar.commons.utilities.impl.Pair;
 import it.unibo.the100dayswar.model.cell.api.Cell;
 import it.unibo.the100dayswar.model.player.api.Player;
 import it.unibo.the100dayswar.model.unit.api.Soldier;
@@ -14,6 +19,7 @@ public class SoldierImpl extends UnitImpl implements Soldier {
     private static final int DEFAULT_COST_TO_UPGRADE = 30;
     private static final int MAX_LEVEL = 3;
     private static final int DEFAULT_HEALTH = 100;
+    private final List<Observer<Pair<Soldier, Cell>>> observers;
     private Cell position;
     /**
      * Constructor for the soldier.
@@ -22,7 +28,9 @@ public class SoldierImpl extends UnitImpl implements Soldier {
      */
     public SoldierImpl(final Player owner) {
         super(owner, DEFAULT_COST, DEFAULT_HEALTH, DEFAULT_COST_TO_UPGRADE, MAX_LEVEL);
-        this.position = owner.getSpawnPoint();
+        observers = new ArrayList<>();
+        this.position = null;
+        this.movementRequest(owner.getSpawnPoint());
     }
     /**
      * {@inheritDoc}
@@ -31,6 +39,13 @@ public class SoldierImpl extends UnitImpl implements Soldier {
     public void performAttack() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'performAttack'");
+    }
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean canMove(final Cell target) {
+        return this.getPosition().isAdiacent(target) && target.isFree();
     }
     /**
      * {@inheritDoc}
@@ -45,8 +60,31 @@ public class SoldierImpl extends UnitImpl implements Soldier {
      * {@inheritDoc}
      */
     @Override
-    public boolean canMove(final Cell target) {
-        return this.getPosition().isAdiacent(target) && target.isFree();
+    public void movementRequest(Cell target) {
+        notifyObservers(target);
+    }
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void attach(Observer<Pair<Soldier, Cell>> observer) {
+        this.observers.add(observer);
+    }
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void detach(Observer<Pair<Soldier, Cell>> observer) {
+        this.observers.remove(observer);
+    }
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void notifyObservers(final Cell target) {
+        for (Observer<Pair<Soldier, Cell>> observer : this.observers) {
+            observer.update(new Pair<>(this, target));
+        }
     }
     /**
      * {@inheritDoc}
