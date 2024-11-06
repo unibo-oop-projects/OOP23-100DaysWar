@@ -7,6 +7,14 @@ import it.unibo.the100dayswar.model.cell.api.Cell;
  */
 public interface Movable {
     /**
+     * This method helpa the movement of an object to a specified cell
+     * to connect it to a manager that will check and handle it in 
+     * case of a valid movement.
+     *
+     * @param target the cell that is requested to move to
+     */
+    void movementRequest(Cell target);
+    /**
      * Move the object to a new cell.
      * 
      * @param cell the new cell to move to

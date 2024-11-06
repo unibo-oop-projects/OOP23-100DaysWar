@@ -46,6 +46,6 @@ public class HumanPlayerImpl extends AbstractPlayer implements HumanPlayer {
      */
     @Override
     public void moveUnit(final Movable unit, final Cell destination) {
-        unit.move(destination);
+        unit.movementRequest(destination);
     }
 }
