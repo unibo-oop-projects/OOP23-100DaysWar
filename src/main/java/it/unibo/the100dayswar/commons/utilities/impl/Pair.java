@@ -36,7 +36,12 @@ public class Pair<K, V> {
     public V getSecond() {
         return this.second;
     }
-
+    /**
+     * Method to create an empty pair. 
+     * @param <K> first object.
+     * @param <V> second object.
+     * @return the empty pair.
+     */
     public static <K, V> Pair<K, V> empty() {
         return new Pair<>(null, null);
     }

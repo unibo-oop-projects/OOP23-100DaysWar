@@ -1,9 +1,11 @@
 package it.unibo.the100dayswar.model.map.api;
 
+import java.io.Serializable;
+
 /**
  * Interface that model the builder of the game map.
  */
-public interface GameMapBuilder {
+public interface GameMapBuilder extends Serializable {
 
     /**
      * Initialize the map with buildable cells.

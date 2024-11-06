@@ -1,11 +1,13 @@
 package it.unibo.the100dayswar.model.turn.api;
 
+import java.io.Serializable;
+
 import it.unibo.the100dayswar.model.player.api.Player;
 
 /**
  * An Interface for managing the turn swith between the two player.
  */
-public interface GameTurnManager {
+public interface GameTurnManager extends Serializable {
     /**
      * get the current player.
      * @return the current player

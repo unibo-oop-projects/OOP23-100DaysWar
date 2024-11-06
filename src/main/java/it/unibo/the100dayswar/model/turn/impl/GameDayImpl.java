@@ -11,6 +11,7 @@ import java.util.List;
  * class that implement the interface GameDay.
  */
 public class GameDayImpl implements GameDay {
+    private static final long serialVersionUID = 1L;
 
     private static final int MAX_DAY = 100;
     private static final int AMOUNT_IN_A_DAY = 100;

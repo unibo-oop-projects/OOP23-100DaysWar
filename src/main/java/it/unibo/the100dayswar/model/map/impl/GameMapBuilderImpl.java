@@ -17,6 +17,8 @@ import java.util.Random;
  * The implementation of the gameBuilder.
  */
 public class GameMapBuilderImpl implements GameMapBuilder {
+    private static final long serialVersionUID = 1L;
+
     private final int width;
     private final int height;
     private final Cell[][] grid;

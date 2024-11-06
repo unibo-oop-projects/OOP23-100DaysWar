@@ -2,6 +2,7 @@ package it.unibo.the100dayswar.model.map.impl;
 
 import java.util.Optional;
 
+import it.unibo.the100dayswar.commons.utilities.impl.Pair;
 import it.unibo.the100dayswar.model.cell.api.BonusCell;
 import it.unibo.the100dayswar.model.cell.api.BuildableCell;
 import it.unibo.the100dayswar.model.cell.api.Cell;
@@ -16,6 +17,8 @@ import it.unibo.the100dayswar.model.unit.api.Soldier;
  * the implementation of the MapManager.
  */
 public class MapManagerImpl implements MapManager {
+    private static final long serialVersionUID = 1L;
+
     private final GameMapBuilder builder;
     private final GameMap map;
 
@@ -45,11 +48,12 @@ public class MapManagerImpl implements MapManager {
      * map.getsize for fixing intermediate error by the unusing of map object.
      */
     @Override
-    public void handleUnitMovement(final Soldier soldier, final Cell targetPosition) {
-        final BuildableCellImpl targetCell = (BuildableCellImpl) targetPosition;
+    public void update(final Pair<Soldier, Cell> source) {
+        final Soldier soldier = source.getFirst();
+        final BuildableCellImpl targetCell = (BuildableCellImpl) source.getSecond();
         final BuildableCell currentCell = (BuildableCellImpl) soldier.getPosition();
         if (currentCell.isAdiacent(targetCell) && targetCell.isFree()) {
-            soldier.move(targetPosition);
+            soldier.move(targetCell);
             currentCell.setOccupation(Optional.empty());
             targetCell.setOccupation(Optional.of(soldier));
             if (targetCell instanceof BonusCell) {

@@ -1,6 +1,7 @@
 package it.unibo.the100dayswar.model.turn.impl;
 
 import java.util.List;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -9,9 +10,10 @@ import it.unibo.the100dayswar.model.turn.api.GameTurnManager;
 import it.unibo.the100dayswar.model.turn.api.GameDay;
 
 /**
- * class that implement the interface GameTurnManager.
+ * Class that implement the interface GameTurnManager.
  */
 public class GameTurnManagerImpl implements GameTurnManager {
+    private static final long serialVersionUID = 1L;
 
     private static final int PERIOD = 6000;
     private static final int MAX_TURN_WITH_NO_MOVE = 4;
@@ -21,8 +23,8 @@ public class GameTurnManagerImpl implements GameTurnManager {
     private int daysNoMove;
     private boolean gameEnd;
     private final GameDay gameDay;
-    private final Timer timer;
-    private final TimerTask dayTimer;
+    private transient Timer timer;
+    private transient TimerTask dayTimer;
 
     /**
      * Constructor of GameTurnManagerImpl.
@@ -39,13 +41,6 @@ public class GameTurnManagerImpl implements GameTurnManager {
         this.gameDay = new GameDayImpl();
         gameDay.attach(players.get(0));
         gameDay.attach(players.get(1));
-        this.timer = new Timer();
-        this.dayTimer = new TimerTask() {
-            @Override
-            public void run() {
-                onDayPassed();
-            }
-        };
 
     }
     /**
@@ -134,5 +129,23 @@ public class GameTurnManagerImpl implements GameTurnManager {
     @Override
     public void stopTimer() {
         this.timer.cancel();
+    }
+
+    /**
+     * writeObject method for serialization.
+     * 
+     * @param input the input stream
+     * @throws IOException if an I/O error occurs
+     * @throws ClassNotFoundException if the class of a serialized object cannot be found
+     */
+    private void readObject(final java.io.ObjectInputStream input) throws IOException, ClassNotFoundException {
+        input.defaultReadObject();
+        this.timer = new Timer();
+        this.dayTimer = new TimerTask() {
+            @Override
+            public void run() {
+                onDayPassed();
+            }
+        };
     }
 }
