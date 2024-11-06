@@ -23,6 +23,12 @@ public interface Buyable {
      */
     int level();
     /**
+     * This method is used to check if the object can be upgraded.
+     * 
+     * @return true if the object can be upgraded
+     */
+    boolean canUpgrade();
+    /**
      * Upgrade the object if it is possible.
      * 
      * @throws IllegalStateException if it is not possible upgrade the object

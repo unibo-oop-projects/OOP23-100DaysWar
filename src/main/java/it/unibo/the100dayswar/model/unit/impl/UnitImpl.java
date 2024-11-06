@@ -89,6 +89,13 @@ public abstract class UnitImpl implements Unit {
      * {@inheritDoc}
      */
     @Override
+    public boolean canUpgrade() {
+        return this.level < this.maxLevel;
+    }
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
     public void upgrade() {
         if (!canUpgrade()) {
             throw new IllegalStateException();
@@ -115,13 +122,5 @@ public abstract class UnitImpl implements Unit {
         } catch (CloneNotSupportedException e) {
             throw new IllegalStateException("Clone not supported", e);
         }
-    }
-    /**
-     * Method that checks if the object can be upgraded.
-     * 
-     * @return true if the object can be upgraded, false otherwise.
-      */
-      private boolean canUpgrade() {
-        return this.level < this.maxLevel;
     }
 }
