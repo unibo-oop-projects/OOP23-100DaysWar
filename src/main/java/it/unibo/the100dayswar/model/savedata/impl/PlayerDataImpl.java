@@ -1,6 +1,8 @@
 package it.unibo.the100dayswar.model.savedata.impl;
 
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import it.unibo.the100dayswar.model.player.api.Player;
 import it.unibo.the100dayswar.model.savedata.api.PlayerData;
@@ -11,7 +13,10 @@ import it.unibo.the100dayswar.model.tower.api.Tower;
  * needed data of a player to save the game.
  */
 public class PlayerDataImpl implements PlayerData {
+    private static final Logger LOGGER = Logger.getLogger(PlayerDataImpl.class.getName());
     private static final long serialVersionUID = 1L;
+    private static final String CLONE_NOT_SUPPORTED = "Clone not supported";
+
     private final Player player;
     private final List<Tower> towers;
 
@@ -24,13 +29,15 @@ public class PlayerDataImpl implements PlayerData {
      */
     public PlayerDataImpl(final Player player, final List<Tower> towers) {
         if (!towers.stream().allMatch(tower -> tower.getOwner().equals(player))) {
+            LOGGER.log(Level.SEVERE, "Every tower in tower must belong to player", new IllegalArgumentException());
             throw new IllegalArgumentException("Every tower in tower must belong to player");
         }
 
         try {
             this.player = player.copy();
         } catch (CloneNotSupportedException e) {
-            throw new IllegalStateException("Clone not supported", e);
+            LOGGER.log(Level.SEVERE, CLONE_NOT_SUPPORTED, new IllegalStateException());
+            throw new IllegalStateException(CLONE_NOT_SUPPORTED, e);
         }
 
         this.towers = List.copyOf(towers);
@@ -89,7 +96,8 @@ public class PlayerDataImpl implements PlayerData {
         try {
             return player.copy();
         } catch (CloneNotSupportedException e) {
-            throw new IllegalStateException("Clone not supported", e);
+            LOGGER.log(Level.SEVERE, CLONE_NOT_SUPPORTED, e);
+            throw new IllegalStateException(CLONE_NOT_SUPPORTED, e);
         }
     }
 

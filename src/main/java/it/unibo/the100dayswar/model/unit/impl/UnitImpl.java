@@ -1,5 +1,8 @@
 package it.unibo.the100dayswar.model.unit.impl;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import it.unibo.the100dayswar.model.player.api.Player;
 import it.unibo.the100dayswar.model.unit.api.Unit;
 
@@ -9,6 +12,7 @@ import it.unibo.the100dayswar.model.unit.api.Unit;
 public abstract class UnitImpl implements Unit {
     private static final int DEFAULT_LEVEL = 1;
     private static final long serialVersionUID = 1L;
+    private static final Logger LOGGER = Logger.getLogger(UnitImpl.class.getName());
 
     private int health;
     private int level;
@@ -30,6 +34,7 @@ public abstract class UnitImpl implements Unit {
         try {
             this.owner = owner.copy();
         } catch (CloneNotSupportedException e) {
+            LOGGER.log(Level.SEVERE, "Clone not supported", e);
             throw new IllegalStateException("Clone not supported", e);
         }
         this.health = health;
@@ -120,6 +125,7 @@ public abstract class UnitImpl implements Unit {
         try {
             return this.owner.copy();
         } catch (CloneNotSupportedException e) {
+            LOGGER.log(Level.SEVERE, "Clone not supported", e);
             throw new IllegalStateException("Clone not supported", e);
         }
     }
