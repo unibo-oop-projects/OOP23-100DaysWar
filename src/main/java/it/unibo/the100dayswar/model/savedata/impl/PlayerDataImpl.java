@@ -36,7 +36,7 @@ public class PlayerDataImpl implements PlayerData {
         try {
             this.player = player.copy();
         } catch (CloneNotSupportedException e) {
-            LOGGER.log(Level.SEVERE, CLONE_NOT_SUPPORTED, new IllegalStateException());
+            LOGGER.log(Level.SEVERE, CLONE_NOT_SUPPORTED, new IllegalArgumentException());
             throw new IllegalStateException(CLONE_NOT_SUPPORTED, e);
         }
 
@@ -96,7 +96,7 @@ public class PlayerDataImpl implements PlayerData {
         try {
             return player.copy();
         } catch (CloneNotSupportedException e) {
-            LOGGER.log(Level.SEVERE, CLONE_NOT_SUPPORTED, e);
+            LOGGER.log(Level.SEVERE, CLONE_NOT_SUPPORTED, new IllegalArgumentException());
             throw new IllegalStateException(CLONE_NOT_SUPPORTED, e);
         }
     }

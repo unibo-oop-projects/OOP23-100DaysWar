@@ -13,6 +13,7 @@ public abstract class UnitImpl implements Unit {
     private static final int DEFAULT_LEVEL = 1;
     private static final long serialVersionUID = 1L;
     private static final Logger LOGGER = Logger.getLogger(UnitImpl.class.getName());
+    private static final String CLONE_NOT_SUPPORTED = "Clone not supported";
 
     private int health;
     private int level;
@@ -34,8 +35,8 @@ public abstract class UnitImpl implements Unit {
         try {
             this.owner = owner.copy();
         } catch (CloneNotSupportedException e) {
-            LOGGER.log(Level.SEVERE, "Clone not supported", e);
-            throw new IllegalStateException("Clone not supported", e);
+            LOGGER.log(Level.SEVERE, CLONE_NOT_SUPPORTED, e);
+            throw new IllegalStateException(CLONE_NOT_SUPPORTED, e);
         }
         this.health = health;
         this.level = DEFAULT_LEVEL;
@@ -125,8 +126,8 @@ public abstract class UnitImpl implements Unit {
         try {
             return this.owner.copy();
         } catch (CloneNotSupportedException e) {
-            LOGGER.log(Level.SEVERE, "Clone not supported", e);
-            throw new IllegalStateException("Clone not supported", e);
+            LOGGER.log(Level.SEVERE, CLONE_NOT_SUPPORTED, e);
+            throw new IllegalStateException(CLONE_NOT_SUPPORTED, e);
         }
     }
 }
