@@ -1,5 +1,8 @@
 package it.unibo.the100dayswar.model.bankaccount.impl;
 
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import it.unibo.the100dayswar.model.bankaccount.api.BankAccount;
 
 /**
@@ -7,8 +10,8 @@ import it.unibo.the100dayswar.model.bankaccount.api.BankAccount;
  */
 public class BankAccountImpl implements BankAccount {
     private static final long serialVersionUID = 1L;
-
     private static final int INITIAL_BALANCE = 1000;
+    private static final Logger LOGGER = Logger.getLogger(BankAccountImpl.class.getName());
     private int balance;
     /** 
      * Constructor for a bank account.
@@ -44,6 +47,7 @@ public class BankAccountImpl implements BankAccount {
     @Override
     public void purchase(final int amount) {
         if (!canAfford(amount)) {
+            LOGGER.log(Level.SEVERE, "Illegal state exception", new IllegalStateException());
             throw new IllegalStateException();
         }
         setBalance(this.balance - amount);

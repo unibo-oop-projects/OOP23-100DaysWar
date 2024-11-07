@@ -13,8 +13,8 @@ import it.unibo.the100dayswar.model.tower.api.Tower;
  * needed data of a player to save the game.
  */
 public class PlayerDataImpl implements PlayerData {
-    private static final Logger LOGGER = Logger.getLogger(PlayerDataImpl.class.getName());
     private static final long serialVersionUID = 1L;
+    private static final Logger LOGGER = Logger.getLogger(PlayerDataImpl.class.getName());
     private static final String CLONE_NOT_SUPPORTED = "Clone not supported";
 
     private final Player player;
