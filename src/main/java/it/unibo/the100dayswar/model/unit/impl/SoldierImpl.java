@@ -1,14 +1,10 @@
 package it.unibo.the100dayswar.model.unit.impl;
 
-import java.util.ArrayList;
-import java.util.List;
 
-import it.unibo.the100dayswar.commons.patterns.Observer;
-import it.unibo.the100dayswar.commons.utilities.impl.Pair;
 import it.unibo.the100dayswar.model.cell.api.Cell;
 import it.unibo.the100dayswar.model.player.api.Player;
 import it.unibo.the100dayswar.model.unit.api.Soldier;
-import it.unibo.the100dayswar.model.unit.api.Unit;
+
 
 /**
  * A concrete implementation of the Soldier interface.
@@ -21,7 +17,6 @@ public class SoldierImpl extends UnitImpl implements Soldier {
     private static final int MAX_LEVEL = 3;
     private static final int DEFAULT_HEALTH = 100;
 
-    private final List<Observer<Pair<Unit, Cell>>> observers;
     private Cell position;
     /**
      * Constructor for the soldier.
@@ -30,7 +25,6 @@ public class SoldierImpl extends UnitImpl implements Soldier {
      */
     public SoldierImpl(final Player owner) {
         super(owner, DEFAULT_COST, DEFAULT_HEALTH, DEFAULT_COST_TO_UPGRADE, MAX_LEVEL);
-        observers = new ArrayList<>();
         this.position = owner.getSpawnPoint();
     }
     /**
@@ -64,27 +58,7 @@ public class SoldierImpl extends UnitImpl implements Soldier {
     public void movementRequest(final Cell target) {
         notifyObservers(target);
     }
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void attach(final Observer<Pair<Unit, Cell>> observer) {
-        this.observers.add(observer);
-    }
-    /**
-     * {@inheritDoc}
-    */
-    @Override
-    public void detach(final Observer<Pair<Unit, Cell>> observer) {
-        this.observers.remove(observer);
-    }
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void notifyObservers(final Cell target) {
-        observers.forEach(observer -> observer.update(new Pair<>(this, target)));
-    }
+    
     /**
      * {@inheritDoc}
      */
