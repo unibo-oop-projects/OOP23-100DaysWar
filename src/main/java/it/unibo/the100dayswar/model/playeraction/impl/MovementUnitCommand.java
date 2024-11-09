@@ -15,8 +15,8 @@ public class MovementUnitCommand implements MovementCommand {
      * {@inheritDoc}
      */
     @Override
-    public void execute(Player player, Pair<Movable, Cell> pair) {
-        if(player.getSoldiers().contains((Soldier) pair.getFirst())) {
+    public void execute(final Player player, final Pair<Movable, Cell> pair) {
+        if (player.getSoldiers().contains((Soldier) pair.getFirst())) {
             pair.getFirst().movementRequest(pair.getSecond());
         } else {
             throw new IllegalArgumentException("The unit is not owned by the player.");
