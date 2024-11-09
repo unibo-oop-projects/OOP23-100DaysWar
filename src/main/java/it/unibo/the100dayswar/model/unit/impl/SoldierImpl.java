@@ -58,7 +58,7 @@ public class SoldierImpl extends UnitImpl implements Soldier {
     public void movementRequest(final Cell target) {
         notifyObservers(target);
     }
-    
+
     /**
      * {@inheritDoc}
      */
