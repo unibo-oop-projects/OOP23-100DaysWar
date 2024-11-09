@@ -12,6 +12,7 @@ public interface UpgradeCommand extends GenericPlayerCommand<Buyable> {
      * 
      * @param player the player that upgrades the unit.
      * @param unit the unit that is upgraded.
+     * @throws IllegalArgumentException if the unit is not owned by the player.
      */
     @Override
     void execute(Player player, Buyable unit);
