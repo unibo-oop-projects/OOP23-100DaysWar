@@ -1,7 +1,6 @@
 package it.unibo.the100dayswar.model.command.api;
 
 import it.unibo.the100dayswar.model.player.api.Player;
-import it.unibo.the100dayswar.model.unit.api.Buyable;
 
 /**
  * An extension of the command pattern that represents a generic action
@@ -9,7 +8,7 @@ import it.unibo.the100dayswar.model.unit.api.Buyable;
  * 
  * @param <T> the type of the object to be bought.
  */
-public interface GenericPlayerCommand<T extends Buyable> {
+public interface GenericPlayerCommand<T> {
     /** 
      * Applies the command in relation to the player and the buyable object.
      * 
