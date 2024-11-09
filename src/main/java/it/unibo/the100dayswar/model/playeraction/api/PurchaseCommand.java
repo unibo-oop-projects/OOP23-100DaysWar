@@ -12,6 +12,7 @@ public interface PurchaseCommand extends GenericPlayerCommand<Unit> {
      * 
      * @param player the player that purchases the unit.
      * @param unit the unit that is purchased.
+     * @throws IllegalStateException if the unit is not be added correctly to the player.
      */
     @Override
     void execute(Player player, Unit unit);

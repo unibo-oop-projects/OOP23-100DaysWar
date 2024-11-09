@@ -8,7 +8,8 @@ import it.unibo.the100dayswar.model.unit.api.Movable;
 import it.unibo.the100dayswar.model.unit.api.Soldier;
 
 /**
- * An implementations of the command pattern that represents the movement of a movable unit.
+ * An implementations of the command pattern that represents the movement of a 
+ * movable unit.
  */
 public class MovementUnitCommand implements MovementCommand {
     /**

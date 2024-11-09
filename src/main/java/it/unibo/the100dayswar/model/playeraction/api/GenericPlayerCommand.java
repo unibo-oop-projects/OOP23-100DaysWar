@@ -11,7 +11,7 @@ import it.unibo.the100dayswar.model.player.api.Player;
 public interface GenericPlayerCommand<T> {
     /** 
      * Applies the command in relation to the player and the object.
-     * 
+     *
      * @param player the player that performs the command
      * @param object the object used in the command
      */
