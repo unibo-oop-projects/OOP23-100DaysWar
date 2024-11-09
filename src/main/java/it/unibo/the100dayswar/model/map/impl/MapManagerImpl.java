@@ -1,6 +1,8 @@
 package it.unibo.the100dayswar.model.map.impl;
 
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import it.unibo.the100dayswar.commons.utilities.impl.Pair;
 import it.unibo.the100dayswar.model.cell.api.BonusCell;
@@ -23,6 +25,8 @@ public class MapManagerImpl implements MapManager {
 
     private final GameMapBuilder builder;
     private final GameMap map;
+    private static final Logger LOGGER = Logger.getLogger(MapManagerImpl.class.getName());
+
 
     /**
      * the builder of the map.
@@ -69,9 +73,12 @@ public class MapManagerImpl implements MapManager {
     private void createSoldier(final Pair<Unit, Cell> source) {
         final Soldier soldier = (Soldier) source.getFirst();
         final BuildableCell currentCell = (BuildableCellImpl) soldier.getPosition();
-        if (((BuildableCell) source.getSecond()).isSpawn()) {
-        currentCell.setOccupation(Optional.of(soldier));
+        final BuildableCell targetCell = (BuildableCellImpl) source.getSecond();
+        if (!((BuildableCell) source.getSecond()).isSpawn()) {
+            LOGGER.log(Level.WARNING, "Target cell is not a spawn cell for soldier creation: {0}", targetCell.getPosition());
+            throw new IllegalStateException("Target cell is not a spawn cell for soldier creation.");
         }
+        currentCell.setOccupation(Optional.of(soldier));
     }
 
     /**
@@ -82,9 +89,11 @@ public class MapManagerImpl implements MapManager {
         final Tower tower = (Tower) source.getFirst();
         final BuildableCellImpl targetCell = (BuildableCellImpl) source.getSecond();
         final BuildableCell currentCell = (BuildableCellImpl) tower.getPosition();
-        if (currentCell.equals(targetCell)) {
+        if (!targetCell.isBuildable()) {
+            LOGGER.log(Level.WARNING, "Target cell is not buildable for tower placement: {0}", targetCell.getPosition());
+            throw new IllegalStateException("Target cell is not buildable for tower placement.");
+        }
             currentCell.setOccupation(Optional.of(tower));
-        } 
     }
 
     /**
@@ -95,6 +104,10 @@ public class MapManagerImpl implements MapManager {
         final Soldier soldier = (Soldier) source.getFirst();
         final BuildableCellImpl targetCell = (BuildableCellImpl) source.getSecond();
         final BuildableCell currentCell = (BuildableCellImpl) soldier.getPosition();
+        if (!targetCell.isFree()) {
+            LOGGER.log(Level.WARNING, "Target cell is not free for soldier movement: {0}", targetCell.getPosition());
+            throw new IllegalStateException("Target cell is not free for soldier movement.");
+        }
         if (currentCell.isAdiacent(targetCell) && targetCell.isFree()) {
             soldier.move(targetCell);
             currentCell.setOccupation(Optional.empty());
@@ -120,7 +133,7 @@ public class MapManagerImpl implements MapManager {
      * @return true if the unit is a tower.
      */
     private boolean isTower(final Pair<Unit, Cell> source) {
-        return source.getFirst() instanceof Tower;
+        return source.getFirst() instanceof Tower && source.getFirst().getPosition().equals(source.getSecond());
     }
 
     /**
