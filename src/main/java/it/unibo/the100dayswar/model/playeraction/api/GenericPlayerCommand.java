@@ -1,4 +1,4 @@
-package it.unibo.the100dayswar.model.command.api;
+package it.unibo.the100dayswar.model.playeraction.api;
 
 import it.unibo.the100dayswar.model.player.api.Player;
 

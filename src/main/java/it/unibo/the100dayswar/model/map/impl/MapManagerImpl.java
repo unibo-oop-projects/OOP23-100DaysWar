@@ -93,16 +93,16 @@ public class MapManagerImpl implements MapManager {
      */
     private void soldierMovement(final Pair<Unit, Cell> source) {
         final Soldier soldier = (Soldier) source.getFirst();
-            final BuildableCellImpl targetCell = (BuildableCellImpl) source.getSecond();
-            final BuildableCell currentCell = (BuildableCellImpl) soldier.getPosition();
-                 if (currentCell.isAdiacent(targetCell) && targetCell.isFree()) {
-                        soldier.move(targetCell);
-                        currentCell.setOccupation(Optional.empty());
-                        targetCell.setOccupation(Optional.of(soldier));
-                        if (targetCell instanceof BonusCell) {
-                        ((BonusCell) targetCell).notify(soldier.getOwner());
-                         }
-                }
+        final BuildableCellImpl targetCell = (BuildableCellImpl) source.getSecond();
+        final BuildableCell currentCell = (BuildableCellImpl) soldier.getPosition();
+        if (currentCell.isAdiacent(targetCell) && targetCell.isFree()) {
+            soldier.move(targetCell);
+            currentCell.setOccupation(Optional.empty());
+            targetCell.setOccupation(Optional.of(soldier));
+            if (targetCell instanceof BonusCell) {
+                ((BonusCell) targetCell).notify(soldier.getOwner());
+            }
+        }
     }
 
     /**

@@ -1,7 +1,7 @@
-package it.unibo.the100dayswar.model.command.impl;
+package it.unibo.the100dayswar.model.playeraction.impl;
 
-import it.unibo.the100dayswar.model.command.api.UpgradeCommand;
 import it.unibo.the100dayswar.model.player.api.Player;
+import it.unibo.the100dayswar.model.playeraction.api.UpgradeCommand;
 import it.unibo.the100dayswar.model.unit.api.Buyable;
 
 /**

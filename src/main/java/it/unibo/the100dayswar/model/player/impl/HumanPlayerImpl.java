@@ -1,11 +1,13 @@
 package it.unibo.the100dayswar.model.player.impl;
 
+import it.unibo.the100dayswar.commons.utilities.impl.Pair;
 import it.unibo.the100dayswar.model.cell.api.BuildableCell;
 import it.unibo.the100dayswar.model.cell.api.Cell;
-import it.unibo.the100dayswar.model.command.api.GenericPlayerCommand;
-import it.unibo.the100dayswar.model.command.impl.PurchaseUnitCommand;
-import it.unibo.the100dayswar.model.command.impl.UpgradeUnitCommand;
 import it.unibo.the100dayswar.model.player.api.HumanPlayer;
+import it.unibo.the100dayswar.model.playeraction.api.GenericPlayerCommand;
+import it.unibo.the100dayswar.model.playeraction.impl.MovementUnitCommand;
+import it.unibo.the100dayswar.model.playeraction.impl.PurchaseUnitCommand;
+import it.unibo.the100dayswar.model.playeraction.impl.UpgradeUnitCommand;
 import it.unibo.the100dayswar.model.unit.api.Buyable;
 import it.unibo.the100dayswar.model.unit.api.Movable;
 import it.unibo.the100dayswar.model.unit.api.Unit;
@@ -46,6 +48,7 @@ public class HumanPlayerImpl extends AbstractPlayer implements HumanPlayer {
      */
     @Override
     public void moveUnit(final Movable unit, final Cell destination) {
-        unit.movementRequest(destination);
+        final GenericPlayerCommand<Pair<Movable, Cell>> command = new MovementUnitCommand();
+        command.execute(this, new Pair<>(unit, destination));
     }
 }
