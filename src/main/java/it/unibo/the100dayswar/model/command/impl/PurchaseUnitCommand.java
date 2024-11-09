@@ -7,7 +7,7 @@ import it.unibo.the100dayswar.model.unit.api.Unit;
 /**
  * An implementations of the command pattern that represents the purchase of a buyable unit.
  */
-public class PurchaseUnitCommand implements PurchaseCommand {
+public class PurchaseUnitCommand implements PurchaseCommand{
     /**
      * {@inheritDoc}
      */

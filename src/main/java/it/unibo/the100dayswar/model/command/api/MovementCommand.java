@@ -7,7 +7,7 @@ import it.unibo.the100dayswar.model.unit.api.Movable;
  * An extension of the command pattern that represents the movement 
  * of a movable object.
  */
-public interface MovemetCommand extends GenericPlayerCommand<Movable> {
+public interface MovementCommand extends GenericPlayerCommand<Movable> {
     /** 
      * Moves the unit of the player.
      * 
