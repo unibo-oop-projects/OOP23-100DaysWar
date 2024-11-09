@@ -1,14 +1,15 @@
 package it.unibo.the100dayswar.model.unit.api;
 
-import java.io.Serializable;
 
+import it.unibo.the100dayswar.commons.patterns.Observable;
+import it.unibo.the100dayswar.commons.utilities.impl.Pair;
 import it.unibo.the100dayswar.model.cell.api.Cell;
 import it.unibo.the100dayswar.model.player.api.Player;
 
 /** 
  * An interface for a generic unit of the game.
  */
-public interface Unit extends Buyable, Combatant, Serializable {
+public interface Unit extends Buyable, Combatant, Observable<Pair<Unit, Cell>> {
   /**
    * This method returns the owner of the unit.
    * 

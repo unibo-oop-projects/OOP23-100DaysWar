@@ -8,6 +8,7 @@ import it.unibo.the100dayswar.commons.utilities.impl.Pair;
 import it.unibo.the100dayswar.model.cell.api.Cell;
 import it.unibo.the100dayswar.model.player.api.Player;
 import it.unibo.the100dayswar.model.unit.api.Soldier;
+import it.unibo.the100dayswar.model.unit.api.Unit;
 
 /**
  * A concrete implementation of the Soldier interface.
@@ -20,7 +21,7 @@ public class SoldierImpl extends UnitImpl implements Soldier {
     private static final int MAX_LEVEL = 3;
     private static final int DEFAULT_HEALTH = 100;
 
-    private final List<Observer<Pair<Soldier, Cell>>> observers;
+    private final List<Observer<Pair<Unit, Cell>>> observers;
     private Cell position;
     /**
      * Constructor for the soldier.
@@ -67,14 +68,14 @@ public class SoldierImpl extends UnitImpl implements Soldier {
      * {@inheritDoc}
      */
     @Override
-    public void attach(final Observer<Pair<Soldier, Cell>> observer) {
+    public void attach(final Observer<Pair<Unit, Cell>> observer) {
         this.observers.add(observer);
     }
     /**
      * {@inheritDoc}
-     */
+    */
     @Override
-    public void detach(final Observer<Pair<Soldier, Cell>> observer) {
+    public void detach(final Observer<Pair<Unit, Cell>> observer) {
         this.observers.remove(observer);
     }
     /**
