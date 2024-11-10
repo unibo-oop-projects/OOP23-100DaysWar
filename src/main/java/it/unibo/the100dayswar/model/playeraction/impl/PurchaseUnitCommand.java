@@ -14,10 +14,9 @@ public class PurchaseUnitCommand implements PurchaseCommand {
      */
     @Override
     public void execute(final Player player, final Unit unit) {
-        player.spendResources(unit.costToBuy());
         player.addUnit(unit);
-        unit.notifyObservers(unit.getPosition());
         if (player.getUnits().contains(unit)) {
+            player.spendResources(unit.costToBuy());
             unit.notifyObservers(unit.getPosition());
         } else {
             throw new IllegalStateException("The unit is not be added correctly to the player.");

@@ -14,10 +14,10 @@ public class UpgradeUnitCommand implements UpgradeCommand {
      */
     @Override
     public void execute(final Player player, final Buyable unit) {
-        player.spendResources(unit.costToUpgrade());
-        unit.upgrade();
         if (!player.getUnits().contains(unit)) {
             throw new IllegalArgumentException("The unit is not owned by the player.");
         }
+        player.spendResources(unit.costToUpgrade());
+        unit.upgrade();
     }
 }
