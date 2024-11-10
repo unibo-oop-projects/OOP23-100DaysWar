@@ -9,6 +9,7 @@ import it.unibo.the100dayswar.model.unit.api.Unit;
  * of a buyable unit.
  */
 public class PurchaseUnitCommand implements PurchaseCommand {
+    private static final long serialVersionUID = 1L;
     /**
      * {@inheritDoc}
      */

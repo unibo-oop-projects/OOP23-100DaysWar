@@ -1,5 +1,7 @@
 package it.unibo.the100dayswar.model.playeraction.api;
 
+import java.io.Serializable;
+
 import it.unibo.the100dayswar.model.player.api.Player;
 
 /**
@@ -8,7 +10,7 @@ import it.unibo.the100dayswar.model.player.api.Player;
  * 
  * @param <T> the type of the object that the command is used on.
  */
-public interface GenericPlayerCommand<T> {
+public interface GenericPlayerCommand<T> extends Serializable {
     /** 
      * Applies the command in relation to the player and the object.
      *

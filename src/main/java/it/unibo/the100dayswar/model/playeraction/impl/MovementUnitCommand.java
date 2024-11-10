@@ -12,6 +12,7 @@ import it.unibo.the100dayswar.model.unit.api.Soldier;
  * movable unit.
  */
 public class MovementUnitCommand implements MovementCommand {
+    private static final long serialVersionUID = 1L;
     /**
      * {@inheritDoc}
      */

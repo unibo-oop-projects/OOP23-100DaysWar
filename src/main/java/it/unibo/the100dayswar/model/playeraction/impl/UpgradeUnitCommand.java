@@ -9,6 +9,7 @@ import it.unibo.the100dayswar.model.unit.api.Buyable;
  * the upgrade of a buyable.
  */
 public class UpgradeUnitCommand implements UpgradeCommand {
+    private static final long serialVersionUID = 1L;
     /**
      * {@inheritDoc}
      */
