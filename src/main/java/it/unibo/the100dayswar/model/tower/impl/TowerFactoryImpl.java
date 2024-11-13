@@ -1,6 +1,7 @@
 package it.unibo.the100dayswar.model.tower.impl;
 
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.BiFunction;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -18,9 +19,9 @@ public class TowerFactoryImpl implements TowerFactory {
     /**
      * Contains the tower type associated with its constructor.
      */
-    private static final Map<TowerType, BiFunction<Player, Cell, AbstractTower>> TOWER_CREATORS = Map.of(
-        TowerType.BASIC, BasicTowerImpl::new,
-        TowerType.ADVANCED, AdvancedTowerImpl::new
+    private static final Map<TowerType, Optional<BiFunction<Player, Cell, AbstractTower>>> TOWER_CREATORS = Map.of(
+        TowerType.BASIC, Optional.of(BasicTowerImpl::new),
+        TowerType.ADVANCED, Optional.of(AdvancedTowerImpl::new)
     );
 
     /**
@@ -28,13 +29,13 @@ public class TowerFactoryImpl implements TowerFactory {
      */
     @Override
     public AbstractTower buildTower(final Player owner, final TowerType towerType, final Cell position) {
-        final BiFunction<Player, Cell, AbstractTower> towerConstructor = TOWER_CREATORS.get(towerType);
+        final Optional<BiFunction<Player, Cell, AbstractTower>> towerConstructor = TOWER_CREATORS.get(towerType);
 
-        if (towerConstructor == null) {
+        if (towerConstructor.isEmpty()) {
             LOGGER.log(Level.SEVERE, "Unknow Tower Type " + towerType, new IllegalArgumentException());
             throw new IllegalArgumentException("Unknown Tower Type: " + towerType);
         }
 
-        return towerConstructor.apply(owner, position);
+        return towerConstructor.get().apply(owner, position);
     } 
 }
