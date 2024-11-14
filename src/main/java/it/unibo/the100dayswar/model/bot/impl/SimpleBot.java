@@ -11,8 +11,8 @@ import it.unibo.the100dayswar.model.player.impl.AbstractPlayer;
  */
 public class SimpleBot extends AbstractPlayer implements BotPlayer {
     private static final long serialVersionUID = 1L;
-
     private static final String BOT_USERNAME = "Bot1";
+
     private final BotStrategy strategy;
     /**
      * Constructor for the bot player with the given parameters.
