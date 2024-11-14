@@ -17,6 +17,7 @@ import it.unibo.the100dayswar.model.playeraction.api.GenericPlayerCommand;
 import it.unibo.the100dayswar.model.playeraction.impl.MovementUnitCommand;
 import it.unibo.the100dayswar.model.playeraction.impl.PurchaseUnitCommand;
 import it.unibo.the100dayswar.model.playeraction.impl.UpgradeUnitCommand;
+import it.unibo.the100dayswar.model.tower.api.Tower;
 import it.unibo.the100dayswar.model.unit.api.Buyable;
 import it.unibo.the100dayswar.model.unit.api.Movable;
 import it.unibo.the100dayswar.model.unit.api.Soldier;
@@ -101,6 +102,16 @@ public abstract class AbstractPlayer implements Player {
         return units.stream()
             .filter(u -> u instanceof Soldier)
             .map(u -> (Soldier) u)
+            .collect(Collectors.toUnmodifiableSet());
+    }
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Set<Tower> getTowers() {
+        return units.stream()
+            .filter(u -> u instanceof Tower)
+            .map(u -> (Tower) u)
             .collect(Collectors.toUnmodifiableSet());
     }
     /**

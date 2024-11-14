@@ -8,6 +8,7 @@ import it.unibo.the100dayswar.commons.utilities.api.ResourceGenerator;
 import it.unibo.the100dayswar.model.bankaccount.api.BankAccount;
 import it.unibo.the100dayswar.model.cell.api.BuildableCell;
 import it.unibo.the100dayswar.model.cell.api.Cell;
+import it.unibo.the100dayswar.model.tower.api.Tower;
 import it.unibo.the100dayswar.model.unit.api.Buyable;
 import it.unibo.the100dayswar.model.unit.api.Movable;
 import it.unibo.the100dayswar.model.unit.api.Unit;
@@ -37,12 +38,6 @@ public interface Player extends Observer<ResourceGenerator> {
      * @return the spawn point of the player
      */
     BuildableCell getSpawnPoint();
-    /**
-     * The units owned by the player.
-     * 
-     * @return the units owned by the player
-     */
-    Set<Unit> getUnits();
     /**
      * Buys a unit, such as a soldier or tower, and deducts the cost from the player's bank account.
      *
@@ -85,11 +80,23 @@ public interface Player extends Observer<ResourceGenerator> {
      */
     void addUnit(Unit unit);
     /**
+     * The units owned by the player.
+     * 
+     * @return the units owned by the player
+     */
+    Set<Unit> getUnits();
+    /**
      * Returns the soldiers owned by the player.
      *
      * @return the soldiers owned by the player
      */
     Set<Soldier> getSoldiers();
+    /**
+     * Returns the towers owned by the player.
+     *
+     * @return the towers owned by the player
+     */
+    Set<Tower> getTowers();
     /**
      * Returns a copy of the player.
      *
