@@ -149,6 +149,13 @@ public class MapManagerImpl implements MapManager {
             soldier.move(targetCell);
             currentCell.setOccupation(Optional.empty());
             targetCell.setOccupation(Optional.of(soldier));
+            playersCells.forEach((p, s) -> {
+                if (p.equals(soldier.getOwner())) {
+                    addCell(p, targetCell);
+                } else {
+                    removeCell(p, currentCell);
+                }
+            });
             if (targetCell instanceof BonusCell) {
                 ((BonusCell) targetCell).notify(soldier.getOwner());
             }
