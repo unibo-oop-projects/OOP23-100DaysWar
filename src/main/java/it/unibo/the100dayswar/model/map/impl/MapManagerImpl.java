@@ -1,6 +1,7 @@
 package it.unibo.the100dayswar.model.map.impl;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -79,7 +80,17 @@ public class MapManagerImpl implements MapManager {
     public Map<Player, Set<Cell>> getPlayersCells() {
         return new HashMap<>(playersCells); 
     }
-    
+
+    /**
+     * add the cell to the player.
+     * @param player is the player.
+     * @param targetCell is the cell.
+     */
+    private void  addCell(final Player player, final Cell targetCell) {
+        final Set<Cell> cells = playersCells.computeIfAbsent(player, p -> new HashSet<>());
+        cells.add(targetCell); 
+    }
+
     /**
      * create a new soldier.
      * @param source is the pair of the soldier and the cell.
