@@ -92,6 +92,18 @@ public class MapManagerImpl implements MapManager {
     }
 
     /**
+     * remove the cell from the player.
+     * @param player is the player.
+     * @param targetCell is the cell.
+     */
+    private void removeCell(final Player player, final Cell targetCell) {
+        final Set<Cell> cells = playersCells.get(player);
+        if (cells != null && cells.contains(targetCell)) {
+            cells.remove(targetCell);
+        }
+    }
+
+    /**
      * create a new soldier.
      * @param source is the pair of the soldier and the cell.
      */
