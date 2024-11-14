@@ -3,11 +3,7 @@ package it.unibo.the100dayswar.model.bot.impl;
 import it.unibo.the100dayswar.model.bot.api.BotPlayer;
 import it.unibo.the100dayswar.model.bot.api.BotStrategy;
 import it.unibo.the100dayswar.model.cell.api.BuildableCell;
-import it.unibo.the100dayswar.model.cell.api.Cell;
 import it.unibo.the100dayswar.model.player.impl.AbstractPlayer;
-import it.unibo.the100dayswar.model.unit.api.Buyable;
-import it.unibo.the100dayswar.model.unit.api.Movable;
-import it.unibo.the100dayswar.model.unit.api.Unit;
 
 /**
  * A simple implementation of a bot player that uses a strategy
@@ -33,28 +29,5 @@ public class SimpleBot extends AbstractPlayer implements BotPlayer {
     @Override
     public void makeMove() {
         this.strategy.apply(this);
-    }
-    /** 
-     * {@inheritDoc}
-     */
-    @Override
-    public void buyUnit(final Unit unit) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'buyUnit'");
-    }
-    /** 
-     * {@inheritDoc}
-     */
-    @Override
-    public void upgradeUnit(final Buyable unit) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'upgradeUnit'");
-    }
-    /** 
-     * {@inheritDoc}
-     */
-    @Override
-    public void moveUnit(final Movable unit, final Cell destination) {
-        unit.movementRequest(destination);
     }
 }

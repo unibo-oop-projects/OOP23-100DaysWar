@@ -6,12 +6,17 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import it.unibo.the100dayswar.commons.utilities.api.ResourceGenerator;
+import it.unibo.the100dayswar.commons.utilities.impl.Pair;
 import it.unibo.the100dayswar.model.bankaccount.api.BankAccount;
 import it.unibo.the100dayswar.model.bankaccount.impl.BankAccountImpl;
 import it.unibo.the100dayswar.model.cell.api.BuildableCell;
 import it.unibo.the100dayswar.model.cell.api.Cell;
 import it.unibo.the100dayswar.model.cell.impl.BuildableCellImpl;
 import it.unibo.the100dayswar.model.player.api.Player;
+import it.unibo.the100dayswar.model.playeraction.api.GenericPlayerCommand;
+import it.unibo.the100dayswar.model.playeraction.impl.MovementUnitCommand;
+import it.unibo.the100dayswar.model.playeraction.impl.PurchaseUnitCommand;
+import it.unibo.the100dayswar.model.playeraction.impl.UpgradeUnitCommand;
 import it.unibo.the100dayswar.model.unit.api.Buyable;
 import it.unibo.the100dayswar.model.unit.api.Movable;
 import it.unibo.the100dayswar.model.unit.api.Soldier;
@@ -54,17 +59,26 @@ public abstract class AbstractPlayer implements Player {
      * {@inheritDoc}
      */
     @Override
-    public abstract void buyUnit(Unit unit);
+    public void buyUnit(final Unit unit) {
+        final GenericPlayerCommand<Unit> command = new PurchaseUnitCommand();
+        command.execute(this, unit);
+    }
     /** 
      * {@inheritDoc}
      */
     @Override
-    public abstract void upgradeUnit(Buyable unit);
+    public void upgradeUnit(final Buyable unit) {
+        final GenericPlayerCommand<Buyable> command = new UpgradeUnitCommand();
+        command.execute(this, unit);
+    }
     /** 
      * {@inheritDoc}
      */
     @Override
-    public abstract void moveUnit(Movable unit, Cell destination);
+    public void moveUnit(final Movable unit, final Cell destination) {
+        final GenericPlayerCommand<Pair<Movable, Cell>> command = new MovementUnitCommand();
+        command.execute(this, new Pair<>(unit, destination));
+    }
     /** 
      * {@inheritDoc}
      */
