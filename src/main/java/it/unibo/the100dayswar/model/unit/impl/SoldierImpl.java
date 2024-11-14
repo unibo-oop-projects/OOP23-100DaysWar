@@ -11,8 +11,6 @@ import it.unibo.the100dayswar.model.unit.api.Soldier;
  */
 public class SoldierImpl extends UnitImpl implements Soldier {
     private static final long serialVersionUID = 1L;
-
-    private static final int DEFAULT_COST = 50;
     private static final int DEFAULT_COST_TO_UPGRADE = 30;
     private static final int MAX_LEVEL = 3;
     private static final int DEFAULT_HEALTH = 100;
@@ -39,15 +37,15 @@ public class SoldierImpl extends UnitImpl implements Soldier {
      * {@inheritDoc}
      */
     @Override
-    public void movementRequest(final Cell target) {
-        notifyObservers(target);
+    public void move(final Cell cell) {
+        this.position = cell;
     }
     /**
      * {@inheritDoc}
      */
     @Override
-    public void move(final Cell cell) {
-        this.position = cell;
+    public void movementRequest(final Cell target) {
+        notifyObservers(target);
     }
     /**
      * {@inheritDoc}
