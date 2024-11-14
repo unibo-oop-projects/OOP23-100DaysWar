@@ -18,6 +18,7 @@ public interface DecisionMaker extends Serializable {
     void evaluateMoves(BotPlayer botPlayer);
     /**
      * Selects the best move based on the highest score.
+     * This method should be called after the evaluateMoves method.
      * 
      * @return an optional of the best move type or empty if no move is performable
      */
