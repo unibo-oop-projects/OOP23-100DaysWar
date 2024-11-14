@@ -11,15 +11,4 @@ public interface BotPlayer extends Player {
      * according to the current strategy.
      */
     void makeMove();
-    /**
-     * Gets the currrent strategy of the bot player.
-     * @return the strategy of the bot player
-     */
-    BotStrategy getStrategy();
-    /**
-     * Sets the strategy of the bot player.
-     * 
-     * @param strategy the strategy to set
-     */
-    void setStrategy(BotStrategy strategy);
 }
