@@ -16,8 +16,7 @@ import it.unibo.the100dayswar.model.unit.api.Unit;
 public class SimpleBot extends AbstractPlayer implements BotPlayer {
     private static final long serialVersionUID = 1L;
 
-    private BotStrategy strategy;
-
+    private final BotStrategy strategy;
     /**
      * Constructor for the bot player with the given parameters.
      * 
@@ -26,28 +25,14 @@ public class SimpleBot extends AbstractPlayer implements BotPlayer {
      */
     public SimpleBot(final String username, final BuildableCell spawn) {
         super(username, spawn);
+        this.strategy = new SimpleBotStrategy();
     }
     /** 
      * {@inheritDoc}
      */
     @Override
     public void makeMove() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'makeMove'");
-    }
-    /** 
-     * {@inheritDoc}
-     */
-    @Override
-    public BotStrategy getStrategy() {
-        return this.strategy;
-    }
-    /** 
-     * {@inheritDoc}
-     */
-    @Override
-    public void setStrategy(final BotStrategy strategy) {
-        this.strategy = strategy;
+        this.strategy.apply(this);
     }
     /** 
      * {@inheritDoc}
