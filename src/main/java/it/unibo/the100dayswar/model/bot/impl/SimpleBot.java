@@ -16,15 +16,15 @@ import it.unibo.the100dayswar.model.unit.api.Unit;
 public class SimpleBot extends AbstractPlayer implements BotPlayer {
     private static final long serialVersionUID = 1L;
 
+    private static final String BOT_USERNAME = "Bot1";
     private final BotStrategy strategy;
     /**
      * Constructor for the bot player with the given parameters.
-     * 
-     * @param username the username of the bot player
+     *
      * @param spawn the spawn cell of the bot player
      */
-    public SimpleBot(final String username, final BuildableCell spawn) {
-        super(username, spawn);
+    public SimpleBot(final BuildableCell spawn) {
+        super(BOT_USERNAME, spawn);
         this.strategy = new SimpleBotStrategy();
     }
     /** 
