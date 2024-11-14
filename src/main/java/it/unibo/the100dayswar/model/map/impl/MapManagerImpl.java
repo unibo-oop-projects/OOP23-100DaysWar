@@ -1,5 +1,6 @@
 package it.unibo.the100dayswar.model.map.impl;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -29,7 +30,7 @@ public class MapManagerImpl implements MapManager {
     private final GameMapBuilder builder;
     private final GameMap map;
     private static final Logger LOGGER = Logger.getLogger(MapManagerImpl.class.getName());
-
+    private final Map<Player, Set<Cell>> playersCells;
 
     /**
      * the builder of the map.
@@ -38,6 +39,7 @@ public class MapManagerImpl implements MapManager {
     public MapManagerImpl(final GameMapBuilder builder) {
         this.builder = builder;
         map = createMap();
+        playersCells = new HashMap<>();
     }
 
     /**
