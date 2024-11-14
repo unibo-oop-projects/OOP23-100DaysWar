@@ -1,4 +1,4 @@
-package it.unibo.the100dayswar.model.statistics.api;
+package it.unibo.the100dayswar.model.statistic.api;
 
 /**
  * Interface that model the game statistics.
