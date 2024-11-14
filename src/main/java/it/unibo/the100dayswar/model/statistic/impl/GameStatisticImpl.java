@@ -11,7 +11,7 @@ public class GameStatisticImpl implements GameStatistics {
      * {@inheritDoc}
      */
     @Override
-    public int getSoldiers(Player player) {
+    public int getSoldiers(final Player player) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getSoldiers'");
     }
@@ -20,7 +20,7 @@ public class GameStatisticImpl implements GameStatistics {
      * {@inheritDoc}
      */
     @Override
-    public int getTower(Player player) {
+    public int getTower(final Player player) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getTower'");
     }

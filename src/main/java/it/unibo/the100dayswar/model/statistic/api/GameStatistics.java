@@ -10,13 +10,14 @@ public interface GameStatistics {
     /** 
      * Get the number of soldiers of a player.
      * @param player the player.
+     * @return the number of soldiers.
      */
     int getSoldiers(Player player);
 
     /**
      * Get the number of towers of a player.
      * @param player the player.
+     * @return the number of towers.
      */
     int getTower(Player player);
-
 }
