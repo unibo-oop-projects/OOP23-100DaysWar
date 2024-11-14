@@ -71,6 +71,15 @@ public class MapManagerImpl implements MapManager {
             }
             map.getSize();
     }
+
+    /**
+     *{@inheritDoc}
+     */
+    @Override
+    public Map<Player, Set<Cell>> getPlayersCells() {
+        return new HashMap<>(playersCells); 
+    }
+    
     /**
      * create a new soldier.
      * @param source is the pair of the soldier and the cell.
@@ -148,11 +157,5 @@ public class MapManagerImpl implements MapManager {
      */
     private boolean isSoldierWantsToMove(final Pair<Unit, Cell> source) {
         return source.getFirst() instanceof Soldier && !source.getFirst().getPosition().equals(source.getSecond());
-    }
-
-    @Override
-    public Map<Player, Set<Cell>> getPlayersCells() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getPlayersCells'");
     }
 }
