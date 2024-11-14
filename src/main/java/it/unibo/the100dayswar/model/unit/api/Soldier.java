@@ -15,20 +15,20 @@ public interface Soldier extends Unit, Movable {
      * {@inheritDoc}
      */
     @Override
-    public void performAttack();
+    void performAttack();
     /**
      * {@inheritDoc}
      */
     @Override
-    public void move(final Cell cell);
+    void move(Cell cell);
     /**
      * {@inheritDoc}
      */
     @Override
-    public void movementRequest(final Cell target);
+    void movementRequest(Cell target);
     /**
      * {@inheritDoc}
      */
     @Override
-    public Cell getPosition();
+    Cell getPosition();
 }
