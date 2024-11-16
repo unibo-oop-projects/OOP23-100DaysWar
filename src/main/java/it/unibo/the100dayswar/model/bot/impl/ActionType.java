@@ -8,6 +8,7 @@ import it.unibo.the100dayswar.commons.utilities.impl.Score;
 import it.unibo.the100dayswar.model.bot.api.BotPlayer;
 import it.unibo.the100dayswar.model.soldier.api.Soldier;
 import it.unibo.the100dayswar.model.soldier.impl.SoldierImpl;
+import it.unibo.the100dayswar.model.tower.impl.BasicTowerImpl;
 import it.unibo.the100dayswar.model.unit.api.Unit;
 
 /**
@@ -59,13 +60,15 @@ public enum ActionType {
      * Type that represents the purchase of a tower.
      */
     PURCHASE_TOWER {
+        private static final int DEFAULT_SCORE = 1;
+
         /**
          * {@inheritDoc}
          */
         @Override
         protected boolean canPerform(final BotPlayer botPlayer) {
-            // TODO Auto-generated method stub
-            throw new UnsupportedOperationException("Unimplemented method 'canPerform'");
+            //PlaceHolder --> BasicTower.DEFAULT_COST;
+            return botPlayer.getBankAccount().getBalance() >= DEFAULT_SCORE;
         }
 
         /**
@@ -73,8 +76,14 @@ public enum ActionType {
          */
         @Override
         protected Score evaluate(final BotPlayer botPlayer) {
-            // TODO Auto-generated method stub
-            throw new UnsupportedOperationException("Unimplemented method 'evaluate'");
+            return evaluateOrNonPerformable(botPlayer, () -> {
+                final int soldierCount = botPlayer.getSoldiers().size();
+                final int towerCount = botPlayer.getTowers().size();
+                if (towerCount < soldierCount / 2) {
+                    return new Score(HIGH_PRIORITY_SCORE);
+                }
+                return new Score(DEFAULT_SCORE);
+            });
         }
 
         /**
@@ -82,11 +91,15 @@ public enum ActionType {
          */
         @Override
         protected void execute(final BotPlayer botPlayer) {
-            // TODO Auto-generated method stub
-            throw new UnsupportedOperationException("Unimplemented method 'execute'");
+            if (canPerform(botPlayer)) {
+                // botPlayer.getSpawnPoint() --> PlaceHolder to wait for the implementation of the calculation of
+                // a random position for the tower near to the bot spawn point.
+                final Unit tower = new BasicTowerImpl(botPlayer, botPlayer.getSpawnPoint());
+                botPlayer.buyUnit(tower);
+            }
         }
     },
-    /** 
+    /**
      * Type that rapresents the action of upgrading a unit.
      * For a simplier logic this action will upgrade the unit
      * with the lowest cost to upgrade.
