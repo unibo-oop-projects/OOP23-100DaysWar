@@ -1,28 +1,176 @@
 package it.unibo.the100dayswar.model.bot.impl;
 
+import java.util.Set;
+import java.util.function.Supplier;
+
+import it.unibo.the100dayswar.commons.utilities.impl.Score;
+import it.unibo.the100dayswar.model.bot.api.BotPlayer;
+import it.unibo.the100dayswar.model.soldier.api.Soldier;
+import it.unibo.the100dayswar.model.soldier.impl.SoldierImpl;
+
 /**
  * An enum that represents the possible actions that a bot can take.
  */
 public enum ActionType {
     /** 
-     * The action of purchasing a soldier unit.
+     * Type that represents the purchase of a soldier.
      */
-    PURCHASE_SOLDIER,
+    PURCHASE_SOLDIER {
+        private static final int DEFAULT_SCORE = 3;
+        /** 
+         * {@inheritDoc}
+         */
+        @Override
+        protected boolean canPerform(final BotPlayer botPlayer) {
+            return botPlayer.getBankAccount().getBalance() >= Soldier.DEFAULT_COST;
+        }
+        /** 
+         * {@inheritDoc}
+         */
+        @Override
+        protected Score evaluate(final BotPlayer botPlayer) {
+            return evaluateOrNonPerformable(botPlayer, () -> {
+                final Set<Soldier> soldiers = botPlayer.getSoldiers();
+                if (soldiers.isEmpty()) {
+                    return new Score(HIGH_PRIORITY_SCORE);
+                } else if (soldiers.size() >= 3) {
+                    return new Score(NON_PERFORMABLE_SCORE);
+                }
+                return new Score(DEFAULT_SCORE);
+            });
+        }
+        /** 
+         * {@inheritDoc}
+         */
+        @Override
+        protected void execute(final BotPlayer botPlayer) {
+            if (canPerform(botPlayer)) {
+                final Soldier soldier = new SoldierImpl(botPlayer);
+                botPlayer.buyUnit(soldier);
+            }
+        }
+    },
     /** 
-     * The action of purchasing a tower unit.
+     * Type that represents the purchase of a tower.
      */
-    PURCHASE_TOWER,
+    PURCHASE_TOWER {
+        /** 
+         * {@inheritDoc}
+         */
+        @Override
+        protected boolean canPerform(final BotPlayer botPlayer) {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'canPerform'");
+        }
+        /** 
+         * {@inheritDoc}
+         */
+        @Override
+        protected Score evaluate(final BotPlayer botPlayer) {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'evaluate'");
+        }
+        /** 
+         * {@inheritDoc}
+         */
+        @Override
+        protected void execute(final BotPlayer botPlayer) {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'execute'");
+        }
+    },
     /** 
-     * The action of upgrading a unit.
+     * Type that rapresents the action of upgrading a unit.
      * For a simplier logic this action will upgrade the unit
      * with the lowest cost to upgrade.
      */
-    UPGRADE_UNIT,
+    UPGRADE_UNIT {
+        /** 
+         * {@inheritDoc}
+         */
+        @Override
+        protected boolean canPerform(final BotPlayer botPlayer) {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'canPerform'");
+        }
+        /** 
+         * {@inheritDoc}
+         */
+        @Override
+        protected Score evaluate(final BotPlayer botPlayer) {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'evaluate'");
+        }
+        /** 
+         * {@inheritDoc}
+         */
+        @Override
+        protected void execute(final BotPlayer botPlayer) {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'execute'");
+        }
+    },
     /** 
-     * The action of moving a unit.
-     * For a simplier logic this action will move a random unit
-     * that can move but with the logic to move int he direction
-     * of the enemy's spawn.
+     * Type that rapresents the action of moving a unit.
+     * For a simplier logic this action chooses a random unit
+     * that can move and with the use of an algorithm, that
+     * finds the shortest path to the enemy's spawn point, it moves
+     * the unit in the correct direction. 
      */
-    MOVEMENT
+    MOVEMENT {
+        /** 
+         * {@inheritDoc}
+         */
+        @Override
+        protected boolean canPerform(final BotPlayer botPlayer) {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'canPerform'");
+        }
+        /** 
+         * {@inheritDoc}
+         */
+        @Override
+        protected Score evaluate(final BotPlayer botPlayer) {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'evaluate'");
+        }
+        /** 
+         * {@inheritDoc}
+         */
+        @Override
+        protected void execute(final BotPlayer botPlayer) {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'execute'");
+        }
+    };
+    private static final int NON_PERFORMABLE_SCORE = -1;
+    private static final int HIGH_PRIORITY_SCORE = 10;
+    /**
+     * Determines if the bot player can perform the move.
+     * @param botPlayer the bot player
+     * @return true if the bot player can perform the move, false otherwise
+     */
+    protected abstract boolean canPerform(BotPlayer botPlayer);
+    /**
+     * Evaluates the move based on the bot player's state.
+     * @param botPlayer the bot player
+     * @return the score of the move
+     */
+    protected abstract Score evaluate(BotPlayer botPlayer);
+    /**
+     * Executes the move.
+     * @param botPlayer the bot player
+     */
+    protected abstract void execute(BotPlayer botPlayer);
+    /**
+     * Utility method that returns a non-performable score if the action can't be performed, 
+     * otherwise calculates the score with the provided scorer.
+     * 
+     * @param botPlayer the bot player
+     * @param scorer a supplier that provides the score if the action can be performed
+     * @return the score of the move
+     */
+    protected Score evaluateOrNonPerformable(final BotPlayer botPlayer, final Supplier<Score> scorer) {
+        return canPerform(botPlayer) ? scorer.get() : new Score(NON_PERFORMABLE_SCORE);
+    }
 }
