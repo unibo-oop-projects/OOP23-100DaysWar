@@ -2,7 +2,7 @@ package it.unibo.the100dayswar.model.fight.impl;
 
 import it.unibo.the100dayswar.model.cell.api.Cell;
 import it.unibo.the100dayswar.model.fight.api.BattleTowerSoldier;
-import it.unibo.the100dayswar.model.unit.api.Soldier;
+import it.unibo.the100dayswar.model.soldier.api.Soldier;
 import it.unibo.the100dayswar.model.tower.api.Tower;
 /**
  * Implementation of the battle between a soldier (attacker) and a tower (defender).
