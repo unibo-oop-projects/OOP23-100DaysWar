@@ -1,9 +1,12 @@
 package it.unibo.the100dayswar.model.bot.api;
 
+import java.io.Serializable;
+
 /**
- * Interface that defines the strategy used to calculate the next moves.
+ * Defines the strategy of a bot player which can 
+ * calculate the best move to make.
  */
-public interface BotStrategy {
+public interface BotStrategy extends Serializable {
     /**
      * Apply the strategy to the bot player.
      * 

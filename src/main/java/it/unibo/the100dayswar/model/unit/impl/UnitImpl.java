@@ -1,8 +1,13 @@
 package it.unibo.the100dayswar.model.unit.impl;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import it.unibo.the100dayswar.commons.patterns.Observer;
+import it.unibo.the100dayswar.commons.utilities.impl.Pair;
+import it.unibo.the100dayswar.model.cell.api.Cell;
 import it.unibo.the100dayswar.model.player.api.Player;
 import it.unibo.the100dayswar.model.unit.api.Unit;
 
@@ -21,6 +26,7 @@ public abstract class UnitImpl implements Unit {
     private final int costToUpgrade;
     private final int maxLevel;
     private final Player owner;
+    private final List<Observer<Pair<Unit, Cell>>> observers;
 
     /**
      * Constructor from the given parameters for a generic Unit.
@@ -43,6 +49,7 @@ public abstract class UnitImpl implements Unit {
         this.costToBuy = costToBuy;
         this.costToUpgrade = costToUpgrade;
         this.maxLevel = maxLevel;
+        this.observers = new ArrayList<>();
     }
     /** 
      * {@inheritDoc}
@@ -129,5 +136,28 @@ public abstract class UnitImpl implements Unit {
             LOGGER.log(Level.SEVERE, CLONE_NOT_SUPPORTED, e);
             throw new IllegalStateException(CLONE_NOT_SUPPORTED, e);
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void attach(final Observer<Pair<Unit, Cell>> observer) {
+        this.observers.add(observer);
+    }
+    /**
+     * {@inheritDoc}
+    */
+    @Override
+    public void detach(final Observer<Pair<Unit, Cell>> observer) {
+        this.observers.remove(observer);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void notifyObservers(final Cell target) {
+        observers.forEach(observer -> observer.update(new Pair<>(this, target)));
     }
 }

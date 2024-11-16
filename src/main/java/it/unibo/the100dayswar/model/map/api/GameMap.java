@@ -5,6 +5,7 @@ import it.unibo.the100dayswar.model.cell.api.Cell;
 
 import java.awt.Dimension;
 import java.io.Serializable;
+import java.util.stream.Stream;
 
 
 /**
@@ -25,4 +26,10 @@ public interface GameMap extends Serializable {
      * @return the size of the map.
      */
     Dimension getSize();
+
+    /**
+     * Get all the cells of the map.
+     * @return a stream of all the cells.
+     */
+    Stream<Cell> getAllCells();
 }
