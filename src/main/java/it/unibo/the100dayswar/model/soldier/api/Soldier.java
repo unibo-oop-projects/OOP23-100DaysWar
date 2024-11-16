@@ -1,6 +1,8 @@
-package it.unibo.the100dayswar.model.unit.api;
+package it.unibo.the100dayswar.model.soldier.api;
 
 import it.unibo.the100dayswar.model.cell.api.Cell;
+import it.unibo.the100dayswar.model.unit.api.Movable;
+import it.unibo.the100dayswar.model.unit.api.Unit;
 
 /**
  * Interface that defines a soldier unit which can attack another
