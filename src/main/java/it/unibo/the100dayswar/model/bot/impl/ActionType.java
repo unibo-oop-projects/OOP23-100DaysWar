@@ -5,8 +5,11 @@ import java.util.Random;
 import java.util.Set;
 import java.util.function.Supplier;
 
+import com.google.common.collect.Iterables;
+
 import it.unibo.the100dayswar.commons.utilities.impl.Score;
 import it.unibo.the100dayswar.model.bot.api.BotPlayer;
+import it.unibo.the100dayswar.model.cell.api.Cell;
 import it.unibo.the100dayswar.model.soldier.api.Soldier;
 import it.unibo.the100dayswar.model.soldier.impl.SoldierImpl;
 import it.unibo.the100dayswar.model.tower.impl.BasicTowerImpl;
@@ -68,7 +71,7 @@ public enum ActionType {
          */
         @Override
         protected boolean canPerform(final BotPlayer botPlayer) {
-            //PlaceHolder --> BasicTower.DEFAULT_COST;
+            // PlaceHolder --> BasicTower.DEFAULT_COST;
             return botPlayer.getBankAccount().getBalance() >= DEFAULT_SCORE;
         }
 
@@ -93,7 +96,8 @@ public enum ActionType {
         @Override
         protected void execute(final BotPlayer botPlayer) {
             if (canPerform(botPlayer)) {
-                // botPlayer.getSpawnPoint() --> PlaceHolder to wait for the implementation of the calculation of
+                // botPlayer.getSpawnPoint() --> PlaceHolder to wait for the implementation of
+                // the calculation of
                 // a random position for the tower near to the bot spawn point.
                 final Unit tower = new BasicTowerImpl(botPlayer, botPlayer.getSpawnPoint());
                 botPlayer.buyUnit(tower);
@@ -149,6 +153,7 @@ public enum ActionType {
     MOVE_UNIT {
         private static final int DEFAULT_SCORE = 4;
         private static final Random RANDOM = new Random();
+
         /**
          * {@inheritDoc}
          */
@@ -170,8 +175,30 @@ public enum ActionType {
          */
         @Override
         protected void execute(final BotPlayer botPlayer) {
-            // TODO Auto-generated method stub
-            throw new UnsupportedOperationException("Unimplemented method 'execute'");
+            final Set<Soldier> soldiers = botPlayer.getSoldiers();
+            if (canPerform(botPlayer)) {
+                final Soldier unitToMove = Iterables.get(soldiers, RANDOM.nextInt(soldiers.size()));
+                final Cell destination = determineDestination(botPlayer, unitToMove);
+
+                if (destination != null) {
+                    botPlayer.moveUnit(unitToMove, destination);
+                }
+            }
+        }
+
+        /**
+         * Determines the destination for the unit using BFS logic.
+         * 
+         * @param botPlayer the bot player
+         * @param unit      the unit to move
+         * @return the destination cell
+         */
+        private Cell determineDestination(final BotPlayer botPlayer, final Unit unit) {
+            //Placeholder
+            botPlayer.makeMove();
+            //PlaceHolder
+            unit.takeDamage(10);
+            return null;
         }
     };
 
