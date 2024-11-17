@@ -1,6 +1,7 @@
 package it.unibo.the100dayswar.model.bot.impl;
 
 import java.util.Comparator;
+import java.util.Random;
 import java.util.Set;
 import java.util.function.Supplier;
 
@@ -146,13 +147,14 @@ public enum ActionType {
      * the unit in the correct direction.
      */
     MOVE_UNIT {
+        private static final int DEFAULT_SCORE = 4;
+        private static final Random RANDOM = new Random();
         /**
          * {@inheritDoc}
          */
         @Override
         protected boolean canPerform(final BotPlayer botPlayer) {
-            // TODO Auto-generated method stub
-            throw new UnsupportedOperationException("Unimplemented method 'canPerform'");
+            return !botPlayer.getSoldiers().isEmpty();
         }
 
         /**
@@ -160,8 +162,7 @@ public enum ActionType {
          */
         @Override
         protected Score evaluate(final BotPlayer botPlayer) {
-            // TODO Auto-generated method stub
-            throw new UnsupportedOperationException("Unimplemented method 'evaluate'");
+            return evaluateOrNonPerformable(botPlayer, () -> new Score(DEFAULT_SCORE));
         }
 
         /**
