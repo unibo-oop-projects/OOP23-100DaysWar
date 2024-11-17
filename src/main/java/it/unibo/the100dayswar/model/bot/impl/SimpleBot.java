@@ -1,11 +1,15 @@
 package it.unibo.the100dayswar.model.bot.impl;
 
+import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import it.unibo.the100dayswar.model.bot.api.BotPlayer;
 import it.unibo.the100dayswar.model.bot.api.BotStrategy;
 import it.unibo.the100dayswar.model.cell.api.BuildableCell;
 import it.unibo.the100dayswar.model.cell.api.Cell;
+import it.unibo.the100dayswar.model.cell.impl.BuildableCellImpl;
 import it.unibo.the100dayswar.model.player.impl.AbstractPlayer;
 
 /**
@@ -14,39 +18,49 @@ import it.unibo.the100dayswar.model.player.impl.AbstractPlayer;
  */
 public class SimpleBot extends AbstractPlayer implements BotPlayer {
     private static final long serialVersionUID = 1L;
-    private static final String BOT_USERNAME = "Bot1";
+    private static final String BOT_NAME = "Bot1";
 
+    private final BuildableCell enemySpawnPoint;
+    private final Set<Cell> gameMapCells;
     private final BotStrategy strategy;
+
     /**
-     * Constructor for the bot player with the given parameters.
+     * Constructor for the bot player.
      *
-     * @param spawn the spawn cell of the bot player
+     * @param spawnPoint      the spawn point of the bot player
+     * @param enemySpawnPoint the spawn point of the enemy
+     * @param gameMapCells    the game map
      */
-    public SimpleBot(final BuildableCell spawn) {
-        super(BOT_USERNAME, spawn);
+    public SimpleBot(final BuildableCell spawnPoint,
+            final BuildableCell enemySpawnPoint,
+            final Stream<Cell> gameMapCells) {
+        super(BOT_NAME, spawnPoint);
         this.strategy = new SimpleBotStrategy();
+        this.enemySpawnPoint = new BuildableCellImpl(enemySpawnPoint);
+        this.gameMapCells = gameMapCells.collect(Collectors.toUnmodifiableSet());
     }
-    /** 
+
+    /**
      * {@inheritDoc}
      */
     @Override
     public void makeMove() {
-        this.strategy.apply(this);
+        strategy.apply(this);
     }
-    /** 
+
+    /**
      * {@inheritDoc}
      */
     @Override
-    public Cell enemySpawnPoint() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'enemySpawnPoint'");
+    public BuildableCell enemySpawnPoint() {
+        return new BuildableCellImpl(enemySpawnPoint);
     }
-    /** 
+
+    /**
      * {@inheritDoc}
      */
     @Override
     public Set<Cell> getAllCells() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getAllCells'");
+        return new HashSet<>(gameMapCells);
     }
 }
