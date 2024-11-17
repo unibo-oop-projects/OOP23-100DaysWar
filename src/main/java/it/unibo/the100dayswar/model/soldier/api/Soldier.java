@@ -1,6 +1,7 @@
 package it.unibo.the100dayswar.model.soldier.api;
 
 import it.unibo.the100dayswar.model.cell.api.Cell;
+import it.unibo.the100dayswar.model.unit.api.Combatant;
 import it.unibo.the100dayswar.model.unit.api.Movable;
 import it.unibo.the100dayswar.model.unit.api.Unit;
 
@@ -17,7 +18,7 @@ public interface Soldier extends Unit, Movable {
      * {@inheritDoc}
      */
     @Override
-    void performAttack();
+    void performAttack(Combatant target);
     /**
      * {@inheritDoc}
      */

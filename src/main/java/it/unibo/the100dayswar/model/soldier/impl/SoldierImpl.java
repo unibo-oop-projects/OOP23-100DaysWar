@@ -2,8 +2,10 @@ package it.unibo.the100dayswar.model.soldier.impl;
 
 
 import it.unibo.the100dayswar.model.cell.api.Cell;
+import it.unibo.the100dayswar.model.fight.impl.GenericBattleCommand;
 import it.unibo.the100dayswar.model.player.api.Player;
 import it.unibo.the100dayswar.model.soldier.api.Soldier;
+import it.unibo.the100dayswar.model.unit.api.Combatant;
 import it.unibo.the100dayswar.model.unit.impl.UnitImpl;
 
 
@@ -30,9 +32,8 @@ public class SoldierImpl extends UnitImpl implements Soldier {
      * {@inheritDoc}
      */
     @Override
-    public void performAttack() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'performAttack'");
+    public void performAttack(Combatant target) {
+        new GenericBattleCommand<>().execute(this, target);
     }
     /**
      * {@inheritDoc}
