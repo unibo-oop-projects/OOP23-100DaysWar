@@ -6,7 +6,6 @@ import java.util.Set;
 import it.unibo.the100dayswar.commons.patterns.Observer;
 import it.unibo.the100dayswar.commons.utilities.api.ResourceGenerator;
 import it.unibo.the100dayswar.model.bankaccount.api.BankAccount;
-import it.unibo.the100dayswar.model.cell.api.BuildableCell;
 import it.unibo.the100dayswar.model.cell.api.Cell;
 import it.unibo.the100dayswar.model.soldier.api.Soldier;
 import it.unibo.the100dayswar.model.tower.api.Tower;
@@ -37,7 +36,7 @@ public interface Player extends Observer<ResourceGenerator> {
      *
      * @return the spawn point of the player
      */
-    BuildableCell getSpawnPoint();
+    Cell getSpawnPoint();
     /**
      * Buys a unit, such as a soldier or tower, and deducts the cost from the player's bank account.
      *

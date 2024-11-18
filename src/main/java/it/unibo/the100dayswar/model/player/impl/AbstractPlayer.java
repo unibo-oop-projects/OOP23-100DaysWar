@@ -32,7 +32,7 @@ public abstract class AbstractPlayer implements Player {
     private final String username;
     private final BankAccount bankAccount;
     private final Set<Unit> units;
-    private final BuildableCell spawnPoint;
+    private final Cell spawnPoint;
     /**
      * Constructor for the human player from the given parameters.
      * 
@@ -125,8 +125,8 @@ public abstract class AbstractPlayer implements Player {
      * {@inheritDoc}
      */
     @Override
-    public BuildableCell getSpawnPoint() {
-        return new BuildableCellImpl(this.spawnPoint);
+    public Cell getSpawnPoint() {
+        return new BuildableCellImpl((BuildableCell) this.spawnPoint);
     }
     /**
      * {@inheritDoc}
