@@ -1,7 +1,7 @@
 package it.unibo.the100dayswar.model.fight.api;
 
+import it.unibo.the100dayswar.model.soldier.api.Soldier;
 import it.unibo.the100dayswar.model.tower.api.Tower;
-import it.unibo.the100dayswar.model.unit.api.Soldier;
 
 /**
  * Interface rappresenting a battle started by a tower against a soldier.
@@ -14,5 +14,5 @@ public interface BattleTowerSoldier extends Battle<Tower, Soldier> {
      * @param defender soldier that defend
      */
     @Override
-    void startFiht(Tower attacker, Soldier defender);
+    void startFight(Tower attacker, Soldier defender);
 }

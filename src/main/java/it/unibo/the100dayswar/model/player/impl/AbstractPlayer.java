@@ -17,10 +17,10 @@ import it.unibo.the100dayswar.model.playeraction.api.GenericPlayerCommand;
 import it.unibo.the100dayswar.model.playeraction.impl.MovementUnitCommand;
 import it.unibo.the100dayswar.model.playeraction.impl.PurchaseUnitCommand;
 import it.unibo.the100dayswar.model.playeraction.impl.UpgradeUnitCommand;
+import it.unibo.the100dayswar.model.soldier.api.Soldier;
 import it.unibo.the100dayswar.model.tower.api.Tower;
 import it.unibo.the100dayswar.model.unit.api.Buyable;
 import it.unibo.the100dayswar.model.unit.api.Movable;
-import it.unibo.the100dayswar.model.unit.api.Soldier;
 import it.unibo.the100dayswar.model.unit.api.Unit;
 
 /**

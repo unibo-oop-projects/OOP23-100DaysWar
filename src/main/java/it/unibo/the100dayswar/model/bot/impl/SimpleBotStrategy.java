@@ -30,7 +30,7 @@ public class SimpleBotStrategy implements BotStrategy {
         decisionMaker.evaluateMoves(botPlayer);
         final Optional<ActionType> bestMove = decisionMaker.getBestMoveType();
         if (bestMove.isPresent()) {
-            bestMove.get(); // Placeholder
+            bestMove.get().execute(botPlayer);
         }
     }
 }

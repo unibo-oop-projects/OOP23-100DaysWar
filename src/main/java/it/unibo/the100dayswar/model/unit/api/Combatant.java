@@ -27,5 +27,5 @@ public interface Combatant {
      * 
      * @throws IllegalArgumentException if the attack is not allowed
      */
-    void performAttack();
+    void performAttack(Combatant target);
 }

@@ -9,6 +9,7 @@ import it.unibo.the100dayswar.commons.patterns.Observer;
 import it.unibo.the100dayswar.commons.utilities.impl.Pair;
 import it.unibo.the100dayswar.model.cell.api.Cell;
 import it.unibo.the100dayswar.model.player.api.Player;
+import it.unibo.the100dayswar.model.unit.api.Combatant;
 import it.unibo.the100dayswar.model.unit.api.Unit;
 
 /**
@@ -76,7 +77,7 @@ public abstract class UnitImpl implements Unit {
      * {@inheritDoc}
      */
     @Override
-    public abstract void performAttack();
+    public abstract void performAttack(Combatant target);
     /** 
      * {@inheritDoc}
      */
