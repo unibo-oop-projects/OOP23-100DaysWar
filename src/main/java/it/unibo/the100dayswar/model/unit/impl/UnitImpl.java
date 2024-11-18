@@ -16,7 +16,6 @@ import it.unibo.the100dayswar.model.unit.api.Unit;
  * units.
  */
 public abstract class UnitImpl implements Unit {
-    private static final int DEFAULT_LEVEL = 1;
     private static final long serialVersionUID = 1L;
 
     private int health;

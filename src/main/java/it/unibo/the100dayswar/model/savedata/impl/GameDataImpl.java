@@ -3,6 +3,7 @@ package it.unibo.the100dayswar.model.savedata.impl;
 import it.unibo.the100dayswar.model.map.api.GameMap;
 import it.unibo.the100dayswar.model.savedata.api.GameData;
 import it.unibo.the100dayswar.model.savedata.api.PlayerData;
+import it.unibo.the100dayswar.model.turn.api.GameTurnManager;
 
 /**
  * Class that saves all the data that need to be serialized.
@@ -13,6 +14,7 @@ public class GameDataImpl implements GameData {
     private final PlayerData playerData1;
     private final PlayerData playerData2;
     private final GameMap gameMap;
+    private final GameTurnManager gameTurnManager;
 
     /**
      * Constructor of GameDataImpl, initializes the object
@@ -21,8 +23,14 @@ public class GameDataImpl implements GameData {
      * @param playerData1 the player to save
      * @param playerData2 the towers of the player to save
      * @param gameMap the map of the current game
+     * @param gameTurnManager the game turn manager of the current game
      */
-    public GameDataImpl(final PlayerData playerData1, final PlayerData playerData2, final GameMap gameMap) {
+    public GameDataImpl(
+            final PlayerData playerData1, 
+            final PlayerData playerData2, 
+            final GameMap gameMap, 
+            final GameTurnManager gameTurnManager) {
+
         if (playerData1.equals(playerData2)) {
             throw new IllegalArgumentException("playerData1 and playerData2 must be different");
         }
@@ -30,7 +38,9 @@ public class GameDataImpl implements GameData {
         this.playerData1 = playerData1;
         this.playerData2 = playerData2;
         this.gameMap = gameMap;
+        this.gameTurnManager = gameTurnManager;
     }
+
 
     /**
      * {@inheritDoc}
@@ -54,5 +64,13 @@ public class GameDataImpl implements GameData {
     @Override
     public GameMap getGameMap() {
         return this.gameMap;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public GameTurnManager getGameTurnManager() {
+        return gameTurnManager;
     }
 }

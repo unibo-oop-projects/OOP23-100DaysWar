@@ -1,6 +1,7 @@
 package it.unibo.the100dayswar.model.tower.impl;
 
 import it.unibo.the100dayswar.model.cell.api.Cell;
+import it.unibo.the100dayswar.model.fight.impl.GenericBattleCommand;
 import it.unibo.the100dayswar.model.player.api.Player;
 import it.unibo.the100dayswar.model.tower.api.Tower;
 import it.unibo.the100dayswar.model.tower.api.TowerType;
@@ -45,7 +46,7 @@ public abstract class AbstractTower extends UnitImpl implements Tower {
      */
     @Override
     public void performAttack(final Combatant target) {
-        // TODO Auto-generated method stub
+        new GenericBattleCommand<>().execute(this, target);
     }
 
     /**
