@@ -1,9 +1,10 @@
 package it.unibo.the100dayswar.model.statistic.impl;
 
 import it.unibo.the100dayswar.model.player.api.Player;
+import it.unibo.the100dayswar.model.soldier.api.Soldier;
 import it.unibo.the100dayswar.model.statistic.api.GameStatistics;
 import it.unibo.the100dayswar.model.tower.api.Tower;
-import it.unibo.the100dayswar.model.unit.api.Soldier;
+
 /**
  * The implementation of the game statistics.
  */
