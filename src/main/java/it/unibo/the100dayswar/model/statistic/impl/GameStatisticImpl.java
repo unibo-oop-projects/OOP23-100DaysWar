@@ -2,6 +2,7 @@ package it.unibo.the100dayswar.model.statistic.impl;
 
 import it.unibo.the100dayswar.model.player.api.Player;
 import it.unibo.the100dayswar.model.statistic.api.GameStatistics;
+import it.unibo.the100dayswar.model.unit.api.Soldier;
 /**
  * The implementation of the game statistics.
  */
@@ -12,8 +13,9 @@ public class GameStatisticImpl implements GameStatistics {
      */
     @Override
     public int getSoldiers(final Player player) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getSoldiers'");
+        return (int) player.getUnits().stream()
+                       .filter(unit -> unit instanceof Soldier)
+                       .count();
     }
 
     /**
