@@ -152,10 +152,13 @@ public class MapManagerImpl implements MapManager {
             playersCells.forEach((p, s) -> {
                 if (p.equals(soldier.getOwner())) {
                     addCell(p, targetCell);
-                } else {
-                    removeCell(p, currentCell);
+                } else if (s.contains(targetCell)) {
+                    removeCell(p, targetCell);
                 }
             });
+            if (!playersCells.containsKey(soldier.getOwner()) || !playersCells.get(soldier.getOwner()).contains(currentCell)) {
+                addCell(soldier.getOwner(), currentCell);
+            }
             if (targetCell instanceof BonusCell) {
                 ((BonusCell) targetCell).notify(soldier.getOwner());
             }
