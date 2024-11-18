@@ -28,9 +28,11 @@ public class GameStatisticImpl implements GameStatistics {
                        .filter(unit -> unit instanceof Tower)
                        .count();
     }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public int getCellsPercentage(Player player) {
+    public int getCellsPercentage(final Player player) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getCellsPercentage'");
     }
