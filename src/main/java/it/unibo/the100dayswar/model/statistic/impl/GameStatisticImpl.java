@@ -29,4 +29,10 @@ public class GameStatisticImpl implements GameStatistics {
                        .count();
     }
 
+    @Override
+    public int getCellsPercentage(Player player) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getCellsPercentage'");
+    }
+
 }

@@ -20,4 +20,10 @@ public interface GameStatistics {
      * @return the number of towers.
      */
     int getTower(Player player);
+    /**
+     * Get the percentage of cells owned by a player.
+     * @param player the player.
+     * @return the percentage of cells owned by the player.
+     */
+    int getCellsPercentage(Player player);
 }
