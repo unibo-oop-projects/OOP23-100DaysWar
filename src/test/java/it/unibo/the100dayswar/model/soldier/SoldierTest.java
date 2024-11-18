@@ -17,14 +17,15 @@ import it.unibo.the100dayswar.model.cell.api.Cell;
 class SoldierTest {
 
     private Soldier soldier;
-    private final Player testPlayer = new HumanPlayerImpl("test", 
-        new BuildableCellImpl(new PositionImpl(1, 1), 
-        true, 
-        true));
+    private Player testPlayer;
 
     @BeforeEach
     void setUp() {
         soldier = new SoldierImpl(testPlayer);
+        testPlayer = new HumanPlayerImpl("test", 
+            new BuildableCellImpl(new PositionImpl(1, 1), 
+            true, 
+            true));
     }
 
     @Test
@@ -36,7 +37,7 @@ class SoldierTest {
     @Test
     void testMove() {
         Cell testCell = new BuildableCellImpl(new PositionImpl(2, 2), true, true);
-        soldier.movementRequest(testCell);
+        soldier.move(testCell);
         assertEquals(testCell, soldier.getPosition());
     }
 

@@ -13,7 +13,8 @@ import it.unibo.the100dayswar.model.unit.api.Combatant;
 import it.unibo.the100dayswar.model.unit.api.Unit;
 
 /**
- * An abstract implementation that contains all the common features of the game units.
+ * An abstract implementation that contains all the common features of the game
+ * units.
  */
 public abstract class UnitImpl implements Unit {
     private static final int DEFAULT_LEVEL = 1;
@@ -32,13 +33,14 @@ public abstract class UnitImpl implements Unit {
     /**
      * Constructor from the given parameters for a generic Unit.
      * 
-     * @param owner the player that owns this unit
-     * @param health health points
-     * @param costToBuy cost to buy
+     * @param owner         the player that owns this unit
+     * @param health        health points
+     * @param costToBuy     cost to buy
      * @param costToUpgrade cost to upgrade
-     * @param maxLevel maximum level
-      */
-    public UnitImpl(final Player owner, final int health, final int costToBuy, final int costToUpgrade, final int maxLevel) {
+     * @param maxLevel      maximum level
+     */
+    public UnitImpl(final Player owner, final int health, final int costToBuy, final int costToUpgrade,
+            final int maxLevel) {
         try {
             this.owner = owner.copy();
         } catch (CloneNotSupportedException e) {
@@ -52,71 +54,76 @@ public abstract class UnitImpl implements Unit {
         this.maxLevel = maxLevel;
         this.observers = new ArrayList<>();
     }
-    /** 
+
+    /**
      * {@inheritDoc}
      */
     @Override
     public int currentHealth() {
         return this.health;
     }
-    /** 
+
+    /**
      * {@inheritDoc}
      */
     @Override
     public void setHealth(final int health) {
         this.health = health;
     }
-    /** 
+
+    /**
      * {@inheritDoc}
      */
     @Override
     public void takeDamage(final int damage) {
         setHealth(this.currentHealth() - damage);
     }
-    /** 
+
+    /**
      * {@inheritDoc}
      */
     @Override
     public abstract void performAttack(Combatant target);
-    /** 
+
+    /**
      * {@inheritDoc}
      */
     @Override
     public int costToBuy() {
         return this.costToBuy;
     }
-    /** 
+
+    /**
      * {@inheritDoc}
      */
     @Override
     public int costToUpgrade() {
         return this.costToUpgrade * this.level();
     }
-    /** 
+
+    /**
      * {@inheritDoc}
      */
     @Override
     public int level() {
         return this.level;
     }
-    /** 
+
+    /**
      * {@inheritDoc}
      */
     @Override
     public boolean canUpgrade() {
         return this.level < this.maxLevel;
     }
-    /** 
+
+    /**
      * {@inheritDoc}
      */
     @Override
-    public void upgrade() {
-        if (!canUpgrade()) {
-            throw new IllegalStateException();
-        }
-        this.level++;
-    }
-    /** 
+    public abstract void upgrade();
+
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -126,7 +133,8 @@ public abstract class UnitImpl implements Unit {
         }
         this.level--;
     }
-    /** 
+
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -146,9 +154,10 @@ public abstract class UnitImpl implements Unit {
     public void attach(final Observer<Pair<Unit, Cell>> observer) {
         this.observers.add(observer);
     }
+
     /**
      * {@inheritDoc}
-    */
+     */
     @Override
     public void detach(final Observer<Pair<Unit, Cell>> observer) {
         this.observers.remove(observer);
