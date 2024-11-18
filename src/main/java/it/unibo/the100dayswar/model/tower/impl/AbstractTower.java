@@ -4,6 +4,7 @@ import it.unibo.the100dayswar.model.cell.api.Cell;
 import it.unibo.the100dayswar.model.player.api.Player;
 import it.unibo.the100dayswar.model.tower.api.Tower;
 import it.unibo.the100dayswar.model.tower.api.TowerType;
+import it.unibo.the100dayswar.model.unit.api.Combatant;
 import it.unibo.the100dayswar.model.unit.impl.UnitImpl;
 
 /**
@@ -43,7 +44,7 @@ public abstract class AbstractTower extends UnitImpl implements Tower {
      * {@inheritDoc}
      */
     @Override
-    public void performAttack() {
+    public void performAttack(final Combatant target) {
         // TODO Auto-generated method stub
     }
 

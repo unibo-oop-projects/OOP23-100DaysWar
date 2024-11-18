@@ -1,7 +1,8 @@
 package it.unibo.the100dayswar.model.fight.impl;
 
+import it.unibo.the100dayswar.model.dice.api.Dice;
+import it.unibo.the100dayswar.model.dice.impl.DiceImpl;
 import it.unibo.the100dayswar.model.fight.api.BattleSoldierSoldier;
-import it.unibo.the100dayswar.model.fight.api.Dice;
 import it.unibo.the100dayswar.model.soldier.api.Soldier;
 import it.unibo.the100dayswar.commons.utilities.impl.Pair;
 

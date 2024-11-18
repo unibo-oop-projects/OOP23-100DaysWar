@@ -16,7 +16,7 @@ public class BasicTowerImpl extends AbstractTower implements BasicTower {
     private static final long serialVersionUID = 1L;
 
     private static final int HEALTH_MULTYPLIER_BASIC = 10;
-    private static final int UPGRADE_MULTYPLIER_BASIC = 2;
+    private static final int UPGRADE_MULTYPLIER_BASIC = 2; 
 
     /**
      * Constructs a basic tower.

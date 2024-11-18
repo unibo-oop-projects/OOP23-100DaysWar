@@ -25,6 +25,8 @@ public interface Combatant {
     /** 
      * Perform the attack of the object.
      * 
+     * @param target the target of the attack
+     * 
      * @throws IllegalArgumentException if the attack is not allowed
      */
     void performAttack(Combatant target);

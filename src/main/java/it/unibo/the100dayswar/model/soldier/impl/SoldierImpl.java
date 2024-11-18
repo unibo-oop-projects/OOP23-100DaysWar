@@ -33,7 +33,7 @@ public class SoldierImpl extends UnitImpl implements Soldier {
      * {@inheritDoc}
      */
     @Override
-    public void performAttack(Combatant target) {
+    public void performAttack(final Combatant target) {
         new GenericBattleCommand<>().execute(this, target);
     }
 
