@@ -43,7 +43,7 @@ public class AdvancedTowerImpl extends AbstractTower implements AdvancedTower {
      */
     @Override
     public void upgrade() {
-        if (this.level() < MAX_LEVEL) {
+        if (this.getLevel() < MAX_LEVEL) {
             this.incrementLevel();
 
             this.setHealth(ADVANCED_HEALTH * HEALTH_MULTYPLIER_ADVANCED);

@@ -50,7 +50,7 @@ public class BasicTowerImpl extends AbstractTower implements BasicTower {
      */
     @Override
     public void upgrade() {
-        if (this.level() < MAX_LEVEL) {
+        if (this.getLevel() < MAX_LEVEL) {
             this.incrementLevel();
 
             this.setHealth(BASIC_HEALTH * HEALTH_MULTYPLIER_BASIC);
