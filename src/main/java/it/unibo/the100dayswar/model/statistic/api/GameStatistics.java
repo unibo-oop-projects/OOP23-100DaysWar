@@ -30,4 +30,11 @@ public interface GameStatistics {
      * @return the percentage of cells owned by the player.
      */
     double getCellsPercentage(Player player, MapManager mapManager, GameMap map);
+
+    /**
+     * Get the balance of a player.
+     * @param player the player.
+     * @return the balance of the player.
+     */
+    int getPlayerBalance(Player player);
 }

@@ -45,4 +45,12 @@ public class GameStatisticImpl implements GameStatistics {
         return totalCells > 0 ? (double) ownedCells / totalCells * 100 : 0.0;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getPlayerBalance(Player player) {
+        return player.getBankAccount().getBalance();
+    }
+
 }
