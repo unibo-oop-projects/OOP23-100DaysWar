@@ -1,4 +1,4 @@
-package it.unibo.the100dayswar.model;
+package it.unibo.the100dayswar.model.cell;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
