@@ -36,20 +36,19 @@ class SoldierTest {
 
     @Test
     void testMove() {
-        Cell testCell = new BuildableCellImpl(new PositionImpl(2, 2), true, true);
+        final Cell testCell = new BuildableCellImpl(new PositionImpl(2, 2), true, true);
         soldier.move(testCell);
         assertEquals(testCell, soldier.getPosition());
     }
 
     @Test
     void testPerformAttack() {
-        Combatant target = new SoldierImpl(testPlayer);
+        final Combatant target = new SoldierImpl(testPlayer);
         soldier.performAttack(target);
         assertEquals(100, target.currentHealth());
     }
 
     @Test
     void testMovementRequest() {
-        
     }
 }

@@ -67,7 +67,7 @@ public class SoldierImpl extends UnitImpl implements Soldier {
     @Override
     public void upgrade() {
         if (this.level() < MAX_LEVEL) {
-            // TODO scrivere un metodo in unit per aumentare il livello
+            this.incrementLevel();
             this.setHealth(DEFAULT_HEALTH + INCREASE_HEALTH * this.level() - 1);
         }
     }
