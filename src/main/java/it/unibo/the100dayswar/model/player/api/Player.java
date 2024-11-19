@@ -6,12 +6,12 @@ import java.util.Set;
 import it.unibo.the100dayswar.commons.patterns.Observer;
 import it.unibo.the100dayswar.commons.utilities.api.ResourceGenerator;
 import it.unibo.the100dayswar.model.bankaccount.api.BankAccount;
-import it.unibo.the100dayswar.model.cell.api.BuildableCell;
 import it.unibo.the100dayswar.model.cell.api.Cell;
+import it.unibo.the100dayswar.model.soldier.api.Soldier;
+import it.unibo.the100dayswar.model.tower.api.Tower;
 import it.unibo.the100dayswar.model.unit.api.Buyable;
 import it.unibo.the100dayswar.model.unit.api.Movable;
 import it.unibo.the100dayswar.model.unit.api.Unit;
-import it.unibo.the100dayswar.model.unit.api.Soldier;
 
 /**
  * Interface that defines the behavior of the possible moves that can be performed by a player.
@@ -36,13 +36,7 @@ public interface Player extends Observer<ResourceGenerator> {
      *
      * @return the spawn point of the player
      */
-    BuildableCell getSpawnPoint();
-    /**
-     * The units owned by the player.
-     * 
-     * @return the units owned by the player
-     */
-    Set<Unit> getUnits();
+    Cell getSpawnPoint();
     /**
      * Buys a unit, such as a soldier or tower, and deducts the cost from the player's bank account.
      *
@@ -85,18 +79,23 @@ public interface Player extends Observer<ResourceGenerator> {
      */
     void addUnit(Unit unit);
     /**
+     * The units owned by the player.
+     * 
+     * @return the units owned by the player
+     */
+    Set<Unit> getUnits();
+    /**
      * Returns the soldiers owned by the player.
      *
      * @return the soldiers owned by the player
      */
     Set<Soldier> getSoldiers();
     /**
-     * Returns a copy of the player.
+     * Returns the towers owned by the player.
      *
-     * @return a copy of the player
-     * @throws CloneNotSupportedException 
+     * @return the towers owned by the player
      */
-    Player copy() throws CloneNotSupportedException;
+    Set<Tower> getTowers();
     /**
      * Method that updates the bank account player with the resource generated.
      * 

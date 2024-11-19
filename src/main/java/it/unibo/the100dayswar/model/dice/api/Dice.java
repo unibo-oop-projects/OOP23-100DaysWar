@@ -1,4 +1,4 @@
-package it.unibo.the100dayswar.model.fight.api;
+package it.unibo.the100dayswar.model.dice.api;
 
 /**
  * Represents a die that can be rolled to generate a random integer result.

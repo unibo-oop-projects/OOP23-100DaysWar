@@ -23,9 +23,9 @@ public interface Unit extends Buyable, Combatant, Observable<Pair<Unit, Cell>> {
   */
   Cell getPosition();
   /**
-     * Notifies all observers of this Soldier that it has moved to a new cell.
-     * 
-     * @param target the cell the Soldier has moved to
-     */
-    void notifyObservers(Cell target);
+  * Notifies all observers of this Soldier that it has moved to a new cell.
+  * 
+  * @param target the cell the Soldier has moved to
+  */
+  void notifyObservers(Cell target);
 }

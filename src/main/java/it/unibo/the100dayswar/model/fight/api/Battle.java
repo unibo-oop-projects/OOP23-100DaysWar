@@ -15,5 +15,5 @@ public interface Battle<T extends Combatant, U extends Combatant> {
      * @param attacker the unit attacker
      * @param defender the unit defender
      */
-    void startFiht(T attacker, U defender);
+    void startFight(T attacker, U defender);
 }

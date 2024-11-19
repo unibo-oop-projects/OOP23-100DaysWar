@@ -2,8 +2,9 @@ package it.unibo.the100dayswar.model.map.impl;
 
 import java.awt.Dimension;
 import java.util.Optional;
+import java.util.stream.Stream;
 import java.util.Arrays;
-
+import java.util.Objects;
 
 import it.unibo.the100dayswar.commons.utilities.api.Position;
 import it.unibo.the100dayswar.model.cell.api.Cell;
@@ -70,5 +71,16 @@ public class GameMapImpl implements GameMap {
      */
     private boolean isInMap(final Position pos) {
         return pos.getX() >= 0 && pos.getX() < size.getWidth() && pos.getY() >= 0 && pos.getY() < size.getHeight();
+    }
+
+    /**
+     * {@inheritDoc}
+     * @return a stream of all the cells.
+     */
+    @Override
+    public Stream<Cell> getAllCells() {
+       return Arrays.stream(map)
+                 .flatMap(Arrays::stream)
+                 .filter(Objects::nonNull);
     }
 }

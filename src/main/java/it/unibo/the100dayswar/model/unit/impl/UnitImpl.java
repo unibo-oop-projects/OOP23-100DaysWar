@@ -2,23 +2,22 @@ package it.unibo.the100dayswar.model.unit.impl;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import it.unibo.the100dayswar.commons.patterns.Observer;
 import it.unibo.the100dayswar.commons.utilities.impl.Pair;
 import it.unibo.the100dayswar.model.cell.api.Cell;
 import it.unibo.the100dayswar.model.player.api.Player;
+import it.unibo.the100dayswar.model.player.impl.PlayerImpl;
+import it.unibo.the100dayswar.model.unit.api.Combatant;
 import it.unibo.the100dayswar.model.unit.api.Unit;
 
 /**
- * An abstract implementation that contains all the common features of the game units.
+ * An abstract implementation that contains all the common features of the game
+ * units.
  */
 public abstract class UnitImpl implements Unit {
-    private static final int DEFAULT_LEVEL = 1;
     private static final long serialVersionUID = 1L;
-    private static final Logger LOGGER = Logger.getLogger(UnitImpl.class.getName());
-    private static final String CLONE_NOT_SUPPORTED = "Clone not supported";
+    private static final int DEFAULT_LEVEL = 1;
 
     private int health;
     private int level;
@@ -31,19 +30,15 @@ public abstract class UnitImpl implements Unit {
     /**
      * Constructor from the given parameters for a generic Unit.
      * 
-     * @param owner the player that owns this unit
-     * @param health health points
-     * @param costToBuy cost to buy
+     * @param owner         the player that owns this unit
+     * @param health        health points
+     * @param costToBuy     cost to buy
      * @param costToUpgrade cost to upgrade
-     * @param maxLevel maximum level
-      */
-    public UnitImpl(final Player owner, final int health, final int costToBuy, final int costToUpgrade, final int maxLevel) {
-        try {
-            this.owner = owner.copy();
-        } catch (CloneNotSupportedException e) {
-            LOGGER.log(Level.SEVERE, CLONE_NOT_SUPPORTED, e);
-            throw new IllegalStateException(CLONE_NOT_SUPPORTED, e);
-        }
+     * @param maxLevel      maximum level
+     */
+    public UnitImpl(final Player owner, final int health, final int costToBuy, final int costToUpgrade,
+            final int maxLevel) {
+        this.owner = new PlayerImpl(owner);
         this.health = health;
         this.level = DEFAULT_LEVEL;
         this.costToBuy = costToBuy;
@@ -51,71 +46,76 @@ public abstract class UnitImpl implements Unit {
         this.maxLevel = maxLevel;
         this.observers = new ArrayList<>();
     }
-    /** 
+
+    /**
      * {@inheritDoc}
      */
     @Override
     public int currentHealth() {
         return this.health;
     }
-    /** 
+
+    /**
      * {@inheritDoc}
      */
     @Override
     public void setHealth(final int health) {
         this.health = health;
     }
-    /** 
+
+    /**
      * {@inheritDoc}
      */
     @Override
     public void takeDamage(final int damage) {
         setHealth(this.currentHealth() - damage);
     }
-    /** 
+
+    /**
      * {@inheritDoc}
      */
     @Override
-    public abstract void performAttack();
-    /** 
+    public abstract void performAttack(Combatant target);
+
+    /**
      * {@inheritDoc}
      */
     @Override
     public int costToBuy() {
         return this.costToBuy;
     }
-    /** 
+
+    /**
      * {@inheritDoc}
      */
     @Override
     public int costToUpgrade() {
         return this.costToUpgrade * this.level();
     }
-    /** 
+
+    /**
      * {@inheritDoc}
      */
     @Override
     public int level() {
         return this.level;
     }
-    /** 
+
+    /**
      * {@inheritDoc}
      */
     @Override
     public boolean canUpgrade() {
         return this.level < this.maxLevel;
     }
-    /** 
+
+    /**
      * {@inheritDoc}
      */
     @Override
-    public void upgrade() {
-        if (!canUpgrade()) {
-            throw new IllegalStateException();
-        }
-        this.level++;
-    }
-    /** 
+    public abstract void upgrade();
+
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -125,17 +125,13 @@ public abstract class UnitImpl implements Unit {
         }
         this.level--;
     }
-    /** 
+
+    /**
      * {@inheritDoc}
      */
     @Override
     public Player getOwner() {
-        try {
-            return this.owner.copy();
-        } catch (CloneNotSupportedException e) {
-            LOGGER.log(Level.SEVERE, CLONE_NOT_SUPPORTED, e);
-            throw new IllegalStateException(CLONE_NOT_SUPPORTED, e);
-        }
+        return new PlayerImpl(this.owner);
     }
 
     /**
@@ -145,9 +141,10 @@ public abstract class UnitImpl implements Unit {
     public void attach(final Observer<Pair<Unit, Cell>> observer) {
         this.observers.add(observer);
     }
+
     /**
      * {@inheritDoc}
-    */
+     */
     @Override
     public void detach(final Observer<Pair<Unit, Cell>> observer) {
         this.observers.remove(observer);

@@ -1,7 +1,8 @@
-package it.unibo.the100dayswar.model.fight.impl;
+package it.unibo.the100dayswar.model.dice.impl;
 
 import java.util.Random;
-import it.unibo.the100dayswar.model.fight.api.Dice;
+
+import it.unibo.the100dayswar.model.dice.api.Dice;
 
 /**
  * Implementation of the {@link Dice} interface that simulates a six-sided die.

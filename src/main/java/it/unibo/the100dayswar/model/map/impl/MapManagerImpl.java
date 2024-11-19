@@ -1,6 +1,10 @@
 package it.unibo.the100dayswar.model.map.impl;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -12,8 +16,9 @@ import it.unibo.the100dayswar.model.cell.impl.BuildableCellImpl;
 import it.unibo.the100dayswar.model.map.api.GameMap;
 import it.unibo.the100dayswar.model.map.api.GameMapBuilder;
 import it.unibo.the100dayswar.model.map.api.MapManager;
+import it.unibo.the100dayswar.model.player.api.Player;
+import it.unibo.the100dayswar.model.soldier.api.Soldier;
 import it.unibo.the100dayswar.model.tower.api.Tower;
-import it.unibo.the100dayswar.model.unit.api.Soldier;
 import it.unibo.the100dayswar.model.unit.api.Unit;
 
 
@@ -26,7 +31,7 @@ public class MapManagerImpl implements MapManager {
     private final GameMapBuilder builder;
     private final GameMap map;
     private static final Logger LOGGER = Logger.getLogger(MapManagerImpl.class.getName());
-
+    private final Map<Player, Set<Cell>> playersCells;
 
     /**
      * the builder of the map.
@@ -35,6 +40,7 @@ public class MapManagerImpl implements MapManager {
     public MapManagerImpl(final GameMapBuilder builder) {
         this.builder = builder;
         map = createMap();
+        playersCells = new HashMap<>();
     }
 
     /**
@@ -66,6 +72,37 @@ public class MapManagerImpl implements MapManager {
             }
             map.getSize();
     }
+
+    /**
+     *{@inheritDoc}
+     */
+    @Override
+    public Map<Player, Set<Cell>> getPlayersCells() {
+        return new HashMap<>(playersCells); 
+    }
+
+    /**
+     * add the cell to the player.
+     * @param player is the player.
+     * @param targetCell is the cell.
+     */
+    private void  addCell(final Player player, final Cell targetCell) {
+        final Set<Cell> cells = playersCells.computeIfAbsent(player, p -> new HashSet<>());
+        cells.add(targetCell); 
+    }
+
+    /**
+     * remove the cell from the player.
+     * @param player is the player.
+     * @param targetCell is the cell.
+     */
+    private void removeCell(final Player player, final Cell targetCell) {
+        final Set<Cell> cells = playersCells.get(player);
+        if (cells != null && cells.contains(targetCell)) {
+            cells.remove(targetCell);
+        }
+    }
+
     /**
      * create a new soldier.
      * @param source is the pair of the soldier and the cell.
@@ -112,6 +149,16 @@ public class MapManagerImpl implements MapManager {
             soldier.move(targetCell);
             currentCell.setOccupation(Optional.empty());
             targetCell.setOccupation(Optional.of(soldier));
+            playersCells.forEach((p, s) -> {
+                if (p.equals(soldier.getOwner())) {
+                    addCell(p, targetCell);
+                } else if (s.contains(targetCell)) {
+                    removeCell(p, targetCell);
+                }
+            });
+            if (!playersCells.containsKey(soldier.getOwner()) || !playersCells.get(soldier.getOwner()).contains(currentCell)) {
+                addCell(soldier.getOwner(), currentCell);
+            }
             if (targetCell instanceof BonusCell) {
                 ((BonusCell) targetCell).notify(soldier.getOwner());
             }

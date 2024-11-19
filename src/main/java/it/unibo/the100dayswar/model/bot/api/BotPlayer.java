@@ -1,5 +1,8 @@
 package it.unibo.the100dayswar.model.bot.api;
 
+import java.util.Set;
+
+import it.unibo.the100dayswar.model.cell.api.Cell;
 import it.unibo.the100dayswar.model.player.api.Player;
 
 /**
@@ -11,15 +14,16 @@ public interface BotPlayer extends Player {
      * according to the current strategy.
      */
     void makeMove();
-    /**
-     * Gets the currrent strategy of the bot player.
-     * @return the strategy of the bot player
-     */
-    BotStrategy getStrategy();
-    /**
-     * Sets the strategy of the bot player.
+    /** 
+     * The method that is used to get the spawn point of the enemy.
      * 
-     * @param strategy the strategy to set
+     * @return the spawn point of the enemy
      */
-    void setStrategy(BotStrategy strategy);
+    Cell enemySpawnPoint();
+    /** 
+     * The method that is used to get all the cells in the game map.
+     * 
+     * @return a set of all the cells in the game map
+     */
+    Set<Cell> getAllCells();
 }
