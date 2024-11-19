@@ -1,5 +1,8 @@
 package it.unibo.the100dayswar.model.statistic.impl;
 
+import java.util.Set;
+
+import it.unibo.the100dayswar.model.map.api.GameMap;
 import it.unibo.the100dayswar.model.map.api.MapManager;
 import it.unibo.the100dayswar.model.player.api.Player;
 import it.unibo.the100dayswar.model.soldier.api.Soldier;
@@ -34,9 +37,12 @@ public class GameStatisticImpl implements GameStatistics {
      * {@inheritDoc}
      */
     @Override
-    public int getCellsPercentage(final Player player, final MapManager mapManager) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getCellsPercentage'");
+    public double getCellsPercentage(final Player player, final MapManager mapManager, final GameMap map) {
+        int ownedCells = mapManager.getPlayersCells()
+                               .getOrDefault(player, Set.of())
+                               .size();
+        long totalCells = map.getAllCells().count();
+        return totalCells > 0 ? (double) ownedCells / totalCells * 100 : 0.0;
     }
 
 }
