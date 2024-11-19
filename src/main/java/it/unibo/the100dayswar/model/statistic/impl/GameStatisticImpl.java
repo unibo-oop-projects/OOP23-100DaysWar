@@ -1,5 +1,6 @@
 package it.unibo.the100dayswar.model.statistic.impl;
 
+import it.unibo.the100dayswar.model.map.api.MapManager;
 import it.unibo.the100dayswar.model.player.api.Player;
 import it.unibo.the100dayswar.model.soldier.api.Soldier;
 import it.unibo.the100dayswar.model.statistic.api.GameStatistics;
@@ -33,7 +34,7 @@ public class GameStatisticImpl implements GameStatistics {
      * {@inheritDoc}
      */
     @Override
-    public int getCellsPercentage(final Player player) {
+    public int getCellsPercentage(final Player player, final MapManager mapManager) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getCellsPercentage'");
     }
