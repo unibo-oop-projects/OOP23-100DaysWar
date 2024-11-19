@@ -26,7 +26,7 @@ import it.unibo.the100dayswar.model.unit.api.Unit;
 /**
  * An abstract class that implements the Player interface.
  */
-public abstract class AbstractPlayer implements Player {
+public class PlayerImpl implements Player {
     private static final long serialVersionUID = 1L;
 
     private final String username;
@@ -39,7 +39,7 @@ public abstract class AbstractPlayer implements Player {
      * @param username the username of the player
      * @param spawnPoint the spawn point of the player
      */
-    public AbstractPlayer(final String username, final BuildableCell spawnPoint) {
+    public PlayerImpl(final String username, final BuildableCell spawnPoint) {
         this.username = username;
         this.bankAccount = new BankAccountImpl();
         this.units = new HashSet<>();
@@ -50,7 +50,7 @@ public abstract class AbstractPlayer implements Player {
      * 
      * @param player player to copy
      */
-    public AbstractPlayer(final Player player) {
+    public PlayerImpl(final Player player) {
         this.username = player.getUsername();
         this.bankAccount = player.getBankAccount();
         this.units = player.getUnits();
@@ -148,17 +148,6 @@ public abstract class AbstractPlayer implements Player {
     @Override
     public void spendResources(final int amount) {
         this.bankAccount.purchase(amount);
-    }
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Player copy() {
-        try {
-            return (AbstractPlayer) super.clone();
-        } catch (CloneNotSupportedException e) {
-            throw new IllegalStateException("Clone not supported", e);
-        }
     }
     /**
      * {@inheritDoc}

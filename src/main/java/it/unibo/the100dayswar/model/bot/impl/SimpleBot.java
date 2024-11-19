@@ -10,13 +10,13 @@ import it.unibo.the100dayswar.model.bot.api.BotStrategy;
 import it.unibo.the100dayswar.model.cell.api.BuildableCell;
 import it.unibo.the100dayswar.model.cell.api.Cell;
 import it.unibo.the100dayswar.model.cell.impl.BuildableCellImpl;
-import it.unibo.the100dayswar.model.player.impl.AbstractPlayer;
+import it.unibo.the100dayswar.model.player.impl.PlayerImpl;
 
 /**
  * A simple implementation of a bot player that uses a strategy
  * to decide which move is the best with simple checks and calculations.
  */
-public class SimpleBot extends AbstractPlayer implements BotPlayer {
+public class SimpleBot extends PlayerImpl implements BotPlayer {
     private static final long serialVersionUID = 1L;
     private static final String BOT_NAME = "Bot1";
 

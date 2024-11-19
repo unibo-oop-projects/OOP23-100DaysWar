@@ -97,13 +97,6 @@ public interface Player extends Observer<ResourceGenerator> {
      */
     Set<Tower> getTowers();
     /**
-     * Returns a copy of the player.
-     *
-     * @return a copy of the player
-     * @throws CloneNotSupportedException 
-     */
-    Player copy() throws CloneNotSupportedException;
-    /**
      * Method that updates the bank account player with the resource generated.
      * 
      * @param generator is the that generate the resource earned.
