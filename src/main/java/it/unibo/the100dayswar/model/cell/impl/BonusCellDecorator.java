@@ -52,7 +52,7 @@ public class BonusCellDecorator extends BuildableCellImpl implements BonusCell {
      */
     @Override
     public void notify(final Observer<ResourceGenerator> observer) {
-        if (isBonusActive()) {
+        if (isBonusActive() && !this.getUnit().isEmpty()) {
             observers.stream().filter(observer::equals).forEach(p -> p.update(this));
             setBonusActive(false);
         }
@@ -62,7 +62,7 @@ public class BonusCellDecorator extends BuildableCellImpl implements BonusCell {
      */
     @Override
     public boolean isBonusActive() {
-        return this.bonusActive && !this.getUnit().isEmpty();
+        return this.bonusActive;
     }
     /** 
      * {@inheritDoc}
