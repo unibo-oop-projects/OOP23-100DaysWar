@@ -1,6 +1,7 @@
 package it.unibo.the100dayswar.model.bot.impl;
 
 import java.util.Comparator;
+import java.util.List;
 import java.util.Random;
 import java.util.Set;
 import java.util.function.Supplier;
@@ -10,6 +11,7 @@ import com.google.common.collect.Iterables;
 import it.unibo.the100dayswar.commons.utilities.impl.Score;
 import it.unibo.the100dayswar.model.bot.api.BotPlayer;
 import it.unibo.the100dayswar.model.cell.api.Cell;
+import it.unibo.the100dayswar.model.pathfinder.impl.BfsPathFinder;
 import it.unibo.the100dayswar.model.soldier.api.Soldier;
 import it.unibo.the100dayswar.model.soldier.impl.SoldierImpl;
 import it.unibo.the100dayswar.model.tower.impl.BasicTowerImpl;
@@ -167,7 +169,12 @@ public enum ActionType {
          */
         @Override
         protected Score evaluate(final BotPlayer botPlayer) {
-            return evaluateOrNonPerformable(botPlayer, () -> new Score(DEFAULT_SCORE));
+            return evaluateOrNonPerformable(botPlayer, () -> {
+                if (botPlayer.getSoldiers().size() >= 2) {
+                    return new Score(DEFAULT_SCORE + 2);
+                }
+                return new Score(DEFAULT_SCORE);
+            });
         }
 
         /**
@@ -194,11 +201,14 @@ public enum ActionType {
          * @return the destination cell
          */
         private Cell determineDestination(final BotPlayer botPlayer, final Unit unit) {
-            //Placeholder
-            botPlayer.makeMove();
-            //PlaceHolder
-            unit.takeDamage(10);
-            return null;
+            final BfsPathFinder pathFinder = new BfsPathFinder(botPlayer.getAllCells());
+
+            final Cell start = unit.getPosition();
+            final Cell destination = botPlayer.enemySpawnPoint();
+
+            final List<Cell> path = pathFinder.findPath(start, destination);
+            //return the second cell of the path because the first one is the start cell
+            return (path.size() > 1) ? path.get(1) : null;
         }
     };
 
