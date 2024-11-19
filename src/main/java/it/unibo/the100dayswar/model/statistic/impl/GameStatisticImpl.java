@@ -52,5 +52,4 @@ public class GameStatisticImpl implements GameStatistics {
     public int getPlayerBalance(final Player player) {
         return player.getBankAccount().getBalance();
     }
-
 }
