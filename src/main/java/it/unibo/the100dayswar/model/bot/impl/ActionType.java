@@ -193,6 +193,7 @@ public enum ActionType {
      */
     MOVE_UNIT {
         private static final int DEFAULT_SCORE = 4;
+        private static final Random RANDOM = new Random();
 
         /**
          * {@inheritDoc}
@@ -220,7 +221,6 @@ public enum ActionType {
          */
         @Override
         protected void execute(final BotPlayer botPlayer) {
-            final Random random = new Random();
             final Set<Soldier> soldiers = botPlayer.getSoldiers();
             if (canPerform(botPlayer)) {
                 // choose a random soldier
