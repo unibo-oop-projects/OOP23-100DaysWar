@@ -49,7 +49,7 @@ public class GameStatisticImpl implements GameStatistics {
      * {@inheritDoc}
      */
     @Override
-    public int getPlayerBalance(Player player) {
+    public int getPlayerBalance(final Player player) {
         return player.getBankAccount().getBalance();
     }
 
