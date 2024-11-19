@@ -69,4 +69,27 @@ public class BankAccountImpl implements BankAccount {
     private boolean canAfford(final int amount) {
         return this.getBalance() >= amount;
     }
+
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean equals(final Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof BankAccountImpl)) {
+            return false;
+        }
+        final BankAccountImpl other = (BankAccountImpl) obj;
+        return this.getBalance() == other.getBalance();
+    }
+
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public int hashCode() {
+        return Integer.hashCode(this.getBalance());
+    }
 }

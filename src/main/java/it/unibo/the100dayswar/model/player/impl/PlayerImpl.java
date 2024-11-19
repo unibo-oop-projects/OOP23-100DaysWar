@@ -2,6 +2,7 @@ package it.unibo.the100dayswar.model.player.impl;
 
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -33,10 +34,11 @@ public class PlayerImpl implements Player {
     private final BankAccount bankAccount;
     private final Set<Unit> units;
     private final Cell spawnPoint;
+
     /**
      * Constructor for the human player from the given parameters.
      * 
-     * @param username the username of the player
+     * @param username   the username of the player
      * @param spawnPoint the spawn point of the player
      */
     public PlayerImpl(final String username, final BuildableCell spawnPoint) {
@@ -45,6 +47,7 @@ public class PlayerImpl implements Player {
         this.units = new HashSet<>();
         this.spawnPoint = new BuildableCellImpl(spawnPoint);
     }
+
     /**
      * Constructor for the human player from the given player.
      * 
@@ -56,7 +59,8 @@ public class PlayerImpl implements Player {
         this.units = player.getUnits();
         this.spawnPoint = player.getSpawnPoint();
     }
-    /** 
+
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -64,7 +68,8 @@ public class PlayerImpl implements Player {
         final GenericPlayerCommand<Unit> command = new PurchaseUnitCommand();
         command.execute(this, unit);
     }
-    /** 
+
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -72,7 +77,8 @@ public class PlayerImpl implements Player {
         final GenericPlayerCommand<Buyable> command = new UpgradeUnitCommand();
         command.execute(this, unit);
     }
-    /** 
+
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -80,13 +86,15 @@ public class PlayerImpl implements Player {
         final GenericPlayerCommand<Pair<Movable, Cell>> command = new MovementUnitCommand();
         command.execute(this, new Pair<>(unit, destination));
     }
-    /** 
+
+    /**
      * {@inheritDoc}
      */
     @Override
     public String getUsername() {
         return String.copyValueOf(this.username.toCharArray());
     }
+
     /**
      * {@inheritDoc}
      */
@@ -94,26 +102,29 @@ public class PlayerImpl implements Player {
     public Set<Unit> getUnits() {
         return Collections.unmodifiableSet(units);
     }
+
     /**
      * {@inheritDoc}
      */
     @Override
     public Set<Soldier> getSoldiers() {
         return units.stream()
-            .filter(u -> u instanceof Soldier)
-            .map(u -> (Soldier) u)
-            .collect(Collectors.toUnmodifiableSet());
+                .filter(u -> u instanceof Soldier)
+                .map(u -> (Soldier) u)
+                .collect(Collectors.toUnmodifiableSet());
     }
+
     /**
      * {@inheritDoc}
      */
     @Override
     public Set<Tower> getTowers() {
         return units.stream()
-            .filter(u -> u instanceof Tower)
-            .map(u -> (Tower) u)
-            .collect(Collectors.toUnmodifiableSet());
+                .filter(u -> u instanceof Tower)
+                .map(u -> (Tower) u)
+                .collect(Collectors.toUnmodifiableSet());
     }
+
     /**
      * {@inheritDoc}
      */
@@ -121,6 +132,7 @@ public class PlayerImpl implements Player {
     public BankAccount getBankAccount() {
         return new BankAccountImpl(this.bankAccount);
     }
+
     /**
      * {@inheritDoc}
      */
@@ -128,6 +140,7 @@ public class PlayerImpl implements Player {
     public Cell getSpawnPoint() {
         return new BuildableCellImpl((BuildableCell) this.spawnPoint);
     }
+
     /**
      * {@inheritDoc}
      */
@@ -135,6 +148,7 @@ public class PlayerImpl implements Player {
     public void earnResources(final int amount) {
         this.bankAccount.earn(amount);
     }
+
     /**
      * {@inheritDoc}
      */
@@ -142,6 +156,15 @@ public class PlayerImpl implements Player {
     public void addUnit(final Unit unit) {
         this.units.add(unit);
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void removeUnit(final Unit unit) {
+        this.units.remove(unit);
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -149,11 +172,49 @@ public class PlayerImpl implements Player {
     public void spendResources(final int amount) {
         this.bankAccount.purchase(amount);
     }
+
     /**
      * {@inheritDoc}
      */
     @Override
     public void update(final ResourceGenerator generator) {
         this.earnResources(generator.getAmount());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String toString() {
+        return "Player [username=" + username
+                + ", bankAccount=" + bankAccount
+                + ", units=" + units
+                + ", spawnPoint=" + spawnPoint + "]";
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(username, bankAccount, units, spawnPoint);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean equals(final Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof PlayerImpl)) {
+            return false;
+        }
+        final PlayerImpl other = (PlayerImpl) obj;
+        return Objects.equals(username, other.username)
+                && Objects.equals(bankAccount, other.bankAccount)
+                && Objects.equals(units, other.units)
+                && Objects.equals(spawnPoint, other.spawnPoint);
     }
 }
