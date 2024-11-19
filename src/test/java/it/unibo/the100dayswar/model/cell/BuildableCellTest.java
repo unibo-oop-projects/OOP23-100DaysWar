@@ -13,11 +13,11 @@ import it.unibo.the100dayswar.model.cell.impl.BuildableCellImpl;
 import it.unibo.the100dayswar.model.player.impl.PlayerImpl;
 import it.unibo.the100dayswar.model.soldier.impl.SoldierImpl;
 
-public class BuildableCellTest {
+class BuildableCellTest {
 
     @Test
     void testIsBuildable() {
-        BuildableCellImpl cell = new BuildableCellImpl(new PositionImpl(0, 0), true, false);
+        final BuildableCellImpl cell = new BuildableCellImpl(new PositionImpl(0, 0), true, false);
 
         assertTrue(cell.isBuildable());
         assertFalse(cell.isSpawn());
@@ -25,12 +25,12 @@ public class BuildableCellTest {
 
     @Test
     void testIsFree() {
-        BuildableCellImpl cell = new BuildableCellImpl(new PositionImpl(0, 1), true, true);
+        final BuildableCellImpl cell = new BuildableCellImpl(new PositionImpl(0, 1), true, true);
 
         assertTrue(cell.isFree());
 
-        PlayerImpl player = new PlayerImpl("Player1", cell);
-        SoldierImpl soldier = new SoldierImpl(player);
+        final PlayerImpl player = new PlayerImpl("Player1", cell);
+        final SoldierImpl soldier = new SoldierImpl(player);
         cell.setOccupation(Optional.of(soldier));
 
         assertFalse(cell.isFree());
@@ -38,12 +38,12 @@ public class BuildableCellTest {
 
     @Test
     void testSetAndGetOccupation() {
-        BuildableCellImpl cell = new BuildableCellImpl(new PositionImpl(0, 2), true, true);
+        final BuildableCellImpl cell = new BuildableCellImpl(new PositionImpl(0, 2), true, true);
 
         assertTrue(cell.getUnit().isEmpty());
 
-        PlayerImpl player = new PlayerImpl("Player1", cell);
-        SoldierImpl soldier = new SoldierImpl(player);
+        final PlayerImpl player = new PlayerImpl("Player1", cell);
+        final SoldierImpl soldier = new SoldierImpl(player);
         cell.setOccupation(Optional.of(soldier));
 
         assertTrue(cell.getUnit().isPresent());
