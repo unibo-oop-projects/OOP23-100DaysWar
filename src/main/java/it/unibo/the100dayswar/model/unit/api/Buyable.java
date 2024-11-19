@@ -21,7 +21,11 @@ public interface Buyable {
      * 
      * @return the level
      */
-    int level();
+    int getLevel();
+    /**
+     * This method is used to set the level of the object.
+     */
+    void setLevel(int level);
     /**
      * This method is used to check if the object can be upgraded.
      * 

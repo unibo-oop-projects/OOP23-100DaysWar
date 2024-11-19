@@ -60,7 +60,7 @@ public class BattleSoldierSoldierImpl implements BattleSoldierSoldier {
       */
     private int calculateRollFromSoldier(final Soldier soldier) {
         int total = 0;
-        for (int i = 0; i < soldier.level(); i++) {
+        for (int i = 0; i < soldier.getLevel(); i++) {
             total += dice.roll();
         }
         return total;
