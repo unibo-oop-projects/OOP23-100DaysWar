@@ -68,7 +68,8 @@ public enum ActionType {
         }
     },
     /**
-     * Type that represents the purchase of a tower.
+     * Type that represents the purchase of a tower in a random 
+     * position near the spawn point so the tower can defend it.
      */
     PURCHASE_TOWER {
         private static final int DEFAULT_SCORE = 1;
@@ -114,22 +115,20 @@ public enum ActionType {
         /**
          * Finds a random cell near the spawn point but not adjacent.
          * 
-         * @param botPlayer The bot player placing the tower.
-         * @return A randomly chosen cell for the tower, or null if no valid cell exists.
+         * @param botPlayer The bot player placing the tower
+         * @return A randomly cell where put the tower on, or null if no valid cell exists
          */
         private Cell findRandomTowerPosition(final BotPlayer botPlayer) {
-            final Cell spawnPoint = botPlayer.getSpawnPoint(); // Spawn point of the bot
-            final List<Cell> allCells = botPlayer.getAllCells().stream().collect(Collectors.toList());
+            final Cell spawnPoint = botPlayer.getSpawnPoint();
             final Random random = new Random();
 
             // Filter cells: near the spawn point but not adjacent, and buildable
-            List<Cell> validCells = allCells.stream()
+            final List<Cell> validCells = botPlayer.getAllCells().stream()
                 .filter(cell -> !cell.isAdiacent(spawnPoint))
                 .filter(cell -> isNearSpawn(cell, spawnPoint))
                 .filter(cell -> cell instanceof BuildableCell)
                 .collect(Collectors.toList());
 
-            // Return a random cell from the valid cells
             return validCells.isEmpty() ? null : validCells.get(random.nextInt(validCells.size()));
         }
 
