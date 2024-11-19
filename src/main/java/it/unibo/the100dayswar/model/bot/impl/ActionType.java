@@ -73,6 +73,7 @@ public enum ActionType {
      */
     PURCHASE_TOWER {
         private static final int DEFAULT_SCORE = 1;
+        private static final Random RANDOM = new Random();
 
         /**
          * {@inheritDoc}
@@ -120,7 +121,6 @@ public enum ActionType {
          */
         private Cell findRandomTowerPosition(final BotPlayer botPlayer) {
             final Cell spawnPoint = botPlayer.getSpawnPoint();
-            final Random random = new Random();
 
             // Filter cells: near the spawn point but not adjacent, and buildable
             final List<Cell> validCells = botPlayer.getAllCells().stream()
@@ -129,7 +129,7 @@ public enum ActionType {
                 .filter(cell -> cell instanceof BuildableCell)
                 .collect(Collectors.toList());
 
-            return validCells.isEmpty() ? null : validCells.get(random.nextInt(validCells.size()));
+            return validCells.isEmpty() ? null : validCells.get(RANDOM.nextInt(validCells.size()));
         }
 
         /**
@@ -193,6 +193,7 @@ public enum ActionType {
      */
     MOVE_UNIT {
         private static final int DEFAULT_SCORE = 4;
+        private static final Random RANDOM = new Random();
 
         /**
          * {@inheritDoc}
@@ -220,11 +221,10 @@ public enum ActionType {
          */
         @Override
         protected void execute(final BotPlayer botPlayer) {
-            final Random random = new Random();
             final Set<Soldier> soldiers = botPlayer.getSoldiers();
             if (canPerform(botPlayer)) {
                 // choose a random soldier
-                final Soldier unitToMove = Iterables.get(soldiers, random.nextInt(soldiers.size()));
+                final Soldier unitToMove = Iterables.get(soldiers, RANDOM.nextInt(soldiers.size()));
                 // using the BFS algorithm to find the next cell in the path to the enemy spawn point
                 final Cell destination = determineDestination(botPlayer, unitToMove);
                 if (destination != null) {

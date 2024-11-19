@@ -24,6 +24,8 @@ public interface Buyable {
     int getLevel();
     /**
      * This method is used to set the level of the object.
+     * 
+     * @param level the level to set
      */
     void setLevel(int level);
     /**

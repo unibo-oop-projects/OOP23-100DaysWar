@@ -17,7 +17,6 @@ import it.unibo.the100dayswar.model.cell.api.Cell;
 
 class SoldierTest {
 
-    
     private Player testPlayer;
     private Soldier soldier;
 
@@ -32,8 +31,8 @@ class SoldierTest {
 
     @Test
     void testInitialization() {
-        assertTrue(testPlayer.getUsername().equals(soldier.getOwner().getUsername()), "The soldier should be owned by the player");
-        assertTrue(testPlayer.getSpawnPoint().getPosition().equals(soldier.getPosition().getPosition()), "The soldier should be spawned in the player's spawn point");
+        assertEquals(testPlayer.getUsername(), soldier.getOwner().getUsername());
+        assertEquals(testPlayer.getSpawnPoint().getPosition(), soldier.getPosition().getPosition());
     }
 
     @Test
@@ -55,11 +54,12 @@ class SoldierTest {
     void testMovementRequest() {
 =======
     void testUpgrade() {
+        final int healthAfterUpgrade = 150;
         assertEquals(1, soldier.getLevel());
         assertEquals(100, soldier.currentHealth());
         soldier.upgrade();
         assertEquals(2, soldier.getLevel());
-        assertEquals(150, soldier.currentHealth());
+        assertEquals(healthAfterUpgrade, soldier.currentHealth());
     }
 
     @Test
