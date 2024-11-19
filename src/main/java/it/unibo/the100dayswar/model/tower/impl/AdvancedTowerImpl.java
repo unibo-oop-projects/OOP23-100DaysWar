@@ -1,12 +1,9 @@
 package it.unibo.the100dayswar.model.tower.impl;
 
-import it.unibo.the100dayswar.commons.patterns.Observer;
-import it.unibo.the100dayswar.commons.utilities.impl.Pair;
 import it.unibo.the100dayswar.model.cell.api.Cell;
 import it.unibo.the100dayswar.model.player.api.Player;
 import it.unibo.the100dayswar.model.tower.api.AdvancedTower;
 import it.unibo.the100dayswar.model.tower.api.TowerType;
-import it.unibo.the100dayswar.model.unit.api.Unit;
 
 /**
  * Class that implements an advanced type of tower extending 
@@ -17,6 +14,11 @@ public class AdvancedTowerImpl extends AbstractTower implements AdvancedTower {
 
     private static final int HEALTH_MULTYPLIER_ADVANCED = 12;
     private static final int UPGRADE_MULTYPLIER_ADVANCED = 2;
+    private static final int DAMAGE_MULTYPLIER_ADVANCED = 2;
+
+    private static final int ADVANCED_HEALTH = TowerType.ADVANCED.getPrice() * HEALTH_MULTYPLIER_ADVANCED;
+    private static final int ADVANCED_UPGRADE = TowerType.ADVANCED.getPrice() * UPGRADE_MULTYPLIER_ADVANCED;
+    private static final int ADVANCED_DAMAGE = TowerType.ADVANCED.getPrice() * UPGRADE_MULTYPLIER_ADVANCED;
 
     /**
      * Constructs an advanced tower.
@@ -25,37 +27,28 @@ public class AdvancedTowerImpl extends AbstractTower implements AdvancedTower {
      * @param position the position of the advanced tower in the map
      */
     public AdvancedTowerImpl(final Player owner, final Cell position) {
-        super(TowerType.ADVANCED, owner,
-        TowerType.ADVANCED.getPrice() * HEALTH_MULTYPLIER_ADVANCED, 
-        position, 
-        TowerType.ADVANCED.getPrice(), 
-        TowerType.ADVANCED.getPrice() * UPGRADE_MULTYPLIER_ADVANCED);
+        super(
+            TowerType.ADVANCED, 
+            owner,
+            ADVANCED_HEALTH, 
+            position, 
+            TowerType.ADVANCED.getPrice(),
+            ADVANCED_UPGRADE,
+            ADVANCED_DAMAGE
+        );
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public int getDamage() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getDamage'");
-    }
+    public void upgrade() {
+        if (this.getLevel() < MAX_LEVEL) {
+            this.incrementLevel();
 
-     /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void attach(final Observer<Pair<Unit, Cell>> observer) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'attach'");
-    }
+            this.setHealth(ADVANCED_HEALTH * HEALTH_MULTYPLIER_ADVANCED);
 
-     /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void detach(final Observer<Pair<Unit, Cell>> observer) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'detach'");
+            this.setDamage(this.getDamage() * DAMAGE_MULTYPLIER_ADVANCED);
+        }
     }
 }

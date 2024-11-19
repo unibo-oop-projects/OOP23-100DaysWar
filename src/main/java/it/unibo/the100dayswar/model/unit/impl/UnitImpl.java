@@ -165,4 +165,12 @@ public abstract class UnitImpl implements Unit {
     public void notifyObservers(final Cell target) {
         observers.forEach(observer -> observer.update(new Pair<>(this, target)));
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void incrementLevel() {
+        this.level++;
+    }
 }

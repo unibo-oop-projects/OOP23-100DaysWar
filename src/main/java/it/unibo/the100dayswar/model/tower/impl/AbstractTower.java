@@ -14,9 +14,16 @@ import it.unibo.the100dayswar.model.unit.impl.UnitImpl;
 public abstract class AbstractTower extends UnitImpl implements Tower {
     private static final long serialVersionUID = 1L;
 
-    private static final int MAX_LEVEL = 4;
+    /**
+     * The the maximum level of the tower.
+     */
+    protected static final int MAX_LEVEL = 4;
     private final TowerType towerType;
     private final Cell position;
+    /**
+     * The damage dealt by the tower.
+     */
+    private int damage;
 
     /**
      * Constructs a Tower with the specified position, level, and tower type.
@@ -27,6 +34,7 @@ public abstract class AbstractTower extends UnitImpl implements Tower {
      * @param position the position of the tower
      * @param costToBuy the cost to buy the tower
      * @param costToUpgrade the cost to upgrade the tower
+     * @param damage the damage of the tower
      */
     public AbstractTower(
         final TowerType towerType, 
@@ -34,11 +42,13 @@ public abstract class AbstractTower extends UnitImpl implements Tower {
         final int health,
         final Cell position,
         final int costToBuy,
-        final int costToUpgrade
+        final int costToUpgrade,
+        final int damage
         ) {
         super(owner, health, costToBuy, costToUpgrade, MAX_LEVEL);
         this.position = position;
         this.towerType = towerType;
+        this.damage = damage;
     }
 
     /**
@@ -61,7 +71,9 @@ public abstract class AbstractTower extends UnitImpl implements Tower {
      * {@inheritDoc}
      */
     @Override
-    public abstract int getDamage();
+    public int getDamage() {
+        return this.damage;
+    }
 
     /**
      * {@inheritDoc}
@@ -75,8 +87,8 @@ public abstract class AbstractTower extends UnitImpl implements Tower {
      * {@inheritDoc}
      */
     @Override
-    public void upgrade() {
-        // TODO Auto-generated method stub
+    public void setDamage(final int damage) {
+        this.damage = damage;
     }
 
     /**
