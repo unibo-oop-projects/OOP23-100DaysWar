@@ -90,15 +90,23 @@ public abstract class UnitImpl implements Unit {
      */
     @Override
     public int costToUpgrade() {
-        return this.costToUpgrade * this.level();
+        return this.costToUpgrade * this.getLevel();
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public int level() {
+    public int getLevel() {
         return this.level;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setLevel(final int level) {
+        this.level = level;
     }
 
     /**

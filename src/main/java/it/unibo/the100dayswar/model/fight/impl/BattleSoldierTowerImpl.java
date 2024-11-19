@@ -15,7 +15,7 @@ public class BattleSoldierTowerImpl implements BattleSoldierTower {
      */
     @Override
     public void startFight(final Soldier attacker, final Tower defender) {
-        final int damage = DEFAULT_DAMAGE * attacker.level();
+        final int damage = DEFAULT_DAMAGE * attacker.getLevel();
         defender.takeDamage(damage);
     }
 }
