@@ -28,4 +28,8 @@ public interface Unit extends Buyable, Combatant, Observable<Pair<Unit, Cell>> {
   * @param target the cell the Soldier has moved to
   */
   void notifyObservers(Cell target);
+  /**
+   * Increment the level of the Unit by one.
+   */
+  void incrementLevel();
 }

@@ -15,9 +15,16 @@ public interface Tower extends Unit {
     int getDamage();
 
     /**
-     * Method that return the type of the tower.
+     * Method that returns the type of the tower.
      * 
      * @return the tower type
      */
     TowerType getTowerType();
+
+    /**
+     * Method that sets the damage of the tower.
+     * 
+     * @param damage the damage of the tower
+     */
+    void setDamage(int damage);
 }
