@@ -33,10 +33,6 @@ class SoldierTest {
     void testInitialization() {
         assertEquals(testPlayer.getUsername(), soldier.getOwner().getUsername());
         assertEquals(testPlayer.getSpawnPoint().getPosition(), soldier.getPosition().getPosition());
-    }
-
-    @Test
-    void testMove() {
         final Cell testCell = new BuildableCellImpl(new PositionImpl(2, 2), true, true);
         soldier.move(testCell);
         assertEquals(testCell, soldier.getPosition());
