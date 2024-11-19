@@ -43,16 +43,6 @@ class SoldierTest {
     }
 
     @Test
-<<<<<<< HEAD
-    void testPerformAttack() {
-        final Combatant target = new SoldierImpl(testPlayer);
-        soldier.performAttack(target);
-        assertEquals(100, target.currentHealth());
-    }
-
-    @Test
-    void testMovementRequest() {
-=======
     void testUpgrade() {
         final int healthAfterUpgrade = 150;
         assertEquals(1, soldier.getLevel());
@@ -68,8 +58,10 @@ class SoldierTest {
         assertEquals(100, soldier.currentHealth());
         assertEquals(100, target.currentHealth());
         soldier.performAttack(target);
-        assertTrue(soldier.currentHealth() == 100 && target.currentHealth() == 0 
-            || soldier.currentHealth() == 0 && target.currentHealth() == 100 );
->>>>>>> 0cf7697 (completed the test of the soldier and fixed some errors)
+        assertTrue(
+            soldier.currentHealth() == 100 && target.currentHealth() == 0 
+            ||
+            soldier.currentHealth() == 0 && target.currentHealth() == 100
+        );
     }
 }

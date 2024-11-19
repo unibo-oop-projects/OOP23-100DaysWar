@@ -66,16 +66,10 @@ public class SoldierImpl extends UnitImpl implements Soldier {
      */
     @Override
     public void upgrade() {
-<<<<<<< HEAD
-        if (this.level() < MAX_LEVEL) {
-            this.incrementLevel();
-            this.setHealth(DEFAULT_HEALTH + INCREASE_HEALTH * this.level() - 1);
-=======
         if (this.canUpgrade()) {
             this.setLevel(this.getLevel() + 1);
             final int increaseFactor = INCREASE_HEALTH * (this.getLevel() - 1);
             this.setHealth(INITIAL_HEALTH + increaseFactor);
->>>>>>> 0cf7697 (completed the test of the soldier and fixed some errors)
         }
     }
 }
