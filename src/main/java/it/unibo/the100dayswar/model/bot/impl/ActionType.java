@@ -5,15 +5,18 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 import com.google.common.collect.Iterables;
 
 import it.unibo.the100dayswar.commons.utilities.impl.Score;
 import it.unibo.the100dayswar.model.bot.api.BotPlayer;
+import it.unibo.the100dayswar.model.cell.api.BuildableCell;
 import it.unibo.the100dayswar.model.cell.api.Cell;
 import it.unibo.the100dayswar.model.pathfinder.impl.BfsPathFinder;
 import it.unibo.the100dayswar.model.soldier.api.Soldier;
 import it.unibo.the100dayswar.model.soldier.impl.SoldierImpl;
+import it.unibo.the100dayswar.model.tower.api.TowerType;
 import it.unibo.the100dayswar.model.tower.impl.BasicTowerImpl;
 import it.unibo.the100dayswar.model.unit.api.Unit;
 
@@ -43,8 +46,10 @@ public enum ActionType {
             return evaluateOrNonPerformable(botPlayer, () -> {
                 final Set<Soldier> soldiers = botPlayer.getSoldiers();
                 if (soldiers.isEmpty()) {
+                    // if the bot has no soldiers, it should buy one
                     return new Score(HIGH_PRIORITY_SCORE);
                 } else if (soldiers.size() >= 3) {
+                    // if the bot has more than 3 soldiers, it should not buy another one
                     return new Score(NON_PERFORMABLE_SCORE);
                 }
                 return new Score(DEFAULT_SCORE);
@@ -73,8 +78,7 @@ public enum ActionType {
          */
         @Override
         protected boolean canPerform(final BotPlayer botPlayer) {
-            // PlaceHolder --> BasicTower.DEFAULT_COST;
-            return botPlayer.getBankAccount().getBalance() >= DEFAULT_SCORE;
+            return botPlayer.getBankAccount().getBalance() >= TowerType.BASIC.getPrice();
         }
 
         /**
@@ -86,6 +90,7 @@ public enum ActionType {
                 final int soldierCount = botPlayer.getSoldiers().size();
                 final int towerCount = botPlayer.getTowers().size();
                 if (towerCount < soldierCount / 2) {
+                    // if the bot has less towers than half of the soldiers, it should buy one
                     return new Score(HIGH_PRIORITY_SCORE);
                 }
                 return new Score(DEFAULT_SCORE);
@@ -98,12 +103,47 @@ public enum ActionType {
         @Override
         protected void execute(final BotPlayer botPlayer) {
             if (canPerform(botPlayer)) {
-                // botPlayer.getSpawnPoint() --> PlaceHolder to wait for the implementation of
-                // the calculation of
-                // a random position for the tower near to the bot spawn point.
-                final Unit tower = new BasicTowerImpl(botPlayer, botPlayer.getSpawnPoint());
-                botPlayer.buyUnit(tower);
+                final Cell towerPosition = findRandomTowerPosition(botPlayer);
+                if (towerPosition != null) {
+                    final Unit tower = new BasicTowerImpl(botPlayer, towerPosition);
+                    botPlayer.buyUnit(tower);
+                }
             }
+        }
+
+        /**
+         * Finds a random cell near the spawn point but not adjacent.
+         * 
+         * @param botPlayer The bot player placing the tower.
+         * @return A randomly chosen cell for the tower, or null if no valid cell exists.
+         */
+        private Cell findRandomTowerPosition(final BotPlayer botPlayer) {
+            final Cell spawnPoint = botPlayer.getSpawnPoint(); // Spawn point of the bot
+            final List<Cell> allCells = botPlayer.getAllCells().stream().collect(Collectors.toList());
+            final Random random = new Random();
+
+            // Filter cells: near the spawn point but not adjacent, and buildable
+            List<Cell> validCells = allCells.stream()
+                .filter(cell -> !cell.isAdiacent(spawnPoint))
+                .filter(cell -> isNearSpawn(cell, spawnPoint))
+                .filter(cell -> cell instanceof BuildableCell)
+                .collect(Collectors.toList());
+
+            // Return a random cell from the valid cells
+            return validCells.isEmpty() ? null : validCells.get(random.nextInt(validCells.size()));
+        }
+
+        /**
+         * Checks if a cell is near the spawn point but not adjacent.
+         * 
+         * @param cell The cell to check.
+         * @param spawnPoint The spawn point of the bot.
+         * @return True if the cell is near but not adjacent, false otherwise.
+         */
+        private boolean isNearSpawn(final Cell cell, final Cell spawnPoint) {
+            final int distance = Math.abs(cell.getPosition().getX() - spawnPoint.getPosition().getX()) 
+                + Math.abs(cell.getPosition().getY() - spawnPoint.getPosition().getY());
+            return distance > 1 && distance <= 3;
         }
     },
     /**
@@ -154,7 +194,6 @@ public enum ActionType {
      */
     MOVE_UNIT {
         private static final int DEFAULT_SCORE = 4;
-        private static final Random RANDOM = new Random();
 
         /**
          * {@inheritDoc}
@@ -182,11 +221,13 @@ public enum ActionType {
          */
         @Override
         protected void execute(final BotPlayer botPlayer) {
+            final Random random = new Random();
             final Set<Soldier> soldiers = botPlayer.getSoldiers();
             if (canPerform(botPlayer)) {
-                final Soldier unitToMove = Iterables.get(soldiers, RANDOM.nextInt(soldiers.size()));
+                // choose a random soldier
+                final Soldier unitToMove = Iterables.get(soldiers, random.nextInt(soldiers.size()));
+                // using the BFS algorithm to find the next cell in the path to the enemy spawn point
                 final Cell destination = determineDestination(botPlayer, unitToMove);
-
                 if (destination != null) {
                     botPlayer.moveUnit(unitToMove, destination);
                 }
