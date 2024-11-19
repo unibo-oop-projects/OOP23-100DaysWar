@@ -38,10 +38,10 @@ public class GameStatisticImpl implements GameStatistics {
      */
     @Override
     public double getCellsPercentage(final Player player, final MapManager mapManager, final GameMap map) {
-        int ownedCells = mapManager.getPlayersCells()
+        final int ownedCells = mapManager.getPlayersCells()
                                .getOrDefault(player, Set.of())
                                .size();
-        long totalCells = map.getAllCells().count();
+        final long totalCells = map.getAllCells().count();
         return totalCells > 0 ? (double) ownedCells / totalCells * 100 : 0.0;
     }
 

@@ -72,6 +72,14 @@ public abstract class AbstractTower extends UnitImpl implements Tower {
     }
 
     /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void upgrade() {
+        // TODO Auto-generated method stub
+    }
+
+    /**
      * Gets the MAX_LEVEL of the tower.
      * 
      * @return the MAX_LEVEL of the tower

@@ -1,8 +1,9 @@
 package it.unibo.the100dayswar.model.savedata.impl;
 
 import it.unibo.the100dayswar.model.map.api.GameMap;
+import it.unibo.the100dayswar.model.player.api.Player;
+import it.unibo.the100dayswar.model.player.impl.PlayerImpl;
 import it.unibo.the100dayswar.model.savedata.api.GameData;
-import it.unibo.the100dayswar.model.savedata.api.PlayerData;
 import it.unibo.the100dayswar.model.turn.api.GameTurnManager;
 
 /**
@@ -11,8 +12,8 @@ import it.unibo.the100dayswar.model.turn.api.GameTurnManager;
 public class GameDataImpl implements GameData {
     private static final long serialVersionUID = 1L;
 
-    private final PlayerData playerData1;
-    private final PlayerData playerData2;
+    private final Player playerData1;
+    private final Player playerData2;
     private final GameMap gameMap;
     private final GameTurnManager gameTurnManager;
 
@@ -21,13 +22,13 @@ public class GameDataImpl implements GameData {
      * with the given params.
      * 
      * @param playerData1 the player to save
-     * @param playerData2 the towers of the player to save
+     * @param playerData2 the player to save
      * @param gameMap the map of the current game
      * @param gameTurnManager the game turn manager of the current game
      */
     public GameDataImpl(
-            final PlayerData playerData1, 
-            final PlayerData playerData2, 
+            final Player playerData1, 
+            final Player playerData2, 
             final GameMap gameMap, 
             final GameTurnManager gameTurnManager) {
 
@@ -35,27 +36,26 @@ public class GameDataImpl implements GameData {
             throw new IllegalArgumentException("playerData1 and playerData2 must be different");
         }
 
-        this.playerData1 = playerData1;
-        this.playerData2 = playerData2;
+        this.playerData1 = new PlayerImpl(playerData1);
+        this.playerData2 = new PlayerImpl(playerData2);
         this.gameMap = gameMap;
         this.gameTurnManager = gameTurnManager;
     }
-
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public PlayerData getPlayerData1() {
-        return this.playerData1;
+    public Player getPlayerData1() {
+        return new PlayerImpl(playerData1);
     }
 
      /**
      * {@inheritDoc}
      */
     @Override
-    public PlayerData getPlayerData2() {
-        return this.playerData2;
+    public Player getPlayerData2() {
+        return new PlayerImpl(playerData2);
     }
 
     /**

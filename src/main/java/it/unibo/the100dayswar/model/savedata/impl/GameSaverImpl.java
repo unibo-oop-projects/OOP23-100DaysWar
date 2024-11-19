@@ -16,6 +16,7 @@ public class GameSaverImpl implements GameSaver {
     private static final Logger LOGGER = Logger.getLogger(GameSaverImpl.class.getName());
     private static final String PATH = System.getProperty("user.home") + "/saved_game.ser";
     private final String customPath;
+
     private final GameDataImpl currentGameData;
 
     /**
