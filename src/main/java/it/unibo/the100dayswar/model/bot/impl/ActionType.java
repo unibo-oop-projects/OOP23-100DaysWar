@@ -160,7 +160,7 @@ public enum ActionType {
         protected boolean canPerform(final BotPlayer botPlayer) {
             return botPlayer.getUnits().stream()
                     .anyMatch(unit -> unit.canUpgrade()
-                            && botPlayer.getBankAccount().getBalance() >= unit.costToUpgrade());
+                            && botPlayer.getBankAccount().getBalance() >= unit.getUpgradeCost());
         }
 
         /**
@@ -179,7 +179,7 @@ public enum ActionType {
             if (canPerform(botPlayer)) {
                 botPlayer.getUnits().stream()
                         .filter(Unit::canUpgrade)
-                        .min(Comparator.comparingInt(Unit::costToUpgrade))
+                        .min(Comparator.comparingInt(Unit::getUpgradeCost))
                         .ifPresent(botPlayer::upgradeUnit);
             }
         }

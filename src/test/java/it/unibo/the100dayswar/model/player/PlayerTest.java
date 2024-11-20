@@ -154,7 +154,7 @@ class PlayerTest {
         player.buyUnit(soldier);
         assertTrue(player.getUnits().contains(soldier),
                 "The unit should be added to the units set after purchase");
-        final int unitCost = soldier.costToBuy();
+        final int unitCost = soldier.getBuyCost();
         final int expectedBalance = 1000 + earnedAmount - unitCost;
         assertEquals(expectedBalance, player.getBankAccount().getBalance(),
                 "The balance should decrease by the cost of the purchased unit");
@@ -164,12 +164,10 @@ class PlayerTest {
     void testUpgradeUnit() {
         final Buyable soldier = new SoldierImpl(player);
         player.addUnit((Unit) soldier);
-        final int earnedAmount = 1000;
-        player.earnResources(earnedAmount);
-        final int upgradeCost = soldier.costToUpgrade();
+        final int costToUpgradeToLevel2 = soldier.getUpgradeCost();
         player.upgradeUnit(soldier);
         final int expectedLevel = 2;
-        final int expectedBalance = 1000 + earnedAmount - upgradeCost;
+        final int expectedBalance = 1000 - costToUpgradeToLevel2;
         assertEquals(expectedLevel, soldier.getLevel(),
                 "The unit's level should increase after the upgrade");
         assertEquals(expectedBalance, player.getBankAccount().getBalance(),

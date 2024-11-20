@@ -18,7 +18,7 @@ public class UpgradeUnitCommand implements UpgradeCommand {
         if (!player.getUnits().contains(unit)) {
             throw new IllegalArgumentException("The unit is not owned by the player.");
         }
-        player.spendResources(unit.costToUpgrade());
+        player.spendResources(unit.getUpgradeCost());
         unit.upgrade();
     }
 }

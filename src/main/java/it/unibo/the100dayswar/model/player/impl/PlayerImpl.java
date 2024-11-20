@@ -196,14 +196,6 @@ public class PlayerImpl implements Player {
      * {@inheritDoc}
      */
     @Override
-    public int hashCode() {
-        return Objects.hash(username, bankAccount, units, spawnPoint);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public boolean equals(final Object obj) {
         if (this == obj) {
             return true;
@@ -215,6 +207,14 @@ public class PlayerImpl implements Player {
         return Objects.equals(username, other.username)
                 && Objects.equals(bankAccount, other.bankAccount)
                 && Objects.equals(units, other.units)
-                && Objects.equals(spawnPoint, other.spawnPoint);
+                && Objects.equals(spawnPoint.getPosition(), other.spawnPoint.getPosition());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(username, bankAccount, units, spawnPoint.getPosition());
     }
 }

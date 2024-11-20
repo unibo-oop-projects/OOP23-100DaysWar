@@ -81,7 +81,7 @@ public abstract class UnitImpl implements Unit {
      * {@inheritDoc}
      */
     @Override
-    public int costToBuy() {
+    public int getBuyCost() {
         return this.costToBuy;
     }
 
@@ -89,7 +89,7 @@ public abstract class UnitImpl implements Unit {
      * {@inheritDoc}
      */
     @Override
-    public int costToUpgrade() {
+    public int getUpgradeCost() {
         return this.costToUpgrade * this.getLevel();
     }
 
