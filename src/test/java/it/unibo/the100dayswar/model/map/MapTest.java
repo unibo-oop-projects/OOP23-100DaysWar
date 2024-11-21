@@ -60,4 +60,17 @@ class MapTest {
         assertNotNull(mapManager.getPlayersCells(), "The map manager should manage players' cells.");
         assertTrue(mapManager.getPlayersCells().isEmpty(), "No players should own cells initially.");
     }
+
+    @Test
+    void testPlayerOwnership() {
+        final BuildableCellImpl spawnCell = new BuildableCellImpl(new PositionImpl(0, 0), true, true);
+        final PlayerImpl player = new PlayerImpl("Player1", spawnCell);
+        final SoldierImpl soldier = new SoldierImpl(player);
+
+        mapManager.update(new Pair<>(soldier, spawnCell));
+
+        final Set<Cell> playerCells = mapManager.getPlayersCells().get(player);
+        assertNotNull(playerCells, "The player should own some cells.");
+        assertTrue(playerCells.contains(spawnCell), "The player should own their spawn cell.");
+    }
 }
