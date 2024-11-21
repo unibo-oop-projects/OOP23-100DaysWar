@@ -57,6 +57,7 @@ public class BonusCellDecorator extends BuildableCellImpl implements BonusCell {
             setBonusActive(false);
         }
     }
+
     /** 
      * {@inheritDoc}
      */
@@ -64,11 +65,35 @@ public class BonusCellDecorator extends BuildableCellImpl implements BonusCell {
     public boolean isBonusActive() {
         return this.bonusActive;
     }
+
     /** 
      * {@inheritDoc}
      */
     @Override
     public void setBonusActive(final boolean bonusActive) {
         this.bonusActive = bonusActive;
+    }
+
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean equals(final Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof BonusCellDecorator)) {
+            return false;
+        }
+        final BonusCellDecorator other = (BonusCellDecorator) obj;
+        return super.equals(obj) && this.bonusActive == other.bonusActive;
+    }
+
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public int hashCode() {
+        return super.hashCode() + Boolean.hashCode(this.bonusActive);
     }
 }
