@@ -40,7 +40,7 @@ class PlayerTest {
         final int expectedInitialBalance = 1000;
         assertEquals(PLAYER_NAME, player.getUsername(),
                 "The player's name should be correctly initialized");
-        assertEquals(spawnPoint.getPosition(), player.getSpawnPoint().getPosition(),
+        assertEquals(spawnPoint, player.getSpawnPoint(),
                 "The player's spawn point should match the one provided");
         assertEquals(expectedInitialBalance, player.getBankAccount().getBalance(),
                 "The player's bank account balance should start at 1000");
