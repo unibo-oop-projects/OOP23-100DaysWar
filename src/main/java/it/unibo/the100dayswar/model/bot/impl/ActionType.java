@@ -44,15 +44,9 @@ public enum ActionType {
         @Override
         protected Score evaluate(final BotPlayer botPlayer) {
             return evaluateOrNonPerformable(botPlayer, () -> {
-                final Set<Soldier> soldiers = botPlayer.getSoldiers();
-                if (soldiers.isEmpty()) {
-                    // if the bot has no soldiers, it should buy one
-                    return new Score(HIGH_PRIORITY_SCORE);
-                } else if (soldiers.size() >= 3) {
-                    // if the bot has more than 3 soldiers, it should not buy another one
-                    return new Score(NON_PERFORMABLE_SCORE);
-                }
-                return new Score(DEFAULT_SCORE);
+                final int soldierCount = botPlayer.getSoldiers().size();
+                // Higher priority if soldier count is low
+                return new Score(DEFAULT_SCORE + Math.max(0, 3 - soldierCount));
             });
         }
 
@@ -92,7 +86,7 @@ public enum ActionType {
                 final int soldierCount = botPlayer.getSoldiers().size();
                 final int towerCount = botPlayer.getTowers().size();
                 if (towerCount < soldierCount / 2) {
-                    // if the bot has less towers than half of the soldiers, it should buy one
+                    // If the bot has less towers than half of the soldiers, it should buy one
                     return new Score(HIGH_PRIORITY_SCORE);
                 }
                 return new Score(DEFAULT_SCORE);
@@ -151,16 +145,19 @@ public enum ActionType {
      * with the lowest cost to upgrade.
      */
     UPGRADE_UNIT {
-        private static final int DEFAULT_SCORE = 2;
-
+        private static final int BASE_SCORE = 2;
+        private static final int INCREMENT_SCORE = 5;
+        // These numbers are used to give to upgrade move a high priority every 5 turns
+        private static final int UPGRADE_TURN_INTERVAL = 5;
+        private int actionCounter;
         /**
          * {@inheritDoc}
          */
         @Override
         protected boolean canPerform(final BotPlayer botPlayer) {
             return botPlayer.getUnits().stream()
-                    .anyMatch(unit -> unit.canUpgrade()
-                            && botPlayer.getBankAccount().getBalance() >= unit.getUpgradeCost());
+                    .filter(Unit::canUpgrade)
+                    .anyMatch(unit -> botPlayer.getBankAccount().getBalance() >= unit.getUpgradeCost());
         }
 
         /**
@@ -168,7 +165,13 @@ public enum ActionType {
          */
         @Override
         protected Score evaluate(final BotPlayer botPlayer) {
-            return evaluateOrNonPerformable(botPlayer, () -> new Score(DEFAULT_SCORE));
+            return evaluateOrNonPerformable(botPlayer, () -> {
+                actionCounter++;
+                if (actionCounter >= UPGRADE_TURN_INTERVAL) {
+                    return new Score(BASE_SCORE + INCREMENT_SCORE);
+                }
+                return new Score(BASE_SCORE);
+            });
         }
 
         /**
@@ -177,6 +180,7 @@ public enum ActionType {
         @Override
         protected void execute(final BotPlayer botPlayer) {
             if (canPerform(botPlayer)) {
+                actionCounter = 0;
                 botPlayer.getUnits().stream()
                         .filter(Unit::canUpgrade)
                         .min(Comparator.comparingInt(Unit::getUpgradeCost))
@@ -208,12 +212,7 @@ public enum ActionType {
          */
         @Override
         protected Score evaluate(final BotPlayer botPlayer) {
-            return evaluateOrNonPerformable(botPlayer, () -> {
-                if (botPlayer.getSoldiers().size() >= 2) {
-                    return new Score(DEFAULT_SCORE + 2);
-                }
-                return new Score(DEFAULT_SCORE);
-            });
+            return evaluateOrNonPerformable(botPlayer, () -> new Score(DEFAULT_SCORE));
         }
 
         /**
@@ -223,9 +222,9 @@ public enum ActionType {
         protected void execute(final BotPlayer botPlayer) {
             final Set<Soldier> soldiers = botPlayer.getSoldiers();
             if (canPerform(botPlayer)) {
-                // choose a random soldier
+                // Choose a random soldier
                 final Soldier unitToMove = Iterables.get(soldiers, RANDOM.nextInt(soldiers.size()));
-                // using the BFS algorithm to find the next cell in the path to the enemy spawn point
+                // Using the BFS algorithm to find the next cell in the path to the enemy spawn point
                 final Cell destination = determineDestination(botPlayer, unitToMove);
                 if (destination != null) {
                     botPlayer.moveUnit(unitToMove, destination);
@@ -247,7 +246,7 @@ public enum ActionType {
             final Cell destination = botPlayer.enemySpawnPoint();
 
             final List<Cell> path = pathFinder.findPath(start, destination);
-            //return the second cell of the path because the first one is the start cell
+            // Return the second cell of the path because the first one is the start cell
             return (path.size() > 1) ? path.get(1) : null;
         }
     };
