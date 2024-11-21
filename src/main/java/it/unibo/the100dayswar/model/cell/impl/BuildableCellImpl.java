@@ -1,5 +1,6 @@
 package it.unibo.the100dayswar.model.cell.impl;
 
+import java.util.Objects;
 import java.util.Optional;
 import it.unibo.the100dayswar.commons.utilities.api.Position;
 import it.unibo.the100dayswar.model.cell.api.BuildableCell;
@@ -80,5 +81,30 @@ public class BuildableCellImpl extends CellAbs implements BuildableCell {
     @Override
     public void setOccupation(final Optional<Unit> unit) {
         this.currentUnit = unit.orElse(null);
+    }
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean equals(final Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof BuildableCellImpl)) {
+            return false;
+        }
+        final BuildableCellImpl other = (BuildableCellImpl) obj;
+        return Objects.equals(this.getPosition(), other.getPosition())
+                && Objects.equals(this.getUnit(), other.getUnit())
+                && Objects.equals(this.isSpawn, other.isSpawn)
+                && Objects.equals(this.isBuildable, other.isBuildable);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.getPosition(), this.getUnit(), this.isSpawn, this.isBuildable);
     }
 }
