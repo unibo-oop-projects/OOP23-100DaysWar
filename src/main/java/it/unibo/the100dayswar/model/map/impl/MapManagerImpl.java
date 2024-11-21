@@ -115,6 +115,10 @@ public class MapManagerImpl implements MapManager {
             LOGGER.log(Level.WARNING, "Target cell is not a spawn cell for soldier creation: {0}", targetCell.getPosition());
             throw new IllegalStateException("Target cell is not a spawn cell for soldier creation.");
         }
+        if (targetCell.getUnit().isPresent()) {
+            LOGGER.log(Level.WARNING, "Spawn cell is already occupied by another unit: {0}", targetCell.getPosition());
+            throw new IllegalStateException("Spawn cell is already occupied by another unit.");
+        }
         currentCell.setOccupation(Optional.of(soldier));
         addCell(soldier.getOwner(), targetCell);
     }
