@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import it.unibo.the100dayswar.commons.utilities.impl.Pair;
 import it.unibo.the100dayswar.commons.utilities.impl.PositionImpl;
@@ -104,6 +105,22 @@ class MapTest {
         assertFalse(startCell.getUnit().isPresent(), "The start cell should no longer contain the soldier.");
     }
 
+    @Test
+void testSpawnCellOccupiedByNewSoldier() {
+    final BuildableCellImpl spawnCell = new BuildableCellImpl(new PositionImpl(0, 0), true, true);
+    final PlayerImpl player = new PlayerImpl("FirstPlayer", spawnCell);
+    final SoldierImpl firstSoldier = new SoldierImpl(player);
+
+    mapManager.update(new Pair<>(firstSoldier, spawnCell));
+
+    final SoldierImpl secondSoldier = new SoldierImpl(player);
+    final Exception exception = assertThrows(IllegalStateException.class, () -> {
+        mapManager.update(new Pair<>(secondSoldier, spawnCell));
+    });
+
+    assertEquals("Spawn cell is occupied. Move the existing soldier before creating a new one.", exception.getMessage());
+    assertTrue(spawnCell.getUnit().isPresent(), "The spawn cell should still contain the first soldier.");
+}
     @Test
     void testObstaclePlacement() {
         final long obstacleCount = gameMap.getAllCells()
