@@ -89,4 +89,18 @@ class MapTest {
 
         assertFalse(((BonusCellDecorator) bonusCell).isBonusActive(), "The bonus cell should be inactive after activation.");
     }
+
+    @Test
+    void testSoldierMovement() {
+        final BuildableCellImpl startCell = new BuildableCellImpl(new PositionImpl(0, 0), true, true);
+        final BuildableCellImpl targetCell = new BuildableCellImpl(new PositionImpl(0, 1), true, false);
+        final PlayerImpl player = new PlayerImpl("Player1", startCell);
+        final SoldierImpl soldier = new SoldierImpl(player);
+
+        mapManager.update(new Pair<>(soldier, startCell));
+        mapManager.update(new Pair<>(soldier, targetCell));
+
+        assertTrue(targetCell.getUnit().isPresent(), "The target cell should now contain the soldier.");
+        assertFalse(startCell.getUnit().isPresent(), "The start cell should no longer contain the soldier.");
+    }
 }
