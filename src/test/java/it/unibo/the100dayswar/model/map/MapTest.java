@@ -73,4 +73,20 @@ class MapTest {
         assertNotNull(playerCells, "The player should own some cells.");
         assertTrue(playerCells.contains(spawnCell), "The player should own their spawn cell.");
     }
+
+    @Test
+    void testBonusCellActivation() {
+        final Cell bonusCell = gameMap.getAllCells()
+                .filter(cell -> cell instanceof BonusCellDecorator)
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException("No bonus cells found in the map."));
+        final BuildableCellImpl baseCell = (BuildableCellImpl) bonusCell;
+        final PlayerImpl player = new PlayerImpl("Player1", baseCell);
+        final SoldierImpl soldier = new SoldierImpl(player);
+
+        baseCell.setOccupation(Optional.of(soldier));
+        ((BonusCellDecorator) bonusCell).notify(player);
+
+        assertFalse(((BonusCellDecorator) bonusCell).isBonusActive(), "The bonus cell should be inactive after activation.");
+    }
 }
