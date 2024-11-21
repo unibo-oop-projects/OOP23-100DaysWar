@@ -106,12 +106,14 @@ class MapTest {
     }
 
     @Test
-void testSpawnCellOccupiedByNewSoldier() {
+    void testSpawnCellOccupiedByNewSoldier() {
     final BuildableCellImpl spawnCell = new BuildableCellImpl(new PositionImpl(0, 0), true, true);
     final PlayerImpl player = new PlayerImpl("FirstPlayer", spawnCell);
     final SoldierImpl firstSoldier = new SoldierImpl(player);
 
     mapManager.update(new Pair<>(firstSoldier, spawnCell));
+
+    assertTrue(spawnCell.getUnit().isPresent(), "The spawn cell should contain the first soldier.");
 
     final SoldierImpl secondSoldier = new SoldierImpl(player);
     final Exception exception = assertThrows(IllegalStateException.class, () -> {
