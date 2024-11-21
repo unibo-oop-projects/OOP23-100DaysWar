@@ -54,4 +54,10 @@ class MapTest {
         assertTrue(hasSpawn, "The map should contain at least one spawn cell.");
     }
 
+    @Test
+    void testMapManagerInitialization() {
+        assertNotNull(mapManager, "The map manager should be initialized.");
+        assertNotNull(mapManager.getPlayersCells(), "The map manager should manage players' cells.");
+        assertTrue(mapManager.getPlayersCells().isEmpty(), "No players should own cells initially.");
+    }
 }
