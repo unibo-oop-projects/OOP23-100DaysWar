@@ -116,6 +116,7 @@ public class MapManagerImpl implements MapManager {
             throw new IllegalStateException("Target cell is not a spawn cell for soldier creation.");
         }
         currentCell.setOccupation(Optional.of(soldier));
+        addCell(soldier.getOwner(), targetCell);
     }
 
     /**
@@ -171,7 +172,9 @@ public class MapManagerImpl implements MapManager {
      * @return true if the soldier is new.
      */
     private boolean isNewSoldier(final Pair<Unit, Cell> source) {
-        return source.getFirst() instanceof Soldier && source.getFirst().getPosition().equals(source.getSecond());
+        return source.getFirst() instanceof Soldier
+        && source.getSecond().equals(((Soldier) source.getFirst()).getPosition())
+        && ((Soldier) source.getFirst()).getPosition().isSpawn();
     }
 
     /**
@@ -189,6 +192,7 @@ public class MapManagerImpl implements MapManager {
      * @return true if the soldier wants to move.
      */
     private boolean isSoldierWantsToMove(final Pair<Unit, Cell> source) {
-        return source.getFirst() instanceof Soldier && !source.getFirst().getPosition().equals(source.getSecond());
+        return source.getFirst() instanceof Soldier
+        && !source.getFirst().getPosition().equals(source.getSecond());
     }
 }
