@@ -28,14 +28,15 @@ public enum ActionType {
      * Type that represents the purchase of a soldier.
      */
     PURCHASE_SOLDIER {
-        private static final int DEFAULT_SCORE = 3;
+        private static final int DEFAULT_SCORE = 2;
 
         /**
          * {@inheritDoc}
          */
         @Override
         protected boolean canPerform(final BotPlayer botPlayer) {
-            return botPlayer.getBankAccount().getBalance() >= Soldier.DEFAULT_COST;
+            return botPlayer.getBankAccount().getBalance() >= Soldier.DEFAULT_COST
+                || !botPlayer.getSpawnPoint().isFree();
         }
 
         /**
