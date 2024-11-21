@@ -103,4 +103,13 @@ class MapTest {
         assertTrue(targetCell.getUnit().isPresent(), "The target cell should now contain the soldier.");
         assertFalse(startCell.getUnit().isPresent(), "The start cell should no longer contain the soldier.");
     }
+
+    @Test
+    void testObstaclePlacement() {
+        final long obstacleCount = gameMap.getAllCells()
+                .filter(cell -> !((BuildableCellImpl) cell).isBuildable())
+                .count();
+
+        assertTrue(obstacleCount > 0, "There should be obstacles placed in the map.");
+    }
 }
