@@ -1,7 +1,7 @@
 package it.unibo.the100dayswar.model.map.api;
 
 import it.unibo.the100dayswar.commons.utilities.api.Position;
-import it.unibo.the100dayswar.model.cell.api.Cell;
+import it.unibo.the100dayswar.model.cell.impl.CellImpl;
 
 import java.awt.Dimension;
 import java.io.Serializable;
@@ -18,7 +18,7 @@ public interface GameMap extends Serializable {
      * @param position is the coordinate(x,y).
      * @return The cell at (x, y).
      */
-    Cell getCell(Position position);
+    CellImpl getCell(Position position);
 
     /** 
      * 
@@ -31,5 +31,5 @@ public interface GameMap extends Serializable {
      * Get all the cells of the map.
      * @return a stream of all the cells.
      */
-    Stream<Cell> getAllCells();
+    Stream<CellImpl> getAllCells();
 }

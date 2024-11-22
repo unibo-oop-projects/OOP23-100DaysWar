@@ -2,9 +2,8 @@ package it.unibo.the100dayswar.model.map.impl;
 
 import it.unibo.the100dayswar.commons.utilities.api.Position;
 import it.unibo.the100dayswar.commons.utilities.impl.PositionImpl;
-import it.unibo.the100dayswar.model.cell.api.Cell;
-import it.unibo.the100dayswar.model.cell.impl.BonusCellDecorator;
-import it.unibo.the100dayswar.model.cell.impl.BuildableCellImpl;
+import it.unibo.the100dayswar.model.cell.impl.BonusCellImpl;
+import it.unibo.the100dayswar.model.cell.impl.CellImpl;
 import it.unibo.the100dayswar.model.map.api.GameMap;
 import it.unibo.the100dayswar.model.map.api.GameMapBuilder;
 
@@ -21,7 +20,7 @@ public class GameMapBuilderImpl implements GameMapBuilder {
 
     private final int width;
     private final int height;
-    private final Cell[][] grid;
+    private final CellImpl[][] grid;
     private final Random random = new Random();
 
     /**
@@ -32,7 +31,7 @@ public class GameMapBuilderImpl implements GameMapBuilder {
     public GameMapBuilderImpl(final int width, final int height) {
         this.width = width;
         this.height = height;
-        this.grid = new Cell[width][height];
+        this.grid = new CellImpl[width][height];
     }
 
     /**
@@ -43,7 +42,7 @@ public class GameMapBuilderImpl implements GameMapBuilder {
     public GameMapBuilder initializeBuildableCells() {
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
-                grid[x][y] = new BuildableCellImpl(new PositionImpl(x, y), true, false);
+                grid[x][y] = new CellImpl(new PositionImpl(x, y), true, false);
             }
         }
         return this;
@@ -57,8 +56,8 @@ public class GameMapBuilderImpl implements GameMapBuilder {
     public GameMapBuilder addSpawnCells() {
         final int spawn1 = random.nextInt(width);
         final int spawn2 = random.nextInt(width);
-        grid[0][spawn1] = new BuildableCellImpl(new PositionImpl(0, spawn1), true, true);
-        grid[height - 1][spawn2] = new BuildableCellImpl(new PositionImpl(width - 1, spawn2), true, true);
+        grid[0][spawn1] = new CellImpl(new PositionImpl(0, spawn1), true, true);
+        grid[height - 1][spawn2] = new CellImpl(new PositionImpl(width - 1, spawn2), true, true);
         return this;
     }
 
@@ -76,8 +75,8 @@ public class GameMapBuilderImpl implements GameMapBuilder {
             if (grid[x][y].isSpawn()) { 
                 continue;
             }
-           final BuildableCellImpl tempObstacle = new BuildableCellImpl(new PositionImpl(x, y), false, false);
-           final BuildableCellImpl originalCell = (BuildableCellImpl) grid[x][y];
+           final CellImpl tempObstacle = new CellImpl(new PositionImpl(x, y), false, false);
+           final CellImpl originalCell = (CellImpl) grid[x][y];
             grid[x][y] = tempObstacle;
 
             if (isPathAvailable()) {
@@ -103,7 +102,7 @@ public class GameMapBuilderImpl implements GameMapBuilder {
             final int y = random.nextInt(height);
 
             if (!grid[x][y].isSpawn() && grid[x][y].isFree()) { 
-                grid[x][y] = new BonusCellDecorator(new BuildableCellImpl(new PositionImpl(x, y), true, false));
+                grid[x][y] = new BonusCellImpl(new CellImpl(new PositionImpl(x, y), true, false));
                 bonusCellAdded++;
             }
         }
@@ -164,7 +163,7 @@ public class GameMapBuilderImpl implements GameMapBuilder {
 
             for (final Position neighbor : getNeighbors(current)) {
                 if (!visited[neighbor.getY()][neighbor.getX()]
-                    && ((BuildableCellImpl) grid[neighbor.getY()][neighbor.getX()]).isBuildable()) {
+                    && ((CellImpl) grid[neighbor.getY()][neighbor.getX()]).isBuildable()) {
                         visited[neighbor.getY()][neighbor.getX()] = true;
                         queue.add(neighbor);
                     }

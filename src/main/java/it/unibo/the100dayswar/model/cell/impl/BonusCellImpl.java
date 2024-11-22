@@ -10,7 +10,7 @@ import it.unibo.the100dayswar.model.cell.api.BonusCell;
 /**
  * Implementation of the BonusCell interface.
  */
-public class BonusCellDecorator extends BuildableCellImpl implements BonusCell {
+public class BonusCellImpl extends CellImpl implements BonusCell {
     private static final long serialVersionUID = 1L;
 
     private final Set<Observer<ResourceGenerator>> observers;
@@ -21,7 +21,7 @@ public class BonusCellDecorator extends BuildableCellImpl implements BonusCell {
      * 
      * @param decoratedCell is the cell that will be decorated.
      */
-    public BonusCellDecorator(final BuildableCellImpl decoratedCell) {
+    public BonusCellImpl(final CellImpl decoratedCell) {
         super(decoratedCell);
         this.observers = new HashSet<>();
         this.bonusActive = true;
@@ -82,10 +82,10 @@ public class BonusCellDecorator extends BuildableCellImpl implements BonusCell {
         if (this == obj) {
             return true;
         }
-        if (!(obj instanceof BonusCellDecorator)) {
+        if (!(obj instanceof BonusCellImpl)) {
             return false;
         }
-        final BonusCellDecorator other = (BonusCellDecorator) obj;
+        final BonusCellImpl other = (BonusCellImpl) obj;
         return super.equals(obj) && this.bonusActive == other.bonusActive;
     }
 

@@ -1,29 +1,44 @@
 package it.unibo.the100dayswar.model.cell.impl;
 
+import java.util.Objects;
+import java.util.Optional;
+
 import it.unibo.the100dayswar.commons.utilities.api.Position;
 import it.unibo.the100dayswar.commons.utilities.impl.PositionImpl;
 import it.unibo.the100dayswar.model.cell.api.Cell;
+import it.unibo.the100dayswar.model.unit.api.Unit;
 /**
  * Class that model the concept of a generic cell.
  */
-public abstract class CellAbs implements Cell {
+public  class CellImpl implements Cell {
     private static final long serialVersionUID = 1L;
 
     private final Position position;
+    private final boolean isBuildable;
+    private final boolean isSpawn;
+    private transient Unit currentUnit;
 
     /**
-     * Constructor from coordinates.
+     * Constructor from coordinates and cell characteristics.
      * @param coordinate coordinates to identify the cell in the map.
+     * @param isBuildable true if the cell can be built upon.
+     * @param isSpawn true if the cell is a spawn point.
      */
-    public CellAbs(final Position coordinate) {
+    public CellImpl(final Position coordinate,final boolean isBuildable, final boolean isSpawn) {
         this.position = new PositionImpl(coordinate);
+        this.isBuildable = isBuildable;
+        this.isSpawn = isSpawn;
+        this.currentUnit = null;
     }
     /**
      * Constructor from a cell.
      * @param cell  identify the cell in the map.
      */
-    public CellAbs(final Cell cell) {
+    public CellImpl(final CellImpl cell) {
         this.position = cell.getPosition();
+        this.isBuildable = cell.isBuildable();
+        this.isSpawn = cell.isSpawn();
+        this.currentUnit = null;
     }
 
     /**
@@ -38,13 +53,64 @@ public abstract class CellAbs implements Cell {
      * {@inheritDoc}
      */
     @Override
-    public abstract boolean isFree();
+    public boolean isBuildable() {
+        return this.isBuildable;
+    }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public abstract boolean isSpawn();
+    public boolean isSpawn() {
+        return this.isSpawn;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Optional<Unit> getUnit() {
+        return Optional.ofNullable(this.currentUnit);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isFree() {
+        return this.currentUnit == null && this.isBuildable;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setOccupation(final Optional<Unit> unit) {
+        this.currentUnit = unit.orElse(null);
+    }
+
+    @Override
+    public boolean equals(final Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof CellImpl)) {
+            return false;
+        }
+        final CellImpl other = (CellImpl) obj;
+        return Objects.equals(this.getPosition(), other.getPosition())
+                && Objects.equals(this.getUnit(), other.getUnit())
+                && Objects.equals(this.isSpawn, other.isSpawn)
+                && Objects.equals(this.isBuildable, other.isBuildable);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.getPosition(), this.getUnit(), this.isSpawn, this.isBuildable);
+    }
 
     /**
      * 

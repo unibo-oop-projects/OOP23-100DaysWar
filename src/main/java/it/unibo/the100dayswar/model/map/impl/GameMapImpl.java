@@ -7,7 +7,7 @@ import java.util.Arrays;
 import java.util.Objects;
 
 import it.unibo.the100dayswar.commons.utilities.api.Position;
-import it.unibo.the100dayswar.model.cell.api.Cell;
+import it.unibo.the100dayswar.model.cell.impl.CellImpl;
 import it.unibo.the100dayswar.model.map.api.GameMap;
 
 
@@ -18,7 +18,7 @@ public class GameMapImpl implements GameMap {
     private static final long serialVersionUID = 1L;
 
     private final Dimension size;
-    private final Cell[][] map;
+    private final CellImpl[][] map;
 
     /**
      * The constructor of the map.
@@ -26,9 +26,9 @@ public class GameMapImpl implements GameMap {
      * @param height is the height.
      * @param grid is the matrix of Cells.
      */
-    public GameMapImpl(final int width, final int height, final Cell[][] grid) {
+    public GameMapImpl(final int width, final int height, final CellImpl[][] grid) {
         this.size = new Dimension(width, height);
-        this.map = new Cell[grid.length][];
+        this.map = new CellImpl[grid.length][];
         for (int i = 0; i < grid.length; i++) {
             this.map[i] = Arrays.copyOf(grid[i], grid[i].length);
         }
@@ -40,7 +40,7 @@ public class GameMapImpl implements GameMap {
      * @return the Cell in that specific position or error if the position in not valid.
      */
     @Override
-    public Cell getCell(final Position position) {
+    public CellImpl getCell(final Position position) {
         return getCellByPosition(position).orElseThrow(() -> new IllegalArgumentException("Invalid position: " + position));
     }
 
@@ -57,7 +57,7 @@ public class GameMapImpl implements GameMap {
      * @param position is the postion (x,y) of the cell.
      * @return the cell if in that position exisit a cell.
      */
-    private Optional<Cell> getCellByPosition(final Position position) {
+    private Optional<CellImpl> getCellByPosition(final Position position) {
         if (!isInMap(position)) {
             return Optional.empty();
         }
@@ -78,7 +78,7 @@ public class GameMapImpl implements GameMap {
      * @return a stream of all the cells.
      */
     @Override
-    public Stream<Cell> getAllCells() {
+    public Stream<CellImpl> getAllCells() {
        return Arrays.stream(map)
                  .flatMap(Arrays::stream)
                  .filter(Objects::nonNull);

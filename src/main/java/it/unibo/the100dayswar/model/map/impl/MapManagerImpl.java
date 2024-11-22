@@ -10,16 +10,14 @@ import java.util.logging.Logger;
 
 import it.unibo.the100dayswar.commons.utilities.impl.Pair;
 import it.unibo.the100dayswar.model.cell.api.BonusCell;
-import it.unibo.the100dayswar.model.cell.api.BuildableCell;
-import it.unibo.the100dayswar.model.cell.api.Cell;
-import it.unibo.the100dayswar.model.cell.impl.BuildableCellImpl;
+import it.unibo.the100dayswar.model.cell.impl.CellImpl;
 import it.unibo.the100dayswar.model.map.api.GameMap;
 import it.unibo.the100dayswar.model.map.api.GameMapBuilder;
 import it.unibo.the100dayswar.model.map.api.MapManager;
 import it.unibo.the100dayswar.model.player.api.Player;
 import it.unibo.the100dayswar.model.soldier.api.Soldier;
 import it.unibo.the100dayswar.model.tower.api.Tower;
-import it.unibo.the100dayswar.model.unit.api.Unit;
+import it.unibo.the100dayswar.model.unit.impl.UnitImpl;
 
 
 /**
@@ -31,7 +29,7 @@ public class MapManagerImpl implements MapManager {
     private final GameMapBuilder builder;
     private final GameMap map;
     private static final Logger LOGGER = Logger.getLogger(MapManagerImpl.class.getName());
-    private final Map<Player, Set<Cell>> playersCells;
+    private final Map<Player, Set<CellImpl>> playersCells;
 
     /**
      * the builder of the map.
@@ -60,7 +58,7 @@ public class MapManagerImpl implements MapManager {
      * map.getsize for fixing intermediate error by the unusing of map object.
      */
     @Override
-    public void update(final Pair<Unit, Cell> source) {
+    public void update(final Pair<UnitImpl, CellImpl> source) {
             if (isSoldierWantsToMove(source)) {
                 soldierMovement(source);
             }
@@ -77,7 +75,7 @@ public class MapManagerImpl implements MapManager {
      *{@inheritDoc}
      */
     @Override
-    public Map<Player, Set<Cell>> getPlayersCells() {
+    public Map<Player, Set<CellImpl>> getPlayersCells() {
         return new HashMap<>(playersCells); 
     }
 
@@ -86,8 +84,8 @@ public class MapManagerImpl implements MapManager {
      * @param player is the player.
      * @param targetCell is the cell.
      */
-    private void  addCell(final Player player, final Cell targetCell) {
-        final Set<Cell> cells = playersCells.computeIfAbsent(player, p -> new HashSet<>());
+    private void  addCell(final Player player, final CellImpl targetCell) {
+        final Set<CellImpl> cells = playersCells.computeIfAbsent(player, p -> new HashSet<>());
         cells.add(targetCell); 
     }
 
@@ -96,8 +94,8 @@ public class MapManagerImpl implements MapManager {
      * @param player is the player.
      * @param targetCell is the cell.
      */
-    private void removeCell(final Player player, final Cell targetCell) {
-        final Set<Cell> cells = playersCells.get(player);
+    private void removeCell(final Player player, final CellImpl targetCell) {
+        final Set<CellImpl> cells = playersCells.get(player);
         if (cells != null && cells.contains(targetCell)) {
             cells.remove(targetCell);
         }
@@ -107,11 +105,11 @@ public class MapManagerImpl implements MapManager {
      * create a new soldier.
      * @param source is the pair of the soldier and the cell.
      */
-    private void createSoldier(final Pair<Unit, Cell> source) {
+    private void createSoldier(final Pair<UnitImpl, CellImpl> source) {
         final Soldier soldier = (Soldier) source.getFirst();
-        final BuildableCell currentCell = (BuildableCellImpl) soldier.getPosition();
-        final BuildableCell targetCell = (BuildableCellImpl) source.getSecond();
-        if (!((BuildableCell) source.getSecond()).isSpawn()) {
+        final CellImpl currentCell = (CellImpl) soldier.getPosition();
+        final CellImpl targetCell = (CellImpl) source.getSecond();
+        if (!((CellImpl) source.getSecond()).isSpawn()) {
             LOGGER.log(Level.WARNING, "Target cell is not a spawn cell for soldier creation: {0}", targetCell.getPosition());
             throw new IllegalStateException("Target cell is not a spawn cell for soldier creation.");
         }
@@ -127,10 +125,10 @@ public class MapManagerImpl implements MapManager {
      * create a new tower.
      * @param source is the pair of the tower and the cell.
      */
-    private void createTower(final Pair<Unit, Cell> source) {
+    private void createTower(final Pair<UnitImpl, CellImpl> source) {
         final Tower tower = (Tower) source.getFirst();
-        final BuildableCellImpl targetCell = (BuildableCellImpl) source.getSecond();
-        final BuildableCell currentCell = (BuildableCellImpl) tower.getPosition();
+        final CellImpl targetCell = (CellImpl) source.getSecond();
+        final CellImpl currentCell = (CellImpl) tower.getPosition();
         if (!targetCell.isBuildable()) {
             LOGGER.log(Level.WARNING, "Target cell is not buildable for tower placement: {0}", targetCell.getPosition());
             throw new IllegalStateException("Target cell is not buildable for tower placement.");
@@ -142,10 +140,10 @@ public class MapManagerImpl implements MapManager {
      * move the soldier.
      * @param source is the pair of the soldier and the cell.
      */
-    private void soldierMovement(final Pair<Unit, Cell> source) {
+    private void soldierMovement(final Pair<UnitImpl, CellImpl> source) {
         final Soldier soldier = (Soldier) source.getFirst();
-        final BuildableCellImpl targetCell = (BuildableCellImpl) source.getSecond();
-        final BuildableCell currentCell = (BuildableCellImpl) soldier.getPosition();
+        final CellImpl targetCell = (CellImpl) source.getSecond();
+        final CellImpl currentCell = (CellImpl) soldier.getPosition();
         if (!targetCell.isFree()) {
             LOGGER.log(Level.WARNING, "Target cell is not free for soldier movement: {0}", targetCell.getPosition());
             throw new IllegalStateException("Target cell is not free for soldier movement.");
@@ -175,7 +173,7 @@ public class MapManagerImpl implements MapManager {
      * @param source is the pair of the soldier and the cell.
      * @return true if the soldier is new.
      */
-    private boolean isNewSoldier(final Pair<Unit, Cell> source) {
+    private boolean isNewSoldier(final Pair<UnitImpl, CellImpl> source) {
         return source.getFirst() instanceof Soldier
         && source.getSecond().equals(((Soldier) source.getFirst()).getPosition())
         && ((Soldier) source.getFirst()).getPosition().isSpawn();
@@ -186,7 +184,7 @@ public class MapManagerImpl implements MapManager {
      * @param source is the pair of the unit and the cell.
      * @return true if the unit is a tower.
      */
-    private boolean isTower(final Pair<Unit, Cell> source) {
+    private boolean isTower(final Pair<UnitImpl, CellImpl> source) {
         return source.getFirst() instanceof Tower && source.getFirst().getPosition().equals(source.getSecond());
     }
 
@@ -195,7 +193,7 @@ public class MapManagerImpl implements MapManager {
      * @param source is the pair of the soldier and the cell.
      * @return true if the soldier wants to move.
      */
-    private boolean isSoldierWantsToMove(final Pair<Unit, Cell> source) {
+    private boolean isSoldierWantsToMove(final Pair<UnitImpl, CellImpl> source) {
         return source.getFirst() instanceof Soldier
         && !source.getFirst().getPosition().equals(source.getSecond());
     }
