@@ -125,9 +125,7 @@ public class MapManagerImpl implements MapManager {
             throw new IllegalStateException("Spawn cell is occupied. Move the existing soldier before creating a new one.");
         }
         map.setOccupationOnCell((targetCell), Optional.of(soldier));
-        if(!playersCells.containsKey(soldier.getOwner())) {
-            addCell(soldier.getOwner(), targetCell);
-        }
+        addCell(soldier.getOwner(), targetCell);
     }
 
     /**
@@ -148,7 +146,7 @@ public class MapManagerImpl implements MapManager {
                 if (p.equals(tower.getOwner())) {
                     addCell(p, targetCell);
                 } else if (s.contains(targetCell)) {
-                removeCell(p, targetCell);
+                    removeCell(p, targetCell);
                 }
             });
         } else {

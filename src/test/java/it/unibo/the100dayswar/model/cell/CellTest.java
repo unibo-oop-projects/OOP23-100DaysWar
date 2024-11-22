@@ -9,15 +9,18 @@ import org.junit.jupiter.api.Test;
 import java.util.Optional;
 
 import it.unibo.the100dayswar.commons.utilities.impl.PositionImpl;
-import it.unibo.the100dayswar.model.cell.impl.BuildableCellImpl;
+import it.unibo.the100dayswar.model.cell.impl.CellImpl;
+import it.unibo.the100dayswar.model.cell.api.Cell;
 import it.unibo.the100dayswar.model.player.impl.PlayerImpl;
+import it.unibo.the100dayswar.model.player.api.Player;
 import it.unibo.the100dayswar.model.soldier.impl.SoldierImpl;
+import it.unibo.the100dayswar.model.soldier.api.Soldier;
 
-class BuildableCellTest {
+class CellTest {
 
     @Test
     void testIsBuildable() {
-        final BuildableCellImpl cell = new BuildableCellImpl(new PositionImpl(0, 0), true, false);
+        final Cell cell = new CellImpl(new PositionImpl(0, 0), true, false);
 
         assertTrue(cell.isBuildable());
         assertFalse(cell.isSpawn());
@@ -25,12 +28,12 @@ class BuildableCellTest {
 
     @Test
     void testIsFree() {
-        final BuildableCellImpl cell = new BuildableCellImpl(new PositionImpl(0, 1), true, true);
+        final Cell cell = new CellImpl(new PositionImpl(0, 1), true, true);
 
         assertTrue(cell.isFree());
 
-        final PlayerImpl player = new PlayerImpl("Player1", cell);
-        final SoldierImpl soldier = new SoldierImpl(player);
+        final Player player = new PlayerImpl("Player1", cell);
+        final Soldier soldier = new SoldierImpl(player);
         cell.setOccupation(Optional.of(soldier));
 
         assertFalse(cell.isFree());
@@ -38,12 +41,12 @@ class BuildableCellTest {
 
     @Test
     void testSetAndGetOccupation() {
-        final BuildableCellImpl cell = new BuildableCellImpl(new PositionImpl(0, 2), true, true);
+        final Cell cell = new CellImpl(new PositionImpl(0, 2), true, true);
 
         assertTrue(cell.getUnit().isEmpty());
 
-        final PlayerImpl player = new PlayerImpl("Player1", cell);
-        final SoldierImpl soldier = new SoldierImpl(player);
+        final Player player = new PlayerImpl("Player1", cell);
+        final Soldier soldier = new SoldierImpl(player);
         cell.setOccupation(Optional.of(soldier));
 
         assertTrue(cell.getUnit().isPresent());

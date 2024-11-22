@@ -7,15 +7,15 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import it.unibo.the100dayswar.commons.utilities.impl.Pair;
-import it.unibo.the100dayswar.commons.utilities.impl.PositionImpl;
-import it.unibo.the100dayswar.model.cell.impl.BuildableCellImpl;
+import it.unibo.the100dayswar.model.cell.api.BonusCell;
 import it.unibo.the100dayswar.model.cell.api.Cell;
 import it.unibo.the100dayswar.model.map.impl.GameMapBuilderImpl;
 import it.unibo.the100dayswar.model.map.impl.GameMapImpl;
 import it.unibo.the100dayswar.model.map.impl.MapManagerImpl;
+import it.unibo.the100dayswar.model.player.api.Player;
 import it.unibo.the100dayswar.model.player.impl.PlayerImpl;
 import it.unibo.the100dayswar.model.soldier.impl.SoldierImpl;
-import it.unibo.the100dayswar.model.cell.impl.BonusCellDecorator;
+import it.unibo.the100dayswar.model.soldier.api.Soldier;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -31,6 +31,14 @@ class MapTest {
     private static final int OBSTACLE_COUNT = 5;
     private GameMapImpl gameMap;
     private MapManagerImpl mapManager;
+    private PlayerImpl player1;
+    private PlayerImpl player2;
+    private SoldierImpl soldier1;
+    private SoldierImpl soldier2;
+    private SoldierImpl soldier3;
+    private Cell spawnCell;
+    private Cell targetCell;
+    private Cell bonusCell;
 
     @BeforeEach
     void setUp() {
@@ -42,6 +50,23 @@ class MapTest {
                   .addObstacles(OBSTACLE_COUNT);
         gameMap = (GameMapImpl) mapBuilder.build();
         mapManager = new MapManagerImpl(mapBuilder);
+        spawnCell = (Cell) gameMap.getAllCells()
+                .filter(cell -> cell instanceof Cell && ((Cell) cell).isSpawn())
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException("No spawn cells found in the map."));
+        targetCell = (Cell) gameMap.getAllCells()
+                .filter(cell -> cell instanceof Cell && !((Cell) cell).isAdiacent(spawnCell))
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException("No non-spawn cells found in the map adiacent at the start cell."));
+        bonusCell = gameMap.getAllCells()
+                .filter(cell -> cell instanceof BonusCell)
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException("No bonus cells found in the map."));
+        player1 = new PlayerImpl("Player1", spawnCell);
+        player2 = new PlayerImpl("Player2", spawnCell);
+        soldier1 = new SoldierImpl(player1);
+        soldier2 = new SoldierImpl(player1);
+        soldier3 = new SoldierImpl(player2);
     }
 
     @Test
@@ -51,7 +76,7 @@ class MapTest {
         assertEquals(HEIGHT, gameMap.getSize().getHeight(), "The map height should match.");
 
         final boolean hasSpawn = gameMap.getAllCells()
-                .anyMatch(cell -> cell instanceof BuildableCellImpl && ((BuildableCellImpl) cell).isSpawn());
+                .anyMatch(cell -> cell instanceof Cell && ((Cell) cell).isSpawn());
         assertTrue(hasSpawn, "The map should contain at least one spawn cell.");
     }
 
@@ -64,58 +89,58 @@ class MapTest {
 
     @Test
     void testPlayerOwnership() {
-        final BuildableCellImpl spawnCell = new BuildableCellImpl(new PositionImpl(0, 0), true, true);
-        final PlayerImpl player = new PlayerImpl("Player1", spawnCell);
+        final Player player = new PlayerImpl("Player1", spawnCell);
         final SoldierImpl soldier = new SoldierImpl(player);
 
         mapManager.update(new Pair<>(soldier, spawnCell));
 
         final Set<Cell> playerCells = mapManager.getPlayersCells().get(player);
+        assertTrue(spawnCell.getUnit().isPresent(), "The spawn cell should contain the soldier.");
+        assertTrue(spawnCell.isSpawn(), "The spawn cell should be a spawn cell.");
         assertNotNull(playerCells, "The player should own some cells.");
         assertTrue(playerCells.contains(spawnCell), "The player should own their spawn cell.");
     }
 
     @Test
     void testBonusCellActivation() {
-        final Cell bonusCell = gameMap.getAllCells()
-                .filter(cell -> cell instanceof BonusCellDecorator)
-                .findFirst()
-                .orElseThrow(() -> new IllegalStateException("No bonus cells found in the map."));
-        final BuildableCellImpl baseCell = (BuildableCellImpl) bonusCell;
+        final Cell baseCell = (Cell) bonusCell;
         final PlayerImpl player = new PlayerImpl("Player1", baseCell);
         final SoldierImpl soldier = new SoldierImpl(player);
 
-        baseCell.setOccupation(Optional.of(soldier));
-        ((BonusCellDecorator) bonusCell).notify(player);
+        gameMap.setOccupationOnCell(baseCell,Optional.of(soldier));
+        ((BonusCell) bonusCell).notify(player);
 
-        assertFalse(((BonusCellDecorator) bonusCell).isBonusActive(), "The bonus cell should be inactive after activation.");
+        assertFalse(((BonusCell) bonusCell).isBonusActive(), "The bonus cell should be inactive after activation.");
     }
 
     @Test
     void testSoldierMovement() {
-        final BuildableCellImpl startCell = new BuildableCellImpl(new PositionImpl(0, 0), true, true);
-        final BuildableCellImpl targetCell = new BuildableCellImpl(new PositionImpl(0, 1), true, false);
-        final PlayerImpl player = new PlayerImpl("Player1", startCell);
-        final SoldierImpl soldier = new SoldierImpl(player);
 
-        mapManager.update(new Pair<>(soldier, startCell));
-        mapManager.update(new Pair<>(soldier, targetCell));
+        mapManager.update(new Pair<>(soldier1, spawnCell));
+
+        assertTrue(spawnCell.getUnit().isPresent(), "The start cell should contain the soldier.");
+        assertFalse(targetCell.getUnit().isPresent(), "The target cell should not contain the soldier.");
+
+        mapManager.update(new Pair<>(soldier1, targetCell));
 
         assertTrue(targetCell.getUnit().isPresent(), "The target cell should now contain the soldier.");
-        assertFalse(startCell.getUnit().isPresent(), "The start cell should no longer contain the soldier.");
+        assertFalse(spawnCell.getUnit().isPresent(), "The start cell should no longer contain the soldier.");
     }
 
     @Test
     void testSpawnCellOccupiedByNewSoldier() {
-    final BuildableCellImpl spawnCell = new BuildableCellImpl(new PositionImpl(0, 0), true, true);
-    final PlayerImpl player = new PlayerImpl("FirstPlayer", spawnCell);
-    final SoldierImpl firstSoldier = new SoldierImpl(player);
+    final Cell spawnCell = (Cell) gameMap.getAllCells()
+            .filter(cell -> cell instanceof Cell && ((Cell) cell).isSpawn())
+            .findFirst()
+            .orElseThrow(() -> new IllegalStateException("No spawn cells found in the map."));
+    final Player player = new PlayerImpl("FirstPlayer", spawnCell);
+    final Soldier firstSoldier = new SoldierImpl(player);
 
     mapManager.update(new Pair<>(firstSoldier, spawnCell));
 
     assertTrue(spawnCell.getUnit().isPresent(), "The spawn cell should contain the first soldier.");
-
-    final SoldierImpl secondSoldier = new SoldierImpl(player);
+    assertTrue(spawnCell.isSpawn(), "The spawn cell should is a spawnCell.");
+    final Soldier secondSoldier = new SoldierImpl(player);
     final Exception exception = assertThrows(IllegalStateException.class, () -> {
         mapManager.update(new Pair<>(secondSoldier, spawnCell));
     });
@@ -126,7 +151,7 @@ class MapTest {
     @Test
     void testObstaclePlacement() {
         final long obstacleCount = gameMap.getAllCells()
-                .filter(cell -> !((BuildableCellImpl) cell).isBuildable())
+                .filter(cell -> !((Cell) cell).isBuildable())
                 .count();
 
         assertTrue(obstacleCount > 0, "There should be obstacles placed in the map.");
