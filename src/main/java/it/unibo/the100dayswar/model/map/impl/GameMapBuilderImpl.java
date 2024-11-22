@@ -2,6 +2,7 @@ package it.unibo.the100dayswar.model.map.impl;
 
 import it.unibo.the100dayswar.commons.utilities.api.Position;
 import it.unibo.the100dayswar.commons.utilities.impl.PositionImpl;
+import it.unibo.the100dayswar.model.cell.api.Cell;
 import it.unibo.the100dayswar.model.cell.impl.BonusCellImpl;
 import it.unibo.the100dayswar.model.cell.impl.CellImpl;
 import it.unibo.the100dayswar.model.map.api.GameMap;
@@ -20,7 +21,7 @@ public class GameMapBuilderImpl implements GameMapBuilder {
 
     private final int width;
     private final int height;
-    private final CellImpl[][] grid;
+    private final Cell[][] grid;
     private final Random random = new Random();
 
     /**
@@ -75,8 +76,8 @@ public class GameMapBuilderImpl implements GameMapBuilder {
             if (grid[x][y].isSpawn()) { 
                 continue;
             }
-           final CellImpl tempObstacle = new CellImpl(new PositionImpl(x, y), false, false);
-           final CellImpl originalCell = (CellImpl) grid[x][y];
+           final Cell tempObstacle = new CellImpl(new PositionImpl(x, y), false, false);
+           final Cell originalCell = (Cell) grid[x][y];
             grid[x][y] = tempObstacle;
 
             if (isPathAvailable()) {
@@ -163,7 +164,7 @@ public class GameMapBuilderImpl implements GameMapBuilder {
 
             for (final Position neighbor : getNeighbors(current)) {
                 if (!visited[neighbor.getY()][neighbor.getX()]
-                    && ((CellImpl) grid[neighbor.getY()][neighbor.getX()]).isBuildable()) {
+                    && ((Cell) grid[neighbor.getY()][neighbor.getX()]).isBuildable()) {
                         visited[neighbor.getY()][neighbor.getX()] = true;
                         queue.add(neighbor);
                     }

@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.Objects;
 
 import it.unibo.the100dayswar.commons.utilities.api.Position;
+import it.unibo.the100dayswar.model.cell.api.Cell;
 import it.unibo.the100dayswar.model.cell.impl.CellImpl;
 import it.unibo.the100dayswar.model.map.api.GameMap;
 
@@ -18,7 +19,7 @@ public class GameMapImpl implements GameMap {
     private static final long serialVersionUID = 1L;
 
     private final Dimension size;
-    private final CellImpl[][] map;
+    private final Cell[][] map;
 
     /**
      * The constructor of the map.
@@ -26,7 +27,7 @@ public class GameMapImpl implements GameMap {
      * @param height is the height.
      * @param grid is the matrix of Cells.
      */
-    public GameMapImpl(final int width, final int height, final CellImpl[][] grid) {
+    public GameMapImpl(final int width, final int height, final Cell[][] grid) {
         this.size = new Dimension(width, height);
         this.map = new CellImpl[grid.length][];
         for (int i = 0; i < grid.length; i++) {
@@ -40,7 +41,7 @@ public class GameMapImpl implements GameMap {
      * @return the Cell in that specific position or error if the position in not valid.
      */
     @Override
-    public CellImpl getCell(final Position position) {
+    public Cell getCell(final Position position) {
         return getCellByPosition(position).orElseThrow(() -> new IllegalArgumentException("Invalid position: " + position));
     }
 
@@ -57,7 +58,7 @@ public class GameMapImpl implements GameMap {
      * @param position is the postion (x,y) of the cell.
      * @return the cell if in that position exisit a cell.
      */
-    private Optional<CellImpl> getCellByPosition(final Position position) {
+    private Optional<Cell> getCellByPosition(final Position position) {
         if (!isInMap(position)) {
             return Optional.empty();
         }
@@ -78,7 +79,7 @@ public class GameMapImpl implements GameMap {
      * @return a stream of all the cells.
      */
     @Override
-    public Stream<CellImpl> getAllCells() {
+    public Stream<Cell> getAllCells() {
        return Arrays.stream(map)
                  .flatMap(Arrays::stream)
                  .filter(Objects::nonNull);
