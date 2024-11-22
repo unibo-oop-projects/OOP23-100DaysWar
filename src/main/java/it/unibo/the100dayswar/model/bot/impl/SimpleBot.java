@@ -8,9 +8,8 @@ import java.util.stream.Stream;
 
 import it.unibo.the100dayswar.model.bot.api.BotPlayer;
 import it.unibo.the100dayswar.model.bot.api.BotStrategy;
-import it.unibo.the100dayswar.model.cell.api.BuildableCell;
 import it.unibo.the100dayswar.model.cell.api.Cell;
-import it.unibo.the100dayswar.model.cell.impl.BuildableCellImpl;
+import it.unibo.the100dayswar.model.cell.impl.CellImpl;
 import it.unibo.the100dayswar.model.player.impl.PlayerImpl;
 
 /**
@@ -21,7 +20,7 @@ public class SimpleBot extends PlayerImpl implements BotPlayer {
     private static final long serialVersionUID = 1L;
     private static final String BOT_NAME = "Bot1";
 
-    private final BuildableCell enemySpawnPoint;
+    private final Cell enemySpawnPoint;
     private final Set<Cell> gameMapCells;
     private final BotStrategy strategy;
 
@@ -32,12 +31,12 @@ public class SimpleBot extends PlayerImpl implements BotPlayer {
      * @param enemySpawnPoint the spawn point of the enemy
      * @param gameMapCells    the game map
      */
-    public SimpleBot(final BuildableCell spawnPoint,
-            final BuildableCell enemySpawnPoint,
+    public SimpleBot(final Cell spawnPoint,
+            final Cell enemySpawnPoint,
             final Stream<Cell> gameMapCells) {
         super(BOT_NAME, spawnPoint);
         this.strategy = new SimpleBotStrategy();
-        this.enemySpawnPoint = new BuildableCellImpl(enemySpawnPoint);
+        this.enemySpawnPoint = new CellImpl(enemySpawnPoint);
         this.gameMapCells = gameMapCells.collect(Collectors.toUnmodifiableSet());
     }
 
@@ -53,8 +52,8 @@ public class SimpleBot extends PlayerImpl implements BotPlayer {
      * {@inheritDoc}
      */
     @Override
-    public BuildableCell enemySpawnPoint() {
-        return new BuildableCellImpl(enemySpawnPoint);
+    public Cell enemySpawnPoint() {
+        return new CellImpl(enemySpawnPoint);
     }
 
     /**

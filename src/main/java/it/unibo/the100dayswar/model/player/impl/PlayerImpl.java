@@ -10,9 +10,8 @@ import it.unibo.the100dayswar.commons.utilities.api.ResourceGenerator;
 import it.unibo.the100dayswar.commons.utilities.impl.Pair;
 import it.unibo.the100dayswar.model.bankaccount.api.BankAccount;
 import it.unibo.the100dayswar.model.bankaccount.impl.BankAccountImpl;
-import it.unibo.the100dayswar.model.cell.api.BuildableCell;
 import it.unibo.the100dayswar.model.cell.api.Cell;
-import it.unibo.the100dayswar.model.cell.impl.BuildableCellImpl;
+import it.unibo.the100dayswar.model.cell.impl.CellImpl;
 import it.unibo.the100dayswar.model.player.api.Player;
 import it.unibo.the100dayswar.model.playeraction.api.GenericPlayerCommand;
 import it.unibo.the100dayswar.model.playeraction.impl.MovementUnitCommand;
@@ -41,11 +40,11 @@ public class PlayerImpl implements Player {
      * @param username   the username of the player
      * @param spawnPoint the spawn point of the player
      */
-    public PlayerImpl(final String username, final BuildableCell spawnPoint) {
+    public PlayerImpl(final String username, final Cell spawnPoint) {
         this.username = username;
         this.bankAccount = new BankAccountImpl();
         this.units = new HashSet<>();
-        this.spawnPoint = new BuildableCellImpl(spawnPoint);
+        this.spawnPoint = new CellImpl(spawnPoint);
     }
 
     /**
@@ -138,7 +137,7 @@ public class PlayerImpl implements Player {
      */
     @Override
     public Cell getSpawnPoint() {
-        return new BuildableCellImpl((BuildableCell) this.spawnPoint);
+        return new CellImpl(this.spawnPoint);
     }
 
     /**

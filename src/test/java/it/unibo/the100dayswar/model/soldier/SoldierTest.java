@@ -10,10 +10,10 @@ import it.unibo.the100dayswar.model.soldier.api.Soldier;
 import it.unibo.the100dayswar.model.soldier.impl.SoldierImpl;
 import it.unibo.the100dayswar.model.unit.api.Combatant;
 import it.unibo.the100dayswar.commons.utilities.impl.PositionImpl;
-import it.unibo.the100dayswar.model.cell.impl.BuildableCellImpl;
 import it.unibo.the100dayswar.model.player.api.Player;
 import it.unibo.the100dayswar.model.player.impl.PlayerImpl;
 import it.unibo.the100dayswar.model.cell.api.Cell;
+import it.unibo.the100dayswar.model.cell.impl.CellImpl;
 
 class SoldierTest {
 
@@ -23,7 +23,7 @@ class SoldierTest {
     @BeforeEach
     void setUp() {
         testPlayer = new PlayerImpl("testPlayer", 
-            new BuildableCellImpl(new PositionImpl(1, 1), 
+            new CellImpl(new PositionImpl(1, 1), 
             true, 
             true));
         soldier = new SoldierImpl(testPlayer);
@@ -33,7 +33,7 @@ class SoldierTest {
     void testInitialization() {
         assertEquals(testPlayer.getUsername(), soldier.getOwner().getUsername());
         assertEquals(testPlayer.getSpawnPoint().getPosition(), soldier.getPosition().getPosition());
-        final Cell testCell = new BuildableCellImpl(new PositionImpl(2, 2), true, true);
+        final Cell testCell = new CellImpl(new PositionImpl(2, 2), true, true);
         soldier.move(testCell);
         assertEquals(testCell, soldier.getPosition());
     }

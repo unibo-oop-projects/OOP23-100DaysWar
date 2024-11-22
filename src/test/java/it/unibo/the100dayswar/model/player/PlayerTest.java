@@ -12,8 +12,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import it.unibo.the100dayswar.commons.utilities.impl.PositionImpl;
-import it.unibo.the100dayswar.model.cell.api.BuildableCell;
-import it.unibo.the100dayswar.model.cell.impl.BuildableCellImpl;
+import it.unibo.the100dayswar.model.cell.api.Cell;
+import it.unibo.the100dayswar.model.cell.impl.CellImpl;
 import it.unibo.the100dayswar.model.player.impl.PlayerImpl;
 import it.unibo.the100dayswar.model.soldier.api.Soldier;
 import it.unibo.the100dayswar.model.soldier.impl.SoldierImpl;
@@ -26,12 +26,12 @@ import it.unibo.the100dayswar.model.unit.api.Unit;
 
 class PlayerTest {
     private static final String PLAYER_NAME = "TestPlayer";
-    private BuildableCell spawnPoint;
+    private Cell spawnPoint;
     private PlayerImpl player;
 
     @BeforeEach
     void setUp() {
-        spawnPoint = new BuildableCellImpl(new PositionImpl(0, 0), true, true);
+        spawnPoint = new CellImpl(new PositionImpl(0, 0), true, true);
         player = new PlayerImpl(PLAYER_NAME, spawnPoint);
     }
 
@@ -131,8 +131,8 @@ class PlayerTest {
 
     @Test
     void testGetTowers() {
-        final Tower tower1 = new BasicTowerImpl(player, new BuildableCellImpl(new PositionImpl(1, 1), true, true));
-        final Tower tower2 = new BasicTowerImpl(player, new BuildableCellImpl(new PositionImpl(2, 2), true, true));
+        final Tower tower1 = new BasicTowerImpl(player, new CellImpl(new PositionImpl(1, 1), true, true));
+        final Tower tower2 = new BasicTowerImpl(player, new CellImpl(new PositionImpl(2, 2), true, true));
         player.addUnit(tower1);
         player.addUnit(tower2);
 

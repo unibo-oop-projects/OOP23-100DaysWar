@@ -11,7 +11,6 @@ import com.google.common.collect.Iterables;
 
 import it.unibo.the100dayswar.commons.utilities.impl.Score;
 import it.unibo.the100dayswar.model.bot.api.BotPlayer;
-import it.unibo.the100dayswar.model.cell.api.BuildableCell;
 import it.unibo.the100dayswar.model.cell.api.Cell;
 import it.unibo.the100dayswar.model.pathfinder.impl.BfsPathFinder;
 import it.unibo.the100dayswar.model.soldier.api.Soldier;
@@ -121,7 +120,6 @@ public enum ActionType {
             final List<Cell> validCells = botPlayer.getAllCells().stream()
                 .filter(cell -> !cell.isAdiacent(spawnPoint))
                 .filter(cell -> isNearSpawn(cell, spawnPoint))
-                .filter(cell -> cell instanceof BuildableCell)
                 .collect(Collectors.toList());
 
             return validCells.isEmpty() ? null : validCells.get(RANDOM.nextInt(validCells.size()));
