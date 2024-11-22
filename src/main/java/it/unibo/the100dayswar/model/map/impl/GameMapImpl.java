@@ -90,14 +90,13 @@ public class GameMapImpl implements GameMap {
      * @param cell is the cell that will be occupied.
      * @param unit is the unit that will occupy the cell.
      */
+    @Override
     public void setOccupationOnCell(final Cell cell, final Optional<Unit> unit) {
         if (
             isInMap(cell.getPosition())
             && unit.isPresent()
-            ) {    
+            ) {
                 map[cell.getPosition().getX()][cell.getPosition().getY()].setOccupation(unit);
-                System.out.println("Occupation setted? "
-                + map[cell.getPosition().getX()][cell.getPosition().getY()].getUnit().isPresent());
         }
     }
 }

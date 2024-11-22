@@ -79,7 +79,7 @@ public class BonusCellImpl extends CellImpl implements BonusCell {
      * {@inheritDoc}
      */
     @Override
-    public boolean equals(final Object obj) {
+    public  boolean equals(final Object obj) {
         if (this == obj) {
             return true;
         }

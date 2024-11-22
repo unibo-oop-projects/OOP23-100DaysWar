@@ -6,7 +6,6 @@ import java.util.Optional;
 import it.unibo.the100dayswar.commons.utilities.api.Position;
 import it.unibo.the100dayswar.commons.utilities.impl.PositionImpl;
 import it.unibo.the100dayswar.model.cell.api.Cell;
-import it.unibo.the100dayswar.model.cell.impl.CellImpl;
 import it.unibo.the100dayswar.model.unit.api.Unit;
 /**
  * Class that model the concept of a generic cell.
@@ -14,7 +13,7 @@ import it.unibo.the100dayswar.model.unit.api.Unit;
 public  class CellImpl implements Cell {
     private static final long serialVersionUID = 1L;
 
-    private final Position position;
+    private  final Position position;
     private final boolean isBuildable;
     private final boolean isSpawn;
     private transient Unit currentUnit;
@@ -25,7 +24,7 @@ public  class CellImpl implements Cell {
      * @param isBuildable true if the cell can be built upon.
      * @param isSpawn true if the cell is a spawn point.
      */
-    public CellImpl(final Position coordinate,final boolean isBuildable, final boolean isSpawn) {
+    public CellImpl(final Position coordinate, final boolean isBuildable, final boolean isSpawn) {
         this.position = new PositionImpl(coordinate);
         this.isBuildable = isBuildable;
         this.isSpawn = isSpawn;
@@ -89,9 +88,11 @@ public  class CellImpl implements Cell {
     public void setOccupation(final Optional<Unit> unit) {
         this.currentUnit = unit.orElse(null);
     }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public boolean equals(final Object obj) {
+    public  boolean equals(final Object obj) {
         if (this == obj) {
             return true;
         }
@@ -109,7 +110,7 @@ public  class CellImpl implements Cell {
      * {@inheritDoc}
      */
     @Override
-    public int hashCode() {
+    public   int hashCode() {
         return Objects.hash(this.getPosition(), this.getUnit(), this.isSpawn, this.isBuildable);
     }
 

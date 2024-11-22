@@ -35,5 +35,10 @@ public interface GameMap extends Serializable {
      */
     Stream<Cell> getAllCells();
 
-    void setOccupationOnCell( Cell cell, Optional<Unit> unit);
+    /**
+     * Set the occupation of a cell.
+     * @param cell is the cell to set the occupation.
+     * @param unit is the unit that occupy the cell.
+     */
+    void setOccupationOnCell(Cell cell, Optional<Unit> unit);
 }

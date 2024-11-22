@@ -77,7 +77,7 @@ public class GameMapBuilderImpl implements GameMapBuilder {
                 continue;
             }
            final Cell tempObstacle = new CellImpl(new PositionImpl(x, y), false, false);
-           final Cell originalCell = (Cell) grid[x][y];
+           final Cell originalCell = grid[x][y];
             grid[x][y] = tempObstacle;
 
             if (isPathAvailable()) {
@@ -164,7 +164,7 @@ public class GameMapBuilderImpl implements GameMapBuilder {
 
             for (final Position neighbor : getNeighbors(current)) {
                 if (!visited[neighbor.getY()][neighbor.getX()]
-                    && ((Cell) grid[neighbor.getY()][neighbor.getX()]).isBuildable()) {
+                    && grid[neighbor.getY()][neighbor.getX()].isBuildable()) {
                         visited[neighbor.getY()][neighbor.getX()] = true;
                         queue.add(neighbor);
                     }
