@@ -10,6 +10,7 @@ import it.unibo.the100dayswar.commons.utilities.api.Position;
 import it.unibo.the100dayswar.model.cell.api.Cell;
 import it.unibo.the100dayswar.model.cell.impl.CellImpl;
 import it.unibo.the100dayswar.model.map.api.GameMap;
+import it.unibo.the100dayswar.model.unit.api.Unit;
 
 
 /**
@@ -83,5 +84,21 @@ public class GameMapImpl implements GameMap {
        return Arrays.stream(map)
                  .flatMap(Arrays::stream)
                  .filter(Objects::nonNull);
+    }
+
+    /**
+     * {@inheritDoc}
+     * @param cell is the cell that will be occupied.
+     * @param unit is the unit that will occupy the cell.
+     */
+    public void setOccupationOnCell(final Cell cell, final Optional<Unit> unit) {
+        if (
+            isInMap(cell.getPosition())
+            && unit.isPresent()
+            ) {    
+                map[cell.getPosition().getX()][cell.getPosition().getY()].setOccupation(unit);
+                System.out.println("Occupation setted? "
+                + map[cell.getPosition().getX()][cell.getPosition().getY()].getUnit().isPresent());
+        }
     }
 }

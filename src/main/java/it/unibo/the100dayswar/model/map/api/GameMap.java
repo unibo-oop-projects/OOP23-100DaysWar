@@ -2,9 +2,11 @@ package it.unibo.the100dayswar.model.map.api;
 
 import it.unibo.the100dayswar.commons.utilities.api.Position;
 import it.unibo.the100dayswar.model.cell.api.Cell;
+import it.unibo.the100dayswar.model.unit.api.Unit;
 
 import java.awt.Dimension;
 import java.io.Serializable;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 
@@ -32,4 +34,6 @@ public interface GameMap extends Serializable {
      * @return a stream of all the cells.
      */
     Stream<Cell> getAllCells();
+
+    void setOccupationOnCell( Cell cell, Optional<Unit> unit);
 }
