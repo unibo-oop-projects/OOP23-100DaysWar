@@ -6,6 +6,7 @@ import java.util.Set;
 import it.unibo.the100dayswar.commons.patterns.Observer;
 import it.unibo.the100dayswar.commons.utilities.api.ResourceGenerator;
 import it.unibo.the100dayswar.model.cell.api.BonusCell;
+import it.unibo.the100dayswar.model.cell.api.Cell;
 
 /**
  * Implementation of the BonusCell interface.
@@ -21,7 +22,7 @@ public class BonusCellImpl extends CellImpl implements BonusCell {
      * 
      * @param decoratedCell is the cell that will be decorated.
      */
-    public BonusCellImpl(final CellImpl decoratedCell) {
+    public BonusCellImpl(final Cell decoratedCell) {
         super(decoratedCell);
         this.observers = new HashSet<>();
         this.bonusActive = true;

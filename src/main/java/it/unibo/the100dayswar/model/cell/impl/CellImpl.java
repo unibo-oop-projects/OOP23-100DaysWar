@@ -6,6 +6,7 @@ import java.util.Optional;
 import it.unibo.the100dayswar.commons.utilities.api.Position;
 import it.unibo.the100dayswar.commons.utilities.impl.PositionImpl;
 import it.unibo.the100dayswar.model.cell.api.Cell;
+import it.unibo.the100dayswar.model.cell.impl.CellImpl;
 import it.unibo.the100dayswar.model.unit.api.Unit;
 /**
  * Class that model the concept of a generic cell.
@@ -34,7 +35,7 @@ public  class CellImpl implements Cell {
      * Constructor from a cell.
      * @param cell  identify the cell in the map.
      */
-    public CellImpl(final CellImpl cell) {
+    public CellImpl(final Cell cell) {
         this.position = cell.getPosition();
         this.isBuildable = cell.isBuildable();
         this.isSpawn = cell.isSpawn();
@@ -94,14 +95,14 @@ public  class CellImpl implements Cell {
         if (this == obj) {
             return true;
         }
-        if (!(obj instanceof CellImpl)) {
+        if (!(obj instanceof Cell)) {
             return false;
         }
-        final CellImpl other = (CellImpl) obj;
+        final Cell other = (Cell) obj;
         return Objects.equals(this.getPosition(), other.getPosition())
                 && Objects.equals(this.getUnit(), other.getUnit())
-                && Objects.equals(this.isSpawn, other.isSpawn)
-                && Objects.equals(this.isBuildable, other.isBuildable);
+                && Objects.equals(this.isSpawn, other.isSpawn())
+                && Objects.equals(this.isBuildable, other.isBuildable());
     }
 
     /**
