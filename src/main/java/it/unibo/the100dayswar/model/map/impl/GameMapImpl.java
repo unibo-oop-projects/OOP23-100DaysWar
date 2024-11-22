@@ -65,7 +65,6 @@ public class GameMapImpl implements GameMap {
         }
         return Optional.of(map[position.getX()][position.getY()]);
     }
-
     /**
      * ausiliar funcion for getCellByPosition.
      * @param pos is a position.

@@ -8,6 +8,7 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+
 import it.unibo.the100dayswar.commons.utilities.impl.Pair;
 import it.unibo.the100dayswar.model.cell.api.BonusCell;
 import it.unibo.the100dayswar.model.cell.api.Cell;
@@ -79,6 +80,13 @@ public class MapManagerImpl implements MapManager {
     }
 
     /**
+     *{@inheritDoc}
+     */
+    public GameMap getMap() {
+        return map;
+    }
+
+    /**
      * add the cell to the player.
      * @param player is the player.
      * @param targetCell is the cell.
@@ -106,9 +114,9 @@ public class MapManagerImpl implements MapManager {
      */
     private void createSoldier(final Pair<Unit, Cell> source) {
         final Soldier soldier = (Soldier) source.getFirst();
-        final Cell currentCell = (Cell) soldier.getPosition();
-        final Cell targetCell = (Cell) source.getSecond();
-        if (!((Cell) source.getSecond()).isSpawn()) {
+        final Cell targetCell = (Cell) getMap().getCell(source.getSecond().getPosition());
+
+        if (!((Cell) targetCell).isSpawn()) {
             LOGGER.log(Level.WARNING, "Target cell is not a spawn cell for soldier creation: {0}", targetCell.getPosition());
             throw new IllegalStateException("Target cell is not a spawn cell for soldier creation.");
         }
@@ -116,8 +124,10 @@ public class MapManagerImpl implements MapManager {
             LOGGER.log(Level.WARNING, "Spawn cell is occupied. Move the existing soldier before creating a new one.: {0}", targetCell.getPosition());
             throw new IllegalStateException("Spawn cell is occupied. Move the existing soldier before creating a new one.");
         }
-        currentCell.setOccupation(Optional.of(soldier));
-        addCell(soldier.getOwner(), targetCell);
+        map.setOccupationOnCell((targetCell), Optional.of(soldier));
+        if(!playersCells.containsKey(soldier.getOwner())) {
+            addCell(soldier.getOwner(), targetCell);
+        }
     }
 
     /**
@@ -126,31 +136,42 @@ public class MapManagerImpl implements MapManager {
      */
     private void createTower(final Pair<Unit, Cell> source) {
         final Tower tower = (Tower) source.getFirst();
-        final Cell targetCell = (Cell) source.getSecond();
-        final Cell currentCell = (Cell) tower.getPosition();
+        final Cell targetCell = (Cell) getMap().getCell(source.getSecond().getPosition());
+
         if (!targetCell.isBuildable()) {
             LOGGER.log(Level.WARNING, "Target cell is not buildable for tower placement: {0}", targetCell.getPosition());
             throw new IllegalStateException("Target cell is not buildable for tower placement.");
         }
-            currentCell.setOccupation(Optional.of(tower));
+        if(targetCell.isFree()) {
+           map.setOccupationOnCell(targetCell, Optional.of(tower));
+           playersCells.forEach((p, s) -> {
+                if (p.equals(tower.getOwner())) {
+                    addCell(p, targetCell);
+                } else if (s.contains(targetCell)) {
+                removeCell(p, targetCell);
+                }
+            });
+        } else {
+            LOGGER.log(Level.WARNING, "Target cell is not free for tower placement: {0}", targetCell.getPosition());
+            throw new IllegalStateException("Target cell is not free for tower placement.");
+            }
     }
-
     /**
      * move the soldier.
      * @param source is the pair of the soldier and the cell.
      */
     private void soldierMovement(final Pair<Unit, Cell> source) {
         final Soldier soldier = (Soldier) source.getFirst();
-        final Cell targetCell = (Cell) source.getSecond();
-        final Cell currentCell = (Cell) soldier.getPosition();
+        final Cell targetCell = (Cell) getMap().getCell(source.getSecond().getPosition());
+        final Cell currentCell = (Cell) getMap().getCell(soldier.getPosition().getPosition());
         if (!targetCell.isFree()) {
             LOGGER.log(Level.WARNING, "Target cell is not free for soldier movement: {0}", targetCell.getPosition());
             throw new IllegalStateException("Target cell is not free for soldier movement.");
         }
         if (currentCell.isAdiacent(targetCell) && targetCell.isFree()) {
             soldier.move(targetCell);
-            currentCell.setOccupation(Optional.empty());
-            targetCell.setOccupation(Optional.of(soldier));
+            map.setOccupationOnCell(currentCell, Optional.empty());
+            map.setOccupationOnCell(targetCell, Optional.of(soldier));
             playersCells.forEach((p, s) -> {
                 if (p.equals(soldier.getOwner())) {
                     addCell(p, targetCell);
@@ -158,9 +179,6 @@ public class MapManagerImpl implements MapManager {
                     removeCell(p, targetCell);
                 }
             });
-            if (!playersCells.containsKey(soldier.getOwner()) || !playersCells.get(soldier.getOwner()).contains(currentCell)) {
-                addCell(soldier.getOwner(), currentCell);
-            }
             if (targetCell instanceof BonusCell) {
                 ((BonusCell) targetCell).notify(soldier.getOwner());
             }
