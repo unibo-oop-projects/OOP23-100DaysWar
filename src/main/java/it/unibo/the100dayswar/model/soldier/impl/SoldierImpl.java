@@ -1,6 +1,7 @@
 package it.unibo.the100dayswar.model.soldier.impl;
 
 import it.unibo.the100dayswar.model.cell.api.Cell;
+import it.unibo.the100dayswar.model.cell.impl.CellImpl;
 import it.unibo.the100dayswar.model.fight.impl.GenericBattleCommand;
 import it.unibo.the100dayswar.model.player.api.Player;
 import it.unibo.the100dayswar.model.soldier.api.Soldier;
@@ -42,7 +43,7 @@ public class SoldierImpl extends UnitImpl implements Soldier {
      */
     @Override
     public void move(final Cell cell) {
-        this.position = cell;
+        this.position = new CellImpl(cell);
     }
 
     /**
@@ -58,7 +59,7 @@ public class SoldierImpl extends UnitImpl implements Soldier {
      */
     @Override
     public Cell getPosition() {
-        return this.position;
+        return new CellImpl(this.position);
     }
 
     /**
