@@ -159,7 +159,7 @@ public class MapManagerImpl implements MapManager {
             LOGGER.log(Level.WARNING, "Target cell is not free for soldier movement: {0}", targetCell.getPosition());
             throw new IllegalStateException("Target cell is not free for soldier movement.");
         }
-        if (currentCell.isAdiacent(targetCell) && targetCell.isFree()) {
+        if (currentCell.isAdiacent(targetCell)) {
             soldier.move(targetCell);
             map.setOccupationOnCell(currentCell, Optional.empty());
             map.setOccupationOnCell(targetCell, Optional.of(soldier));
@@ -203,6 +203,6 @@ public class MapManagerImpl implements MapManager {
      */
     private boolean isSoldierWantsToMove(final Pair<Unit, Cell> source) {
         return source.getFirst() instanceof Soldier
-        && !source.getFirst().getPosition().equals(source.getSecond());
+        && !source.getSecond().equals(((Soldier) source.getFirst()).getPosition());
     }
 }

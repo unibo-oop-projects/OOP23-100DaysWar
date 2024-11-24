@@ -13,7 +13,7 @@ import it.unibo.the100dayswar.model.unit.api.Unit;
 public  class CellImpl implements Cell {
     private static final long serialVersionUID = 1L;
 
-    private  final Position position;
+    private final  Position position;
     private final boolean isBuildable;
     private final boolean isSpawn;
     private transient Unit currentUnit;
@@ -101,7 +101,6 @@ public  class CellImpl implements Cell {
         }
         final Cell other = (Cell) obj;
         return Objects.equals(this.getPosition(), other.getPosition())
-                && Objects.equals(this.getUnit(), other.getUnit())
                 && Objects.equals(this.isSpawn, other.isSpawn())
                 && Objects.equals(this.isBuildable, other.isBuildable());
     }
@@ -111,7 +110,7 @@ public  class CellImpl implements Cell {
      */
     @Override
     public   int hashCode() {
-        return Objects.hash(this.getPosition(), this.getUnit(), this.isSpawn, this.isBuildable);
+        return Objects.hash(this.getPosition(), this.isSpawn, this.isBuildable);
     }
 
     /**

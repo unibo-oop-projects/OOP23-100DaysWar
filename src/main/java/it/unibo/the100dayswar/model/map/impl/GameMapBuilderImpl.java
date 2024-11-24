@@ -58,7 +58,7 @@ public class GameMapBuilderImpl implements GameMapBuilder {
         final int spawn1 = random.nextInt(width);
         final int spawn2 = random.nextInt(width);
         grid[0][spawn1] = new CellImpl(new PositionImpl(0, spawn1), true, true);
-        grid[height - 1][spawn2] = new CellImpl(new PositionImpl(width - 1, spawn2), true, true);
+        grid[height - 1][spawn2] = new CellImpl(new PositionImpl(height - 1, spawn2), true, true);
         return this;
     }
 
