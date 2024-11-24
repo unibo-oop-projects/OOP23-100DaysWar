@@ -242,7 +242,7 @@ public enum ActionType {
             final BfsPathFinder pathFinder = new BfsPathFinder(botPlayer.getAllCells());
 
             final Cell start = unit.getPosition();
-            final Cell destination = botPlayer.enemySpawnPoint();
+            final Cell destination = botPlayer.getEnemySpawnPoint();
 
             final List<Cell> path = pathFinder.findPath(start, destination);
             // Return the second cell of the path because the first one is the start cell

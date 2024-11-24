@@ -7,8 +7,9 @@ import it.unibo.the100dayswar.model.bot.api.BotStrategy;
 import it.unibo.the100dayswar.model.bot.api.DecisionMaker;
 
 /**
- * An implementation of the BotStrategy interface that represents a simple strategy
- * that evaluate the best move assigning a score to each possible move and 
+ * An implementation of the BotStrategy interface that represents a simple
+ * strategy
+ * that evaluate the best move assigning a score to each possible move and
  * after this it will choose the move with the highest score.
  */
 public class SimpleBotStrategy implements BotStrategy {
@@ -22,6 +23,7 @@ public class SimpleBotStrategy implements BotStrategy {
     public SimpleBotStrategy() {
         this.decisionMaker = new DecisionMakerImpl();
     }
+
     /**
      * {@inheritDoc}
      */

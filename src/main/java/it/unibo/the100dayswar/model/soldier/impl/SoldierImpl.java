@@ -15,7 +15,7 @@ public class SoldierImpl extends UnitImpl implements Soldier {
     private static final int COST_TO_UPGRADE = 30;
     private static final int MAX_LEVEL = 3;
     private static final int INITIAL_HEALTH = 100;
-    private static final int INCREASE_HEALTH = 50;
+    private static final int INCREASE_HEALTH = 25;
 
     private Cell position;
 
@@ -69,7 +69,7 @@ public class SoldierImpl extends UnitImpl implements Soldier {
         if (this.canUpgrade()) {
             this.setLevel(this.getLevel() + 1);
             final int increaseFactor = INCREASE_HEALTH * (this.getLevel() - 1);
-            this.setHealth(INITIAL_HEALTH + increaseFactor);
+            this.setHealth(this.currentHealth() + increaseFactor);
         }
     }
 }

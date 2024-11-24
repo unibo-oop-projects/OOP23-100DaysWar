@@ -22,7 +22,7 @@ public class SimpleBot extends PlayerImpl implements BotPlayer {
 
     private final Cell enemySpawnPoint;
     private final Set<Cell> gameMapCells;
-    private final BotStrategy strategy;
+    private final BotStrategy strategy; 
 
     /**
      * Constructor for the bot player.
@@ -52,7 +52,7 @@ public class SimpleBot extends PlayerImpl implements BotPlayer {
      * {@inheritDoc}
      */
     @Override
-    public Cell enemySpawnPoint() {
+    public Cell getEnemySpawnPoint() {
         return new CellImpl(enemySpawnPoint);
     }
 
