@@ -19,7 +19,7 @@ public interface BotPlayer extends Player {
      * 
      * @return the spawn point of the enemy
      */
-    Cell enemySpawnPoint();
+    Cell getEnemySpawnPoint();
     /** 
      * The method that is used to get all the cells in the game map.
      * 
