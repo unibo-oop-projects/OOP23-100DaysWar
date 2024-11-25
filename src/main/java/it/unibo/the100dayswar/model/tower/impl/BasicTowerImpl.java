@@ -18,7 +18,7 @@ public class BasicTowerImpl extends AbstractTower implements BasicTower {
 
     private static final int BASIC_HEALTH = TowerType.BASIC.getPrice() * HEALTH_MULTYPLIER_BASIC;
     private static final int BASIC_UPGRADE = TowerType.BASIC.getPrice() * UPGRADE_MULTYPLIER_BASIC;
-    private static final int BASIC_DAMAGE = TowerType.BASIC.getPrice() * UPGRADE_MULTYPLIER_BASIC;
+    private static final int BASIC_DAMAGE = TowerType.BASIC.getPrice() * DAMAGE_MULTYPLIER_BASIC;
 
 
     /**
@@ -53,9 +53,9 @@ public class BasicTowerImpl extends AbstractTower implements BasicTower {
         if (this.getLevel() < MAX_LEVEL) {
             this.incrementLevel();
 
-            this.setHealth(BASIC_HEALTH * HEALTH_MULTYPLIER_BASIC);
+            this.setHealth(this.currentHealth() * UPGRADE_MULTYPLIER_BASIC);
 
-            this.setDamage(this.getDamage() * DAMAGE_MULTYPLIER_BASIC);
+            this.setDamage(this.getDamage() * UPGRADE_MULTYPLIER_BASIC);
         }
     }
 }

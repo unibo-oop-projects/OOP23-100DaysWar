@@ -33,6 +33,8 @@ public class TowerFactoryImpl implements TowerFactory {
             throw new NullPointerException("All arguments must be non null");
         }
 
+        // TODO aggiungere più controlli sulle celle.
+
         final BiFunction<Player, Cell, AbstractTower> towerConstructor = TOWER_CREATORS.get(towerType);
 
         return towerConstructor.apply(owner, position);
