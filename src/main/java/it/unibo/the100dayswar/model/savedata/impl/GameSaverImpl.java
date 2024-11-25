@@ -26,6 +26,10 @@ public class GameSaverImpl implements GameSaver {
      * @param customPath custom path of the saving file
      */
     public GameSaverImpl(final GameDataImpl gameDataImpl, final String customPath) {
+        if (gameDataImpl == null) {
+            LOGGER.log(Level.SEVERE, "Game data must be non-null");
+            throw new NullPointerException("Game data must be non-null");
+        }
         this.currentGameData = gameDataImpl;
         this.customPath = customPath;
     }

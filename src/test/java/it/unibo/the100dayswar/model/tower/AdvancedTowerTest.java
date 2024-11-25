@@ -11,7 +11,6 @@ import it.unibo.the100dayswar.model.player.api.Player;
 import it.unibo.the100dayswar.model.player.impl.PlayerImpl;
 import it.unibo.the100dayswar.model.tower.api.Tower;
 import it.unibo.the100dayswar.model.tower.api.TowerType;
-import it.unibo.the100dayswar.model.tower.impl.AdvancedTowerImpl;
 import it.unibo.the100dayswar.model.tower.impl.TowerFactoryImpl;
 
 public class AdvancedTowerTest {

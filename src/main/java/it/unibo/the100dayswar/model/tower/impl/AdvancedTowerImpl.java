@@ -18,7 +18,7 @@ public class AdvancedTowerImpl extends AbstractTower implements AdvancedTower {
 
     private static final int ADVANCED_HEALTH = TowerType.ADVANCED.getPrice() * HEALTH_MULTYPLIER_ADVANCED;
     private static final int ADVANCED_UPGRADE = TowerType.ADVANCED.getPrice() * UPGRADE_MULTYPLIER_ADVANCED;
-    private static final int ADVANCED_DAMAGE = TowerType.ADVANCED.getPrice() * UPGRADE_MULTYPLIER_ADVANCED;
+    private static final int ADVANCED_DAMAGE = TowerType.ADVANCED.getPrice() * DAMAGE_MULTYPLIER_ADVANCED;
 
     /**
      * Constructs an advanced tower.
@@ -46,9 +46,9 @@ public class AdvancedTowerImpl extends AbstractTower implements AdvancedTower {
         if (this.getLevel() < MAX_LEVEL) {
             this.incrementLevel();
 
-            this.setHealth(ADVANCED_HEALTH * HEALTH_MULTYPLIER_ADVANCED);
+            this.setHealth(this.currentHealth() * UPGRADE_MULTYPLIER_ADVANCED);
 
-            this.setDamage(this.getDamage() * DAMAGE_MULTYPLIER_ADVANCED);
+            this.setDamage(this.getDamage() * UPGRADE_MULTYPLIER_ADVANCED);
         }
     }
 }
