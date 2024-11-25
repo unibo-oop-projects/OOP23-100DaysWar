@@ -17,6 +17,8 @@ import it.unibo.the100dayswar.model.tower.impl.AdvancedTowerImpl;
  * Test suite for the TowerFactoryImpl class.
  */
 public class TowerFactoryTest {
+    final Cell mockCell = new CellImpl(new PositionImpl(0, 0), true, true);
+    final Player mockPlayer = new PlayerImpl("MockPlayer", mockCell);
 
     /**
      * Tests the creation of a BasicTower using the TowerFactory.
@@ -24,9 +26,6 @@ public class TowerFactoryTest {
     @Test
     void testCreateBasicTower() {
         TowerFactoryImpl factory = new TowerFactoryImpl();
-        Cell mockCell = new CellImpl(new PositionImpl(0, 0), true, true);
-        Player mockPlayer = new PlayerImpl("P1");
-        Cell mockCell = new CellImpl(null, false, false)
 
         var tower = factory.buildTower(mockPlayer, TowerType.BASIC, mockCell);
         assertTrue(tower instanceof BasicTowerImpl, "Tower should be of type BasicTowerImpl");
@@ -39,8 +38,6 @@ public class TowerFactoryTest {
     @Test
     void testCreateAdvancedTower() {
         TowerFactoryImpl factory = new TowerFactoryImpl();
-        Player mockPlayer = Mockito.mock(Player.class);
-        Cell mockCell = Mockito.mock(Cell.class);
 
         var tower = factory.buildTower(mockPlayer, TowerType.ADVANCED, mockCell);
         assertTrue(tower instanceof AdvancedTowerImpl, "Tower should be of type AdvancedTowerImpl");
@@ -53,12 +50,23 @@ public class TowerFactoryTest {
     @Test
     void testInvalidTowerType() {
         TowerFactoryImpl factory = new TowerFactoryImpl();
-        Player mockPlayer = Mockito.mock(Player.class);
-        Cell mockCell = Mockito.mock(Cell.class);
 
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> 
+        Exception exception1 = assertThrows( NullPointerException.class, () -> 
             factory.buildTower(mockPlayer, null, mockCell)
         );
-        assertTrue(exception.getMessage().contains("Unknown Tower Type"));
+
+        assertTrue(exception1.getMessage().contains("All arguments must be non null"));
+
+        Exception exception2 = assertThrows( NullPointerException.class, () -> 
+            factory.buildTower(mockPlayer, null, mockCell)
+        );
+
+        assertTrue(exception2.getMessage().contains("All arguments must be non null"));
+
+        Exception exception3 = assertThrows( NullPointerException.class, () -> 
+            factory.buildTower(mockPlayer, null, mockCell)
+        );
+
+        assertTrue(exception3.getMessage().contains("All arguments must be non null"));
     }
 }
