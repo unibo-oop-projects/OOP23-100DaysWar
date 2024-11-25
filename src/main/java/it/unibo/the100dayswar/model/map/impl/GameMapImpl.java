@@ -49,8 +49,6 @@ public class GameMapImpl implements GameMap {
 
     /**
      * {@inheritDoc}
-     * @param position is the position (x,y) of the cell.
-     * @return the Cell in that specific position or error if the position in not valid.
      */
     @Override
     public Cell getCell(final Position position) {
@@ -59,7 +57,6 @@ public class GameMapImpl implements GameMap {
 
     /**
      * {@inheritDoc}
-     * @return the size of the game map.
      */
     @Override
     public Dimension getSize() {
@@ -87,7 +84,6 @@ public class GameMapImpl implements GameMap {
 
     /**
      * {@inheritDoc}
-     * @return a stream of all the cells.
      */
     @Override
     public Stream<Cell> getAllCells() {
@@ -98,8 +94,6 @@ public class GameMapImpl implements GameMap {
 
     /**
      * {@inheritDoc}
-     * @param cell is the cell that will be occupied.
-     * @param unit is the unit that will occupy the cell.
      */
     @Override
     public void setOccupationOnCell(final Cell cell, final Optional<Unit> unit) {
