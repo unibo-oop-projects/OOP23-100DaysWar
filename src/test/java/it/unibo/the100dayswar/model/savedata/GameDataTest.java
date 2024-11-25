@@ -1,6 +1,12 @@
 package it.unibo.the100dayswar.model.savedata;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertSame;
+
 import org.junit.jupiter.api.Test;
 
 import it.unibo.the100dayswar.commons.utilities.impl.PositionImpl;
@@ -20,13 +26,15 @@ import java.util.stream.Collectors;
 /**
  * Test suite for GameDataImpl class.
  */
-public class GameDataTest {
-    final Player mockPlayer1 = new PlayerImpl("MockPlayer1", new CellImpl(new PositionImpl(0, 0), true, true));
-    final Player mockPlayer2 = new PlayerImpl("MockPlayer2", new CellImpl(new PositionImpl(9, 9), true, true));
-    final GameMap mockGameMap = new GameMapImpl(10, 10, new CellImpl[10][10]);
-    final GameTurnManager mockGameTurnManager = new GameTurnManagerImpl(List.of(mockPlayer1, mockPlayer2));
+class GameDataTest {
+    private static final int MAP_DIMENSION = 10;
 
-    final GameDataImpl mockGameData = new GameDataImpl(mockPlayer1, mockPlayer2, mockGameMap, mockGameTurnManager);
+    private final Player mockPlayer1 = new PlayerImpl("MockPlayer1", new CellImpl(new PositionImpl(0, 0), true, true));
+    private final Player mockPlayer2 = new PlayerImpl("MockPlayer2", new CellImpl(new PositionImpl(9, 9), true, true));
+    private final GameMap mockGameMap = new GameMapImpl(MAP_DIMENSION, MAP_DIMENSION, new CellImpl[MAP_DIMENSION][MAP_DIMENSION]);
+    private final GameTurnManager mockGameTurnManager = new GameTurnManagerImpl(List.of(mockPlayer1, mockPlayer2));
+
+    private final GameDataImpl mockGameData = new GameDataImpl(mockPlayer1, mockPlayer2, mockGameMap, mockGameTurnManager);
 
     /**
      * Test to ensure the constructor throws an exception when
@@ -34,8 +42,7 @@ public class GameDataTest {
      */
     @Test
     void testConstructorWithSamePlayersThrowsException() {
-        
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> 
+        final Exception exception = assertThrows(IllegalArgumentException.class, () -> 
             new GameDataImpl(mockPlayer1, mockPlayer1, mockGameMap, mockGameTurnManager)
         );
 
@@ -79,7 +86,7 @@ public class GameDataTest {
 
         assertNotSame(mockGameMap, copy);
 
-        assertEquals(new Dimension(10, 10), copy.getSize());
+        assertEquals(new Dimension(MAP_DIMENSION, MAP_DIMENSION), copy.getSize());
         assertEquals(mockGameMap.getAllCells().collect(Collectors.toList()), copy.getAllCells().collect(Collectors.toList()));
     }
 

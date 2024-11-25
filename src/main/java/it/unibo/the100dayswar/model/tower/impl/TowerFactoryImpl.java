@@ -28,9 +28,9 @@ public class TowerFactoryImpl implements TowerFactory {
      */
     @Override
     public AbstractTower buildTower(final Player owner, final TowerType towerType, final Cell position) {
-        if(owner == null || towerType == null || position == null) {  
+        if (owner == null || towerType == null || position == null) {
             LOGGER.log(Level.SEVERE, "Unknow Tower Type " + towerType, new NullPointerException());
-            throw new NullPointerException("All arguments must be non null");
+            throw new IllegalArgumentException("All arguments must be non null");
         }
 
         // TODO aggiungere più controlli sulle celle.

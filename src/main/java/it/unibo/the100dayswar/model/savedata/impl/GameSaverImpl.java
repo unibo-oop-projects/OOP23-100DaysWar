@@ -15,8 +15,8 @@ import it.unibo.the100dayswar.model.savedata.api.GameSaver;
 public class GameSaverImpl implements GameSaver {
     private static final Logger LOGGER = Logger.getLogger(GameSaverImpl.class.getName());
     private static final String PATH = System.getProperty("user.home") + "/saved_game.ser";
-    private final String customPath;
 
+    private final String customPath;
     private final GameDataImpl currentGameData;
 
     /**
@@ -28,7 +28,7 @@ public class GameSaverImpl implements GameSaver {
     public GameSaverImpl(final GameDataImpl gameDataImpl, final String customPath) {
         if (gameDataImpl == null) {
             LOGGER.log(Level.SEVERE, "Game data must be non-null");
-            throw new NullPointerException("Game data must be non-null");
+            throw new IllegalArgumentException("Game data must be non-null");
         }
         this.currentGameData = gameDataImpl;
         this.customPath = customPath;
@@ -46,9 +46,10 @@ public class GameSaverImpl implements GameSaver {
 
     /**
      * {@inheritDoc}
+     * @throws IOException
      */
     @Override
-    public void saveGame() {
+    public void saveGame() throws IOException {
         final String path = (customPath != null) ? customPath : PATH;
         saveGameAtPath(path);
     }
@@ -57,14 +58,15 @@ public class GameSaverImpl implements GameSaver {
      * Saves the game data to the specified path.
      * 
      * @param path the path where the game data will be saved
+     * @throws IOException
      */
-    private void saveGameAtPath(final String path) {
+    private void saveGameAtPath(final String path) throws IOException {
         try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(path))) {
             out.writeObject(currentGameData);
             LOGGER.log(Level.INFO, "Game saved successfully at " + path);
-
         } catch (IOException e) {
             LOGGER.log(Level.SEVERE, "Error during game serialization and saving at " + path, e);
+            throw new IOException("Error saving game at path: " + path, e);
         }
     }
 }

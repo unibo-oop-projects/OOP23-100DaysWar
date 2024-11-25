@@ -13,20 +13,25 @@ import it.unibo.the100dayswar.model.tower.api.Tower;
 import it.unibo.the100dayswar.model.tower.api.TowerType;
 import it.unibo.the100dayswar.model.tower.impl.TowerFactoryImpl;
 
-public class AdvancedTowerTest {
-    final Cell mockCell = new CellImpl(new PositionImpl(0, 0), true, true);
-    final Player mockPlayer = new PlayerImpl("MockPlayer", mockCell);
-    final Tower mockAdvancedTower = new TowerFactoryImpl().buildTower(mockPlayer, TowerType.ADVANCED, mockCell);
+/**
+ * Test suite for AdvancedTowerImpl.
+ */
+class AdvancedTowerTest {
+    private final Cell mockCell = new CellImpl(new PositionImpl(0, 0), true, true);
+    private final Player mockPlayer = new PlayerImpl("MockPlayer", mockCell);
+    private final Tower mockAdvancedTower = new TowerFactoryImpl().buildTower(mockPlayer, TowerType.ADVANCED, mockCell);
 
     /**
      * Tests the initial properties of an AdvancedTower.
      */
     @Test
     void testAdvancedTowerProperties() {
+        final int currentHealth = 60;
+        final int currentDamage = 10;
 
         assertEquals(TowerType.ADVANCED, mockAdvancedTower.getTowerType(), "Tower type should be ADVANCED");
-        assertEquals(60, mockAdvancedTower.currentHealth(), "Advanced tower health should match formula");
-        assertEquals(10, mockAdvancedTower.getDamage(), "Advanced tower damage should match formula");
+        assertEquals(currentHealth, mockAdvancedTower.currentHealth(), "Advanced tower health should match formula");
+        assertEquals(currentDamage, mockAdvancedTower.getDamage(), "Advanced tower damage should match formula");
     }
 
     /**
@@ -34,10 +39,14 @@ public class AdvancedTowerTest {
      */
     @Test
     void testUpgradeAdvancedTower() {
+        final int newLevel = 2;
+        final int newHealth = 120;
+        final int newDamage = 20;
+
         mockAdvancedTower.upgrade();
-        assertEquals(2, mockAdvancedTower.getLevel(), "Tower level should increase after upgrade");
-        assertEquals(120, mockAdvancedTower.currentHealth(), "Health should be updated after upgrade");
-        assertEquals(20, mockAdvancedTower.getDamage(), "Damage should be updated after upgrade");
+        assertEquals(newLevel, mockAdvancedTower.getLevel(), "Tower level should increase after upgrade");
+        assertEquals(newHealth, mockAdvancedTower.currentHealth(), "Health should be updated after upgrade");
+        assertEquals(newDamage, mockAdvancedTower.getDamage(), "Damage should be updated after upgrade");
     }
 
     /**
@@ -45,7 +54,9 @@ public class AdvancedTowerTest {
      */
     @Test
     void testMaxLevelUpgrade() {
-        for (int i = 0; i < 5; i++) {
+        final int maxLevel = 5;
+
+        for (int i = 0; i < maxLevel; i++) {
             mockAdvancedTower.upgrade();
         }
         assertEquals(4, mockAdvancedTower.getLevel(), "Tower should not exceed MAX_LEVEL");

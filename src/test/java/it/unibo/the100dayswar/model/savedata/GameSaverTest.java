@@ -1,12 +1,15 @@
 package it.unibo.the100dayswar.model.savedata;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import java.io.*;
-import java.nio.file.*;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.AfterEach;
 
 import it.unibo.the100dayswar.model.savedata.impl.GameSaverImpl;
 import it.unibo.the100dayswar.model.turn.api.GameTurnManager;
@@ -20,19 +23,19 @@ import it.unibo.the100dayswar.model.player.impl.PlayerImpl;
 import it.unibo.the100dayswar.model.savedata.impl.GameDataImpl;
 
 /**
- * Tests the class GameSaverImpl.
+ * Test suite for GameSaverImpl.
  */
 class GameSaverTest {
-
     private static final String TEST_CUSTOM_PATH = "test_saved_game.ser";
     private static final String DEFAULT_PATH = System.getProperty("user.home") + "/saved_game.ser";
+    private static final int MAP_DIMENSION = 12;
 
-    final Player mockPlayer1 = new PlayerImpl("MockPlayer1", new CellImpl(new PositionImpl(0, 0), true, true));
-    final Player mockPlayer2 = new PlayerImpl("MockPlayer2", new CellImpl(new PositionImpl(9, 9), true, true));
-    final GameMap mockGameMap = new GameMapImpl(10, 10, new CellImpl[10][10]);
-    final GameTurnManager mockGameTurnManager = new GameTurnManagerImpl(List.of(mockPlayer1, mockPlayer2));
+    private final Player mockPlayer1 = new PlayerImpl("MockPlayer1", new CellImpl(new PositionImpl(2, 2), true, true));
+    private final Player mockPlayer2 = new PlayerImpl("MockPlayer2", new CellImpl(new PositionImpl(8, 8), true, true));
+    private final GameMap mockGameMap = new GameMapImpl(MAP_DIMENSION, MAP_DIMENSION, new CellImpl[MAP_DIMENSION][MAP_DIMENSION]);
+    private final GameTurnManager mockGameTurnManager = new GameTurnManagerImpl(List.of(mockPlayer1, mockPlayer2));
 
-    final GameDataImpl mockGameData = new GameDataImpl(mockPlayer1, mockPlayer2, mockGameMap, mockGameTurnManager);
+    private final GameDataImpl mockGameData = new GameDataImpl(mockPlayer1, mockPlayer2, mockGameMap, mockGameTurnManager);
 
     /**
      * Cleans up the files.
@@ -47,9 +50,10 @@ class GameSaverTest {
 
     /**
      * Test saving to a custom path.
+     * @throws IOException
      */
     @Test
-    void testSaveGameWithCustomPath() {
+    void testSaveGameWithCustomPath() throws IOException {
         final GameSaverImpl saver = new GameSaverImpl(mockGameData, TEST_CUSTOM_PATH);
         saver.saveGame();
 
@@ -59,9 +63,10 @@ class GameSaverTest {
 
     /**
      * Test saving to the default path.
+     * @throws IOException
      */
     @Test
-    void testSaveGameWithDefaultPath() {
+    void testSaveGameWithDefaultPath() throws IOException {
         final GameSaverImpl saver = new GameSaverImpl(mockGameData);
         saver.saveGame();
 
@@ -73,18 +78,13 @@ class GameSaverTest {
      * Test that an IOException is logged when saving fails.
      */
     @Test
-    void testSaveGameHandlesIOException() {
-        final GameSaverImpl saver = new GameSaverImpl(mockGameData, "/invalid_path/saved_game.ser");
+    void testSaveGameThrowsIOException() {
+        final String invalidPath = "/invalid_path/saved_game.ser";
+        final GameSaverImpl saver = new GameSaverImpl(mockGameData, invalidPath);
 
-        // Redirect logging to check errors
-        ByteArrayOutputStream logStream = new ByteArrayOutputStream();
-        System.setErr(new PrintStream(logStream));
+        final Exception exception = assertThrows(IOException.class, saver::saveGame);
 
-        saver.saveGame();
-
-        // Check for error log
-        final String logOutput = logStream.toString();
-        assertTrue(logOutput.contains("Error during game serialization and saving at "), "Error should be logged when saving fails.");
+        assertTrue(exception.getMessage().contains("Error during game serialization and saving at " + invalidPath));
     }
 
     /**
@@ -92,7 +92,7 @@ class GameSaverTest {
      */
     @Test
     void testConstructorWithNullGameDataThrowsException() {
-        Exception exception = assertThrows(NullPointerException.class, () -> 
+        final Exception exception = assertThrows(IllegalArgumentException.class, () -> 
             new GameSaverImpl(null, TEST_CUSTOM_PATH)
         );
 
