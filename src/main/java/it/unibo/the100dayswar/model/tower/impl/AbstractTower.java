@@ -1,6 +1,7 @@
 package it.unibo.the100dayswar.model.tower.impl;
 
 import it.unibo.the100dayswar.model.cell.api.Cell;
+import it.unibo.the100dayswar.model.cell.impl.CellImpl;
 import it.unibo.the100dayswar.model.fight.impl.GenericBattleCommand;
 import it.unibo.the100dayswar.model.player.api.Player;
 import it.unibo.the100dayswar.model.tower.api.Tower;
@@ -46,7 +47,7 @@ public abstract class AbstractTower extends UnitImpl implements Tower {
         final int damage
         ) {
         super(owner, health, costToBuy, costToUpgrade, MAX_LEVEL);
-        this.position = position;
+        this.position = new CellImpl(position);
         this.towerType = towerType;
         this.damage = damage;
     }
@@ -64,7 +65,7 @@ public abstract class AbstractTower extends UnitImpl implements Tower {
      */
     @Override
     public Cell getPosition() {
-        return this.position;
+        return new CellImpl(this.position);
     }
 
     /**

@@ -38,6 +38,16 @@ public class GameMapImpl implements GameMap {
     }
 
     /**
+     * The constructor of the map.
+     * 
+     * @param gameMap the map.
+     */
+    public GameMapImpl(final GameMap gameMap) {
+        this.size = gameMap.getSize();
+        this.map = gameMap.getMap();
+    }
+
+    /**
      * {@inheritDoc}
      * @param position is the position (x,y) of the cell.
      * @return the Cell in that specific position or error if the position in not valid.
@@ -99,5 +109,17 @@ public class GameMapImpl implements GameMap {
             ) {
                 map[cell.getPosition().getX()][cell.getPosition().getY()].setOccupation(unit);
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Cell[][] getMap() {
+        return Arrays.stream(this.map)
+                    .map(row -> Arrays.stream(row)
+                                    .map(cell -> cell == null ? null : new CellImpl(cell))
+                                    .toArray(Cell[]::new))
+                    .toArray(Cell[][]::new);
     }
 }

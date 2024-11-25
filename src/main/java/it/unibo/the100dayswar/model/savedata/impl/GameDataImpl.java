@@ -1,6 +1,7 @@
 package it.unibo.the100dayswar.model.savedata.impl;
 
 import it.unibo.the100dayswar.model.map.api.GameMap;
+import it.unibo.the100dayswar.model.map.impl.GameMapImpl;
 import it.unibo.the100dayswar.model.player.api.Player;
 import it.unibo.the100dayswar.model.player.impl.PlayerImpl;
 import it.unibo.the100dayswar.model.savedata.api.GameData;
@@ -38,7 +39,7 @@ public class GameDataImpl implements GameData {
 
         this.playerData1 = new PlayerImpl(playerData1);
         this.playerData2 = new PlayerImpl(playerData2);
-        this.gameMap = gameMap;
+        this.gameMap = new GameMapImpl(gameMap);
         this.gameTurnManager = gameTurnManager;
     }
 
@@ -63,7 +64,7 @@ public class GameDataImpl implements GameData {
      */
     @Override
     public GameMap getGameMap() {
-        return this.gameMap;
+        return new GameMapImpl(this.gameMap);
     }
 
     /**

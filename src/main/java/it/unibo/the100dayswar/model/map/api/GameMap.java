@@ -41,4 +41,10 @@ public interface GameMap extends Serializable {
      * @param unit is the unit that occupy the cell.
      */
     void setOccupationOnCell(Cell cell, Optional<Unit> unit);
+
+    /**
+     * Returns a deep copy of the map.
+     * @return a deep copy of the map.
+     */
+    Cell[][] getMap();
 }
