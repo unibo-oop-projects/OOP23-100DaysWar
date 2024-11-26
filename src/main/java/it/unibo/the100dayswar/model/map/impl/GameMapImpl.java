@@ -97,11 +97,15 @@ public class GameMapImpl implements GameMap {
      */
     @Override
     public void setOccupationOnCell(final Cell cell, final Optional<Unit> unit) {
-        if (
-            isInMap(cell.getPosition())
-            && unit.isPresent()
-            ) {
-                map[cell.getPosition().getX()][cell.getPosition().getY()].setOccupation(unit);
+        if (isInMap(cell.getPosition())) {
+            final Cell mapCell =  map[cell.getPosition().getX()][cell.getPosition().getY()];
+            if (unit.isEmpty()) {
+                mapCell.setOccupation(Optional.empty());
+                return;
+            }
+            mapCell.setOccupation(unit);
+        } else {
+            throw new IllegalArgumentException("Cell position is out of bounds: " + cell.getPosition());
         }
     }
 

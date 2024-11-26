@@ -51,7 +51,7 @@ class MapTest {
                 .findFirst()
                 .orElseThrow(() -> new IllegalStateException("No spawn cells found in the map."));
         targetCell = gameMap.getAllCells()
-                .filter(cell -> !cell.isAdiacent(spawnCell) && cell.isFree())
+                .filter(cell -> cell.isAdiacent(spawnCell) && cell.isFree())
                 .findFirst()
                 .orElseThrow(() -> new IllegalStateException("No non-spawn cells found in the map adiacent at the start cell."));
         bonusCell = gameMap.getAllCells()
