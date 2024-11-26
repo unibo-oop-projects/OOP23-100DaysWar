@@ -6,6 +6,7 @@ import java.io.ObjectOutputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import it.unibo.the100dayswar.model.savedata.api.GameData;
 import it.unibo.the100dayswar.model.savedata.api.GameSaver;
 
 /**
@@ -17,20 +18,20 @@ public class GameSaverImpl implements GameSaver {
     private static final String PATH = System.getProperty("user.home") + "/saved_game.ser";
 
     private final String customPath;
-    private final GameDataImpl currentGameData;
+    private final GameData currentGameData;
 
     /**
      * Constructor that initializes the class with the given parameters.
      * 
-     * @param gameDataImpl data of the current game
+     * @param gameData data of the current game
      * @param customPath custom path of the saving file
      */
-    public GameSaverImpl(final GameDataImpl gameDataImpl, final String customPath) {
-        if (gameDataImpl == null) {
+    public GameSaverImpl(final GameData gameData, final String customPath) {
+        if (gameData == null) {
             LOGGER.log(Level.SEVERE, "Game data must be non-null");
             throw new IllegalArgumentException("Game data must be non-null");
         }
-        this.currentGameData = gameDataImpl;
+        this.currentGameData = gameData;
         this.customPath = customPath;
     }
 
@@ -38,10 +39,10 @@ public class GameSaverImpl implements GameSaver {
      * Constructor that initializes the class without a custom path.
      * The location of the saving file will be set to the default PATH.
      *
-     * @param gameDataImpl Data of the current game.
+     * @param gameData Data of the current game.
      */
-    public GameSaverImpl(final GameDataImpl gameDataImpl) {
-        this(gameDataImpl, null);
+    public GameSaverImpl(final GameData gameData) {
+        this(gameData, null);
     }
 
     /**

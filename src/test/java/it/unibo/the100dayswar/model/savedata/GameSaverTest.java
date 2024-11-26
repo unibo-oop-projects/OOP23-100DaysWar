@@ -104,7 +104,6 @@ class GameSaverTest {
      */
     @Test
     void testSaveGameOverwritesExistingFile() throws IOException {
-        // Pre-create the file
         Files.createFile(Paths.get(TEST_CUSTOM_PATH));
 
         final GameSaverImpl saver = new GameSaverImpl(mockGameData, TEST_CUSTOM_PATH);
