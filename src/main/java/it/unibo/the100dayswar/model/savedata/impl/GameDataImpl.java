@@ -15,7 +15,7 @@ public class GameDataImpl implements GameData {
 
     private final Player playerData1;
     private final Player playerData2;
-    private final GameMap gameMap;
+    private final GameMap gameMap;  // TODO cambiare a MapManager
     private final GameTurnManager gameTurnManager;
 
     /**
