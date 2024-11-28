@@ -1,14 +1,14 @@
 package it.unibo.the100dayswar.model.bot.impl;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 import com.google.common.collect.Iterables;
 
+import it.unibo.the100dayswar.commons.patterns.Observable;
+import it.unibo.the100dayswar.commons.patterns.Observer;
+import it.unibo.the100dayswar.commons.utilities.impl.Pair;
 import it.unibo.the100dayswar.commons.utilities.impl.Score;
 import it.unibo.the100dayswar.model.bot.api.BotPlayer;
 import it.unibo.the100dayswar.model.cell.api.Cell;
@@ -23,8 +23,9 @@ import it.unibo.the100dayswar.model.unit.api.Unit;
  * An enum that represents the possible actions that a bot can take.
  */
 public enum ActionType {
+
     /**
-     * Type that represents the purchase of a soldier.
+     * Represents the action of purchasing a soldier.
      */
     PURCHASE_SOLDIER {
         private static final int DEFAULT_SCORE = 2;
@@ -35,7 +36,7 @@ public enum ActionType {
         @Override
         protected boolean canPerform(final BotPlayer botPlayer) {
             return botPlayer.getBankAccount().getBalance() >= Soldier.DEFAULT_COST
-                || !botPlayer.getSpawnPoint().isFree();
+                    && botPlayer.getSpawnPoint().isFree();
         }
 
         /**
@@ -58,12 +59,14 @@ public enum ActionType {
             if (canPerform(botPlayer)) {
                 final Soldier soldier = new SoldierImpl(botPlayer);
                 botPlayer.buyUnit(soldier);
+                notifyObservers(new Pair<>(soldier, soldier.getPosition()));
             }
         }
     },
+
     /**
-     * Type that represents the purchase of a tower in a random 
-     * position near the spawn point so the tower can defend it.
+     * Represents the action of purchasing a tower in a random position near the spawn point
+     * so the tower can defend it.
      */
     PURCHASE_TOWER {
         private static final int DEFAULT_SCORE = 1;
@@ -103,52 +106,54 @@ public enum ActionType {
                 if (towerPosition != null) {
                     final Unit tower = new BasicTowerImpl(botPlayer, towerPosition);
                     botPlayer.buyUnit(tower);
+                    notifyObservers(new Pair<>(tower, tower.getPosition()));
                 }
             }
         }
 
         /**
          * Finds a random cell near the spawn point but not adjacent.
-         * 
+         *
          * @param botPlayer The bot player placing the tower
-         * @return A randomly cell where put the tower on, or null if no valid cell exists
+         * @return A random cell where to put the tower, or null if no valid cell exists
          */
         private Cell findRandomTowerPosition(final BotPlayer botPlayer) {
             final Cell spawnPoint = botPlayer.getSpawnPoint();
 
             // Filter cells: near the spawn point but not adjacent, and buildable
             final List<Cell> validCells = botPlayer.getAllCells().stream()
-                .filter(cell -> !cell.isAdiacent(spawnPoint))
-                .filter(cell -> isNearSpawn(cell, spawnPoint))
-                .collect(Collectors.toList());
+                    .filter(cell -> !cell.isAdiacent(spawnPoint))
+                    .filter(cell -> isNearSpawn(cell, spawnPoint))
+                    .collect(Collectors.toList());
 
             return validCells.isEmpty() ? null : validCells.get(RANDOM.nextInt(validCells.size()));
         }
 
         /**
          * Checks if a cell is near the spawn point but not adjacent.
-         * 
-         * @param cell The cell to check.
-         * @param spawnPoint The spawn point of the bot.
-         * @return True if the cell is near but not adjacent, false otherwise.
+         *
+         * @param cell       The cell to check
+         * @param spawnPoint The spawn point of the bot
+         * @return True if the cell is near but not adjacent, false otherwise
          */
         private boolean isNearSpawn(final Cell cell, final Cell spawnPoint) {
-            final int distance = Math.abs(cell.getPosition().getX() - spawnPoint.getPosition().getX()) 
-                + Math.abs(cell.getPosition().getY() - spawnPoint.getPosition().getY());
+            final int distance = Math.abs(cell.getPosition().getX() - spawnPoint.getPosition().getX())
+                    + Math.abs(cell.getPosition().getY() - spawnPoint.getPosition().getY());
             return distance > 1 && distance <= 3;
         }
     },
+
     /**
-     * Type that rapresents the action of upgrading a unit.
-     * For a simplier logic this action will upgrade the unit
-     * with the lowest cost to upgrade.
+     * Represents the action of upgrading a unit.
+     * For a simpler logic, this action will upgrade the unit with the lowest cost to upgrade.
      */
     UPGRADE_UNIT {
         private static final int BASE_SCORE = 2;
         private static final int INCREMENT_SCORE = 5;
-        // These numbers are used to give to upgrade move a high priority every 5 turns
+        // These numbers are used to give the upgrade move a high priority every 5 turns
         private static final int UPGRADE_TURN_INTERVAL = 5;
         private int actionCounter;
+
         /**
          * {@inheritDoc}
          */
@@ -187,12 +192,11 @@ public enum ActionType {
             }
         }
     },
+
     /**
-     * Type that rapresents the action of moving a unit.
-     * For a simplier logic this action chooses a random unit
-     * that can move and with the use of an algorithm, that
-     * finds the shortest path to the enemy's spawn point, it moves
-     * the unit in the correct direction.
+     * Represents the action of moving a unit.
+     * For a simpler logic, this action chooses a random unit that can move
+     * and moves the unit towards the enemy's spawn point using the shortest path.
      */
     MOVE_UNIT {
         private static final int DEFAULT_SCORE = 4;
@@ -223,17 +227,18 @@ public enum ActionType {
             if (canPerform(botPlayer)) {
                 // Choose a random soldier
                 final Soldier unitToMove = Iterables.get(soldiers, RANDOM.nextInt(soldiers.size()));
-                // Using the BFS algorithm to find the next cell in the path to the enemy spawn point
+                // Using BFS algorithm to find the next cell in the path to the enemy spawn point
                 final Cell destination = determineDestination(botPlayer, unitToMove);
                 if (destination != null) {
                     botPlayer.moveUnit(unitToMove, destination);
+                    notifyObservers(new Pair<>(unitToMove, destination));
                 }
             }
         }
 
         /**
          * Determines the destination for the unit using BFS logic.
-         * 
+         *
          * @param botPlayer the bot player
          * @param unit      the unit to move
          * @return the destination cell
@@ -250,41 +255,106 @@ public enum ActionType {
         }
     };
 
+    /**
+     * A static class, shared by all types of this enum, that has the 
+     * task of manage the observers of the actions.
+     */
+    private static class ActionNotifier implements Observable<Pair<Unit, Cell>> {
+        private final Set<Observer<Pair<Unit, Cell>>> observers = new HashSet<>();
+
+        /**
+         * @param observer the observer to attach
+         */
+        @Override
+        public void attach(final Observer<Pair<Unit, Cell>> observer) {
+            observers.add(observer);
+        }
+
+        /**
+         * @param observer the observer to detach
+         */
+        @Override
+        public void detach(final Observer<Pair<Unit, Cell>> observer) {
+            observers.remove(observer);
+        }
+
+        /**
+         * Notifies all attached observers with the given data.
+         *
+         * @param data the data to pass to the observers
+         */
+        public void notifyObservers(final Pair<Unit, Cell> data) {
+            for (final Observer<Pair<Unit, Cell>> observer : observers) {
+                observer.update(data);
+            }
+        }
+    }
+
+    /**
+     * The istance of the ActionNotifier.
+     */
+    private static final ActionNotifier NOTIFIER = new ActionNotifier();
+
+    /**
+     * Registers an observer.
+     *
+     * @param observer the observer to register
+     */
+    public static void add(final Observer<Pair<Unit, Cell>> observer) {
+        NOTIFIER.attach(observer);
+    }
+
+    /**
+     * Unregisters an observer.
+     *
+     * @param observer the observer to unregister
+     */
+    public static void delete(final Observer<Pair<Unit, Cell>> observer) {
+        NOTIFIER.detach(observer);
+    }
+
+    /**
+     * Notifies all registered observers with the given data.
+     *
+     * @param data the data to notify observers with
+     */
+    protected void notifyObservers(final Pair<Unit, Cell> data) {
+        NOTIFIER.notifyObservers(data);
+    }
+
     private static final int NON_PERFORMABLE_SCORE = -1;
     private static final int HIGH_PRIORITY_SCORE = 10;
 
     /**
-     * Determines if the bot player can perform the move.
-     * 
+     * Determines if the bot player can perform the action.
+     *
      * @param botPlayer the bot player
-     * @return true if the bot player can perform the move, false otherwise
+     * @return true if the bot player can perform the action, false otherwise
      */
     protected abstract boolean canPerform(BotPlayer botPlayer);
 
     /**
-     * Evaluates the move based on the bot player's state.
-     * 
+     * Evaluates the action based on the bot player's state.
+     *
      * @param botPlayer the bot player
-     * @return the score of the move
+     * @return the score of the action
      */
     protected abstract Score evaluate(BotPlayer botPlayer);
 
     /**
-     * Executes the move.
-     * 
+     * Executes the action.
+     *
      * @param botPlayer the bot player
      */
     protected abstract void execute(BotPlayer botPlayer);
 
     /**
-     * Utility method that returns a non-performable score if the action can't be
-     * performed,
+     * Utility method that returns a non-performable score if the action can't be performed,
      * otherwise calculates the score with the provided scorer.
-     * 
+     *
      * @param botPlayer the bot player
-     * @param scorer    a supplier that provides the score if the action can be
-     *                  performed
-     * @return the score of the move
+     * @param scorer    a supplier that provides the score if the action can be performed
+     * @return the score of the action
      */
     protected Score evaluateOrNonPerformable(final BotPlayer botPlayer, final Supplier<Score> scorer) {
         return canPerform(botPlayer) ? scorer.get() : new Score(NON_PERFORMABLE_SCORE);
