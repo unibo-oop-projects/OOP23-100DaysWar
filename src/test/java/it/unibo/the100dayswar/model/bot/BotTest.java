@@ -1,15 +1,12 @@
 package it.unibo.the100dayswar.model.bot;
 
-import it.unibo.the100dayswar.model.map.api.GameMap;
 import it.unibo.the100dayswar.model.map.impl.GameMapBuilderImpl;
-import it.unibo.the100dayswar.model.player.api.Player;
-import it.unibo.the100dayswar.model.player.impl.PlayerImpl;
+import it.unibo.the100dayswar.model.map.impl.MapManagerImpl;
 import it.unibo.the100dayswar.model.bot.api.BotPlayer;
 import it.unibo.the100dayswar.model.bot.api.DecisionMaker;
 import it.unibo.the100dayswar.model.bot.impl.ActionType;
 import it.unibo.the100dayswar.model.bot.impl.DecisionMakerImpl;
 import it.unibo.the100dayswar.model.bot.impl.SimpleBot;
-import it.unibo.the100dayswar.model.cell.api.Cell;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -25,20 +22,11 @@ class BotTest {
 
     @BeforeEach
     void setUp() {
-        final GameMap map = createMap();
-        final Cell enemySpawnPoint = map.getAllCells()
-            .filter(c -> c.getPosition().getX() == 0)
-            .filter(Cell::isSpawn)
-            .findFirst().get();
-
-        final Cell spawnPoint = map.getAllCells()
-            .filter(c -> c.getPosition().getX() == MAP_SIZE - 1
-            && !c.equals(enemySpawnPoint))
-            .filter(Cell::isSpawn)
-            .findFirst().get();
-
-        final Player enemy = new PlayerImpl("Enemy", enemySpawnPoint);
-        bot = new SimpleBot(spawnPoint, enemy.getSpawnPoint(), map.getAllCells());
+        bot = new SimpleBot(new MapManagerImpl(new GameMapBuilderImpl(MAP_SIZE, MAP_SIZE)
+                .initializeBuildableCells()
+                .addSpawnCells()
+                .addObstacles(2)
+                .addBonusCell(2)));
     }
 
     @Test
@@ -61,17 +49,6 @@ class BotTest {
         // This method for now does not change the position of the soldier
         // because needs the add of the map manager to notify the movement request
         //assertFalse(bot.getSpawnPoint().equals(bot.getSoldiers().stream().findAny().get().getPosition()));
-    }
-
-
-
-    private GameMap createMap() {
-        return new GameMapBuilderImpl(MAP_SIZE, MAP_SIZE)
-                .initializeBuildableCells()
-                .addSpawnCells()
-                .addObstacles(2)
-                .addBonusCell(2)
-                .build();
     }
 
 }

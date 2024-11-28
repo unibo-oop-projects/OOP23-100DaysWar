@@ -10,6 +10,7 @@ import it.unibo.the100dayswar.model.bot.api.BotPlayer;
 import it.unibo.the100dayswar.model.bot.api.BotStrategy;
 import it.unibo.the100dayswar.model.cell.api.Cell;
 import it.unibo.the100dayswar.model.cell.impl.CellImpl;
+import it.unibo.the100dayswar.model.map.api.MapManager;
 import it.unibo.the100dayswar.model.player.impl.PlayerImpl;
 
 /**
@@ -31,13 +32,10 @@ public class SimpleBot extends PlayerImpl implements BotPlayer {
      * @param enemySpawnPoint the spawn point of the enemy
      * @param gameMapCells    the game map
      */
-    public SimpleBot(final Cell spawnPoint,
-            final Cell enemySpawnPoint,
-            final Stream<Cell> gameMapCells) {
-        super(BOT_NAME, spawnPoint);
+    public SimpleBot(final MapManager mapManager) {
+        super(BOT_NAME, mapManager.getBotSpawn());
         this.strategy = new SimpleBotStrategy();
-        this.enemySpawnPoint = new CellImpl(enemySpawnPoint);
-        this.gameMapCells = gameMapCells.collect(Collectors.toUnmodifiableSet());
+        this.enemySpawnPoint = mapManager.getPlayerSpawn();
     }
 
     /**
