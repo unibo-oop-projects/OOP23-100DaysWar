@@ -7,7 +7,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
+import java.util.stream.Stream;
 
 import it.unibo.the100dayswar.commons.utilities.impl.Pair;
 import it.unibo.the100dayswar.model.cell.api.BonusCell;
@@ -47,10 +47,11 @@ public class MapManagerImpl implements MapManager {
     */
     private GameMap createMap() {
         return builder
-        .addBonusCell(4)
-        .addObstacles(3)
-        .addSpawnCells()
-        .build();
+                .initializeBuildableCells()
+                .addSpawnCells()
+                .addBonusCell(4)
+                .addObstacles(3)
+                .build();
     }
 
     /**
@@ -204,5 +205,36 @@ public class MapManagerImpl implements MapManager {
     private boolean isSoldierWantsToMove(final Pair<Unit, Cell> source) {
         return source.getFirst() instanceof Soldier
         && !source.getSecond().equals(((Soldier) source.getFirst()).getPosition());
+    }
+
+    /**
+     *{@inheritDoc}
+     */
+    @Override
+    public Cell getBotSpawn() {
+        return map.getAllCells()
+            .filter(Cell::isSpawn)
+            .findFirst()
+            .orElseThrow(() -> new IllegalStateException("No spawn cells found in the map."));
+    }
+
+    /**
+     *{@inheritDoc}
+     */
+    @Override
+    public Cell getPlayerSpawn() {
+        return map.getAllCells()
+            .filter(Cell::isSpawn)
+            .filter(c -> !c.equals(getBotSpawn()))
+            .findFirst()
+            .orElseThrow(() -> new IllegalStateException("No spawn cells found in the map."));
+    }
+
+    /**
+     *{@inheritDoc}
+     */
+    @Override
+    public Stream<Cell> getMapAsAStream() {
+        return map.getAllCells();
     }
 }

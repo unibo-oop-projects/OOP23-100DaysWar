@@ -3,6 +3,7 @@ package it.unibo.the100dayswar.model.map.api;
 
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import it.unibo.the100dayswar.commons.patterns.Observer;
 import it.unibo.the100dayswar.commons.utilities.impl.Pair;
@@ -27,4 +28,18 @@ public interface MapManager extends Observer<Pair<Unit, Cell>> {
      * @return the cells in possession of the players.
      */
     Map<Player, Set<Cell>> getPlayersCells();
+    /**
+     * @return the spawn cell in possession of the bot.
+     */
+    Cell getBotSpawn();
+
+    /**
+     * @return the spawn cell in possession of the player.
+     */
+    Cell getPlayerSpawn();
+
+    /**
+     * @return map as a stream.
+     */
+    Stream<Cell> getMapAsAStream();
 }
