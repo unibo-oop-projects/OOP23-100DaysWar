@@ -22,7 +22,7 @@ public class SimpleBot extends PlayerImpl implements BotPlayer {
 
     private final Cell enemySpawnPoint;
     private final Set<Cell> gameMapCells;
-    private final BotStrategy strategy; 
+    private final BotStrategy strategy;
 
     /**
      * Constructor for the bot player.
@@ -31,6 +31,8 @@ public class SimpleBot extends PlayerImpl implements BotPlayer {
      */
     public SimpleBot(final MapManager mapManager) {
         super(BOT_NAME, mapManager.getBotSpawn());
+        ActionType.clear();
+        ActionType.add(mapManager);
         this.strategy = new SimpleBotStrategy();
         this.enemySpawnPoint = mapManager.getPlayerSpawn();
         this.gameMapCells = mapManager.getMapAsAStream().collect(Collectors.toSet());

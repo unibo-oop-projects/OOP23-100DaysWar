@@ -63,7 +63,7 @@ public enum ActionType {
             if (canPerform(botPlayer)) {
                 final Soldier soldier = new SoldierImpl(botPlayer);
                 botPlayer.buyUnit(soldier);
-                notifyObservers(new Pair<>(soldier, soldier.getPosition()));
+                notifyObservers(new Pair<>(soldier, botPlayer.getSpawnPoint()));
             }
         }
     },
@@ -293,6 +293,13 @@ public enum ActionType {
         }
 
         /**
+         * Removes all attached observers.
+         */
+        public void removeAllObservers() {
+            observers.clear();
+        }
+
+        /**
          * Notifies all attached observers with the given data.
          *
          * @param data the data to pass to the observers
@@ -320,6 +327,13 @@ public enum ActionType {
      */
     public static void delete(final Observer<Pair<Unit, Cell>> observer) {
         NOTIFIER.detach(observer);
+    }
+
+    /**
+     * Clears all attached observers.
+     */
+    public static void clear() {
+        NOTIFIER.removeAllObservers();
     }
 
     /**
