@@ -1,6 +1,10 @@
 package it.unibo.the100dayswar.model.bot.impl;
 
-import java.util.*;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Random;
+import java.util.Set;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
@@ -255,11 +259,21 @@ public enum ActionType {
         }
     };
 
+    private static final long serialVersionUID = 1L;
+    private static final int NON_PERFORMABLE_SCORE = -1;
+    private static final int HIGH_PRIORITY_SCORE = 10;
+
+    /**
+     * The istance of the ActionNotifier.
+     */
+    private static final ActionNotifier NOTIFIER = new ActionNotifier();
+
     /**
      * A static class, shared by all types of this enum, that has the 
      * task of manage the observers of the actions.
      */
-    private static class ActionNotifier implements Observable<Pair<Unit, Cell>> {
+    private static final class ActionNotifier implements Observable<Pair<Unit, Cell>> {
+        private static final long serialVersionUID = 1L;
         private final Set<Observer<Pair<Unit, Cell>>> observers = new HashSet<>();
 
         /**
@@ -291,11 +305,6 @@ public enum ActionType {
     }
 
     /**
-     * The istance of the ActionNotifier.
-     */
-    private static final ActionNotifier NOTIFIER = new ActionNotifier();
-
-    /**
      * Registers an observer.
      *
      * @param observer the observer to register
@@ -321,9 +330,6 @@ public enum ActionType {
     protected void notifyObservers(final Pair<Unit, Cell> data) {
         NOTIFIER.notifyObservers(data);
     }
-
-    private static final int NON_PERFORMABLE_SCORE = -1;
-    private static final int HIGH_PRIORITY_SCORE = 10;
 
     /**
      * Determines if the bot player can perform the action.

@@ -4,7 +4,6 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import it.unibo.the100dayswar.model.bot.api.BotPlayer;
 import it.unibo.the100dayswar.model.bot.api.BotStrategy;
@@ -28,14 +27,13 @@ public class SimpleBot extends PlayerImpl implements BotPlayer {
     /**
      * Constructor for the bot player.
      *
-     * @param spawnPoint      the spawn point of the bot player
-     * @param enemySpawnPoint the spawn point of the enemy
-     * @param gameMapCells    the game map
+     * @param mapManager the map manager of the game
      */
     public SimpleBot(final MapManager mapManager) {
         super(BOT_NAME, mapManager.getBotSpawn());
         this.strategy = new SimpleBotStrategy();
         this.enemySpawnPoint = mapManager.getPlayerSpawn();
+        this.gameMapCells = mapManager.getMapAsAStream().collect(Collectors.toSet());
     }
 
     /**

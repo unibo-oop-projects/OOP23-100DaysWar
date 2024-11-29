@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 
 import it.unibo.the100dayswar.model.soldier.api.Soldier;
 import it.unibo.the100dayswar.model.soldier.impl.SoldierImpl;
-import it.unibo.the100dayswar.model.unit.api.Combatant;
 import it.unibo.the100dayswar.commons.utilities.impl.PositionImpl;
 import it.unibo.the100dayswar.model.player.api.Player;
 import it.unibo.the100dayswar.model.player.impl.PlayerImpl;
@@ -40,7 +39,7 @@ class SoldierTest {
 
     @Test
     void testUpgrade() {
-        final int healthAfterUpgrade = 150;
+        final int healthAfterUpgrade = 125;
         assertEquals(1, soldier.getLevel());
         assertEquals(100, soldier.currentHealth());
         soldier.upgrade();
@@ -50,7 +49,7 @@ class SoldierTest {
 
     @Test
     void testPerformAttack() {
-        final Combatant target = new SoldierImpl(testPlayer);
+        final Soldier target = new SoldierImpl(testPlayer);
         assertEquals(100, soldier.currentHealth());
         assertEquals(100, target.currentHealth());
         soldier.performAttack(target);
