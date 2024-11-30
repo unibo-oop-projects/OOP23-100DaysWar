@@ -8,6 +8,8 @@ import org.junit.jupiter.api.Test;
 
 import it.unibo.the100dayswar.model.soldier.api.Soldier;
 import it.unibo.the100dayswar.model.soldier.impl.SoldierImpl;
+import it.unibo.the100dayswar.model.tower.api.Tower;
+import it.unibo.the100dayswar.model.tower.impl.AdvancedTowerImpl;
 import it.unibo.the100dayswar.commons.utilities.impl.PositionImpl;
 import it.unibo.the100dayswar.model.player.api.Player;
 import it.unibo.the100dayswar.model.player.impl.PlayerImpl;
@@ -48,7 +50,7 @@ class SoldierTest {
     }
 
     @Test
-    void testPerformAttack() {
+    void testAttackSoldier() {
         final Soldier target = new SoldierImpl(testPlayer);
         assertEquals(100, soldier.currentHealth());
         assertEquals(100, target.currentHealth());
@@ -57,6 +59,35 @@ class SoldierTest {
             soldier.currentHealth() == 100 && target.currentHealth() == 0 
             ||
             soldier.currentHealth() == 0 && target.currentHealth() == 100
+        );
+    }
+
+    @Test
+    void testAttackSoldierWithDifferentLevel() {
+        final Soldier target = new SoldierImpl(testPlayer);
+        final int soldierHealth = 100;
+        final int targetHealth = 175;
+        target.upgrade();
+        target.upgrade();
+        assertEquals(100, soldier.currentHealth());
+        assertEquals(targetHealth, target.currentHealth());
+        soldier.performAttack(target);
+        assertTrue(
+            soldier.currentHealth() == soldierHealth && target.currentHealth() == 0
+            ||
+            soldier.currentHealth() == 0 && target.currentHealth() == targetHealth
+        );
+    }
+
+    @Test
+    void testAttackTower() {
+        final Tower tower = new AdvancedTowerImpl(testPlayer, new CellImpl(new PositionImpl(1, 1), true, true));
+        final int towerHealth = tower.currentHealth();
+        final int defSoldierDamage = 30;
+        assertEquals(100, soldier.currentHealth());
+        soldier.performAttack(tower);
+        assertTrue(
+            soldier.currentHealth() == 100 && tower.currentHealth() == towerHealth - defSoldierDamage * soldier.getLevel()
         );
     }
 }
