@@ -11,15 +11,15 @@ import org.junit.jupiter.api.Test;
 
 import it.unibo.the100dayswar.commons.utilities.impl.PositionImpl;
 import it.unibo.the100dayswar.model.cell.impl.CellImpl;
-import it.unibo.the100dayswar.model.map.api.GameMap;
-import it.unibo.the100dayswar.model.map.impl.GameMapImpl;
+import it.unibo.the100dayswar.model.map.api.MapManager;
+import it.unibo.the100dayswar.model.map.impl.GameMapBuilderImpl;
+import it.unibo.the100dayswar.model.map.impl.MapManagerImpl;
 import it.unibo.the100dayswar.model.player.api.Player;
 import it.unibo.the100dayswar.model.player.impl.PlayerImpl;
 import it.unibo.the100dayswar.model.savedata.impl.GameDataImpl;
 import it.unibo.the100dayswar.model.turn.api.GameTurnManager;
 import it.unibo.the100dayswar.model.turn.impl.GameTurnManagerImpl;
 
-import java.awt.Dimension;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,10 +31,10 @@ class GameDataTest {
 
     private final Player mockPlayer1 = new PlayerImpl("MockPlayer1", new CellImpl(new PositionImpl(0, 0), true, true));
     private final Player mockPlayer2 = new PlayerImpl("MockPlayer2", new CellImpl(new PositionImpl(9, 9), true, true));
-    private final GameMap mockGameMap = new GameMapImpl(MAP_DIMENSION, MAP_DIMENSION, new CellImpl[MAP_DIMENSION][MAP_DIMENSION]);
+    private final MapManager mockGameMapManager = new MapManagerImpl(new GameMapBuilderImpl(MAP_DIMENSION, MAP_DIMENSION));
     private final GameTurnManager mockGameTurnManager = new GameTurnManagerImpl(List.of(mockPlayer1, mockPlayer2));
 
-    private final GameDataImpl mockGameData = new GameDataImpl(mockPlayer1, mockPlayer2, mockGameMap, mockGameTurnManager);
+    private final GameDataImpl mockGameData = new GameDataImpl(mockPlayer1, mockPlayer2, mockGameMapManager, mockGameTurnManager);
 
     /**
      * Test to ensure the constructor throws an exception when
@@ -43,7 +43,7 @@ class GameDataTest {
     @Test
     void testConstructorWithSamePlayersThrowsException() {
         final Exception exception = assertThrows(IllegalArgumentException.class, () -> 
-            new GameDataImpl(mockPlayer1, mockPlayer1, mockGameMap, mockGameTurnManager)
+            new GameDataImpl(mockPlayer1, mockPlayer1, mockGameMapManager, mockGameTurnManager)
         );
 
         assertTrue(exception.getMessage().contains("playerData1 and playerData2 must be different"));
@@ -56,7 +56,7 @@ class GameDataTest {
     void testConstructorInitializesFields() {
         assertNotNull(mockGameData.getPlayerData1());
         assertNotNull(mockGameData.getPlayerData2());
-        assertNotNull(mockGameData.getGameMap());
+        assertNotNull(mockGameData.getMapManager());
         assertNotNull(mockGameData.getGameTurnManager());
     }
 
@@ -78,16 +78,16 @@ class GameDataTest {
     }
 
     /**
-     * Test to verify getGameMap returns a deep copy.
+     * Test to verify getMapManager returns a deep copy.
      */
     @Test
     void testGetGameMapReturnsDeepCopy() {
-        final GameMap copy = mockGameData.getGameMap();
+        final MapManager copy = mockGameData.getMapManager();
 
-        assertNotSame(mockGameMap, copy);
+        assertNotSame(mockGameMapManager, copy);
 
-        assertEquals(new Dimension(MAP_DIMENSION, MAP_DIMENSION), copy.getSize());
-        assertEquals(mockGameMap.getAllCells().collect(Collectors.toList()), copy.getAllCells().collect(Collectors.toList()));
+        assertEquals(mockGameMapManager.getMapAsAStream().collect(Collectors.toList()), copy.getMapAsAStream().collect(Collectors.toList()));
+        assertEquals(mockGameMapManager.getPlayersCells(), copy.getPlayersCells());
     }
 
     /**
@@ -98,4 +98,3 @@ class GameDataTest {
         assertSame(mockGameTurnManager, mockGameData.getGameTurnManager());
     }
 }
-
