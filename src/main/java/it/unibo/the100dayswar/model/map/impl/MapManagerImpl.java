@@ -8,16 +8,19 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.awt.Dimension;
 
 import it.unibo.the100dayswar.commons.utilities.impl.Pair;
 import it.unibo.the100dayswar.model.cell.api.BonusCell;
 import it.unibo.the100dayswar.model.cell.api.Cell;
+import it.unibo.the100dayswar.model.cell.impl.CellImpl;
 import it.unibo.the100dayswar.model.map.api.GameMap;
 import it.unibo.the100dayswar.model.map.api.GameMapBuilder;
 import it.unibo.the100dayswar.model.map.api.MapManager;
 import it.unibo.the100dayswar.model.player.api.Player;
+import it.unibo.the100dayswar.model.player.impl.PlayerImpl;
 import it.unibo.the100dayswar.model.soldier.api.Soldier;
 import it.unibo.the100dayswar.model.tower.api.Tower;
 import it.unibo.the100dayswar.model.unit.api.Unit;
@@ -42,6 +45,28 @@ public class MapManagerImpl implements MapManager {
         map = createMap();
         playersCells = new HashMap<>();
     }
+
+    /**
+     * the builder of the mapManager with all objects.
+     * @param original is the original mapManager.
+     */
+    public MapManagerImpl(final MapManager original) {
+    this.builder = new GameMapBuilderImpl(0, 0);
+    final int height = original.getMapDimension().height;
+    final int width = original.getMapDimension().width;
+
+    this.map = new GameMapImpl(width,height,createMapFromStream(width, height,original.getMapAsAStream()));
+
+    this.playersCells = new HashMap<>();
+    original.getPlayersCells().forEach((player, cells) -> {
+        Set<Cell> copiedCells = cells.stream()
+                                     .map(cell -> new CellImpl(cell)) 
+                                     .collect(Collectors.toSet());
+        this.playersCells.put(new PlayerImpl(player), copiedCells); 
+    });
+
+}
+
 
     /**
      * the builder of the map with all objects.
