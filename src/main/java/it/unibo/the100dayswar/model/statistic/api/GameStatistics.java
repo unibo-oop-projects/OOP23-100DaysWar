@@ -1,6 +1,6 @@
 package it.unibo.the100dayswar.model.statistic.api;
 
-import it.unibo.the100dayswar.model.map.api.GameMap;
+
 import it.unibo.the100dayswar.model.map.api.MapManager;
 import it.unibo.the100dayswar.model.player.api.Player;
 
@@ -29,7 +29,7 @@ public interface GameStatistics {
      * @param map the game map.
      * @return the percentage of cells owned by the player.
      */
-    double getCellsPercentage(Player player, MapManager mapManager, GameMap map);
+    double getCellsPercentage(Player player, MapManager mapManager);
 
     /**
      * Get the balance of a player.
