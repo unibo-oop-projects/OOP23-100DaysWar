@@ -8,6 +8,7 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Stream;
+import java.awt.Dimension;
 
 import it.unibo.the100dayswar.commons.utilities.impl.Pair;
 import it.unibo.the100dayswar.model.cell.api.BonusCell;
@@ -237,4 +238,13 @@ public class MapManagerImpl implements MapManager {
     public Stream<Cell> getMapAsAStream() {
         return map.getAllCells();
     }
+
+    /**
+     *{@inheritDoc}
+     */
+    @Override
+    public Dimension getMapDimension() {
+        return new Dimension(map.getSize().width, map.getSize().height).getSize();
+    }
+    
 }

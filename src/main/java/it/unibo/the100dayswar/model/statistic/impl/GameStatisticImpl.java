@@ -2,7 +2,7 @@ package it.unibo.the100dayswar.model.statistic.impl;
 
 import java.util.Set;
 
-import it.unibo.the100dayswar.model.map.api.GameMap;
+
 import it.unibo.the100dayswar.model.map.api.MapManager;
 import it.unibo.the100dayswar.model.player.api.Player;
 import it.unibo.the100dayswar.model.soldier.api.Soldier;

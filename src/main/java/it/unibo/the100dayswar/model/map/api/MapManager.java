@@ -4,6 +4,7 @@ package it.unibo.the100dayswar.model.map.api;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Stream;
+import java.awt.Dimension;
 
 import it.unibo.the100dayswar.commons.patterns.Observer;
 import it.unibo.the100dayswar.commons.utilities.impl.Pair;
@@ -42,4 +43,9 @@ public interface MapManager extends Observer<Pair<Unit, Cell>> {
      * @return map as a stream.
      */
     Stream<Cell> getMapAsAStream();
+
+    /**
+     * @return the dimension of the map.
+     */
+    Dimension getMapDimension();
 }
