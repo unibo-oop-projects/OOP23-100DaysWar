@@ -26,7 +26,6 @@ public interface GameStatistics {
      * Get the percentage of cells owned by a player.
      * @param player the player.
      * @param mapManager the map manager.
-     * @param map the game map.
      * @return the percentage of cells owned by the player.
      */
     double getCellsPercentage(Player player, MapManager mapManager);

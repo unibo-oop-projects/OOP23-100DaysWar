@@ -55,7 +55,7 @@ public class MapManagerImpl implements MapManager {
     final int height = original.getMapDimension().height;
     final int width = original.getMapDimension().width;
 
-    this.map = new GameMapImpl(width,height,createMapFromStream(width, height,original.getMapAsAStream()));
+    this.map = new GameMapImpl(width, height, createMapFromStream(width, height, original.getMapAsAStream()));
 
     this.playersCells = new HashMap<>();
     original.getPlayersCells().forEach((player, cells) -> {
@@ -276,7 +276,7 @@ public class MapManagerImpl implements MapManager {
     /*
      * {@inheritDoc}
      */
-    private Cell[][] createMapFromStream(int width, int height,Stream<Cell> cellStream) {
+    private Cell[][] createMapFromStream(final int width, final int height, final Stream<Cell> cellStream) {
 
         final Cell[][] map = new Cell[width][height];
         final Iterator<Cell> iterator = cellStream.iterator();
