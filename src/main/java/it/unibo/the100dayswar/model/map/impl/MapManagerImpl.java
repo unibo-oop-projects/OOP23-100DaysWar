@@ -2,6 +2,7 @@ package it.unibo.the100dayswar.model.map.impl;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -246,5 +247,23 @@ public class MapManagerImpl implements MapManager {
     public Dimension getMapDimension() {
         return new Dimension(map.getSize().width, map.getSize().height).getSize();
     }
-    
+
+    /*
+     * {@inheritDoc}
+     */
+    private Cell[][] createMapFromStream(int width, int height,Stream<Cell> cellStream) {
+
+        final Cell[][] map = new Cell[width][height];
+        final Iterator<Cell> iterator = cellStream.iterator();
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
+                if (iterator.hasNext()) {
+                    map[x][y] = iterator.next();
+                }
+            }
+        }
+
+        return map;
+    }
+
 }
