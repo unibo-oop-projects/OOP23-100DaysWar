@@ -16,8 +16,6 @@ import it.unibo.the100dayswar.model.turn.api.GameTurnManager;
 import it.unibo.the100dayswar.model.turn.impl.GameTurnManagerImpl;
 import it.unibo.the100dayswar.commons.utilities.impl.PositionImpl;
 import it.unibo.the100dayswar.model.cell.impl.CellImpl;
-import it.unibo.the100dayswar.model.map.api.GameMap;
-import it.unibo.the100dayswar.model.map.impl.GameMapImpl;
 import it.unibo.the100dayswar.model.player.api.Player;
 import it.unibo.the100dayswar.model.player.impl.PlayerImpl;
 import it.unibo.the100dayswar.model.savedata.impl.GameDataImpl;
@@ -28,14 +26,12 @@ import it.unibo.the100dayswar.model.savedata.impl.GameDataImpl;
 class GameSaverTest {
     private static final String TEST_CUSTOM_PATH = "test_saved_game.ser";
     private static final String DEFAULT_PATH = System.getProperty("user.home") + "/saved_game.ser";
-    private static final int MAP_DIMENSION = 12;
 
     private final Player mockPlayer1 = new PlayerImpl("MockPlayer1", new CellImpl(new PositionImpl(2, 2), true, true));
     private final Player mockPlayer2 = new PlayerImpl("MockPlayer2", new CellImpl(new PositionImpl(8, 8), true, true));
-    private final GameMap mockGameMap = new GameMapImpl(MAP_DIMENSION, MAP_DIMENSION, new CellImpl[MAP_DIMENSION][MAP_DIMENSION]);
     private final GameTurnManager mockGameTurnManager = new GameTurnManagerImpl(List.of(mockPlayer1, mockPlayer2));
 
-    private final GameDataImpl mockGameData = new GameDataImpl(mockPlayer1, mockPlayer2, mockGameMap, mockGameTurnManager);
+    private final GameDataImpl mockGameData = new GameDataImpl(mockPlayer2, mockPlayer1, null, mockGameTurnManager);
 
     /**
      * Cleans up the files.
