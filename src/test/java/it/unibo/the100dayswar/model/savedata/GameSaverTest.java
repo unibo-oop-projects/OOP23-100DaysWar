@@ -117,8 +117,11 @@ class GameSaverTest {
 
     /**
      * Generate a custom path.
+     * 
+     * @param gameName the name of the game
+     * @return the save path
      */
-    static String generateSavePath(String gameName) {
+    static String generateSavePath(final String gameName) {
         // Ottieni la directory home dell'utente
         String userHome = System.getProperty("user.home");
 

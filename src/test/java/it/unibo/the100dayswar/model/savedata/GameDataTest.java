@@ -86,7 +86,11 @@ class GameDataTest {
 
         assertNotSame(mockGameMapManager, copy);
 
-        assertEquals(mockGameMapManager.getMapAsAStream().collect(Collectors.toList()), copy.getMapAsAStream().collect(Collectors.toList()));
+        assertEquals(
+            mockGameMapManager.getMapAsAStream().collect(Collectors.toList()),
+            copy.getMapAsAStream().collect(Collectors.toList())
+        );
+
         assertEquals(mockGameMapManager.getPlayersCells(), copy.getPlayersCells());
     }
 

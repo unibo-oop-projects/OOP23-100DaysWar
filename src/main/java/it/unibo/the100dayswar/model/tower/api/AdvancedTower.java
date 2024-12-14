@@ -3,7 +3,7 @@ package it.unibo.the100dayswar.model.tower.api;
 /**
  * Interface that rapresent an advanced tower.
  */
-public interface AdvancedTower {
+public interface AdvancedTower extends Tower {
     /**
      * Methods that get the damage of the advanced tower.
      * 
