@@ -9,5 +9,6 @@ public interface BasicTower extends Tower {
      * 
      * @return the damage of the basic tower
      */
+    @Override
     int getDamage();
 }

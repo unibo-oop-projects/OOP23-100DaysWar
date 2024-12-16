@@ -15,7 +15,7 @@ import it.unibo.the100dayswar.model.savedata.api.GameSaver;
  */
 public class GameSaverImpl implements GameSaver {
     private static final Logger LOGGER = Logger.getLogger(GameSaverImpl.class.getName());
-    private static final String PATH = System.getProperty("user.home") + "/saved_game.ser";
+    private static final String DEFAULT_PATH = System.getProperty("user.home") + "/saved_game.ser";
 
     private final String customPath;
     private final GameData currentGameData;
@@ -51,7 +51,7 @@ public class GameSaverImpl implements GameSaver {
      */
     @Override
     public void saveGame() throws IOException {
-        final String path = (customPath != null) ? customPath : PATH;
+        final String path = (customPath != null) ? customPath : DEFAULT_PATH;
         saveGameAtPath(path);
     }
 

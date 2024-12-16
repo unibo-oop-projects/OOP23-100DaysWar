@@ -86,7 +86,7 @@ class GameSaverTest {
 
         final Exception exception = assertThrows(IOException.class, saver::saveGame);
 
-        assertTrue(exception.getMessage().contains("Error during game serialization and saving at " + invalidPath));
+        assertTrue(exception.getMessage().contains("Error saving game at path: " + invalidPath));
     }
 
     /**
@@ -122,11 +122,9 @@ class GameSaverTest {
      * @return the save path
      */
     static String generateSavePath(final String gameName) {
-        // Ottieni la directory home dell'utente
-        String userHome = System.getProperty("user.home");
+        final String userHome = System.getProperty("user.home");
 
-        // Crea il percorso completo
-        Path savePath = Paths.get(userHome, "Documents", gameName + ".sav");
+        final Path savePath = Paths.get(userHome, "Documents", gameName + ".sav");
 
         return savePath.toString();
     }

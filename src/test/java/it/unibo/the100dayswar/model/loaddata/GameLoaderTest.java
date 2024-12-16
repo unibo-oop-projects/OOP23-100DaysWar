@@ -18,6 +18,7 @@ import org.junit.jupiter.api.Test;
 
 import it.unibo.the100dayswar.commons.utilities.impl.PositionImpl;
 import it.unibo.the100dayswar.model.cell.impl.CellImpl;
+import it.unibo.the100dayswar.model.loaddata.api.GameLoader;
 import it.unibo.the100dayswar.model.loaddata.impl.GameLoaderImpl;
 import it.unibo.the100dayswar.model.savedata.api.GameData;
 import it.unibo.the100dayswar.model.savedata.api.GameSaver;
@@ -63,14 +64,15 @@ class GameLoaderImplTest {
     @Test
     void testLoadGameWithCustomPath() throws IOException, ClassNotFoundException {
         final GameSaver saver = new GameSaverImpl(mockGameData, TEST_CUSTOM_PATH);
+        saver.saveGame();
+
         final GameLoaderImpl loader = new GameLoaderImpl(TEST_CUSTOM_PATH);
         final Optional<GameData> loadedData = loader.loadGame();
-
-        saver.saveGame();
 
         assertTrue(loadedData.isPresent(), "Game data should be loaded successfully.");
         assertEquals(mockGameData, loadedData.get(), "Loaded data should match the saved data.");
     }
+
 
     /**
      * Test loading game data from the default path.
@@ -78,10 +80,10 @@ class GameLoaderImplTest {
     @Test
     void testLoadGameWithDefaultPath() throws IOException, ClassNotFoundException {
         final GameSaver saver = new GameSaverImpl(mockGameData, null);
-        final GameLoaderImpl loader = new GameLoaderImpl();
-        final Optional<GameData> loadedData = loader.loadGame();
-
         saver.saveGame();
+
+        final GameLoader loader = new GameLoaderImpl();
+        final Optional<GameData> loadedData = loader.loadGame();
 
         assertTrue(loadedData.isPresent(), "Game data should be loaded successfully.");
         assertEquals(mockGameData, loadedData.get(), "Loaded data should match the saved data.");
