@@ -27,10 +27,10 @@ import it.unibo.the100dayswar.model.turn.impl.GameTurnManagerImpl;
  * Class that implements the Model interface.
  */
 public class ModelImpl implements Model {
-    
     private static final int DEFAULT_MAP_SIZE = 10;
     private static final int DEFAULT_OBSTACLES = 10;
     private static final int DEFAULT_BONUS_CELLS = 15;
+    private static final int MAX_USERNAME_LENGTH = 15;
 
     private final GameTurnManager turnManager;
     private final MapManager mapManager;
@@ -40,32 +40,19 @@ public class ModelImpl implements Model {
     /** 
      * Constructor of the ModelImpl.
      */
-    private ModelImpl() {
+    public ModelImpl() {
         mapManager = new MapManagerImpl(createMapBuilder());
         ActionType.add(mapManager);
         players = List.of(new SimpleBot(mapManager));
         turnManager = new GameTurnManagerImpl(players);
     }
 
-    /**
-     * Create an istance of the game map builder.
-     * 
-     * @return the game map builder
-     */
-    private GameMapBuilder createMapBuilder() {
-        return new GameMapBuilderImpl(DEFAULT_MAP_SIZE, DEFAULT_MAP_SIZE)
-            .initializeBuildableCells()
-            .addSpawnCells()
-            .addBonusCell(DEFAULT_BONUS_CELLS)
-            .addObstacles(DEFAULT_OBSTACLES);
-    }
-
     /** 
      * {@inheritDoc}
      */
     @Override
-    public void buyBasicTower(Cell position) {
-        BasicTower basicTower = factory.createBasicTower(getHumanPlayer(), position);
+    public void buyBasicTower(final Cell position) {
+        final BasicTower basicTower = factory.createBasicTower(getHumanPlayer(), position);
         players.get(1).buyUnit(basicTower);
         updateAfterCreation(basicTower, List.of(mapManager));
     }
@@ -75,7 +62,7 @@ public class ModelImpl implements Model {
      */
     @Override
     public void buyAdvancedTower(final Cell position) {
-        Tower advancedTower = factory.createAdvancedTower(getHumanPlayer(), position);
+        final Tower advancedTower = factory.createAdvancedTower(getHumanPlayer(), position);
         players.get(1).buyUnit(advancedTower);
         updateAfterCreation(advancedTower, List.of(mapManager));
     }
@@ -94,9 +81,9 @@ public class ModelImpl implements Model {
      * Method that updates the observer after the creation of a unit.
      * 
      * @param unit the unit created
-     * @param observer the observer to update
+     * @param observers the observer to update
      */
-    private void updateAfterCreation(Unit unit, List<Observer<Pair<Unit, Cell>>> observers) {
+    private void updateAfterCreation(final Unit unit, final List<Observer<Pair<Unit, Cell>>> observers) {
         observers.forEach(o -> o.update(new Pair<>(unit, unit.getPosition())));
     }
 
@@ -104,11 +91,11 @@ public class ModelImpl implements Model {
      * {@inheritDoc}
      */
     @Override
-    public void addPlayer(String username) {
-        if (username.length() > 15) {
+    public void addPlayer(final String username) {
+        if (username.length() > MAX_USERNAME_LENGTH) {
             throw new IllegalArgumentException("The username is too long");
         }
-        if(players.size() == 1) {
+        if (players.size() == 1) {
             players.add(new PlayerImpl(
                 username,
                 mapManager.getPlayerSpawn()
@@ -157,5 +144,18 @@ public class ModelImpl implements Model {
             .anyMatch(c -> c.stream().anyMatch(c -> c.equals() && c.equals())); */
         // Placeholder
         return true;
+    }
+
+    /**
+     * Create a map builder to instanciate the map.
+     * 
+     * @return the builder of the map
+     */
+    private GameMapBuilder createMapBuilder() {
+        return new GameMapBuilderImpl(DEFAULT_MAP_SIZE, DEFAULT_MAP_SIZE)
+            .initializeBuildableCells()
+            .addSpawnCells()
+            .addBonusCell(DEFAULT_BONUS_CELLS)
+            .addObstacles(DEFAULT_OBSTACLES);
     }
 }
