@@ -31,7 +31,7 @@ public class GameMapImpl implements GameMap {
      */
     public GameMapImpl(final int width, final int height, final Cell[][] grid) {
         this.size = new Dimension(width, height);
-        this.map = new CellImpl[grid.length][];
+        this.map = new Cell[grid.length][];
         for (int i = 0; i < grid.length; i++) {
             this.map[i] = Arrays.copyOf(grid[i], grid[i].length);
         }
