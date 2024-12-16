@@ -38,6 +38,7 @@ public class ModelImpl implements Model {
     private final UnitFactory factory = new UnitFactoryImpl();
 
     /** 
+     * TODO era private per pattern singleton?.
      * Constructor of the ModelImpl.
      */
     public ModelImpl() {
@@ -147,6 +148,7 @@ public class ModelImpl implements Model {
     }
 
     /**
+     * TODO era public e senza javadoc.
      * Create a map builder to instanciate the map.
      * 
      * @return the builder of the map
