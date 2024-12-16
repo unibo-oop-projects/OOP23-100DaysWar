@@ -20,7 +20,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
-
 import it.unibo.the100dayswar.commons.utilities.impl.PositionImpl;
 import it.unibo.the100dayswar.model.cell.api.Cell;
 import it.unibo.the100dayswar.model.cell.impl.CellImpl;
@@ -49,12 +48,24 @@ class GameLoaderTest {
     private static final int MAP_HEIGHT = 10;
     private static final int MAP_WIDTH = 10;
 
-    private final Player mockPlayer1 = new PlayerImpl("MockPlayer1", new CellImpl(new PositionImpl(0, 0), true, true));
-    private final Player mockPlayer2 = new PlayerImpl("MockPlayer2", new CellImpl(new PositionImpl(9, 9), true, true));
-    private final MapManager mockGameMapManager = new MapManagerImpl(new GameMapBuilderImpl(MAP_WIDTH, MAP_HEIGHT));
-    private final GameTurnManager mockGameTurnManager = new GameTurnManagerImpl(List.of(mockPlayer1, mockPlayer2));
+    private final Player mockPlayer1 = new PlayerImpl(
+        "MockPlayer1", 
+        new CellImpl(new PositionImpl(0, 0), true, true)
+    );
+    private final Player mockPlayer2 = new PlayerImpl(
+        "MockPlayer2", 
+        new CellImpl(new PositionImpl(9, 9), true, true)
+    );
+    private final MapManager mockGameMapManager = new MapManagerImpl(
+        new GameMapBuilderImpl(MAP_WIDTH, MAP_HEIGHT)
+    );
+    private final GameTurnManager mockGameTurnManager = new GameTurnManagerImpl(
+        List.of(mockPlayer1, mockPlayer2)
+    );
 
-    private final GameData mockGameData = new GameDataImpl(mockPlayer2, mockPlayer1, mockGameMapManager, mockGameTurnManager);
+    private final GameData mockGameData = new GameDataImpl(
+        mockPlayer2, mockPlayer1, mockGameMapManager, mockGameTurnManager
+    );
 
     /**
      * Cleanup files after each test.
@@ -80,7 +91,6 @@ class GameLoaderTest {
 
         verifyLoadedGameData(mockGameData, loadedData, MAP_WIDTH, MAP_HEIGHT);
     }
-
 
     /**
      * Test loading game data from the default path.
@@ -137,8 +147,11 @@ class GameLoaderTest {
      * 
      * @return the map as a matrix of Cells
      */
-    private Cell[][] createMapFromStream(final int width, final int height, final Stream<Cell> cellStream) {
-
+    private Cell[][] createMapFromStream(
+        final int width, 
+        final int height, 
+        final Stream<Cell> cellStream
+    ) {
         final Cell[][] map = new Cell[width][height];
         final Iterator<Cell> iterator = cellStream.iterator();
         for (int x = 0; x < width; x++) {
@@ -148,7 +161,6 @@ class GameLoaderTest {
                 }
             }
         }
-
         return map;
     }
 
@@ -161,7 +173,12 @@ class GameLoaderTest {
      * @param expectedWidth the expected width of the map
      * @param expectedHeight the expected Height of the map
      */
-    private void verifyLoadedGameData(final GameData expected, final Optional<GameData> actualOptional, final int expectedWidth, final int expectedHeight) {
+    private void verifyLoadedGameData(
+        final GameData expected, 
+        final Optional<GameData> actualOptional, 
+        final int expectedWidth, 
+        final int expectedHeight
+    ) {
         // Verify that the data are present
         assertTrue(actualOptional.isPresent(), "Game data should be loaded successfully.");
 
@@ -172,28 +189,63 @@ class GameLoaderTest {
         assertAll("Verify player data and turns",
             () -> assertEquals(expected.getPlayerData1(), actual.getPlayerData1(), "PlayerData1 does not match"),
             () -> assertEquals(expected.getPlayerData2(), actual.getPlayerData2(), "PlayerData2 does not match"),
-            () -> assertEquals(expected.getGameTurnManager().getCurrentPlayer(), actual.getGameTurnManager().getCurrentPlayer(), "CurrentPlayer does not match"),
-            () -> assertEquals(expected.getGameTurnManager().getCurrentPlayerIndex(), actual.getGameTurnManager().getCurrentPlayerIndex(), "CurrentPlayerIndex does not match"),
-            () -> assertEquals(expected.getGameTurnManager().getCurrentTurn(), actual.getGameTurnManager().getCurrentTurn(), "CurrentTurn does not match")
+            () -> assertEquals(expected.getGameTurnManager().getCurrentPlayer(), 
+                actual.getGameTurnManager().getCurrentPlayer(), 
+                "CurrentPlayer does not match"
+            ),
+            () -> assertEquals(expected.getGameTurnManager().getCurrentPlayerIndex(), 
+                actual.getGameTurnManager().getCurrentPlayerIndex(), 
+                "CurrentPlayerIndex does not match"
+            ),
+            () -> assertEquals(expected.getGameTurnManager().getCurrentTurn(), 
+                actual.getGameTurnManager().getCurrentTurn(), 
+                "CurrentTurn does not match"
+            )
         );
 
         // Verify the map data
         assertAll("Verify map data",
-            () -> assertEquals(expected.getMapManager().getBotSpawn(), actual.getMapManager().getBotSpawn(), "BotSpawn does not match"),
-            () -> assertEquals(expected.getMapManager().getMapDimension(), actual.getMapManager().getMapDimension(), "MapDimension does not match"),
-            () -> assertEquals(expected.getMapManager().getPlayerSpawn(), actual.getMapManager().getPlayerSpawn(), "PlayerSpawn does not match"),
-            () -> assertEquals(expected.getMapManager().getPlayersCells(), actual.getMapManager().getPlayersCells(), "PlayersCells do not match")
+            () -> assertEquals(expected.getMapManager().getBotSpawn(), 
+                actual.getMapManager().getBotSpawn(), 
+                "BotSpawn does not match"
+            ),
+            () -> assertEquals(expected.getMapManager().getMapDimension(), 
+                actual.getMapManager().getMapDimension(), 
+                "MapDimension does not match"
+            ),
+            () -> assertEquals(expected.getMapManager().getPlayerSpawn(), 
+                actual.getMapManager().getPlayerSpawn(), 
+                "PlayerSpawn does not match"
+            ),
+            () -> assertEquals(expected.getMapManager().getPlayersCells(), 
+                actual.getMapManager().getPlayersCells(), 
+                "PlayersCells do not match"
+            )
         );
 
         // Verify the dimensions of the map
         assertAll("Verify map dimensions",
-            () -> assertEquals(expectedWidth, (int) actual.getMapManager().getMapDimension().getWidth(), "The map width does not match"),   // TODO bisogna rimuovere il cast una volta risolto
-            () -> assertEquals(expectedHeight, (int) actual.getMapManager().getMapDimension().getHeight(), "The map height does not match")
+            () -> assertEquals(expectedWidth, 
+                (int) actual.getMapManager().getMapDimension().getWidth(), 
+                "The map width does not match"
+            ),
+            () -> assertEquals(expectedHeight, 
+                (int) actual.getMapManager().getMapDimension().getHeight(), 
+                "The map height does not match"
+            )
         );
 
         // Verify every cell
-        final GameMap expectedMap = new GameMapImpl(expectedWidth, expectedHeight, createMapFromStream(expectedWidth, expectedHeight, expected.getMapManager().getMapAsAStream()));
-        final GameMap actualMap = new GameMapImpl(expectedWidth, expectedHeight, createMapFromStream(expectedWidth, expectedHeight, actual.getMapManager().getMapAsAStream()));
+        final GameMap expectedMap = new GameMapImpl(
+            expectedWidth, 
+            expectedHeight, 
+            createMapFromStream(expectedWidth, expectedHeight, expected.getMapManager().getMapAsAStream())
+        );
+        final GameMap actualMap = new GameMapImpl(
+            expectedWidth, 
+            expectedHeight, 
+            createMapFromStream(expectedWidth, expectedHeight, actual.getMapManager().getMapAsAStream())
+        );
 
         final Cell[][] expectedMatrix = expectedMap.getMap();
         final Cell[][] actualMatrix = actualMap.getMap();
