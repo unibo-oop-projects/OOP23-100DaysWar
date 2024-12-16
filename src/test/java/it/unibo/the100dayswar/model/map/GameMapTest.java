@@ -18,7 +18,7 @@ import it.unibo.the100dayswar.model.map.impl.GameMapBuilderImpl;
 import it.unibo.the100dayswar.model.player.impl.PlayerImpl;
 import it.unibo.the100dayswar.model.soldier.impl.SoldierImpl;
 
- class GameMapTest {
+class GameMapTest {
     private static final int WIDTH = 10;
     private static final int HEIGHT = 10;
     private static final int BONUS_CELLS_COUNT = 3;
