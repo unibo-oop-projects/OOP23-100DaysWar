@@ -51,18 +51,18 @@ public class MapManagerImpl implements MapManager {
      * @param original is the original mapManager.
      */
     public MapManagerImpl(final MapManager original) {
-    this.builder = new GameMapBuilderImpl(0, 0);
-    final int height = original.getMapDimension().height;
-    final int width = original.getMapDimension().width;
+        this.builder = new GameMapBuilderImpl(0, 0);
+        final int height = original.getMapDimension().height;
+        final int width = original.getMapDimension().width;
 
-    this.map = new GameMapImpl(width, height, createMapFromStream(width, height, original.getMapAsAStream()));
+        this.map = new GameMapImpl(width, height, createMapFromStream(width, height, original.getMapAsAStream()));
 
-    this.playersCells = new HashMap<>();
-    original.getPlayersCells().forEach((player, cells) -> {
-        Set<Cell> copiedCells = cells.stream()
-                                     .map(cell -> new CellImpl(cell)) 
-                                     .collect(Collectors.toSet());
-        this.playersCells.put(new PlayerImpl(player), copiedCells); 
+        this.playersCells = new HashMap<>();
+        original.getPlayersCells().forEach((player, cells) -> {
+             final Set<Cell> copiedCells = cells.stream()
+                                        .map(cell -> new CellImpl(cell)) 
+                                        .collect(Collectors.toSet());
+            this.playersCells.put(new PlayerImpl(player), copiedCells); 
     });
 
 }
