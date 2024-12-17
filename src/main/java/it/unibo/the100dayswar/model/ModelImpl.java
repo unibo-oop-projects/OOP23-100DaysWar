@@ -38,8 +38,7 @@ public class ModelImpl implements Model {
     private final UnitFactory factory = new UnitFactoryImpl();
 
     /** 
-     * TODO era private per pattern singleton?.
-     * Constructor of the ModelImpl.
+     * Constructor of the model.
      */
     public ModelImpl() {
         mapManager = new MapManagerImpl(createMapBuilder());

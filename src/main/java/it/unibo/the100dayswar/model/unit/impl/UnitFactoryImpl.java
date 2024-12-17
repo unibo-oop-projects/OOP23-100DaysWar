@@ -19,7 +19,7 @@ public class UnitFactoryImpl implements UnitFactory {
      * {@inheritDoc}
      */
     @Override
-    public Soldier createSoldier(Player player) {
+    public Soldier createSoldier(final Player player) {
         return new SoldierImpl(player);
     }
 
@@ -27,7 +27,7 @@ public class UnitFactoryImpl implements UnitFactory {
      * {@inheritDoc}
      */
     @Override
-    public BasicTower createBasicTower(Player player, Cell position) {
+    public BasicTower createBasicTower(final Player player, final Cell position) {
         return new BasicTowerImpl(player, position);
     }
 
@@ -35,7 +35,7 @@ public class UnitFactoryImpl implements UnitFactory {
      * {@inheritDoc}
      */
     @Override
-    public AdvancedTower createAdvancedTower(Player player, Cell position) {
+    public AdvancedTower createAdvancedTower(final Player player, final Cell position) {
         return new AdvancedTowerImpl(player, position);
     }
 }

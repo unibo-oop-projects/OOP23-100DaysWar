@@ -11,12 +11,10 @@ import it.unibo.the100dayswar.model.tower.api.BasicTower;
  * of the types of Unit in the game.
  */
 public interface UnitFactory {
-    
     /**
      * Creates a soldier.
      * 
      * @param player the player that own the soldier
-     * @param observer the observer that will be notified when the soldier is created
      * @return the soldier created
      */
     Soldier createSoldier(Player player);
@@ -26,8 +24,7 @@ public interface UnitFactory {
      * 
      * @param player the player that own the tower
      * @param position the position of the tower
-     * @param observer the observer that will be notified when the tower is created
-     * @return
+     * @return the basic tower created
      */
     BasicTower createBasicTower(Player player, Cell position);
 
