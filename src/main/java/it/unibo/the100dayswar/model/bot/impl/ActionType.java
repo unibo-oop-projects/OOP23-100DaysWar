@@ -74,7 +74,6 @@ public enum ActionType {
      */
     PURCHASE_TOWER {
         private static final int DEFAULT_SCORE = 1;
-        private static final Random RANDOM = new Random();
 
         /**
          * {@inheritDoc}
@@ -204,7 +203,6 @@ public enum ActionType {
      */
     MOVE_UNIT {
         private static final int DEFAULT_SCORE = 4;
-        private static final Random RANDOM = new Random();
 
         /**
          * {@inheritDoc}
@@ -262,6 +260,7 @@ public enum ActionType {
     private static final long serialVersionUID = 1L;
     private static final int NON_PERFORMABLE_SCORE = -1;
     private static final int HIGH_PRIORITY_SCORE = 10;
+    private static final Random RANDOM = new Random();
 
     /**
      * The istance of the ActionNotifier.
