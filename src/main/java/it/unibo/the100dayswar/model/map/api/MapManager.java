@@ -1,6 +1,7 @@
 package it.unibo.the100dayswar.model.map.api;
 
 
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Stream;
@@ -48,4 +49,22 @@ public interface MapManager extends Observer<Pair<Unit, Cell>> {
      * @return the dimension of the map.
      */
     Dimension getMapDimension();
+
+    /**
+     * @return the map as a matrix.
+     */
+    static Cell[][] createMapFromStream(final int width, final int height, final Stream<Cell> cellStream) {
+
+        final Cell[][] map = new Cell[width][height];
+        final Iterator<Cell> iterator = cellStream.iterator();
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
+                if (iterator.hasNext()) {
+                    map[x][y] = iterator.next();
+                }
+            }
+        }
+
+        return map;
+    }
 }
