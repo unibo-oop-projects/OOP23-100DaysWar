@@ -51,6 +51,9 @@ public interface MapManager extends Observer<Pair<Unit, Cell>> {
     Dimension getMapDimension();
 
     /**
+     * @param width the width of the map.
+     * @param height the height of the map.
+     * @param cellStream the stream of the cells.
      * @return the map as a matrix.
      */
     static Cell[][] createMapFromStream(final int width, final int height, final Stream<Cell> cellStream) {
