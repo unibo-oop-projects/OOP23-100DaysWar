@@ -7,11 +7,9 @@ import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -139,32 +137,6 @@ class GameLoaderTest {
     }
 
     /**
-     * Create a map as a matrix of Cells from a stream of Cells.
-     * 
-     * @param width the width of the matrix
-     * @param height the height of the matrix 
-     * @param cellStream the starting streaming of Cells
-     * 
-     * @return the map as a matrix of Cells
-     */
-    private Cell[][] createMapFromStream(
-        final int width, 
-        final int height, 
-        final Stream<Cell> cellStream
-    ) {
-        final Cell[][] map = new Cell[width][height];
-        final Iterator<Cell> iterator = cellStream.iterator();
-        for (int x = 0; x < width; x++) {
-            for (int y = 0; y < height; y++) {
-                if (iterator.hasNext()) {
-                    map[x][y] = iterator.next();
-                }
-            }
-        }
-        return map;
-    }
-
-    /**
      * Helper method that verify that the LoadedGameData are the
      * same as the saved (expected) ones.
      * 
@@ -239,12 +211,12 @@ class GameLoaderTest {
         final GameMap expectedMap = new GameMapImpl(
             expectedWidth, 
             expectedHeight, 
-            createMapFromStream(expectedWidth, expectedHeight, expected.getMapManager().getMapAsAStream())
+            MapManager.createMapFromStream(expectedWidth, expectedHeight, expected.getMapManager().getMapAsAStream())
         );
         final GameMap actualMap = new GameMapImpl(
             expectedWidth, 
             expectedHeight, 
-            createMapFromStream(expectedWidth, expectedHeight, actual.getMapManager().getMapAsAStream())
+            MapManager.createMapFromStream(expectedWidth, expectedHeight, actual.getMapManager().getMapAsAStream())
         );
 
         final Cell[][] expectedMatrix = expectedMap.getMap();
