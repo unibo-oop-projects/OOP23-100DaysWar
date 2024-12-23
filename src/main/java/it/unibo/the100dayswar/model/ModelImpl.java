@@ -1,6 +1,7 @@
 package it.unibo.the100dayswar.model;
 
 import java.util.List;
+import java.util.Optional;
 
 import it.unibo.the100dayswar.commons.patterns.Observer;
 import it.unibo.the100dayswar.commons.utilities.impl.Pair;
@@ -8,12 +9,15 @@ import it.unibo.the100dayswar.model.bot.api.BotPlayer;
 import it.unibo.the100dayswar.model.bot.impl.ActionType;
 import it.unibo.the100dayswar.model.bot.impl.SimpleBot;
 import it.unibo.the100dayswar.model.cell.api.Cell;
+import it.unibo.the100dayswar.model.loaddata.api.GameLoader;
+import it.unibo.the100dayswar.model.loaddata.impl.GameLoaderImpl;
 import it.unibo.the100dayswar.model.map.api.GameMapBuilder;
 import it.unibo.the100dayswar.model.map.api.MapManager;
 import it.unibo.the100dayswar.model.map.impl.GameMapBuilderImpl;
 import it.unibo.the100dayswar.model.map.impl.MapManagerImpl;
 import it.unibo.the100dayswar.model.player.api.Player;
 import it.unibo.the100dayswar.model.player.impl.PlayerImpl;
+import it.unibo.the100dayswar.model.savedata.api.GameData;
 import it.unibo.the100dayswar.model.soldier.api.Soldier;
 import it.unibo.the100dayswar.model.tower.api.BasicTower;
 import it.unibo.the100dayswar.model.tower.api.Tower;
@@ -38,13 +42,43 @@ public class ModelImpl implements Model {
     private final UnitFactory factory = new UnitFactoryImpl();
 
     /** 
-     * Constructor of the model.
+     * Constructor of the model from scratch.
+     * 
+     * @param namePlayer the username of the player
      */
-    public ModelImpl() {
-        mapManager = new MapManagerImpl(createMapBuilder());
+    public ModelImpl(final String namePlayer) {
+        this.mapManager = new MapManagerImpl(createMapBuilder());
         ActionType.add(mapManager);
-        players = List.of(new SimpleBot(mapManager));
-        turnManager = new GameTurnManagerImpl(players);
+
+        this.players = List.of(new SimpleBot(mapManager));
+        this.players.add(new PlayerImpl(namePlayer, mapManager.getPlayerSpawn()));
+
+        this.turnManager = new GameTurnManagerImpl(players);
+    }
+
+    /**
+     * Constructor of the model from a pre-saved match.
+     * 
+     * @param path the path of the file containing the saves
+     * @throws IllegalStateException if the data aren't laoded correctly
+     */
+    public ModelImpl(final Optional<String> path) {
+        final GameLoader loader = new GameLoaderImpl(path.get());
+        final Optional<GameData> data = loader.loadGame();
+
+        if (data.isEmpty()) {
+            throw new IllegalStateException("Data weren't laoded correctly");
+            /*
+             * TODO in questo caso possiamo lanciare una schermata di errore
+             */
+        }
+
+        this.mapManager = new MapManagerImpl(data.get().getMapManager());
+        ActionType.add(mapManager);
+
+        this.players = List.of(new PlayerImpl(data.get().getPlayerData1()), new PlayerImpl(data.get().getPlayerData1()));
+
+        this.turnManager = data.get().getGameTurnManager();    // TODO Implementare il costruttore per copiare
     }
 
     /** 
