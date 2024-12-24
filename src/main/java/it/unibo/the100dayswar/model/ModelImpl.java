@@ -1,9 +1,11 @@
 package it.unibo.the100dayswar.model;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
 import it.unibo.the100dayswar.commons.patterns.Observer;
+import it.unibo.the100dayswar.commons.utilities.impl.Direction;
 import it.unibo.the100dayswar.commons.utilities.impl.Pair;
 import it.unibo.the100dayswar.model.bot.api.BotPlayer;
 import it.unibo.the100dayswar.model.bot.impl.ActionType;
@@ -18,6 +20,9 @@ import it.unibo.the100dayswar.model.map.impl.MapManagerImpl;
 import it.unibo.the100dayswar.model.player.api.Player;
 import it.unibo.the100dayswar.model.player.impl.PlayerImpl;
 import it.unibo.the100dayswar.model.savedata.api.GameData;
+import it.unibo.the100dayswar.model.savedata.api.GameSaver;
+import it.unibo.the100dayswar.model.savedata.impl.GameDataImpl;
+import it.unibo.the100dayswar.model.savedata.impl.GameSaverImpl;
 import it.unibo.the100dayswar.model.soldier.api.Soldier;
 import it.unibo.the100dayswar.model.tower.api.BasicTower;
 import it.unibo.the100dayswar.model.tower.api.Tower;
@@ -78,7 +83,7 @@ public class ModelImpl implements Model {
 
         this.players = List.of(new PlayerImpl(data.get().getPlayerData1()), new PlayerImpl(data.get().getPlayerData1()));
 
-        this.turnManager = data.get().getGameTurnManager();    // TODO Implementare il costruttore per copiare
+        this.turnManager = data.get().getGameTurnManager();
     }
 
     /** 
@@ -181,7 +186,52 @@ public class ModelImpl implements Model {
     }
 
     /**
-     * TODO era public e senza javadoc.
+     * {@inheritDoc}
+     */
+    @Override
+    public void movePlayer(final Player player, final Direction direction) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'movePlayer'");
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean saveGame(final String path) {
+        try {
+            final GameData data = new GameDataImpl(getCurrentPlayer(), getBotPlayer(), mapManager, turnManager);
+            final GameSaver gameSaver = new GameSaverImpl(data, path);
+            gameSaver.saveGame();
+        } catch (IOException | IllegalArgumentException e) {
+            return false;
+        }
+
+        // TODO isOver? o un metodo per chiudere il gioco?
+        return true;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void upgradeSoldier(final Soldier soldier) {
+        /*
+         * TODO gestione del canUpgrade, è meglio farlo nella view?
+        */
+        soldier.upgrade();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void skipTurn() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'skipTurn'");
+    }
+
+    /**
      * Create a map builder to instanciate the map.
      * 
      * @return the builder of the map
