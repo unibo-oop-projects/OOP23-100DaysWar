@@ -190,7 +190,7 @@ public class ModelImpl implements Model {
         final Cell idCell = idealCell(currentPosition, direction);
         final int newX = idCell.getPosition().getX();
         final int newY = idCell.getPosition().getY();
-        
+
         /*
          * Check that the new cell is valid.
          */
@@ -276,12 +276,12 @@ public class ModelImpl implements Model {
      *           The returned cell must be validated to ensure it is within
      *           the boundaries of the map.
      */
-    private Cell idealCell(Cell currentCell, Direction direction) {
+    private Cell idealCell(final Cell currentCell, final Direction direction) {
         final Cell idCell = new CellImpl(currentCell);
         final Position idPos = idCell.getPosition();
         final int x = idPos.getX();
         final int y = idPos.getY();
-        
+
         if (direction == Direction.UP) {
             idPos.setY(y - 1);
         } else if (direction == Direction.DOWN) {

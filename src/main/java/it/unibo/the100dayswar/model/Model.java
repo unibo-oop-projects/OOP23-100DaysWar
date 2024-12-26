@@ -33,6 +33,7 @@ public interface Model {
     /**
      * Move a soldier following the specified direction.
      * 
+     * @param soldier the soldier to move
      * @param direction the direction to follow
      * @return true if the soldier was moved correctly false otherwise
      */
@@ -50,7 +51,7 @@ public interface Model {
     /**
      * Upgrade the unit.
      * 
-     * @param Unit the unit to upgrade
+     * @param unit the unit to upgrade
      */
     void upgradeUnit(Unit unit);
 
@@ -59,7 +60,7 @@ public interface Model {
      */
     void skipTurn();
 
-    /*
+    /**
      * Pause the game.
      */
     void pauseGame();
