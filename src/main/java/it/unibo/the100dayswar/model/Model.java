@@ -58,4 +58,14 @@ public interface Model {
      * Skip the current turn.
      */
     void skipTurn();
+
+    /*
+     * Pause the game.
+     */
+    void pauseGame();
+
+    /**
+     * Reasume the game.
+     */
+    void reasumeGame();
 }

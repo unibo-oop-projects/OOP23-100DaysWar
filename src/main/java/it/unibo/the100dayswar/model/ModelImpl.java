@@ -236,6 +236,22 @@ public class ModelImpl implements Model {
     }
 
     /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void pauseGame() {
+        turnManager.stopTimer();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void reasumeGame() {
+        turnManager.startTimer();
+    }
+
+    /**
      * Create a map builder to instanciate the map.
      * 
      * @return the builder of the map
