@@ -202,25 +202,6 @@ public class ModelImpl implements Model {
         return false;
     }
 
-    private Cell idealCell(Cell currentPosition, Direction direction) {
-        final Cell idCell = new CellImpl(currentPosition);
-        final Position idPos = idCell.getPosition();
-        final int x = idPos.getX();
-        final int y = idPos.getY();
-        
-        if (direction == Direction.UP) {
-            idPos.setY(y + 1);
-        } else if (direction == Direction.DOWN) {
-            idPos.setY(y - 1);
-        } else if (direction == Direction.RIGHT) {
-            idPos.setX(x + 1);
-        } else if (direction == Direction.LEFT) {
-            idPos.setX(x - 1);
-        }
-
-        return idCell;
-    }
-
     /**
      * {@inheritDoc}
      */
@@ -266,5 +247,37 @@ public class ModelImpl implements Model {
             .addSpawnCells()
             .addBonusCell(DEFAULT_BONUS_CELLS)
             .addObstacles(DEFAULT_OBSTACLES);
+    }
+
+    /**
+     * Computes the ideal cell starting from the given cell
+     * and the specified direction.
+     * 
+     * @param currentCell the current cell of the soldier
+     * @param direction the direction the soldier has to follow
+     * @return the ideal cell
+     * 
+     * @implNote This method computes the ideal cell, which may be invalid.
+     *           The returned cell must be validated to ensure it is within
+     *           the boundaries of the map.
+     */
+
+    private Cell idealCell(Cell currentCell, Direction direction) {
+        final Cell idCell = new CellImpl(currentCell);
+        final Position idPos = idCell.getPosition();
+        final int x = idPos.getX();
+        final int y = idPos.getY();
+        
+        if (direction == Direction.UP) {
+            idPos.setY(y - 1);
+        } else if (direction == Direction.DOWN) {
+            idPos.setY(y + 1);
+        } else if (direction == Direction.RIGHT) {
+            idPos.setX(x + 1);
+        } else if (direction == Direction.LEFT) {
+            idPos.setX(x - 1);
+        }
+
+        return idCell;
     }
 }
