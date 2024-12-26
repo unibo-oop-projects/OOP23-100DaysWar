@@ -232,8 +232,7 @@ public class ModelImpl implements Model {
      */
     @Override
     public void skipTurn() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'skipTurn'");
+        turnManager.switchTurn();
     }
 
     /**
@@ -261,7 +260,6 @@ public class ModelImpl implements Model {
      *           The returned cell must be validated to ensure it is within
      *           the boundaries of the map.
      */
-
     private Cell idealCell(Cell currentCell, Direction direction) {
         final Cell idCell = new CellImpl(currentCell);
         final Position idPos = idCell.getPosition();
