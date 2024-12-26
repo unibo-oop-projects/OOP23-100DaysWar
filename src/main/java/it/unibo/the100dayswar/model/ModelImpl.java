@@ -5,12 +5,14 @@ import java.util.List;
 import java.util.Optional;
 
 import it.unibo.the100dayswar.commons.patterns.Observer;
+import it.unibo.the100dayswar.commons.utilities.api.Position;
 import it.unibo.the100dayswar.commons.utilities.impl.Direction;
 import it.unibo.the100dayswar.commons.utilities.impl.Pair;
 import it.unibo.the100dayswar.model.bot.api.BotPlayer;
 import it.unibo.the100dayswar.model.bot.impl.ActionType;
 import it.unibo.the100dayswar.model.bot.impl.SimpleBot;
 import it.unibo.the100dayswar.model.cell.api.Cell;
+import it.unibo.the100dayswar.model.cell.impl.CellImpl;
 import it.unibo.the100dayswar.model.loaddata.api.GameLoader;
 import it.unibo.the100dayswar.model.loaddata.impl.GameLoaderImpl;
 import it.unibo.the100dayswar.model.map.api.GameMapBuilder;
@@ -24,8 +26,8 @@ import it.unibo.the100dayswar.model.savedata.api.GameSaver;
 import it.unibo.the100dayswar.model.savedata.impl.GameDataImpl;
 import it.unibo.the100dayswar.model.savedata.impl.GameSaverImpl;
 import it.unibo.the100dayswar.model.soldier.api.Soldier;
-import it.unibo.the100dayswar.model.tower.api.BasicTower;
 import it.unibo.the100dayswar.model.tower.api.Tower;
+import it.unibo.the100dayswar.model.tower.api.TowerType;
 import it.unibo.the100dayswar.model.unit.api.Unit;
 import it.unibo.the100dayswar.model.unit.api.UnitFactory;
 import it.unibo.the100dayswar.model.unit.impl.UnitFactoryImpl;
@@ -40,6 +42,7 @@ public class ModelImpl implements Model {
     private static final int DEFAULT_OBSTACLES = 10;
     private static final int DEFAULT_BONUS_CELLS = 15;
     private static final int MAX_USERNAME_LENGTH = 15;
+    private static final int HUMAN_PLAYER = 1;
 
     private final GameTurnManager turnManager;
     private final MapManager mapManager;
@@ -86,24 +89,14 @@ public class ModelImpl implements Model {
         this.turnManager = data.get().getGameTurnManager();
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
-    public void buyBasicTower(final Cell position) {
-        final BasicTower basicTower = factory.createBasicTower(getHumanPlayer(), position);
-        players.get(1).buyUnit(basicTower);
-        updateAfterCreation(basicTower, List.of(mapManager));
-    }
-
-    /** 
-     * {@inheritDoc}
-     */
-    @Override
-    public void buyAdvancedTower(final Cell position) {
-        final Tower advancedTower = factory.createAdvancedTower(getHumanPlayer(), position);
-        players.get(1).buyUnit(advancedTower);
-        updateAfterCreation(advancedTower, List.of(mapManager));
+    public void buyTower(final TowerType type, final Cell position) {
+        final Tower tower = factory.createTower(players.get(HUMAN_PLAYER), type, position);
+        players.get(HUMAN_PLAYER).buyUnit(tower);
+        updateAfterCreation(tower, List.of(mapManager));
     }
 
     /** 
@@ -189,9 +182,43 @@ public class ModelImpl implements Model {
      * {@inheritDoc}
      */
     @Override
-    public void movePlayer(final Player player, final Direction direction) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'movePlayer'");
+    public boolean moveSoldier(final Soldier soldier, final Direction direction) {
+        final Cell currentPosition = soldier.getPosition();
+        final int totalRows = (int) mapManager.getMapDimension().getHeight();
+        final int totalCols = (int) mapManager.getMapDimension().getWidth();
+
+        final Cell idCell = idealCell(currentPosition, direction);
+        final int newX = idCell.getPosition().getX();
+        final int newY = idCell.getPosition().getY();
+        
+        /*
+         * Check that the new cell is valid.
+         */
+        if (newX >= 0 && newX < totalCols && newY >= 0 && newY < totalRows) {
+            soldier.move(idCell);
+            return true;
+        }
+
+        return false;
+    }
+
+    private Cell idealCell(Cell currentPosition, Direction direction) {
+        final Cell idCell = new CellImpl(currentPosition);
+        final Position idPos = idCell.getPosition();
+        final int x = idPos.getX();
+        final int y = idPos.getY();
+        
+        if (direction == Direction.UP) {
+            idPos.setY(y + 1);
+        } else if (direction == Direction.DOWN) {
+            idPos.setY(y - 1);
+        } else if (direction == Direction.RIGHT) {
+            idPos.setX(x + 1);
+        } else if (direction == Direction.LEFT) {
+            idPos.setX(x - 1);
+        }
+
+        return idCell;
     }
 
     /**
@@ -215,11 +242,8 @@ public class ModelImpl implements Model {
      * {@inheritDoc}
      */
     @Override
-    public void upgradeSoldier(final Soldier soldier) {
-        /*
-         * TODO gestione del canUpgrade, è meglio farlo nella view?
-        */
-        soldier.upgrade();
+    public void upgradeUnit(final Unit unit) {
+        unit.upgrade();
     }
 
     /**

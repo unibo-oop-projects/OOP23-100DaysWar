@@ -2,27 +2,21 @@ package it.unibo.the100dayswar.model;
 
 import it.unibo.the100dayswar.commons.utilities.impl.Direction;
 import it.unibo.the100dayswar.model.cell.api.Cell;
-import it.unibo.the100dayswar.model.player.api.Player;
 import it.unibo.the100dayswar.model.soldier.api.Soldier;
+import it.unibo.the100dayswar.model.tower.api.TowerType;
+import it.unibo.the100dayswar.model.unit.api.Unit;
 
 /** 
  * The interface of the model of the game.
  */
 public interface Model {
-
     /**
-     * Buy a basic tower.
+     * Buy a tower of the specified type.
      * 
+     * @param type the type of the tower
      * @param position the position of the tower
      */
-    void buyBasicTower(Cell position);
-
-    /**
-     * Buy an advanced tower.
-     * 
-     * @param position the position of the tower
-     */
-    void buyAdvancedTower(Cell position);
+    void buyTower(TowerType type, Cell position);
 
     /**
      * Buy a soldier.
@@ -37,12 +31,12 @@ public interface Model {
     void addPlayer(String username);
 
     /**
-     * Move a player following the direction.
+     * Move a soldier following the specified direction.
      * 
-     * @param player the player to move
      * @param direction the direction to follow
+     * @return true if the soldier was moved correctly false otherwise
      */
-    void movePlayer(Player player, Direction direction);
+    boolean moveSoldier(Soldier soldier, Direction direction);
 
     /**
      * Save the current game.
@@ -54,11 +48,11 @@ public interface Model {
     boolean saveGame(String path);
 
     /**
-     * Upgrade the soldier.
+     * Upgrade the unit.
      * 
-     * @param soldier the soldier to upgrade
+     * @param Unit the unit to upgrade
      */
-    void upgradeSoldier(Soldier soldier);
+    void upgradeUnit(Unit unit);
 
     /**
      * Skip the current turn.
