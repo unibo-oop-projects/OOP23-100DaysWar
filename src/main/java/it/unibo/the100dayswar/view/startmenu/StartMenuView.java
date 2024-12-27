@@ -1,6 +1,5 @@
 package it.unibo.the100dayswar.view.startmenu;
 
-
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -22,6 +21,8 @@ import javax.swing.SwingUtilities;
  */
 public class StartMenuView extends JFrame {
 
+    private static final Dimension BUTTON_SIZE = new Dimension(200, 80); // Dimensioni fisse dei pulsanti
+
     /**
      * Constructor of the class.
      */
@@ -36,13 +37,9 @@ public class StartMenuView extends JFrame {
         final JPanel panel = new JPanel(new GridBagLayout());
         final GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(20, 20, 20, 20); // Margins between buttons
-        gbc.fill = GridBagConstraints.BOTH;
-        gbc.weightx = 1.0;
-        gbc.weighty = 0.1;
 
         // Layout
         final Font buttonFont = new Font("Arial", Font.BOLD, 24);
-        final Dimension buttonSize = new Dimension(200, 80); 
         final String resources = "startmenu/";
 
         /*
@@ -50,7 +47,7 @@ public class StartMenuView extends JFrame {
          */
         gbc.gridx = 0;
         gbc.gridy = 0;
-        final JButton btnStart = createButton("START", resources + "start.png", buttonFont, buttonSize);
+        final JButton btnStart = createButton("START", resources + "start.png", buttonFont);
         btnStart.addActionListener(st -> startAction());
         panel.add(btnStart, gbc);
 
@@ -58,7 +55,7 @@ public class StartMenuView extends JFrame {
          * RESUME
          */
         gbc.gridy++;
-        final JButton btnResume = createButton("RESUME", resources + "resume.png", buttonFont, buttonSize);
+        final JButton btnResume = createButton("RESUME", resources + "resume.png", buttonFont);
         btnResume.addActionListener(re -> resumeAction());
         panel.add(btnResume, gbc);
 
@@ -66,7 +63,7 @@ public class StartMenuView extends JFrame {
          * RULES
          */
         gbc.gridy++;
-        final JButton btnRules = createButton("RULES", resources + "rules.png", buttonFont, buttonSize);
+        final JButton btnRules = createButton("RULES", resources + "rules.png", buttonFont);
         btnRules.addActionListener(ru -> rulesAction());
         panel.add(btnRules, gbc);
 
@@ -74,7 +71,7 @@ public class StartMenuView extends JFrame {
          * EXIT
          */
         gbc.gridy++;
-        final JButton btnExit = createButton("EXIT", resources + "exit.png", buttonFont, buttonSize);
+        final JButton btnExit = createButton("EXIT", resources + "exit.png", buttonFont);
         btnExit.addActionListener(ex -> exitAction());
         panel.add(btnExit, gbc);
 
@@ -91,11 +88,13 @@ public class StartMenuView extends JFrame {
      * @param font the font of the button
      * @return the created button
      */
-    private JButton createButton(final String text, final String iconPath, final Font font, final Dimension buttonSize) {
+    private JButton createButton(final String text, final String iconPath, final Font font) {
         final Icon icon = loadIcon(iconPath);
         final JButton button = new JButton(text, icon);
         button.setFont(font);
-        button.setPreferredSize(buttonSize);
+        button.setPreferredSize(BUTTON_SIZE);
+        button.setMinimumSize(BUTTON_SIZE);
+        button.setMaximumSize(BUTTON_SIZE);
         button.setHorizontalTextPosition(SwingConstants.CENTER);
         button.setVerticalTextPosition(SwingConstants.BOTTOM);
         return button;
@@ -148,11 +147,10 @@ public class StartMenuView extends JFrame {
                 "Are you sure you want to exit?",
                 "Exit Confirmation",
                 JOptionPane.YES_NO_OPTION
-            );
-            if (confirm == JOptionPane.YES_OPTION) {
-                // TODO azioni per chiudere il gioco.
-                System.exit(0);
-            }
+        );
+        if (confirm == JOptionPane.YES_OPTION) {
+            System.exit(0);
+        }
     }
 
     /**
