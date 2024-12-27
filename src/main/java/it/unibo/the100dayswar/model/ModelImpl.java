@@ -3,6 +3,8 @@ package it.unibo.the100dayswar.model;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import it.unibo.the100dayswar.commons.patterns.Observer;
 import it.unibo.the100dayswar.commons.utilities.api.Position;
@@ -41,10 +43,11 @@ import it.unibo.the100dayswar.model.turn.impl.GameTurnManagerImpl;
  */
 public class ModelImpl implements Model {
     private static final int DEFAULT_MAP_SIZE = 10;
-    private static final int DEFAULT_OBSTACLES = 10;
-    private static final int DEFAULT_BONUS_CELLS = 15;
+    //private static final int DEFAULT_OBSTACLES = 10; li ho settati gia nel MapManager
+    //private static final int DEFAULT_BONUS_CELLS = 15; stessa cosa degli ostacoli
     private static final int MAX_USERNAME_LENGTH = 15;
     private static final int HUMAN_PLAYER = 1;
+    private static final Logger LOGGER = Logger.getLogger(ModelImpl.class.getName());
 
     private final GameTurnManager turnManager;
     private final MapManager mapManager;
@@ -58,7 +61,7 @@ public class ModelImpl implements Model {
      * @param namePlayer the username of the player
      */
     public ModelImpl(final String namePlayer) {
-        this.mapManager = new MapManagerImpl(createMapBuilder());
+        this.mapManager = new MapManagerImpl(new GameMapBuilderImpl(DEFAULT_MAP_SIZE, DEFAULT_MAP_SIZE));
         ActionType.add(mapManager);
 
         this.players = List.of(new SimpleBot(mapManager));
@@ -180,30 +183,7 @@ public class ModelImpl implements Model {
         // Placeholder
         return true;
     }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean moveSoldier(final Soldier soldier, final Direction direction) {
-        final Cell currentPosition = soldier.getPosition();
-        final int totalRows = (int) mapManager.getMapDimension().getHeight();
-        final int totalCols = (int) mapManager.getMapDimension().getWidth();
-
-        final Cell idCell = idealCell(currentPosition, direction);
-        final int newX = idCell.getPosition().getX();
-        final int newY = idCell.getPosition().getY();
-
-        /*
-         * Check that the new cell is valid.
-         */
-        if (newX >= 0 && newX < totalCols && newY >= 0 && newY < totalRows) {
-            soldier.move(idCell);
-            return true;
-        }
-
-        return false;
-    }
+    
 
     /**
      * {@inheritDoc}
@@ -253,12 +233,12 @@ public class ModelImpl implements Model {
     public void reasumeGame() {
         turnManager.startTimer();
     }
-
+ 
     /**
      * Create a map builder to instanciate the map.
      * 
      * @return the builder of the map
-     */
+     
     private GameMapBuilder createMapBuilder() {
         return new GameMapBuilderImpl(DEFAULT_MAP_SIZE, DEFAULT_MAP_SIZE)
             .initializeBuildableCells()
@@ -266,6 +246,7 @@ public class ModelImpl implements Model {
             .addBonusCell(DEFAULT_BONUS_CELLS)
             .addObstacles(DEFAULT_OBSTACLES);
     }
+    */
 
     /**
      * Computes the ideal cell starting from the given cell
@@ -279,6 +260,7 @@ public class ModelImpl implements Model {
      *           The returned cell must be validated to ensure it is within
      *           the boundaries of the map.
      */
+    /* 
     private Cell idealCell(final Cell currentCell, final Direction direction) {
         final Cell idCell = new CellImpl(currentCell);
         final Position idPos = idCell.getPosition();
@@ -297,6 +279,7 @@ public class ModelImpl implements Model {
 
         return idCell;
     }
+        */
 
     /**
      * {@inheritDoc}
@@ -321,12 +304,28 @@ public class ModelImpl implements Model {
     public Cell[][] getMap() {
         return MapManager.createMapFromStream((int) getMapWidth(), (int) getMapHeight(), mapManager.getMapAsAStream());
     }
-    
+
     /**
      * {@inheritDoc}
      */
     @Override
     public GameStatistics getGameStatistics() {
         return this.gameStatistics;
+    }
+
+    @Override
+    public boolean moveSoldier(Pair<Unit, Cell> source) {
+        if(source.getFirst() instanceof Soldier)
+        {
+            try {
+                mapManager.update(source);
+            } catch (IllegalStateException e) {
+                return false;
+            }
+            
+        }
+
+        LOGGER.log(Level.WARNING, "The unit is not a soldier");
+        throw new IllegalArgumentException("The unit is not a soldier");
     }
 }

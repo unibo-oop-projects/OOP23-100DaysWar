@@ -1,6 +1,7 @@
 package it.unibo.the100dayswar.model;
 
 import it.unibo.the100dayswar.commons.utilities.impl.Direction;
+import it.unibo.the100dayswar.commons.utilities.impl.Pair;
 import it.unibo.the100dayswar.model.cell.api.Cell;
 import it.unibo.the100dayswar.model.soldier.api.Soldier;
 import it.unibo.the100dayswar.model.statistic.api.GameStatistics;
@@ -34,11 +35,10 @@ public interface Model {
     /**
      * Move a soldier following the specified direction.
      * 
-     * @param soldier the soldier to move
-     * @param direction the direction to follow
+     * @param source the pair of the soldier and the cell
      * @return true if the soldier was moved correctly false otherwise
      */
-    boolean moveSoldier(Soldier soldier, Direction direction);
+    boolean moveSoldier(Pair<Unit, Cell> source);
 
     /**
      * Save the current game.
