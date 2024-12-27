@@ -3,6 +3,7 @@ package it.unibo.the100dayswar.model;
 import it.unibo.the100dayswar.commons.utilities.impl.Direction;
 import it.unibo.the100dayswar.model.cell.api.Cell;
 import it.unibo.the100dayswar.model.soldier.api.Soldier;
+import it.unibo.the100dayswar.model.statistic.api.GameStatistics;
 import it.unibo.the100dayswar.model.tower.api.TowerType;
 import it.unibo.the100dayswar.model.unit.api.Unit;
 
@@ -54,6 +55,30 @@ public interface Model {
      * @param unit the unit to upgrade
      */
     void upgradeUnit(Unit unit);
+
+    /**
+     * Gets the width of the map.
+     * @return the width of the map
+     */
+    int getMapWidth();
+
+    /**
+     * Gets the height of the map.
+     * @return the height of the map
+     */
+    int getMapHeight();
+
+    /**
+     * Gets the map as a 2D array of cells.
+     * @return the map
+     */
+    Cell[][] getMap();
+
+    /**
+     * Gets the game statistics.
+     * @return the game statistics
+     */
+    GameStatistics getGameStatistics();
 
     /**
      * Skip the current turn.
