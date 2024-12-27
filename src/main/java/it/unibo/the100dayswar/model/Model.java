@@ -60,13 +60,13 @@ public interface Model {
      * Gets the width of the map.
      * @return the width of the map
      */
-    int getMapWidth();
+    double getMapWidth();
 
     /**
      * Gets the height of the map.
      * @return the height of the map
      */
-    int getMapHeight();
+    double getMapHeight();
 
     /**
      * Gets the map as a 2D array of cells.

@@ -26,6 +26,8 @@ import it.unibo.the100dayswar.model.savedata.api.GameSaver;
 import it.unibo.the100dayswar.model.savedata.impl.GameDataImpl;
 import it.unibo.the100dayswar.model.savedata.impl.GameSaverImpl;
 import it.unibo.the100dayswar.model.soldier.api.Soldier;
+import it.unibo.the100dayswar.model.statistic.api.GameStatistics;
+import it.unibo.the100dayswar.model.statistic.impl.GameStatisticImpl;
 import it.unibo.the100dayswar.model.tower.api.Tower;
 import it.unibo.the100dayswar.model.tower.api.TowerType;
 import it.unibo.the100dayswar.model.unit.api.Unit;
@@ -48,6 +50,7 @@ public class ModelImpl implements Model {
     private final MapManager mapManager;
     private final List<Player> players;
     private final UnitFactory factory = new UnitFactoryImpl();
+    private final GameStatistics gameStatistics = new GameStatisticImpl();
 
     /** 
      * Constructor of the model from scratch.
@@ -293,5 +296,37 @@ public class ModelImpl implements Model {
         }
 
         return idCell;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public double getMapWidth() {
+        return mapManager.getMapDimension().getWidth();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public double getMapHeight() {
+        return mapManager.getMapDimension().getHeight();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Cell[][] getMap() {
+        return MapManager.createMapFromStream((int) getMapWidth(), (int) getMapHeight(), mapManager.getMapAsAStream());
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public GameStatistics getGameStatistics() {
+        return this.gameStatistics;
     }
 }
