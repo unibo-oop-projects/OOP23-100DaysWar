@@ -25,8 +25,7 @@ public class BattleSoldierSoldierImpl implements BattleSoldierSoldier {
     public void startFight(final Soldier attacker, final Soldier defender) {
         final Pair<Soldier, Soldier> result = resolveFight(attacker, defender);
         if (result.getFirst() != null && result.getSecond() != null) {
-            final Soldier loser = result.getSecond();
-            loser.setHealth(0);
+            result.getSecond().setHealth(0);
 
         } else {
             result.getFirst().setHealth(0);
