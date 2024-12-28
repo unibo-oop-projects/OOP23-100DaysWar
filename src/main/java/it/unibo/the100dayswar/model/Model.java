@@ -1,5 +1,6 @@
 package it.unibo.the100dayswar.model;
 
+
 import it.unibo.the100dayswar.commons.utilities.impl.Pair;
 import it.unibo.the100dayswar.model.cell.api.Cell;
 import it.unibo.the100dayswar.model.statistic.api.GameStatistics;
