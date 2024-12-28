@@ -3,7 +3,6 @@ package it.unibo.the100dayswar.model;
 import it.unibo.the100dayswar.commons.utilities.impl.Pair;
 import it.unibo.the100dayswar.model.cell.api.Cell;
 import it.unibo.the100dayswar.model.player.api.Player;
-import it.unibo.the100dayswar.model.statistic.api.GameStatistics;
 import it.unibo.the100dayswar.model.tower.api.TowerType;
 import it.unibo.the100dayswar.model.unit.api.Unit;
 
