@@ -32,18 +32,15 @@ public class StartMenuView extends JFrame {
 
     /**
      * Constructor of the class.
-     * 
-     * NB: Non chiamiamo metodi sovrascrivibili all'interno del costruttore.
      */
     public StartMenuView() {
         super("Start Menu");
-        // Qui ci limitiamo ad eventuali settaggi "basici" non sovrascrivibili
-        // Non chiamiamo initialize();
     }
 
     /**
-     * Metodo di inizializzazione "final" per evitare override accidentali,
-     * da chiamare esplicitamente dopo la costruzione.
+     * Initialize the class.
+     * 
+     * @implNote this method must be final to avoid ConstructorCallsOverridableMethod.
      */
     public final void initialize() {
         buildUI(); 
@@ -94,8 +91,6 @@ public class StartMenuView extends JFrame {
         btnExit.addActionListener(ex -> exitAction());
         panel.add(btnExit, gbc);
 
-        // Uso add(), che è un metodo potenzialmente sovrascrivibile,
-        // ma ora NON è più richiamato dal costruttore.
         add(panel, BorderLayout.CENTER);
     }
 
