@@ -3,8 +3,8 @@ package it.unibo.the100dayswar.model.unit.api;
 import it.unibo.the100dayswar.model.cell.api.Cell;
 import it.unibo.the100dayswar.model.player.api.Player;
 import it.unibo.the100dayswar.model.soldier.api.Soldier;
-import it.unibo.the100dayswar.model.tower.api.AdvancedTower;
-import it.unibo.the100dayswar.model.tower.api.BasicTower;
+import it.unibo.the100dayswar.model.tower.api.Tower;
+import it.unibo.the100dayswar.model.tower.api.TowerType;
 
 /**
  * Interface that rapresent a factory that manages the creation
@@ -20,20 +20,12 @@ public interface UnitFactory {
     Soldier createSoldier(Player player);
 
     /**
-     * Creates a basic tower.
+     * Creates a tower.
      * 
-     * @param player the player that own the tower
+     * @param player the owner of the tower
+     * @param type the type of the tower
      * @param position the position of the tower
-     * @return the basic tower created
+     * @return the tower created
      */
-    BasicTower createBasicTower(Player player, Cell position);
-
-    /**
-     * Creates an advanced tower.
-     * 
-     * @param player the player that own the tower
-     * @param position the position of the tower
-     * @return the advanced tower created
-     */
-    AdvancedTower createAdvancedTower(Player player, Cell position);
+    Tower createTower(Player player, TowerType type, Cell position);
 }

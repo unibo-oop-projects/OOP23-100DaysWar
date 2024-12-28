@@ -7,17 +7,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import it.unibo.the100dayswar.commons.patterns.Observer;
-import it.unibo.the100dayswar.commons.utilities.api.Position;
-import it.unibo.the100dayswar.commons.utilities.impl.Direction;
 import it.unibo.the100dayswar.commons.utilities.impl.Pair;
 import it.unibo.the100dayswar.model.bot.api.BotPlayer;
 import it.unibo.the100dayswar.model.bot.impl.ActionType;
 import it.unibo.the100dayswar.model.bot.impl.SimpleBot;
 import it.unibo.the100dayswar.model.cell.api.Cell;
-import it.unibo.the100dayswar.model.cell.impl.CellImpl;
 import it.unibo.the100dayswar.model.loaddata.api.GameLoader;
 import it.unibo.the100dayswar.model.loaddata.impl.GameLoaderImpl;
-import it.unibo.the100dayswar.model.map.api.GameMapBuilder;
 import it.unibo.the100dayswar.model.map.api.MapManager;
 import it.unibo.the100dayswar.model.map.impl.GameMapBuilderImpl;
 import it.unibo.the100dayswar.model.map.impl.MapManagerImpl;
@@ -233,20 +229,6 @@ public class ModelImpl implements Model {
     public void reasumeGame() {
         turnManager.startTimer();
     }
- 
-    /**
-     * Create a map builder to instanciate the map.
-     * 
-     * @return the builder of the map
-     
-    private GameMapBuilder createMapBuilder() {
-        return new GameMapBuilderImpl(DEFAULT_MAP_SIZE, DEFAULT_MAP_SIZE)
-            .initializeBuildableCells()
-            .addSpawnCells()
-            .addBonusCell(DEFAULT_BONUS_CELLS)
-            .addObstacles(DEFAULT_OBSTACLES);
-    }
-    */
 
     /**
      * Computes the ideal cell starting from the given cell
@@ -313,8 +295,11 @@ public class ModelImpl implements Model {
         return this.gameStatistics;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public boolean moveSoldier(Pair<Unit, Cell> source) {
+    public boolean moveSoldier(final Pair<Unit, Cell> source) {
         if(source.getFirst() instanceof Soldier)
         {
             try {
