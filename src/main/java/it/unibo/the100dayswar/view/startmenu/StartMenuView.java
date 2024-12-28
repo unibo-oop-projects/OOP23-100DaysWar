@@ -20,9 +20,9 @@ import javax.swing.SwingUtilities;
  * Class that models the starting menu of the game.
  */
 public class StartMenuView extends JFrame {
-
-    private static final Dimension BUTTON_SIZE = new Dimension(200, 80); // Dimensioni fisse dei pulsanti
-
+    private static final Dimension BUTTON_SIZE = new Dimension(200, 80);
+    // private static final MainController CONTROLLER = new MainControllerImpl(); TODO
+    
     /**
      * Constructor of the class.
      */
@@ -118,15 +118,14 @@ public class StartMenuView extends JFrame {
      * Defines the actions after pressing START.
      */
     private void startAction() {
-        // TODO Initialize the game
-        System.out.println("Start game!");
+        // CONTROLLER.startGame() TODO
     }
 
     /**
      * Defines the actions after pressing RESUME.
      */
     private void resumeAction() {
-        // TODO Resume the game
+        // CONTROLLER.resumeGame() TODO
         System.out.println("Resume game!");
     }
 
@@ -134,7 +133,11 @@ public class StartMenuView extends JFrame {
      * Defines the actions after pressing RULES.
      */
     private void rulesAction() {
-        // TODO Show game rules
+        /*
+         * TODO
+         * new RulesView();
+         * dispose();
+         */
         System.out.println("Show rules!");
     }
 
