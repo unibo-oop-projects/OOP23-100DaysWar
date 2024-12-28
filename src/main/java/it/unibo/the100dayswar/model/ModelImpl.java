@@ -179,7 +179,6 @@ public class ModelImpl implements Model {
         // Placeholder
         return true;
     }
-    
 
     /**
      * {@inheritDoc}
@@ -325,14 +324,14 @@ public class ModelImpl implements Model {
      */
     @Override
     public boolean moveSoldier(final Pair<Unit, Cell> source) {
-        if(source.getFirst() instanceof Soldier)
-        {
+        if (source.getFirst() instanceof Soldier) {
             try {
                 mapManager.update(source);
             } catch (IllegalStateException e) {
                 return false;
             }
-            
+
+            return true;
         }
 
         LOGGER.log(Level.WARNING, "The unit is not a soldier");

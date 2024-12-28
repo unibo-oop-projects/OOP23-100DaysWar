@@ -74,30 +74,32 @@ public interface Model {
 
    /**
      * Gets the current player.
+     * 
+     * @param player the player to get
      * @return the current player
      */
-    int getSoldiersByStatistics(final Player player);
+    int getSoldiersByStatistics(Player player);
 
     /**
      * Gets the number of towers of the player.
      * @param player the player
      * @return the number of towers
      */
-    int getTowersByStatistics(final Player player);
+    int getTowersByStatistics(Player player);
 
     /**
      * Gets the percentage of cells owned by the player.
      * @param player the player
      * @return the percentage of cells owned
      */
-    double getCellsPercentageByStatistics(final Player player);
+    double getCellsPercentageByStatistics(Player player);
 
     /**
      * Gets the balance of the player.
      * @param player the player
      * @return the balance
      */
-    int getPlayerBalanceByStatistics(final Player player);
+    int getPlayerBalanceByStatistics(Player player);
 
     /**
      * Skip the current turn.
