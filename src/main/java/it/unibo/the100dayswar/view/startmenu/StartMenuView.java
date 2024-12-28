@@ -6,9 +6,11 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -37,22 +39,12 @@ public class StartMenuView extends JFrame {
      */
     public StartMenuView() {
         super("Start Menu");
-<<<<<<< HEAD
     }
 
     /**
      * Initialize the class.
      * 
      * @implNote this method must be final to avoid ConstructorCallsOverridableMethod.
-=======
-        // Qui ci limitiamo ad eventuali settaggi "basici" non sovrascrivibili
-        // Non chiamiamo initialize();
-    }
-
-    /**
-     * Metodo di inizializzazione "final" per evitare override accidentali,
-     * da chiamare esplicitamente dopo la costruzione.
->>>>>>> 48cc07e (All checkstyles passed in StartMenuView and Model)
      */
     public final void initialize() {
         buildUI(); 
@@ -103,11 +95,6 @@ public class StartMenuView extends JFrame {
         btnExit.addActionListener(ex -> exitAction());
         panel.add(btnExit, gbc);
 
-<<<<<<< HEAD
-=======
-        // Uso add(), che è un metodo potenzialmente sovrascrivibile,
-        // ma ora NON è più richiamato dal costruttore.
->>>>>>> 48cc07e (All checkstyles passed in StartMenuView and Model)
         add(panel, BorderLayout.CENTER);
     }
 
