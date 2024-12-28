@@ -1,39 +1,41 @@
 package it.unibo.the100dayswar.model.statistic.api;
 
-
-import it.unibo.the100dayswar.model.map.api.MapManager;
 import it.unibo.the100dayswar.model.player.api.Player;
+import it.unibo.the100dayswar.commons.utilities.impl.Pair;
+
+import java.util.List;
 
 /**
- * Interface that model the game statistics.
+ * Interface that models the game statistics.
  */
 public interface GameStatistics {
 
-    /** 
-     * Get the number of soldiers of a player.
-     * @param player the player.
-     * @return the number of soldiers.
+    /**
+     * Update all the statistics.
      */
-    int getSoldiers(Player player);
+    public void updateAllStatistics();
 
     /**
-     * Get the number of towers of a player.
-     * @param player the player.
-     * @return the number of towers.
+     * Get the number of soldiers for each player, sorted by value.
+     * @return a Pair of players and their soldier counts.
      */
-    int getTower(Player player);
-    /**
-     * Get the percentage of cells owned by a player.
-     * @param player the player.
-     * @param mapManager the map manager.
-     * @return the percentage of cells owned by the player.
-     */
-    double getCellsPercentage(Player player, MapManager mapManager);
+    Pair<List<Player>, List<Integer>> getSoldiers();
 
     /**
-     * Get the balance of a player.
-     * @param player the player.
-     * @return the balance of the player.
+     * Get the number of towers for each player, sorted by value.
+     * @return a Pair of players and their tower counts.
      */
-    int getPlayerBalance(Player player);
+    Pair<List<Player>, List<Integer>> getTowers();
+
+    /**
+     * Get the percentage of cells owned by each player, sorted by value.
+     * @return a Pair of players and their cell percentages.
+     */
+    Pair<List<Player>, List<Double>> getCellsPercentage();
+
+    /**
+     * Get the balances for each player, sorted by value.
+     * @return a Pair of players and their balances.
+     */
+    Pair<List<Player>, List<Integer>> getBalances();
 }

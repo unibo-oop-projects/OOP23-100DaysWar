@@ -49,7 +49,7 @@ public class ModelImpl implements Model {
     private final MapManager mapManager;
     private final List<Player> players;
     private final UnitFactory factory = new UnitFactoryImpl();
-    private final GameStatistics gameStatistics = new GameStatisticImpl();
+    private final GameStatistics gameStatistics;
 
     /** 
      * Constructor of the model from scratch.
@@ -64,6 +64,7 @@ public class ModelImpl implements Model {
         this.players.add(new PlayerImpl(namePlayer, mapManager.getPlayerSpawn()));
 
         this.turnManager = new GameTurnManagerImpl(players);
+        this.gameStatistics = new GameStatisticImpl(players, mapManager);
     }
 
     /**
@@ -89,6 +90,7 @@ public class ModelImpl implements Model {
         this.players = List.of(new PlayerImpl(data.get().getPlayerData1()), new PlayerImpl(data.get().getPlayerData1()));
 
         this.turnManager = data.get().getGameTurnManager();
+        this.gameStatistics = new GameStatisticImpl(players, mapManager);
     }
 
     /**
@@ -291,34 +293,9 @@ public class ModelImpl implements Model {
      * {@inheritDoc}
      */
     @Override
-    public int getSoldiersByStatistics(final Player player) {
-        return gameStatistics.getSoldiers(player);
+    public GameStatistics getGameStatistics() {
+        return gameStatistics;
     }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public int getTowersByStatistics(final Player player) {
-        return gameStatistics.getTower(player);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public double getCellsPercentageByStatistics(final Player player) {
-        return gameStatistics.getCellsPercentage(player, mapManager);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public int getPlayerBalanceByStatistics(final Player player) {
-        return gameStatistics.getPlayerBalance(player);
-    }
-
 
     /**
      * {@inheritDoc}
