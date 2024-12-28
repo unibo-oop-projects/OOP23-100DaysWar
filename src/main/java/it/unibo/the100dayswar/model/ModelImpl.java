@@ -291,9 +291,34 @@ public class ModelImpl implements Model {
      * {@inheritDoc}
      */
     @Override
-    public GameStatistics getGameStatistics() {
-        return this.gameStatistics;
+    public int getSoldiersByStatistics(final Player player) {
+        return gameStatistics.getSoldiers(player);
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getTowersByStatistics(final Player player) {
+        return gameStatistics.getTower(player);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public double getCellsPercentageByStatistics(final Player player) {
+        return gameStatistics.getCellsPercentage(player, mapManager);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getPlayerBalanceByStatistics(final Player player) {
+        return gameStatistics.getPlayerBalance(player);
+    }
+
 
     /**
      * {@inheritDoc}

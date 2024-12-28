@@ -2,6 +2,7 @@ package it.unibo.the100dayswar.model;
 
 import it.unibo.the100dayswar.commons.utilities.impl.Pair;
 import it.unibo.the100dayswar.model.cell.api.Cell;
+import it.unibo.the100dayswar.model.player.api.Player;
 import it.unibo.the100dayswar.model.statistic.api.GameStatistics;
 import it.unibo.the100dayswar.model.tower.api.TowerType;
 import it.unibo.the100dayswar.model.unit.api.Unit;
@@ -72,11 +73,32 @@ public interface Model {
      */
     Cell[][] getMap();
 
-    /**
-     * Gets the game statistics.
-     * @return the game statistics
+   /**
+     * Gets the current player.
+     * @return the current player
      */
-    GameStatistics getGameStatistics();
+    int getSoldiersByStatistics(final Player player);
+
+    /**
+     * Gets the number of towers of the player.
+     * @param player the player
+     * @return the number of towers
+     */
+    int getTowersByStatistics(final Player player);
+
+    /**
+     * Gets the percentage of cells owned by the player.
+     * @param player the player
+     * @return the percentage of cells owned
+     */
+    double getCellsPercentageByStatistics(final Player player);
+
+    /**
+     * Gets the balance of the player.
+     * @param player the player
+     * @return the balance
+     */
+    int getPlayerBalanceByStatistics(final Player player);
 
     /**
      * Skip the current turn.
