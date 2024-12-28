@@ -7,6 +7,10 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 
+import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -20,25 +24,41 @@ import javax.swing.SwingUtilities;
  * Class that models the starting menu of the game.
  */
 public class StartMenuView extends JFrame {
+    private static final long serialVersionUID = 1L;
+    private static final Logger LOGGER = Logger.getLogger(StartMenuView.class.getName());
 
-    private static final Dimension BUTTON_SIZE = new Dimension(200, 80); // Dimensioni fisse dei pulsanti
+    private static final int WIDTH = 200;
+    private static final int HEIGHT = 80;
+    private static final int MARGINS = 20;
+    private static final Dimension BUTTON_SIZE = new Dimension(WIDTH, HEIGHT);
 
     /**
      * Constructor of the class.
+     * 
+     * NB: Non chiamiamo metodi sovrascrivibili all'interno del costruttore.
      */
     public StartMenuView() {
         super("Start Menu");
+    }
 
-        // Basic settings of the window
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setExtendedState(JFrame.MAXIMIZED_BOTH);
+    /**
+     * Initialize the class.
+     * 
+     * @implNote this method must be final to avoid ConstructorCallsOverridableMethod.
+     */
+    public final void initialize() {
+        buildUI(); 
+        postInitialization();
+    }
 
-        // Central panel building
+    /**
+     * Builds the UI components (privato, non sovrascrivibile).
+     */
+    private void buildUI() {
         final JPanel panel = new JPanel(new GridBagLayout());
         final GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(20, 20, 20, 20); // Margins between buttons
+        gbc.insets = new Insets(MARGINS, MARGINS, MARGINS, MARGINS);
 
-        // Layout
         final Font buttonFont = new Font("Arial", Font.BOLD, 24);
         final String resources = "startmenu/";
 
@@ -75,8 +95,15 @@ public class StartMenuView extends JFrame {
         btnExit.addActionListener(ex -> exitAction());
         panel.add(btnExit, gbc);
 
-        // Finish the GUI
         add(panel, BorderLayout.CENTER);
+    }
+
+    /**
+     * Final initialization step for frame configuration.
+     */
+    private void postInitialization() {
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setExtendedState(MAXIMIZED_BOTH);
         setVisible(true);
     }
 
@@ -93,10 +120,9 @@ public class StartMenuView extends JFrame {
         final JButton button = new JButton(text, icon);
         button.setFont(font);
         button.setPreferredSize(BUTTON_SIZE);
-        button.setMinimumSize(BUTTON_SIZE);
-        button.setMaximumSize(BUTTON_SIZE);
         button.setHorizontalTextPosition(SwingConstants.CENTER);
         button.setVerticalTextPosition(SwingConstants.BOTTOM);
+
         return button;
     }
 
@@ -107,35 +133,33 @@ public class StartMenuView extends JFrame {
      * @return the loaded icon or a fallback if not found
      */
     private Icon loadIcon(final String path) {
-        try {
-            return new ImageIcon(ClassLoader.getSystemResource(path));
-        } catch (NullPointerException e) {
-            return new ImageIcon(); // Fallback icon
-        }
+        return Optional.ofNullable(ClassLoader.getSystemResource(path))
+            .map(ImageIcon::new)
+            .orElseGet(() -> {
+                LOGGER.log(Level.WARNING, "The icon at path " + path + " wasn't loaded.");
+                return new ImageIcon(); // Fallback icon
+            });
     }
 
     /**
      * Defines the actions after pressing START.
      */
     private void startAction() {
-        // TODO Initialize the game
-        System.out.println("Start game!");
+        // TODO Implement start logic
     }
 
     /**
      * Defines the actions after pressing RESUME.
      */
     private void resumeAction() {
-        // TODO Resume the game
-        System.out.println("Resume game!");
+        // TODO Implement resume logic
     }
 
     /**
      * Defines the actions after pressing RULES.
      */
     private void rulesAction() {
-        // TODO Show game rules
-        System.out.println("Show rules!");
+        // TODO Implement rules logic
     }
 
     /**
@@ -143,10 +167,10 @@ public class StartMenuView extends JFrame {
      */
     private void exitAction() {
         final int confirm = JOptionPane.showConfirmDialog(
-                this,
-                "Are you sure you want to exit?",
-                "Exit Confirmation",
-                JOptionPane.YES_NO_OPTION
+            this,
+            "Are you sure you want to exit?",
+            "Exit Confirmation",
+            JOptionPane.YES_NO_OPTION
         );
         if (confirm == JOptionPane.YES_OPTION) {
             System.exit(0);
@@ -159,6 +183,9 @@ public class StartMenuView extends JFrame {
      * @param args nothing
      */
     public static void main(final String[] args) {
-        SwingUtilities.invokeLater(StartMenuView::new);
+        SwingUtilities.invokeLater(() -> {
+            final StartMenuView view = new StartMenuView();
+            view.initialize();
+        });
     }
 }
