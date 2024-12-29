@@ -1,5 +1,8 @@
 package it.unibo.the100dayswar.controller.statisticContoller.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import it.unibo.the100dayswar.application.The100DaysWar;
 import it.unibo.the100dayswar.controller.statisticContoller.api.StatisticController;
 import it.unibo.the100dayswar.model.player.api.Player;
@@ -65,5 +68,16 @@ public class StatisticControllerImpl implements StatisticController {
                     .getBalances()
                     .getFirst().indexOf(player));
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<Player> getPlayers() {
+        return new ArrayList<>(The100DaysWar.CONTROLLER.getGameInstance()
+        .getGameStatistics()
+        .getBalances()
+        .getFirst());
+}
 
 }

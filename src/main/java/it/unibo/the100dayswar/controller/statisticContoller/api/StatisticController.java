@@ -1,5 +1,7 @@
 package it.unibo.the100dayswar.controller.statisticContoller.api;
 
+import java.util.List;
+
 import it.unibo.the100dayswar.model.player.api.Player;
 
 public interface StatisticController {
@@ -29,4 +31,8 @@ public interface StatisticController {
      */
     Integer getBalance(Player player);
 
+    /**
+     * @return the list of players. 
+     */
+    List<Player> getPlayers();
 }
