@@ -22,7 +22,6 @@ public class ShopView extends JPanel {
     private final JButton buyBasicTower;
     private final JButton buyAdvancedTower;
     private final JButton upgradeUnit;
-
     /**
      * Constructor for the ShopView class.
      */
@@ -36,7 +35,6 @@ public class ShopView extends JPanel {
         this.upgradeUnit = new JButton("Upgrade Unit");
 
         final ActionListener fakeActionListener = e -> The100DaysWar.CONTROLLER.startGame();
-
         buyBasicTower.addActionListener(fakeActionListener);
         buySoldier.addActionListener(fakeActionListener);
         buyAdvancedTower.addActionListener(fakeActionListener);
@@ -57,10 +55,8 @@ public class ShopView extends JPanel {
         gbc.gridx = 0;
         gbc.gridy = 3;
         super.add(upgradeUnit, gbc);
-
         super.setPreferredSize(new Dimension(WIDTH, HEIGHT));
     }
-
     /**
      * Disable all shop buttons.
      */
@@ -70,7 +66,6 @@ public class ShopView extends JPanel {
         this.buyAdvancedTower.setEnabled(false);
         this.upgradeUnit.setEnabled(false);
     }
-
     /**
      * Enable all shop buttons.
      */

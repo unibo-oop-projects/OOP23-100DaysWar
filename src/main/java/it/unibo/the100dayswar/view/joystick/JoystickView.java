@@ -29,11 +29,23 @@ public class JoystickView extends JPanel {
         this.placeholderPanel = new JPanel();
 
         this.movementView.setBorder(BorderFactory.createTitledBorder(
-            BorderFactory.createLineBorder(java.awt.Color.BLACK), "Movement", TitledBorder.CENTER, TitledBorder.TOP));
+            BorderFactory.createLineBorder(
+                java.awt.Color.BLACK),
+                "Movement",
+                TitledBorder.CENTER,
+                TitledBorder.TOP));
         this.shopView.setBorder(BorderFactory.createTitledBorder(
-            BorderFactory.createLineBorder(java.awt.Color.BLACK), "Shop", TitledBorder.CENTER, TitledBorder.TOP));
+            BorderFactory.createLineBorder(
+                java.awt.Color.BLACK),
+                "Shop",
+                TitledBorder.CENTER,
+                TitledBorder.TOP));
         this.placeholderPanel.setBorder(BorderFactory.createTitledBorder(
-            BorderFactory.createLineBorder(java.awt.Color.BLACK), "Control (Placeholder)", TitledBorder.CENTER, TitledBorder.TOP));
+            BorderFactory.createLineBorder(
+                java.awt.Color.BLACK), 
+                "Control", 
+                TitledBorder.CENTER, 
+                TitledBorder.TOP));
 
         gbc.gridx = 0;
         gbc.gridy = 0;
