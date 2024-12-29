@@ -88,7 +88,7 @@ public class GameStatisticImpl implements GameStatistics {
      */
     @Override
     public Pair<List<Player>, List<Integer>> getSoldiers() {
-        return sortStats(soldiers);
+        return sortStatistic(soldiers);
     }
 
     /**
@@ -96,7 +96,7 @@ public class GameStatisticImpl implements GameStatistics {
      */
     @Override
     public Pair<List<Player>, List<Integer>> getTowers() {
-        return sortStats(towers);
+        return sortStatistic(towers);
     }
 
     /**
@@ -104,7 +104,7 @@ public class GameStatisticImpl implements GameStatistics {
      */
     @Override
     public Pair<List<Player>, List<Double>> getCellsPercentage() {
-        return sortStats(cellsPercentage);
+        return sortStatistic(cellsPercentage);
     }
 
     /**
@@ -112,7 +112,7 @@ public class GameStatisticImpl implements GameStatistics {
      */
     @Override
     public Pair<List<Player>, List<Integer>> getBalances() {
-        return sortStats(balances);
+        return sortStatistic(balances);
     }
 
     /**
@@ -121,7 +121,7 @@ public class GameStatisticImpl implements GameStatistics {
      * @param map the map to sort.
      * @return a Pair of players and their values.
      */
-    private <T extends Comparable<T>> Pair<List<Player>, List<T>> sortStats(Map<Player, T> map) {
+    private <T extends Comparable<T>> Pair<List<Player>, List<T>> sortStatistic(Map<Player, T> map) {
         List<Map.Entry<Player, T>> entries = new ArrayList<>(map.entrySet());
         entries.sort((e1, e2) -> e2.getValue().compareTo(e1.getValue()));
 
