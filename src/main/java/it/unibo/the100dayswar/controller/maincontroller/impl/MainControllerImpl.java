@@ -20,7 +20,7 @@ public class MainControllerImpl implements MainController {
      */
     public MainControllerImpl() {
         this.statisticController = new StatisticControllerImpl();
-        this.model = null;
+        this.model = null;  // TODO da inizializzare
     }
 
 

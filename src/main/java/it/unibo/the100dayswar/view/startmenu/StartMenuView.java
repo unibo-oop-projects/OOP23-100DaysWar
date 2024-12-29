@@ -147,7 +147,6 @@ public class StartMenuView extends JFrame {
      */
     private void startAction() {
         // TODO Implement start logic
-        new PauseMenu(this).setVisible(true);
     }
 
     /**
@@ -155,6 +154,10 @@ public class StartMenuView extends JFrame {
      */
     private void resumeAction() {
         // TODO Implement resume logic
+        /**
+         * Wrongly implemented just to test.
+         */
+        new PauseMenu(this).initialize();
     }
 
     /**

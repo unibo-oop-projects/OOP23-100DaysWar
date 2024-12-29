@@ -20,7 +20,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-import it.unibo.the100dayswar.application.The100DaysWar;
+import it.unibo.the100dayswar.model.dice.impl.DiceImpl;
+import it.unibo.the100dayswar.view.startmenu.StartMenuView;
 
 /**
  * Class that implements the pause menu window.
@@ -28,7 +29,7 @@ import it.unibo.the100dayswar.application.The100DaysWar;
 public class PauseMenu extends JDialog {
     private static final long serialVersionUID = 1L;
     private static final Logger LOGGER = Logger.getLogger(PauseMenu.class.getName());
-    private static final String SAVING_PATH = null;    // Path setted null by default.
+    // TODO private static final String SAVING_PATH = null;    // Path setted null by default.
 
     private static final int MARGINS = 20;
     private static final int WIDTH = 250;
@@ -45,13 +46,12 @@ public class PauseMenu extends JDialog {
      */
     public PauseMenu(final JFrame parent) {
         super(parent, "Paused", true);
-        initialize();
     }
 
     /**
      * Initialize the window.
      */
-    private void initialize() {
+    public void initialize() {
         buildUI();
         postInitialization();
     }
@@ -103,6 +103,7 @@ public class PauseMenu extends JDialog {
         setResizable(false);
         setLocationRelativeTo(getParent());
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        setVisible(true);
     }
 
     /**
@@ -151,36 +152,50 @@ public class PauseMenu extends JDialog {
      * Returns to the main menu.
      */
     private void returnToMainMenu() {
-        saveDialog();
-        dispose();
+        if (saveDialog()) {
+            new StartMenuView().initialize();
+            dispose();
+        }
     }
 
     /**
      * Quits the game.
      */
     private void exitGame() {
-        saveDialog();
-        System.exit(0);
+        if (saveDialog()) {
+            System.exit(0);
+        }
     }
 
     /**
      * Dialog displayed before quitting the game.
+     * 
+     * @return false if there is an error during the game saving 
      */
-    private void saveDialog() {
+    private boolean saveDialog() {
         final int save = JOptionPane.showConfirmDialog(
             this,
             "Do you want to save the game?",
             "Exit Confirmation",
             JOptionPane.YES_NO_OPTION
         );
+
         if (save == JOptionPane.YES_OPTION) {
-            if (The100DaysWar.CONTROLLER.saveGame(SAVING_PATH)) {
+            /*
+             * TODO The100DaysWar.CONTROLLER.saveGame(SAVING_PATH) quando il gioco è completo
+             * 
+             * this line of code must be fixed and updated when the application will work.
+             */
+            final int rand = new DiceImpl().roll();   // TODO needs to be killed
+            if (rand % 2 == 0) {    // TODO needs to be updatev with the above line 
                 JOptionPane.showMessageDialog(
                     this,
                     "Game saved successfully!",
                     "Save Status",
                     JOptionPane.INFORMATION_MESSAGE
                 );
+                return true;
+
             } else {
                 JOptionPane.showMessageDialog(
                     this,
@@ -188,8 +203,11 @@ public class PauseMenu extends JDialog {
                     "Save Status",
                     JOptionPane.ERROR_MESSAGE
                 );
+                return false;
+
             }
         }
+
+        return true;
     }
 }
-
