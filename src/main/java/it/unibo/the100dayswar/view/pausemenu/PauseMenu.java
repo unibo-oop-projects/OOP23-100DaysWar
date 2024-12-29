@@ -37,7 +37,7 @@ public class PauseMenu extends JDialog {
 
     private static final int POST_INIT_WIDTH = 400;
     private static final int POST_INIT_HEIGHT = 300;
-    
+
     /**
      * Constructor of the pausing window.
      * 
