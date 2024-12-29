@@ -1,8 +1,8 @@
 package it.unibo.the100dayswar.controller.maincontroller.impl;
 
 import it.unibo.the100dayswar.controller.maincontroller.api.MainController;
-import it.unibo.the100dayswar.controller.statisticContoller.api.StatisticController;
-import it.unibo.the100dayswar.controller.statisticContoller.impl.StatisticControllerImpl;
+import it.unibo.the100dayswar.controller.statisticscontoller.api.StatisticController;
+import it.unibo.the100dayswar.controller.statisticscontoller.impl.StatisticControllerImpl;
 import it.unibo.the100dayswar.model.Model;
 
 

@@ -23,7 +23,7 @@ public class GameStatisticImpl implements GameStatistics {
      * @param players the list of players.
      * @param mapManager the map manager containing the map data.
      */
-    public GameStatisticImpl(List<Player> players, MapManager mapManager) {
+    public GameStatisticImpl(final List<Player> players, final MapManager mapManager) {
         this.mapManager = mapManager;
 
         players.forEach(player -> {
@@ -58,7 +58,7 @@ public class GameStatisticImpl implements GameStatistics {
      * Updates the percentage of cells owned for each player.
      */
     private void updateCellsPercentage() {
-        long totalCells = mapManager.getMapAsAStream().count();
+        final long totalCells = mapManager.getMapAsAStream().count();
         mapManager.getPlayersCells().forEach((player, cells) -> 
             cellsPercentage.put(player, (double) cells.size() / totalCells * 100)
         );
@@ -76,6 +76,7 @@ public class GameStatisticImpl implements GameStatistics {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void updateAllStatistics() {
         updateSoldiers();
         updateTowers();
@@ -121,12 +122,12 @@ public class GameStatisticImpl implements GameStatistics {
      * @param map the map to sort.
      * @return a Pair of players and their values.
      */
-    private <T extends Comparable<T>> Pair<List<Player>, List<T>> sortStatistic(Map<Player, T> map) {
-        List<Map.Entry<Player, T>> entries = new ArrayList<>(map.entrySet());
+    private <T extends Comparable<T>> Pair<List<Player>, List<T>> sortStatistic(final Map<Player, T> map) {
+       final List<Map.Entry<Player, T>> entries = new ArrayList<>(map.entrySet());
         entries.sort((e1, e2) -> e2.getValue().compareTo(e1.getValue()));
 
-        List<Player> players = new ArrayList<>();
-        List<T> values = new ArrayList<>();
+        final List<Player> players = new ArrayList<>();
+        final List<T> values = new ArrayList<>();
         for (Map.Entry<Player, T> entry : entries) {
             players.add(entry.getKey());
             values.add(entry.getValue());

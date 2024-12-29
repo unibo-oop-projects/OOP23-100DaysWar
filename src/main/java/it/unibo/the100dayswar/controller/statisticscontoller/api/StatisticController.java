@@ -1,4 +1,4 @@
-package it.unibo.the100dayswar.controller.statisticContoller.api;
+package it.unibo.the100dayswar.controller.statisticscontoller.api;
 
 import java.util.List;
 

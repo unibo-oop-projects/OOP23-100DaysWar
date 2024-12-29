@@ -13,7 +13,7 @@ public interface GameStatistics {
     /**
      * Update all the statistics.
      */
-    public void updateAllStatistics();
+    void updateAllStatistics();
 
     /**
      * Get the number of soldiers for each player, sorted by value.
