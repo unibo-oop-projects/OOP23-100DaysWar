@@ -20,6 +20,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 
+import it.unibo.the100dayswar.application.The100DaysWar;
 import it.unibo.the100dayswar.view.pausemenu.PauseMenu;
 
 /**
@@ -146,7 +147,10 @@ public class StartMenuView extends JFrame {
      * Defines the actions after pressing START.
      */
     private void startAction() {
+        The100DaysWar.CONTROLLER.getGameInstance().addPlayer(NameWindow.askUsername(this));
         // TODO Implement start logic
+        // TODO new GameTable() ....
+        dispose();
     }
 
     /**
