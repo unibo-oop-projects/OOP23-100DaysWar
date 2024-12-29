@@ -1,19 +1,29 @@
 package it.unibo.the100dayswar.controller.maincontroller.impl;
 
 import it.unibo.the100dayswar.controller.maincontroller.api.MainController;
+import it.unibo.the100dayswar.controller.statisticContoller.api.StatisticController;
+import it.unibo.the100dayswar.controller.statisticContoller.impl.StatisticControllerImpl;
+import it.unibo.the100dayswar.model.Model;
+
 
 /**
  * The implementation of the main controller of the game.
  */
 public class MainControllerImpl implements MainController {
 
+    private final StatisticController statisticController;
+    private final Model model;
+
+
     /**
      * Constructor of the main controller.
      */
     public MainControllerImpl() {
-        // TODO Auto-generated constructor stub
-        throw new UnsupportedOperationException("Unimplemented method 'MainControllerImpl'");
+        this.statisticController = new StatisticControllerImpl();
+        this.model = null;
     }
+
+
     /** 
      * {@inheritDoc}
      */
@@ -21,5 +31,21 @@ public class MainControllerImpl implements MainController {
     public void startGame() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'startGame'");
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Model getGameInstance() {
+        return this.model;
+    }
+
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public StatisticController getStatisticController() {
+        return this.statisticController;
     }
 }
