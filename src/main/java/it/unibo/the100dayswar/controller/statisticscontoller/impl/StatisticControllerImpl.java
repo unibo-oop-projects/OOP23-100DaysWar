@@ -7,6 +7,9 @@ import it.unibo.the100dayswar.application.The100DaysWar;
 import it.unibo.the100dayswar.controller.statisticscontoller.api.StatisticController;
 import it.unibo.the100dayswar.model.player.api.Player;
 
+/**
+ * The implementation of the statistic controller.
+ */
 public class StatisticControllerImpl implements StatisticController {
 
     /**

@@ -65,6 +65,7 @@ public class ModelImpl implements Model {
 
         this.turnManager = new GameTurnManagerImpl(players);
         this.gameStatistics = new GameStatisticImpl(players, mapManager);
+        gameStatistics.updateAllStatistics();
     }
 
     /**

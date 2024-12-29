@@ -4,6 +4,9 @@ import java.util.List;
 
 import it.unibo.the100dayswar.model.player.api.Player;
 
+/**
+ * Interface that models the statistic controller.
+ */
 public interface StatisticController {
 
     /**

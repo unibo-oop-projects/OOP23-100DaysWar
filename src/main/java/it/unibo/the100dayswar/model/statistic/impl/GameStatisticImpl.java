@@ -5,7 +5,10 @@ import it.unibo.the100dayswar.model.player.api.Player;
 import it.unibo.the100dayswar.model.statistic.api.GameStatistics;
 import it.unibo.the100dayswar.commons.utilities.impl.Pair;
 
-import java.util.*;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.List;
+import java.util.ArrayList;
 
 /**
  * Implementation of GameStatistics.
@@ -32,8 +35,6 @@ public class GameStatisticImpl implements GameStatistics {
             cellsPercentage.put(player, 0.0);
             balances.put(player, 0);
         });
-
-        updateAllStatistics();
     }
 
     /**
@@ -128,7 +129,7 @@ public class GameStatisticImpl implements GameStatistics {
 
         final List<Player> players = new ArrayList<>();
         final List<T> values = new ArrayList<>();
-        for (Map.Entry<Player, T> entry : entries) {
+        for (final Map.Entry<Player, T> entry : entries) {
             players.add(entry.getKey());
             values.add(entry.getValue());
         }
