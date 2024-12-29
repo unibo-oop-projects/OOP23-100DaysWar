@@ -20,6 +20,8 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 
+import it.unibo.the100dayswar.view.pausemenu.PauseMenu;
+
 /**
  * Class that models the starting menu of the game.
  */
@@ -35,7 +37,6 @@ public class StartMenuView extends JFrame {
     /**
      * Constructor of the class.
      * 
-     * NB: Non chiamiamo metodi sovrascrivibili all'interno del costruttore.
      */
     public StartMenuView() {
         super("Start Menu");
@@ -52,7 +53,7 @@ public class StartMenuView extends JFrame {
     }
 
     /**
-     * Builds the UI components (privato, non sovrascrivibile).
+     * Builds the UI components.
      */
     private void buildUI() {
         final JPanel panel = new JPanel(new GridBagLayout());
@@ -146,6 +147,7 @@ public class StartMenuView extends JFrame {
      */
     private void startAction() {
         // TODO Implement start logic
+        new PauseMenu(this).setVisible(true);
     }
 
     /**

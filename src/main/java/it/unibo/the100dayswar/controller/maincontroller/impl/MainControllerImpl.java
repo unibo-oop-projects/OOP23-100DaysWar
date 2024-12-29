@@ -48,4 +48,12 @@ public class MainControllerImpl implements MainController {
     public StatisticController getStatisticController() {
         return this.statisticController;
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean saveGame(final String path) {
+       return model.saveGame(path);
+    }
 }

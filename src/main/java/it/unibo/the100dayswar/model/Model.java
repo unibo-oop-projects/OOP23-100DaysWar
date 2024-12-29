@@ -10,22 +10,22 @@ import it.unibo.the100dayswar.model.unit.api.Unit;
  * The interface of the model of the game.
  */
 public interface Model {
-    /**
-     * Buy a tower of the specified type.
-     * 
-     * @param type the type of the tower
-     * @param position the position of the tower
-     */
-    void buyTower(TowerType type, Cell position);
+  /**
+   * Buy a tower of the specified type.
+   * 
+   * @param type the type of the tower
+   * @param position the position of the tower
+   */
+  void buyTower(TowerType type, Cell position);
 
-    /**
-     * Buy a soldier.
-     */
-    void buySoldier();
+  /**
+   * Buy a soldier.
+   */
+  void buySoldier();
 
-    /**
-     * Add a player to the game.
-     * 
+  /**
+   * Add a player to the game.
+    * 
      * @param username the name of the player
      */
     void addPlayer(String username);

@@ -114,16 +114,6 @@ public class ModelImpl implements Model {
         updateAfterCreation(soldier, List.of(mapManager));
     }
 
-    /**
-     * Method that updates the observer after the creation of a unit.
-     * 
-     * @param unit the unit created
-     * @param observers the observer to update
-     */
-    private void updateAfterCreation(final Unit unit, final List<Observer<Pair<Unit, Cell>>> observers) {
-        observers.forEach(o -> o.update(new Pair<>(unit, unit.getPosition())));
-    }
-
     /** 
      * {@inheritDoc}
      */
@@ -314,5 +304,15 @@ public class ModelImpl implements Model {
 
         LOGGER.log(Level.WARNING, "The unit is not a soldier");
         throw new IllegalArgumentException("The unit is not a soldier");
+    }
+
+    /**
+     * Method that updates the observer after the creation of a unit.
+     * 
+     * @param unit the unit created
+     * @param observers the observer to update
+     */
+    private void updateAfterCreation(final Unit unit, final List<Observer<Pair<Unit, Cell>>> observers) {
+        observers.forEach(o -> o.update(new Pair<>(unit, unit.getPosition())));
     }
 }

@@ -24,4 +24,16 @@ public interface MainController {
      * @return the game instance
      */
     Model getGameInstance();
+
+    /**
+     * Save the current game.
+     * 
+     * @param path the path of the saving_file
+     * @return true if the game was saved correctly
+     *         false otherwise
+     * 
+     * @implNote if the path is null the game will be 
+     * saved in the default path.
+     */
+    boolean saveGame(String path);
 }
