@@ -3,19 +3,17 @@ package it.unibo.the100dayswar.model;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import it.unibo.the100dayswar.commons.patterns.Observer;
-import it.unibo.the100dayswar.commons.utilities.api.Position;
-import it.unibo.the100dayswar.commons.utilities.impl.Direction;
 import it.unibo.the100dayswar.commons.utilities.impl.Pair;
 import it.unibo.the100dayswar.model.bot.api.BotPlayer;
 import it.unibo.the100dayswar.model.bot.impl.ActionType;
 import it.unibo.the100dayswar.model.bot.impl.SimpleBot;
 import it.unibo.the100dayswar.model.cell.api.Cell;
-import it.unibo.the100dayswar.model.cell.impl.CellImpl;
 import it.unibo.the100dayswar.model.loaddata.api.GameLoader;
 import it.unibo.the100dayswar.model.loaddata.impl.GameLoaderImpl;
-import it.unibo.the100dayswar.model.map.api.GameMapBuilder;
 import it.unibo.the100dayswar.model.map.api.MapManager;
 import it.unibo.the100dayswar.model.map.impl.GameMapBuilderImpl;
 import it.unibo.the100dayswar.model.map.impl.MapManagerImpl;
@@ -26,6 +24,8 @@ import it.unibo.the100dayswar.model.savedata.api.GameSaver;
 import it.unibo.the100dayswar.model.savedata.impl.GameDataImpl;
 import it.unibo.the100dayswar.model.savedata.impl.GameSaverImpl;
 import it.unibo.the100dayswar.model.soldier.api.Soldier;
+import it.unibo.the100dayswar.model.statistic.api.GameStatistics;
+import it.unibo.the100dayswar.model.statistic.impl.GameStatisticImpl;
 import it.unibo.the100dayswar.model.tower.api.Tower;
 import it.unibo.the100dayswar.model.tower.api.TowerType;
 import it.unibo.the100dayswar.model.unit.api.Unit;
@@ -39,15 +39,17 @@ import it.unibo.the100dayswar.model.turn.impl.GameTurnManagerImpl;
  */
 public class ModelImpl implements Model {
     private static final int DEFAULT_MAP_SIZE = 10;
-    private static final int DEFAULT_OBSTACLES = 10;
-    private static final int DEFAULT_BONUS_CELLS = 15;
+    //private static final int DEFAULT_OBSTACLES = 10; li ho settati gia nel MapManager
+    //private static final int DEFAULT_BONUS_CELLS = 15; stessa cosa degli ostacoli
     private static final int MAX_USERNAME_LENGTH = 15;
     private static final int HUMAN_PLAYER = 1;
+    private static final Logger LOGGER = Logger.getLogger(ModelImpl.class.getName());
 
     private final GameTurnManager turnManager;
     private final MapManager mapManager;
     private final List<Player> players;
     private final UnitFactory factory = new UnitFactoryImpl();
+    private final GameStatistics gameStatistics;
 
     /** 
      * Constructor of the model from scratch.
@@ -55,13 +57,15 @@ public class ModelImpl implements Model {
      * @param namePlayer the username of the player
      */
     public ModelImpl(final String namePlayer) {
-        this.mapManager = new MapManagerImpl(createMapBuilder());
+        this.mapManager = new MapManagerImpl(new GameMapBuilderImpl(DEFAULT_MAP_SIZE, DEFAULT_MAP_SIZE));
         ActionType.add(mapManager);
 
         this.players = List.of(new SimpleBot(mapManager));
         this.players.add(new PlayerImpl(namePlayer, mapManager.getPlayerSpawn()));
 
         this.turnManager = new GameTurnManagerImpl(players);
+        this.gameStatistics = new GameStatisticImpl(players, mapManager);
+        gameStatistics.updateAllStatistics();
     }
 
     /**
@@ -87,6 +91,7 @@ public class ModelImpl implements Model {
         this.players = List.of(new PlayerImpl(data.get().getPlayerData1()), new PlayerImpl(data.get().getPlayerData1()));
 
         this.turnManager = data.get().getGameTurnManager();
+        this.gameStatistics = new GameStatisticImpl(players, mapManager);
     }
 
     /**
@@ -107,16 +112,6 @@ public class ModelImpl implements Model {
         final Soldier soldier = factory.createSoldier(getHumanPlayer());
         players.get(1).buyUnit(soldier);
         updateAfterCreation(soldier, List.of(mapManager));
-    }
-
-    /**
-     * Method that updates the observer after the creation of a unit.
-     * 
-     * @param unit the unit created
-     * @param observers the observer to update
-     */
-    private void updateAfterCreation(final Unit unit, final List<Observer<Pair<Unit, Cell>>> observers) {
-        observers.forEach(o -> o.update(new Pair<>(unit, unit.getPosition())));
     }
 
     /** 
@@ -182,30 +177,6 @@ public class ModelImpl implements Model {
      * {@inheritDoc}
      */
     @Override
-    public boolean moveSoldier(final Soldier soldier, final Direction direction) {
-        final Cell currentPosition = soldier.getPosition();
-        final int totalRows = (int) mapManager.getMapDimension().getHeight();
-        final int totalCols = (int) mapManager.getMapDimension().getWidth();
-
-        final Cell idCell = idealCell(currentPosition, direction);
-        final int newX = idCell.getPosition().getX();
-        final int newY = idCell.getPosition().getY();
-
-        /*
-         * Check that the new cell is valid.
-         */
-        if (newX >= 0 && newX < totalCols && newY >= 0 && newY < totalRows) {
-            soldier.move(idCell);
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public boolean saveGame(final String path) {
         try {
             final GameData data = new GameDataImpl(getCurrentPlayer(), getBotPlayer(), mapManager, turnManager);
@@ -252,19 +223,6 @@ public class ModelImpl implements Model {
     }
 
     /**
-     * Create a map builder to instanciate the map.
-     * 
-     * @return the builder of the map
-     */
-    private GameMapBuilder createMapBuilder() {
-        return new GameMapBuilderImpl(DEFAULT_MAP_SIZE, DEFAULT_MAP_SIZE)
-            .initializeBuildableCells()
-            .addSpawnCells()
-            .addBonusCell(DEFAULT_BONUS_CELLS)
-            .addObstacles(DEFAULT_OBSTACLES);
-    }
-
-    /**
      * Computes the ideal cell starting from the given cell
      * and the specified direction.
      * 
@@ -276,6 +234,7 @@ public class ModelImpl implements Model {
      *           The returned cell must be validated to ensure it is within
      *           the boundaries of the map.
      */
+    /* 
     private Cell idealCell(final Cell currentCell, final Direction direction) {
         final Cell idCell = new CellImpl(currentCell);
         final Position idPos = idCell.getPosition();
@@ -293,5 +252,67 @@ public class ModelImpl implements Model {
         }
 
         return idCell;
+    }
+        */
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public double getMapWidth() {
+        return mapManager.getMapDimension().getWidth();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public double getMapHeight() {
+        return mapManager.getMapDimension().getHeight();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Cell[][] getMap() {
+        return MapManager.createMapFromStream((int) getMapWidth(), (int) getMapHeight(), mapManager.getMapAsAStream());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public GameStatistics getGameStatistics() {
+        return gameStatistics;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean moveSoldier(final Pair<Unit, Cell> source) {
+        if (source.getFirst() instanceof Soldier) {
+            try {
+                mapManager.update(source);
+            } catch (IllegalStateException e) {
+                return false;
+            }
+
+            return true;
+        }
+
+        LOGGER.log(Level.WARNING, "The unit is not a soldier");
+        throw new IllegalArgumentException("The unit is not a soldier");
+    }
+
+    /**
+     * Method that updates the observer after the creation of a unit.
+     * 
+     * @param unit the unit created
+     * @param observers the observer to update
+     */
+    private void updateAfterCreation(final Unit unit, final List<Observer<Pair<Unit, Cell>>> observers) {
+        observers.forEach(o -> o.update(new Pair<>(unit, unit.getPosition())));
     }
 }

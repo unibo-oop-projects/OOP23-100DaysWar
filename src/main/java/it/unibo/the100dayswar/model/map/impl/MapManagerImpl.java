@@ -75,8 +75,8 @@ public class MapManagerImpl implements MapManager {
         return builder
                 .initializeBuildableCells()
                 .addSpawnCells()
-                .addBonusCell(4)
-                .addObstacles(3)
+                .addBonusCell(8)
+                .addObstacles(10)
                 .build();
     }
 
@@ -95,7 +95,6 @@ public class MapManagerImpl implements MapManager {
             if (isTower(source)) {
                 createTower(source);
             }
-            map.getSize();
     }
 
     /**

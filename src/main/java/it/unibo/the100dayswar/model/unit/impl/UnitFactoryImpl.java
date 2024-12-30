@@ -4,10 +4,9 @@ import it.unibo.the100dayswar.model.cell.api.Cell;
 import it.unibo.the100dayswar.model.player.api.Player;
 import it.unibo.the100dayswar.model.soldier.api.Soldier;
 import it.unibo.the100dayswar.model.soldier.impl.SoldierImpl;
-import it.unibo.the100dayswar.model.tower.api.AdvancedTower;
-import it.unibo.the100dayswar.model.tower.api.BasicTower;
-import it.unibo.the100dayswar.model.tower.impl.AdvancedTowerImpl;
-import it.unibo.the100dayswar.model.tower.impl.BasicTowerImpl;
+import it.unibo.the100dayswar.model.tower.api.Tower;
+import it.unibo.the100dayswar.model.tower.api.TowerType;
+import it.unibo.the100dayswar.model.tower.impl.TowerFactoryImpl;
 import it.unibo.the100dayswar.model.unit.api.UnitFactory;
 
 /**
@@ -23,19 +22,11 @@ public class UnitFactoryImpl implements UnitFactory {
         return new SoldierImpl(player);
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
-    public BasicTower createBasicTower(final Player player, final Cell position) {
-        return new BasicTowerImpl(player, position);
-    }
-
-    /** 
-     * {@inheritDoc}
-     */
-    @Override
-    public AdvancedTower createAdvancedTower(final Player player, final Cell position) {
-        return new AdvancedTowerImpl(player, position);
+    public Tower createTower(final Player player, final TowerType type, final Cell position) {
+        return new TowerFactoryImpl().buildTower(player, type, position);
     }
 }
