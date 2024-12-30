@@ -9,6 +9,7 @@ import it.unibo.the100dayswar.controller.statisticscontoller.api.StatisticContro
 import it.unibo.the100dayswar.controller.statisticscontoller.impl.StatisticControllerImpl;
 import it.unibo.the100dayswar.model.Model;
 import it.unibo.the100dayswar.model.ModelImpl;
+import it.unibo.the100dayswar.view.startmenu.StartMenuView;
 
 
 /**
@@ -36,8 +37,7 @@ public class MainControllerImpl implements MainController {
      */
     @Override
     public void startGame() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'startGame'");
+        new StartMenuView();
     }
 
     /**
