@@ -1,9 +1,12 @@
 package it.unibo.the100dayswar.controller.maincontroller.impl;
 
+import java.util.Optional;
+
 import it.unibo.the100dayswar.controller.maincontroller.api.MainController;
 import it.unibo.the100dayswar.controller.statisticscontoller.api.StatisticController;
 import it.unibo.the100dayswar.controller.statisticscontoller.impl.StatisticControllerImpl;
 import it.unibo.the100dayswar.model.Model;
+import it.unibo.the100dayswar.model.ModelImpl;
 
 
 /**
@@ -55,5 +58,19 @@ public class MainControllerImpl implements MainController {
     @Override
     public boolean saveGame(final String path) {
        return model.saveGame(path);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean loadOldGame(final String path) {
+        try {
+            this.model = new ModelImpl(Optional.ofNullable(path));
+        } catch (IllegalStateException e) {
+            return false;
+        }
+
+        return true;
     }
 }

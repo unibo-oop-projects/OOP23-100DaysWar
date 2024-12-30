@@ -51,7 +51,7 @@ public class GameLoaderImpl implements GameLoader {
      */
     private Optional<GameData> loadGameAtPath(final String path) {
         try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(path))) {
-            return Optional.of((GameData) in.readObject());
+            return Optional.ofNullable((GameData) in.readObject());
         } catch (IOException | ClassNotFoundException e) {
             LOGGER.log(Level.SEVERE, "Error loading game data from " + path, e);
             return Optional.empty();

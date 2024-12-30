@@ -158,17 +158,19 @@ public class StartMenuView extends JFrame {
      */
     private void resumeAction() {
         // TODO Implement resume logic
-        /**
-         * Wrongly implemented just to test.
-         */
-        new PauseMenu(this).initialize();
+        if (The100DaysWar.CONTROLLER.loadOldGame()) {
+            // TODO launch game window
+            dispose();
+        } else {
+            NoOldGameFoundWindow.display();
+        }
     }
 
     /**
      * Defines the actions after pressing RULES.
      */
     private void rulesAction() {
-        // TODO Implement rules logic
+       RulesWindow.display();
     }
 
     /**
@@ -188,7 +190,7 @@ public class StartMenuView extends JFrame {
 
     /**
      * Main to test.
-     * 
+     * TODO KILL THIS MAIN
      * @param args nothing
      */
     public static void main(final String[] args) {

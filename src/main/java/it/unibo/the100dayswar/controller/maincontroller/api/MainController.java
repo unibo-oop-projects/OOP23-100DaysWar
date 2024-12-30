@@ -36,4 +36,17 @@ public interface MainController {
      * saved in the default path.
      */
     boolean saveGame(String path);
+
+    /**
+     * Load a previous game.
+     * 
+     * @param path the path of the saving_file
+     * 
+     * @return true if the game is loaded correctly
+     *         false otherwise
+     * 
+     * @implNote if the path is null the game will be 
+     * loaded from the default path.
+     */
+    boolean loadOldGame(String path);
 }
