@@ -7,7 +7,6 @@ import it.unibo.the100dayswar.application.The100DaysWar;
 import javax.swing.JButton;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
-import java.awt.event.ActionListener;
 import java.awt.GridBagConstraints;
 
 /**
@@ -34,11 +33,11 @@ public class ShopView extends JPanel {
         this.buyAdvancedTower = new JButton("Buy Advanced Tower");
         this.upgradeUnit = new JButton("Upgrade Unit");
 
-        final ActionListener fakeActionListener = e -> The100DaysWar.CONTROLLER.startGame();
-        buyBasicTower.addActionListener(fakeActionListener);
-        buySoldier.addActionListener(fakeActionListener);
-        buyAdvancedTower.addActionListener(fakeActionListener);
-        upgradeUnit.addActionListener(fakeActionListener);
+        buyBasicTower.addActionListener(e -> The100DaysWar.CONTROLLER.getShopController().buyBasicTower());
+        buySoldier.addActionListener(e -> The100DaysWar.CONTROLLER.getShopController().buySoldier());
+        buyAdvancedTower.addActionListener(e -> The100DaysWar.CONTROLLER.getShopController().buyAdvancedTower());
+        upgradeUnit.addActionListener(e -> The100DaysWar.CONTROLLER.getShopController().upgradeUnit(null));
+        //TODO method to select a cell / unit
 
         gbc.gridx = 0;
         gbc.gridy = 0;
