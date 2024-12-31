@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Stream;
 
 import it.unibo.the100dayswar.commons.patterns.Observer;
 import it.unibo.the100dayswar.commons.utilities.impl.Pair;
@@ -277,6 +278,14 @@ public class ModelImpl implements Model {
     @Override
     public Cell[][] getMap() {
         return MapManager.createMapFromStream((int) getMapWidth(), (int) getMapHeight(), mapManager.getMapAsAStream());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Stream<Cell> getMapStream() {
+        return mapManager.getMapAsAStream();
     }
 
     /**

@@ -1,5 +1,7 @@
 package it.unibo.the100dayswar.model;
 
+import java.util.stream.Stream;
+
 import it.unibo.the100dayswar.commons.utilities.impl.Pair;
 import it.unibo.the100dayswar.model.cell.api.Cell;
 import it.unibo.the100dayswar.model.statistic.api.GameStatistics;
@@ -71,6 +73,11 @@ public interface Model {
      * @return the map
      */
     Cell[][] getMap();
+
+    /**
+     *Get the map as a stream of cells.
+     */
+    Stream<Cell> getMapStream();
 
     /**
      * Gets the GameStatistics.
