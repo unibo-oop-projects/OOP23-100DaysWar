@@ -158,7 +158,7 @@ public class StartMenuView extends JFrame {
      */
     private void resumeAction() {
         // TODO Implement resume logic
-        if (The100DaysWar.CONTROLLER.loadOldGame()) {
+        if (The100DaysWar.CONTROLLER.loadOldGame(NameWindow.askUsername(this))) {
             // TODO launch game window
             dispose();
         } else {

@@ -46,15 +46,23 @@ public interface MainController {
     boolean saveGame(String path);
 
     /**
-     * Load a previous game.
+     * Start a new game initializing the model.
      * 
-     * @param path the path of the saving_file
+     * @param username the username of the player
+     */
+    void startNewGame(String username);
+
+    /**
+     * Load a previous game initializing the model as the 
+     * one saved in the saving_file.
      * 
-     * @return true if the game is loaded correctly
+     * @param path the path of the saving file
+     * 
+     * @return true if the old game is loaded correctly
      *         false otherwise
      * 
-     * @implNote if the path is null the game will be 
-     * loaded from the default path.
+     * @implNote if the path is null the old game will be 
+     * laoded following the default path.
      */
     boolean loadOldGame(String path);
 }

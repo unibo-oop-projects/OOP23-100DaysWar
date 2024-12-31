@@ -19,8 +19,11 @@ public class MainControllerImpl implements MainController {
 
     private final StatisticController statisticController;
     private final ShopController shopController;
-    private final Model model;
-
+    /*
+     * TODO il model non deve essere final perchè può essere 
+     * inizializzato in due modi diversi.
+     */
+    private Model model;
 
     /**
      * Constructor of the main controller.
@@ -28,9 +31,7 @@ public class MainControllerImpl implements MainController {
     public MainControllerImpl() {
         this.statisticController = new StatisticControllerImpl();
         this.shopController = new ShopControllerImpl();
-        this.model = null;  // TODO da inizializzare
     }
-
 
     /** 
      * {@inheritDoc}
@@ -76,13 +77,23 @@ public class MainControllerImpl implements MainController {
      * {@inheritDoc}
      */
     @Override
-    public boolean loadOldGame(final String path) {
+    public void startNewGame(final String username) {
+        this.model = new ModelImpl(username);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean loadOldGame(String path) {
         try {
             this.model = new ModelImpl(Optional.ofNullable(path));
         } catch (IllegalStateException e) {
-            return false;
+           return true;
         }
 
-        return true;
+        return false;
     }
+
+    
 }
