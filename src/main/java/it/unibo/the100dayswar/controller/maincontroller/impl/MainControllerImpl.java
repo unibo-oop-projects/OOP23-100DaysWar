@@ -89,11 +89,42 @@ public class MainControllerImpl implements MainController {
         try {
             this.model = new ModelImpl(Optional.ofNullable(path));
         } catch (IllegalStateException e) {
-           return true;
+           return false;
         }
 
-        return false;
+        return true;
     }
 
-    
+    /*
+     * TODO controllo del tempo limite 
+     *  
+     * 
+      public boolean loadOldGame(String path) {
+            ExecutorService executor = Executors.newSingleThreadExecutor();
+            Callable<Boolean> task = () -> {
+                try {
+                    this.model = new ModelImpl(Optional.ofNullable(path));
+                    return true;
+                } catch (IllegalStateException e) {
+                    return false;
+                }
+            };
+
+            Future<Boolean> future = executor.submit(task);
+            try {
+                // Limita il tempo massimo a 2 secondi
+                return future.get(2, TimeUnit.SECONDS);
+            } catch (TimeoutException e) {
+                System.err.println("Load old game timed out!");
+                return false;
+            } catch (InterruptedException | ExecutionException e) {
+                System.err.println("Error during load old game: " + e.getMessage());
+                return false;
+            } finally {
+                executor.shutdownNow();
+            }
+        }
+     *   
+     *
+     */
 }

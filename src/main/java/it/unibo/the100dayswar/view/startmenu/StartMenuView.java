@@ -21,7 +21,6 @@ import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 
 import it.unibo.the100dayswar.application.The100DaysWar;
-import it.unibo.the100dayswar.view.pausemenu.PauseMenu;
 
 /**
  * Class that models the starting menu of the game.
@@ -162,7 +161,7 @@ public class StartMenuView extends JFrame {
             // TODO launch game window
             dispose();
         } else {
-            NoOldGameFoundWindow.display();
+            NoOldGameFoundWindow.show(this);;
         }
     }
 
@@ -170,7 +169,7 @@ public class StartMenuView extends JFrame {
      * Defines the actions after pressing RULES.
      */
     private void rulesAction() {
-       RulesWindow.display();
+       // TODO new RulesViewer
     }
 
     /**
