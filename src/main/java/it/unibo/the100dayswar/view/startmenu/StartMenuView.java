@@ -7,12 +7,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 
-import java.util.Optional;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import javax.swing.Icon;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -20,6 +15,7 @@ import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 
 import it.unibo.the100dayswar.application.The100DaysWar;
+import it.unibo.the100dayswar.commons.utilities.impl.IconLoader;
 import it.unibo.the100dayswar.view.rules.RulesViewer;
 
 /**
@@ -27,8 +23,7 @@ import it.unibo.the100dayswar.view.rules.RulesViewer;
  */
 public class StartMenuView extends JFrame {
     private static final long serialVersionUID = 1L;
-    private static final Logger LOGGER = Logger.getLogger(StartMenuView.class.getName());
-    private static final String PATH = null;    // The path is 'null' by default. 
+    private static final String LOADING_PATH = null;    // The LOADING_PATH is 'null' by default. 
 
     private static final int WIDTH = 200;
     private static final int HEIGHT = 80;
@@ -118,7 +113,7 @@ public class StartMenuView extends JFrame {
      * @return the created button
      */
     private JButton createButton(final String text, final String iconPath, final Font font) {
-        final Icon icon = loadIcon(iconPath);
+        final Icon icon = IconLoader.loadIcon(iconPath);
         final JButton button = new JButton(text, icon);
         button.setFont(font);
         button.setPreferredSize(BUTTON_SIZE);
@@ -126,21 +121,6 @@ public class StartMenuView extends JFrame {
         button.setVerticalTextPosition(SwingConstants.BOTTOM);
 
         return button;
-    }
-
-    /**
-     * Loads an icon from the specified path.
-     * 
-     * @param path the path to the icon
-     * @return the loaded icon or a fallback if not found
-     */
-    private Icon loadIcon(final String path) {
-        return Optional.ofNullable(ClassLoader.getSystemResource(path))
-            .map(ImageIcon::new)
-            .orElseGet(() -> {
-                LOGGER.log(Level.WARNING, "The icon at path " + path + " wasn't loaded.");
-                return new ImageIcon(); // Fallback icon
-            });
     }
 
     /**
@@ -158,7 +138,7 @@ public class StartMenuView extends JFrame {
      */
     private void resumeAction() {
         // TODO Implement resume logic
-        if (The100DaysWar.CONTROLLER.loadOldGame(PATH)) {
+        if (The100DaysWar.CONTROLLER.loadOldGame(LOADING_PATH)) {
             // TODO launch game window
             dispose();
         } else {
