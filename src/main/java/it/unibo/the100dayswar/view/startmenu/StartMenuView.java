@@ -54,7 +54,7 @@ public class StartMenuView extends JFrame {
      * Builds the UI components.
      */
     private void buildUI() {
-        final BackgroundStartMenu panel = new BackgroundStartMenu(RESOURCES + "backgroung2.png");
+        final BackgroundStartMenu panel = new BackgroundStartMenu(RESOURCES + "background3.jpg");
         panel.setLayout(new GridBagLayout());
 
         final GridBagConstraints gbc = new GridBagConstraints();
@@ -64,22 +64,22 @@ public class StartMenuView extends JFrame {
 
         gbc.gridx = 0;
         gbc.gridy = 0;
-        final JButton btnStart = createButton("START", RESOURCES + "start.png", buttonFont);
+        final JButton btnStart = createButton("START", RESOURCES + "genericbutton.jpg", buttonFont);
         btnStart.addActionListener(st -> startAction());
         panel.add(btnStart, gbc);
 
         gbc.gridy++;
-        final JButton btnResume = createButton("RESUME", RESOURCES + "resume.png", buttonFont);
+        final JButton btnResume = createButton("RESUME", RESOURCES + "genericbutton.jpg", buttonFont);
         btnResume.addActionListener(re -> resumeAction());
         panel.add(btnResume, gbc);
 
         gbc.gridy++;
-        final JButton btnRules = createButton("RULES", RESOURCES + "rules.png", buttonFont);
+        final JButton btnRules = createButton("RULES", RESOURCES + "genericbutton.jpg", buttonFont);
         btnRules.addActionListener(ru -> rulesAction());
         panel.add(btnRules, gbc);
 
         gbc.gridy++;
-        final JButton btnExit = createButton("EXIT", RESOURCES + "exit.png", buttonFont);
+        final JButton btnExit = createButton("EXIT", RESOURCES + "genericbutton.jpg", buttonFont);
         btnExit.addActionListener(ex -> exitAction());
         panel.add(btnExit, gbc);
 
@@ -122,7 +122,7 @@ public class StartMenuView extends JFrame {
      * Defines the actions after pressing RULES.
      */
     private void rulesAction() {
-       new RulesViewer().setString();
+       new RulesViewer();
     }
 
     /**
