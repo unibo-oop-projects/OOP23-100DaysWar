@@ -12,9 +12,7 @@ public class MovementControllerImpl implements MovementController {
      */
     @Override
     public void moveUp() {
-        
     }
-
     /** 
      * {@inheritDoc}
      */
@@ -41,5 +39,4 @@ public class MovementControllerImpl implements MovementController {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'moveRight'");
     }
-    
 }
