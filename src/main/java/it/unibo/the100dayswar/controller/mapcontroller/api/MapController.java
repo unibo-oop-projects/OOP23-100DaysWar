@@ -1,5 +1,6 @@
 package it.unibo.the100dayswar.controller.mapcontroller.api;
 
+import it.unibo.the100dayswar.commons.utilities.api.Position;
 import it.unibo.the100dayswar.model.cell.api.Cell;
 
 /**
@@ -31,6 +32,13 @@ public interface MapController {
      * @return the number of obstacles of the map.
      */
     Integer getObstacles(); 
+
+    /**
+     * @return the cell at the given position.
+     * @param x the x coordinate of the cell.
+     * @param y the y coordinate of the cell.
+     */
+    Cell getCellAtPosition(Position pos);
 
 
 }

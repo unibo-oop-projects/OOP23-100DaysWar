@@ -4,6 +4,7 @@ import java.util.stream.Stream;
 
 import it.unibo.the100dayswar.commons.utilities.impl.Pair;
 import it.unibo.the100dayswar.model.cell.api.Cell;
+import it.unibo.the100dayswar.model.map.api.GameMap;
 import it.unibo.the100dayswar.model.statistic.api.GameStatistics;
 import it.unibo.the100dayswar.model.tower.api.TowerType;
 import it.unibo.the100dayswar.model.unit.api.Unit;
@@ -76,7 +77,7 @@ public interface Model {
    * 
    * @return the map
    */
-  Cell[][] getMap();
+  GameMap getMap();
 
   /**
    * Get the map as a stream of cells.
