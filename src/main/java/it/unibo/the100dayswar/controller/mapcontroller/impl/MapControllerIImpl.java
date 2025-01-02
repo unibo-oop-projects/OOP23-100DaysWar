@@ -5,6 +5,7 @@ import it.unibo.the100dayswar.commons.utilities.api.Position;
 import it.unibo.the100dayswar.controller.mapcontroller.api.MapController;
 import it.unibo.the100dayswar.model.cell.api.BonusCell;
 import it.unibo.the100dayswar.model.cell.api.Cell;
+import it.unibo.the100dayswar.model.map.api.GameMap;
 
 /**
  * The implementation of the map controller.
@@ -49,8 +50,8 @@ public class MapControllerIImpl implements MapController {
      * {@inheritDoc}
      */
     @Override
-    public Cell[][] getMap() {
-        return The100DaysWar.CONTROLLER.getGameInstance().getMap().getMap();
+    public GameMap getMap() {
+        return The100DaysWar.CONTROLLER.getGameInstance().getMap();
     }
 
     /**
