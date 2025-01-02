@@ -105,25 +105,6 @@ public class StartMenuView extends JFrame {
     }
 
     /**
-     * Creates a button with the given text, icon, and font.
-     * 
-     * @param text the text of the button
-     * @param iconPath the path to the button's icon
-     * @param font the font of the button
-     * @return the created button
-     */
-    private JButton createButton(final String text, final String iconPath, final Font font) {
-        final Icon icon = IconLoader.loadIcon(iconPath);
-        final JButton button = new JButton(text, icon);
-        button.setFont(font);
-        button.setPreferredSize(BUTTON_SIZE);
-        button.setHorizontalTextPosition(SwingConstants.CENTER);
-        button.setVerticalTextPosition(SwingConstants.BOTTOM);
-
-        return button;
-    }
-
-    /**
      * Defines the actions after pressing START.
      */
     private void startAction() {
@@ -158,6 +139,25 @@ public class StartMenuView extends JFrame {
      */
     private void exitAction() {
         ExitWindow.show(this);
+    }
+
+    /**
+     * Creates a button with the given text, icon, and font.
+     * 
+     * @param text the text of the button
+     * @param iconPath the path to the button's icon
+     * @param font the font of the button
+     * @return the created button
+     */
+    private JButton createButton(final String text, final String iconPath, final Font font) {
+        final Icon icon = IconLoader.loadIcon(iconPath);
+        final JButton button = new JButton(text, icon);
+        button.setFont(font);
+        button.setPreferredSize(BUTTON_SIZE);
+        button.setHorizontalTextPosition(SwingConstants.CENTER);
+        button.setVerticalTextPosition(SwingConstants.BOTTOM);
+
+        return button;
     }
 
     /**
