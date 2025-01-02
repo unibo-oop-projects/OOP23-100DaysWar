@@ -1,5 +1,6 @@
 package it.unibo.the100dayswar.controller.maincontroller.api;
 
+import it.unibo.the100dayswar.controller.mapcontroller.api.MapController;
 import it.unibo.the100dayswar.controller.shopcontroller.api.ShopController;
 import it.unibo.the100dayswar.controller.statisticscontoller.api.StatisticController;
 import it.unibo.the100dayswar.model.Model;
@@ -26,6 +27,12 @@ public interface MainController {
      * @return the shop controller
      */
     ShopController getShopController();
+
+    /** 
+     * Returns the map controller.
+     * @return the map controller
+     */
+    MapController getMapController();
 
     /** 
      * Returns the game instance.

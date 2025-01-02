@@ -12,6 +12,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import it.unibo.the100dayswar.controller.maincontroller.api.MainController;
+import it.unibo.the100dayswar.controller.mapcontroller.api.MapController;
+import it.unibo.the100dayswar.controller.mapcontroller.impl.MapControllerIImpl;
 import it.unibo.the100dayswar.controller.shopcontroller.api.ShopController;
 import it.unibo.the100dayswar.controller.shopcontroller.impl.ShopControllerImpl;
 import it.unibo.the100dayswar.controller.statisticscontoller.api.StatisticController;
@@ -30,6 +32,7 @@ public class MainControllerImpl implements MainController {
 
     private final StatisticController statisticController;
     private final ShopController shopController;
+    private final MapController mapController;
     /*
      * TODO il model non deve essere final perchè può essere 
      * inizializzato in due modi diversi.
@@ -42,6 +45,7 @@ public class MainControllerImpl implements MainController {
     public MainControllerImpl() {
         this.statisticController = new StatisticControllerImpl();
         this.shopController = new ShopControllerImpl();
+        this.mapController = new MapControllerIImpl();
     }
 
     /** 
@@ -66,6 +70,14 @@ public class MainControllerImpl implements MainController {
     @Override
     public StatisticController getStatisticController() {
         return this.statisticController;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public MapController getMapController() {
+        return this.mapController;
     }
 
     /**
