@@ -8,7 +8,7 @@ import javax.swing.JOptionPane;
  * "No old game was found".
  */
 public final class  NoOldGameFoundWindow {
-    
+
     /**
      * A private constructor to hide the implicit public one.
      */

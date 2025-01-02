@@ -7,7 +7,7 @@ import javax.swing.JOptionPane;
  * Utility class that implements the Window to exit the game.
  */
 public final class  ExitWindow {
-    
+
     /**
      * A private constructor to hide the implicit public one.
      */

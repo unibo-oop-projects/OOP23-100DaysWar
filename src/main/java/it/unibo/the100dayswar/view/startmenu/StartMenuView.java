@@ -162,7 +162,7 @@ public class StartMenuView extends JFrame {
             // TODO launch game window
             dispose();
         } else {
-            NoOldGameFoundWindow.show(this);;
+            NoOldGameFoundWindow.show(this);
         }
     }
 
