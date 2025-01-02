@@ -5,24 +5,23 @@ package it.unibo.the100dayswar.controller.movementcontroller.api;
  * the methods to control the movement of the soldiers.
  */
 public interface MovementController {
-    
     /** 
      * Move the selecetd soldier up.
      */
-    public void moveUp();
+    void moveUp();
 
     /** 
      * Move the selecetd soldier down.
      */
-    public void moveDown();
+    void moveDown();
 
     /** 
      * Move the selecetd soldier left.
      */
-    public void moveLeft();
+    void moveLeft();
 
     /** 
      * Move the selecetd soldier right.
      */
-    public void moveRight();
+    void moveRight();
 }
