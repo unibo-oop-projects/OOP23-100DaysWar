@@ -1,6 +1,7 @@
 package it.unibo.the100dayswar.view.startmenu;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -30,7 +31,6 @@ public class StartMenuView extends JFrame {
     private static final int WIDTH = 200;
     private static final int HEIGHT = 80;
     private static final int MARGINS = 20;
-    private static final Dimension BUTTON_SIZE = new Dimension(WIDTH, HEIGHT);
 
     /**
      * Constructor of the class.
@@ -144,12 +144,23 @@ public class StartMenuView extends JFrame {
         final Icon icon = IconLoader.loadIcon(iconPath);
         final JButton button = new JButton(text, icon);
         button.setFont(font);
-        button.setPreferredSize(BUTTON_SIZE);
+        button.setPreferredSize(new Dimension(WIDTH, HEIGHT));
+    
         button.setHorizontalTextPosition(SwingConstants.CENTER);
-        button.setVerticalTextPosition(SwingConstants.BOTTOM);
-
+        button.setVerticalTextPosition(SwingConstants.CENTER);
+    
+        button.setForeground(Color.WHITE);
+    
+        /*
+         * Sets the image as a background
+         */
+        button.setContentAreaFilled(false); 
+        button.setBorderPainted(false);    
+        button.setFocusPainted(false);     
+    
         return button;
     }
+    
 
     /**
      * Main to test.

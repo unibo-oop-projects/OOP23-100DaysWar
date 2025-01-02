@@ -2,8 +2,9 @@ package it.unibo.the100dayswar.commons.utilities.impl;
 
 import java.awt.Font;
 import java.awt.FontFormatException;
-import java.io.File;
+
 import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * Utility class to load a pixel-style font.
@@ -11,7 +12,7 @@ import java.io.IOException;
  */
 public final class PixelFont {
     /**
-     * Static Font field to load the font only the first time.
+     * Static Font field to load the font only one time.
      */
     private static Font pixelFont;
 
@@ -21,19 +22,16 @@ public final class PixelFont {
     private PixelFont() {
     }
 
-    /**
-     * Loads and returns the pixel-style font.
-     * 
-     * @return the pixel-style font if successfully loaded, or Arial as a fallback
-     */
     public static Font getFont() {
-        try {
-            if(pixelFont == null) {
-                pixelFont = Font.createFont(Font.TRUETYPE_FONT, new File("pixelFont.ttf"))
-                                            .deriveFont(24f);
+        try (InputStream fontStream = PixelFont.class.getResourceAsStream("/fonts/PressStart2P-Regular.ttf")) {
+            if (fontStream == null) {
+                throw new IOException("Font file not found");
             }
+            pixelFont = Font.createFont(Font.TRUETYPE_FONT, fontStream).deriveFont(24f);
         } catch (FontFormatException | IOException e) {
+            System.out.println(e);
             pixelFont = new Font("Arial", Font.BOLD, 24);
+            System.out.println("font non caricato");
         }
 
         return pixelFont;
