@@ -15,8 +15,10 @@ import it.unibo.the100dayswar.model.bot.impl.SimpleBot;
 import it.unibo.the100dayswar.model.cell.api.Cell;
 import it.unibo.the100dayswar.model.loaddata.api.GameLoader;
 import it.unibo.the100dayswar.model.loaddata.impl.GameLoaderImpl;
+import it.unibo.the100dayswar.model.map.api.GameMap;
 import it.unibo.the100dayswar.model.map.api.MapManager;
 import it.unibo.the100dayswar.model.map.impl.GameMapBuilderImpl;
+import it.unibo.the100dayswar.model.map.impl.GameMapImpl;
 import it.unibo.the100dayswar.model.map.impl.MapManagerImpl;
 import it.unibo.the100dayswar.model.player.api.Player;
 import it.unibo.the100dayswar.model.player.impl.PlayerImpl;
@@ -276,8 +278,8 @@ public class ModelImpl implements Model {
      * {@inheritDoc}
      */
     @Override
-    public Cell[][] getMap() {
-        return MapManager.createMapFromStream((int) getMapWidth(), (int) getMapHeight(), mapManager.getMapAsAStream());
+    public GameMap getMap() {
+        return  new GameMapImpl ( (int) mapManager.getMapDimension().getWidth(), (int) mapManager.getMapDimension().getHeight(),MapManager.createMapFromStream((int) getMapWidth(), (int) getMapHeight(), mapManager.getMapAsAStream()));
     }
 
     /**
