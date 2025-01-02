@@ -2,6 +2,7 @@ package it.unibo.the100dayswar.controller.mapcontroller.api;
 
 import it.unibo.the100dayswar.commons.utilities.api.Position;
 import it.unibo.the100dayswar.model.cell.api.Cell;
+import it.unibo.the100dayswar.model.map.api.GameMap;
 
 /**
  * Interface that models the map controller.
@@ -21,7 +22,7 @@ public interface MapController {
     /**
      * @return the map.
      */
-    Cell[][] getMap();
+    GameMap getMap();
 
     /**
      * @return the number of bonus cells of the map.
