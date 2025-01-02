@@ -6,7 +6,7 @@ import javax.swing.JOptionPane;
 /**
  * Utility class that implements the Window to exit the game.
  */
-public final class  ExitWindow {
+public final class ExitWindow {
 
     /**
      * A private constructor to hide the implicit public one.
@@ -28,6 +28,7 @@ public final class  ExitWindow {
             JOptionPane.YES_NO_OPTION
         );
         if (confirm == JOptionPane.YES_OPTION) {
+            // TODO implementare i meccanismi di chiusura
             System.exit(0);
         }
     }
