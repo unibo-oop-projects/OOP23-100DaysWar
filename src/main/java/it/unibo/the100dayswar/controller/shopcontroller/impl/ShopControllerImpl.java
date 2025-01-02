@@ -9,7 +9,6 @@ import it.unibo.the100dayswar.model.unit.api.Unit;
  * Class that implements the ShopController interface.
  */
 public class ShopControllerImpl implements ShopController {
-
     /** 
      * {@inheritDoc}
      */
@@ -23,7 +22,7 @@ public class ShopControllerImpl implements ShopController {
      */
     @Override
     public void buyBasicTower() {
-        The100DaysWar.CONTROLLER.getGameInstance().buyTower(TowerType.BASIC, null);;
+        The100DaysWar.CONTROLLER.getGameInstance().buyTower(TowerType.BASIC, null);
     }
 
     /** 
@@ -41,5 +40,4 @@ public class ShopControllerImpl implements ShopController {
     public void upgradeUnit(final Unit unit) {
         The100DaysWar.CONTROLLER.getGameInstance().upgradeUnit(unit);
     }
-    
 }

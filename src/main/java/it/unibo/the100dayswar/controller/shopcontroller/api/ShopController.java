@@ -6,7 +6,6 @@ import it.unibo.the100dayswar.model.unit.api.Unit;
  * Interface that represents the controller of the shop.
  */
 public interface ShopController {
-    
     /**
      * Method that allows the player to buy a soldier.
      */
