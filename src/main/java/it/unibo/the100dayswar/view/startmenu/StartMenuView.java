@@ -10,12 +10,13 @@ import java.awt.Insets;
 import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
+
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 
 import it.unibo.the100dayswar.application.The100DaysWar;
 import it.unibo.the100dayswar.commons.utilities.impl.IconLoader;
+import it.unibo.the100dayswar.commons.utilities.impl.PixelFont;
 import it.unibo.the100dayswar.view.rules.RulesViewer;
 
 /**
@@ -24,6 +25,7 @@ import it.unibo.the100dayswar.view.rules.RulesViewer;
 public class StartMenuView extends JFrame {
     private static final long serialVersionUID = 1L;
     private static final String LOADING_PATH = null;    // The LOADING_PATH is 'null' by default. 
+    private static final String RESOURCES = "/startmenu/";
 
     private static final int WIDTH = 200;
     private static final int HEIGHT = 80;
@@ -52,43 +54,32 @@ public class StartMenuView extends JFrame {
      * Builds the UI components.
      */
     private void buildUI() {
-        final JPanel panel = new JPanel(new GridBagLayout());
+        final BackgroundStartMenu panel = new BackgroundStartMenu(RESOURCES + "background.png");
+        panel.setLayout(new GridBagLayout());
+
         final GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(MARGINS, MARGINS, MARGINS, MARGINS);
 
-        final Font buttonFont = new Font("Arial", Font.BOLD, 24);
-        final String resources = "startmenu/";
+        final Font buttonFont = PixelFont.getFont();
 
-        /*
-         * START
-         */
         gbc.gridx = 0;
         gbc.gridy = 0;
-        final JButton btnStart = createButton("START", resources + "start.png", buttonFont);
+        final JButton btnStart = createButton("START", RESOURCES + "start.png", buttonFont);
         btnStart.addActionListener(st -> startAction());
         panel.add(btnStart, gbc);
 
-        /*
-         * RESUME
-         */
         gbc.gridy++;
-        final JButton btnResume = createButton("RESUME", resources + "resume.png", buttonFont);
+        final JButton btnResume = createButton("RESUME", RESOURCES + "resume.png", buttonFont);
         btnResume.addActionListener(re -> resumeAction());
         panel.add(btnResume, gbc);
 
-        /*
-         * RULES
-         */
         gbc.gridy++;
-        final JButton btnRules = createButton("RULES", resources + "rules.png", buttonFont);
+        final JButton btnRules = createButton("RULES", RESOURCES + "rules.png", buttonFont);
         btnRules.addActionListener(ru -> rulesAction());
         panel.add(btnRules, gbc);
 
-        /*
-         * EXIT
-         */
         gbc.gridy++;
-        final JButton btnExit = createButton("EXIT", resources + "exit.png", buttonFont);
+        final JButton btnExit = createButton("EXIT", RESOURCES + "exit.png", buttonFont);
         btnExit.addActionListener(ex -> exitAction());
         panel.add(btnExit, gbc);
 
