@@ -5,6 +5,9 @@ import java.awt.*;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 
+/**
+ * class that rappresent the Rules Viewer that show the rules for the game.
+ */
 public class RulesViewer extends JFrame{
     private static final long serialVersionUID = 1L;
     private static final int WIDTH = 600;
@@ -14,6 +17,9 @@ public class RulesViewer extends JFrame{
     private final JTextArea textArea;
     private final JScrollPane scrollPane;
 
+    /**
+     * constructor for the RulesViewer.
+     */
     public RulesViewer(){
         super("Rules Viewer");
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -25,9 +31,13 @@ public class RulesViewer extends JFrame{
         scrollPane = new JScrollPane(textArea);
         panel.add(scrollPane, BorderLayout.CENTER);
         this.add(panel);
+        setString();
+        this.setVisible(true);
     }
-
-    public void setString(){
+    /**
+     * this method load the rules text in the file rules.txt and print on the text area.
+     */
+    private void setString(){
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(ClassLoader.getSystemResourceAsStream(PATH_STRING), StandardCharsets.UTF_8))) {
             StringBuilder content = new StringBuilder();
             String line;
