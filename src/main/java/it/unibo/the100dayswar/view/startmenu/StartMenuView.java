@@ -15,12 +15,12 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 
 import it.unibo.the100dayswar.application.The100DaysWar;
+import it.unibo.the100dayswar.view.rules.RulesViewer;
 
 /**
  * Class that models the starting menu of the game.
@@ -28,6 +28,7 @@ import it.unibo.the100dayswar.application.The100DaysWar;
 public class StartMenuView extends JFrame {
     private static final long serialVersionUID = 1L;
     private static final Logger LOGGER = Logger.getLogger(StartMenuView.class.getName());
+    private static final String PATH = null;    // The path is 'null' by default. 
 
     private static final int WIDTH = 200;
     private static final int HEIGHT = 80;
@@ -157,7 +158,7 @@ public class StartMenuView extends JFrame {
      */
     private void resumeAction() {
         // TODO Implement resume logic
-        if (The100DaysWar.CONTROLLER.loadOldGame(NameWindow.askUsername(this))) {
+        if (The100DaysWar.CONTROLLER.loadOldGame(PATH)) {
             // TODO launch game window
             dispose();
         } else {
@@ -169,22 +170,14 @@ public class StartMenuView extends JFrame {
      * Defines the actions after pressing RULES.
      */
     private void rulesAction() {
-       // TODO new RulesViewer
+       new RulesViewer().setString();
     }
 
     /**
      * Defines the actions after pressing EXIT.
      */
     private void exitAction() {
-        final int confirm = JOptionPane.showConfirmDialog(
-            this,
-            "Are you sure you want to exit?",
-            "Exit Confirmation",
-            JOptionPane.YES_NO_OPTION
-        );
-        if (confirm == JOptionPane.YES_OPTION) {
-            System.exit(0);
-        }
+        ExitWindow.show(this);
     }
 
     /**

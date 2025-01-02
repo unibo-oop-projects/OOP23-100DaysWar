@@ -3,8 +3,15 @@ package it.unibo.the100dayswar.view.startmenu;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+/**
+ * Utility class that implements the Window that displays 
+ * "No old game was found".
+ */
 public final class  NoOldGameFoundWindow {
     
+    /**
+     * A private constructor to hide the implicit public one.
+     */
     private NoOldGameFoundWindow() {
     }
 

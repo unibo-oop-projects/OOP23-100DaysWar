@@ -76,7 +76,7 @@ public class ModelImpl implements Model {
      * @throws IllegalStateException if the data aren't laoded correctly
      */
     public ModelImpl(final Optional<String> path) {
-        final GameLoader loader = new GameLoaderImpl(path.get());
+        final GameLoader loader = (path.isPresent()) ? new GameLoaderImpl(path.get()) : new GameLoaderImpl();
         final Optional<GameData> data = loader.loadGame();
 
         if (data.isEmpty()) {

@@ -89,6 +89,7 @@ public class MainControllerImpl implements MainController {
         try {
             this.model = new ModelImpl(Optional.ofNullable(path));
         } catch (IllegalStateException e) {
+            System.err.println(e);
            return false;
         }
 
