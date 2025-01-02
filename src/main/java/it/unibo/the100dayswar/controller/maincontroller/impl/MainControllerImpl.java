@@ -49,7 +49,7 @@ public class MainControllerImpl implements MainController {
      */
     @Override
     public void startGame() {
-        new StartMenuView().initialize();;
+        new StartMenuView().initialize();
     }
 
     /**
