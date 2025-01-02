@@ -29,7 +29,7 @@ public final class PixelFont {
     public static Font getFont() {
         try {
             if(pixelFont == null) {
-                pixelFont = Font.createFont(Font.TRUETYPE_FONT, new File("PressStart2P-Regular.ttf"))
+                pixelFont = Font.createFont(Font.TRUETYPE_FONT, new File("pixelFont.ttf"))
                                             .deriveFont(24f);
             }
         } catch (FontFormatException | IOException e) {

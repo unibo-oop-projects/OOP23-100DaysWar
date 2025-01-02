@@ -25,7 +25,7 @@ import it.unibo.the100dayswar.view.rules.RulesViewer;
 public class StartMenuView extends JFrame {
     private static final long serialVersionUID = 1L;
     private static final String LOADING_PATH = null;    // The LOADING_PATH is 'null' by default. 
-    private static final String RESOURCES = "/startmenu/";
+    private static final String RESOURCES = "startmenu/";
 
     private static final int WIDTH = 200;
     private static final int HEIGHT = 80;
@@ -54,7 +54,7 @@ public class StartMenuView extends JFrame {
      * Builds the UI components.
      */
     private void buildUI() {
-        final BackgroundStartMenu panel = new BackgroundStartMenu(RESOURCES + "background.png");
+        final BackgroundStartMenu panel = new BackgroundStartMenu(RESOURCES + "backgroung2.png");
         panel.setLayout(new GridBagLayout());
 
         final GridBagConstraints gbc = new GridBagConstraints();
