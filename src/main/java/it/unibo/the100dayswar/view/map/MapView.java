@@ -1,6 +1,6 @@
 package it.unibo.the100dayswar.view.map;
 
-import it.unibo.the100dayswar.commons.utilities.impl.Pair;
+
 import it.unibo.the100dayswar.controller.mapcontroller.api.MapController;
 import it.unibo.the100dayswar.model.cell.api.Cell;
 import it.unibo.the100dayswar.model.unit.api.Unit;
@@ -45,13 +45,12 @@ public class MapView extends JPanel {
              */
             @Override
             public void mouseClicked(MouseEvent e) {
-                Pair<Optional<Unit>, Cell> result = getClickedCell(e.getX(), e.getY());
-                if (result != null) {
-                    Optional<Unit> unit = result.getFirst();
-                    Cell cell = result.getSecond();
+                Cell clickedCell = getClickedCell(e.getX(), e.getY());
+                if (clickedCell != null) {
+                    Optional <Unit> unit = clickedCell.getUnit();
 
                     // Stampa informazioni per test
-                    System.out.println("Clicked on cell: " + cell.getPosition());
+                    System.out.println("Clicked on cell: " + clickedCell.getPosition());
                     unit.ifPresentOrElse(
                         u -> System.out.println("Unit present: " + u),
                         () -> System.out.println("No unit present.")
@@ -126,14 +125,12 @@ public class MapView extends JPanel {
      * @param mouseY the y-coordinate of the mouse click.
      * @return a Pair containing the Optional<Unit> and the Cell, or null if the click is out of bounds.
      */
-    public Pair<Optional<Unit>, Cell> getClickedCell(int mouseX, int mouseY) {
+    public Cell getClickedCell(int mouseX, int mouseY) {
         int cellX = mouseX / cellSize;
         int cellY = mouseY / cellSize;
 
         if (cellX >= 0 && cellX < mapController.getMapWidth() && cellY >= 0 && cellY < mapController.getMapHeight()) {
-            Cell clickedCell = mapController.getMap().getMap()[cellY][cellX];
-            Optional<Unit> unit = clickedCell.getUnit();
-            return new Pair<>(unit, clickedCell);
+            return mapController.getMap().getMap()[cellY][cellX];
         }
         return null;
     }
