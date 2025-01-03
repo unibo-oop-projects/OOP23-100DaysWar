@@ -17,6 +17,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import it.unibo.the100dayswar.commons.utilities.impl.IconLoader;
+import it.unibo.the100dayswar.commons.utilities.impl.LoadPixelFont;
 
 /**
  * Utility class that implements the exitWindow after pressing the
@@ -24,15 +25,29 @@ import it.unibo.the100dayswar.commons.utilities.impl.IconLoader;
  */
 public final class ExitWindow extends JDialog {
     private static final long serialVersionUID = 1L;
+
+    private static final String RESOURCES = "startmenu/";
+    private static final String BACKGROUND_PATH = RESOURCES + "adventure.jpg";
+
+    private static final float EXIT_WINDOW_TEXT_SIZE = 30f;
+    private static final Font FONT = LoadPixelFont.getFontWithSize(EXIT_WINDOW_TEXT_SIZE);
     private static final float FONT_BUTTON_NORMALIZER = (float) 1.5;
-    private static final int WIDTH = 500;
-    private static final int HEIGHT = 600;
+
+    private static final int WINDOW_WIDTH = 500;
+    private static final int WINDOW_HEIGHT = 600;
+
+    private static final int BUTTON_WIDTH = 70;
+    private static final int BUTTON_HEIGHT = 50;
 
     /**
-     * Simple utility method to show the dialog.
+     * Utility method to show the dialog.
+     * 
+     * @param parent the parent JFrame
+     * @param path the path of the image
+     * @param font the font to use
      */
-    public static void showDialog(final JFrame parent, final String path, final Font font) {
-        new ExitWindow(parent, (ImageIcon) IconLoader.loadIcon(path), font).setVisible(true);
+    public static void showDialog(final JFrame parent) {
+        new ExitWindow(parent).setVisible(true);
     }
 
     /**
@@ -42,15 +57,16 @@ public final class ExitWindow extends JDialog {
      * @param backgroundImage the background of the window
      * @param font the font of the text in the window
      */
-    private ExitWindow(final JFrame parent, final ImageIcon backgroundImage, final Font font) {
+    private ExitWindow(final JFrame parent) {
         super(parent, "Exit Confirmation", true);
+        final ImageIcon backgroundImage = (ImageIcon) IconLoader.loadIcon(BACKGROUND_PATH);
 
         final JPanel backgroundPanel = createBackgroundPanel(backgroundImage);
 
-        final JLabel label = createLabel(font);
+        final JLabel label = createLabel(FONT);
         backgroundPanel.add(label, BorderLayout.CENTER);
 
-        final JPanel buttonPanel = createButtonPanel(font);
+        final JPanel buttonPanel = createButtonPanel(FONT);
         backgroundPanel.add(buttonPanel, BorderLayout.SOUTH);
 
         postInitialization(backgroundPanel, parent);
@@ -81,7 +97,7 @@ public final class ExitWindow extends JDialog {
             }
         };
         backgroundPanel.setLayout(new BorderLayout());
-        backgroundPanel.setPreferredSize(new Dimension(WIDTH, HEIGHT));
+        backgroundPanel.setPreferredSize(new Dimension(WINDOW_WIDTH, WINDOW_HEIGHT));
 
         return backgroundPanel;
     }
@@ -110,17 +126,17 @@ public final class ExitWindow extends JDialog {
      * @return the button panel
      */
     private JPanel createButtonPanel(final Font font) {
-        final float buttonFontSize = (font.getSize2D() / FONT_BUTTON_NORMALIZER);
+        final float buttonFontSize = font.getSize2D() / FONT_BUTTON_NORMALIZER;
         final Font buttonFont = font.deriveFont(buttonFontSize);
 
         final JPanel buttonPanel = new JPanel();
         buttonPanel.setOpaque(false);
         final JButton yesButton = new JButton("Yes");
         yesButton.setFont(buttonFont);
-        yesButton.setPreferredSize(new Dimension(70, 50));
+        yesButton.setPreferredSize(new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT));
         final JButton noButton = new JButton("No");
         noButton.setFont(buttonFont);
-        noButton.setPreferredSize(new Dimension(70, 50));
+        noButton.setPreferredSize(new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT));
 
         buttonPanel.add(yesButton);
         buttonPanel.add(noButton);

@@ -35,8 +35,6 @@ public class StartMenuView extends JFrame {
     private static final int HEIGHT = 80;
     private static final int MARGINS = 20;
 
-    private static final float EXIT_WINDOW_TEXT_SIZE = 30f;
-
     /**
      * Constructor of the class.
      * 
@@ -134,11 +132,7 @@ public class StartMenuView extends JFrame {
      * Defines the actions after pressing EXIT.
      */
     private void exitAction() {
-        ExitWindow.showDialog(
-            this,
-            RESOURCES + "adventure.jpg",
-            LoadPixelFont.getFontWithSize(EXIT_WINDOW_TEXT_SIZE)
-        );        
+        ExitWindow.showDialog(this);  
     }
 
     /**
