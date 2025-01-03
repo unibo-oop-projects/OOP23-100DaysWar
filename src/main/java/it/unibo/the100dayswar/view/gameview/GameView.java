@@ -31,7 +31,7 @@ public class GameView extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(new BorderLayout());
 
-        final MapView mapView = new MapView(null, null);
+        final MapView mapView = new MapView();
         final StatisticsView statisticsView = new StatisticsView();
         final JoystickView joystickView = new JoystickView();
 
