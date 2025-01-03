@@ -7,11 +7,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 
+// TODO guardare se serve ancora.
 /**
  * Utility class to load images using ImageIO.
  */
 public final class ImageLoader {
-
     private static final Logger LOGGER = Logger.getLogger(ImageLoader.class.getName());
 
     /**
@@ -48,4 +48,3 @@ public final class ImageLoader {
         }
     }
 }
-
