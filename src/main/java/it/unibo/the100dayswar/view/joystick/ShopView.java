@@ -67,8 +67,8 @@ public class ShopView extends JPanel {
      * @return a styled JButton
      */
     private JButton createButton(final String text) {
-        JButton button = new JButton(text);
-        Font customFont = LoadPixelFont.getFont().deriveFont(10f);
+        final JButton button = new JButton(text);
+        final Font customFont = LoadPixelFont.getFont().deriveFont(10f);
         button.setFont(customFont);
         return button;
     }

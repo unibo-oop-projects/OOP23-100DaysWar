@@ -73,8 +73,8 @@ public class MovementView extends JPanel {
      * @return a styled JButton
      */
     private JButton createButton(final String text) {
-        JButton button = new JButton(text);
-        Font customFont = LoadPixelFont.getFont().deriveFont(10f);
+        final JButton button = new JButton(text);
+        final Font customFont = LoadPixelFont.getFont().deriveFont(10f);
         button.setFont(customFont);
         return button;
     }
@@ -119,7 +119,7 @@ public class MovementView extends JPanel {
      * @return a configured GridBagConstraints object
      */
     private GridBagConstraints createGridBagConstraints() {
-        GridBagConstraints gbc = new GridBagConstraints();
+        final GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(INSETS, INSETS, INSETS, INSETS);
         gbc.fill = GridBagConstraints.BOTH;
         gbc.weightx = 1.0;

@@ -28,8 +28,22 @@ public class GameView extends JFrame {
      */
     public GameView() {
         super("Game View");
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setLayout(new BorderLayout());
+    }
+
+    /**
+     * Initializes the frame.
+     */
+    public final void initialize() {
+        setUI();
+        setPostInitialize();
+    }
+
+    /**
+     * Configures the main UI layout and components.
+     */
+    private void setUI() {
+        final JPanel mainPanel = new JPanel(new BorderLayout());
+        this.setContentPane(mainPanel);
 
         final MapView mapView = new MapView();
         final StatisticsView statisticsView = new StatisticsView();
@@ -43,19 +57,16 @@ public class GameView extends JFrame {
         splitPane.setDividerLocation(DIVIDER_LOCATION);
         splitPane.setResizeWeight(RESIZE_WEIGHT);
 
-        this.add(splitPane, BorderLayout.CENTER);
-
-        this.setSize(FRAME_WIDTH, FRAME_HEIGHT);
-        this.setLocationRelativeTo(null);
-        this.setVisible(true);
+        mainPanel.add(splitPane, BorderLayout.CENTER);
     }
 
     /**
-     * Main method to run the GameView.
-     * 
-     * @param args the arguments to run the GameView.
+     * Final initialization step for frame configuration.
      */
-    public static void main(final String[] args) {
-        new GameView();
+    private void setPostInitialize() {
+        this.setSize(FRAME_WIDTH, FRAME_HEIGHT);
+        this.setLocationRelativeTo(null);
+        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        this.setVisible(true);
     }
 }
