@@ -1,28 +1,53 @@
 package it.unibo.the100dayswar.view.rules;
 
-import javax.swing.*;
-import java.awt.*;
-import java.io.*;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import java.awt.BorderLayout;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 
 /**
  * class that rappresent the Rules Viewer that show the rules for the game.
  */
-public class RulesViewer extends JFrame{
+public class RulesViewer extends JFrame {
     private static final long serialVersionUID = 1L;
     private static final int WIDTH = 600;
     private static final int HEIGHT = 400;
     private static final String PATH_STRING = "rules.txt";
-    private final JPanel panel;
-    private final JTextArea textArea;
-    private final JScrollPane scrollPane;
 
     /**
      * constructor for the RulesViewer.
      */
-    public RulesViewer(){
+    public RulesViewer() {
         super("Rules Viewer");
-        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+    }
+    /**
+     * initialize the class.
+     */
+    public final void intitialize() {
+        setUI();
+        setPostInitialize();
+    }
+    /**
+     * Final initialization step for frame configuration.
+     */
+    private void setPostInitialize() {
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setExtendedState(MAXIMIZED_BOTH);
+        setVisible(true);
+    }
+
+    /**
+     * This method create the ui for the ruelsViewer frame.
+     */
+    private void setUI() {
+        final JPanel panel;
+        final JTextArea textArea;
+        final JScrollPane scrollPane;
         this.setSize(WIDTH, HEIGHT);
         panel = new JPanel();
         panel.setLayout(new BorderLayout());
@@ -31,19 +56,10 @@ public class RulesViewer extends JFrame{
         scrollPane = new JScrollPane(textArea);
         panel.add(scrollPane, BorderLayout.CENTER);
         this.add(panel);
-        setString();
-        this.setVisible(true);
-    }
-    /**
-     * this method load the rules text in the file rules.txt and print on the text area.
-     */
-    private void setString(){
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(ClassLoader.getSystemResourceAsStream(PATH_STRING), StandardCharsets.UTF_8))) {
-            StringBuilder content = new StringBuilder();
-            String line;
-            while ((line = reader.readLine()) != null) {
-                content.append(line).append("\n");
-            }
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(
+            ClassLoader.getSystemResourceAsStream(PATH_STRING), StandardCharsets.UTF_8))) {
+            final StringBuilder content = new StringBuilder();
+            reader.lines().forEach(line -> content.append(line).append('\n'));
             textArea.setText(content.toString());
         } catch (IOException e) {
             textArea.setText("Error loading the file:\n" + e.getMessage());
