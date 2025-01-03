@@ -7,6 +7,7 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.util.Optional;
 
 import javax.swing.Icon;
 import javax.swing.JButton;
@@ -18,6 +19,7 @@ import javax.swing.SwingUtilities;
 import it.unibo.the100dayswar.application.The100DaysWar;
 import it.unibo.the100dayswar.commons.utilities.impl.IconLoader;
 import it.unibo.the100dayswar.commons.utilities.impl.LoadPixelFont;
+import it.unibo.the100dayswar.view.gameview.GameView;
 import it.unibo.the100dayswar.view.rules.RulesViewer;
 
 /**
@@ -102,10 +104,12 @@ public class StartMenuView extends JFrame {
      * Defines the actions after pressing START.
      */
     private void startAction() {
-        The100DaysWar.CONTROLLER.getGameInstance().addPlayer(NameWindow.askUsername(this));
-        // TODO Implement start logic
-        // TODO new GameTable() ....
-        dispose();
+        final Optional<String> name = NameWindow.askUsername(this);
+        if (name.isPresent()) {
+            The100DaysWar.CONTROLLER.startNewGame(name.get());
+            dispose();
+            new GameView();
+        }
     }
 
     /**
@@ -125,7 +129,7 @@ public class StartMenuView extends JFrame {
      * Defines the actions after pressing RULES.
      */
     private void rulesAction() {
-       new RulesViewer();
+       new RulesViewer().intitialize();;
     }
 
     /**

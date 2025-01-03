@@ -7,6 +7,7 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Optional;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -53,9 +54,11 @@ public final class NameWindow {
      * Asks the user for a username by displaying a custom dialog.
      *
      * @param parent the parent frame or null if there is no parent
-     * @return the username entered by the user, or null if cancelled
+     * 
+     * @return the valid username entered wrapped in an Optional, 
+     *         or Optional.empty if the user cancelled/closed the dialog
      */
-    public static String askUsername(final JFrame parent) {
+    public static Optional<String> askUsername(final JFrame parent) {
         final NameDialog dialog = new NameDialog(parent, MAX_LENGTH, BACKGROUND_IMAGE);
         dialog.setVisible(true);
         return dialog.getUsername();
@@ -202,10 +205,13 @@ public final class NameWindow {
         }
 
         /**
-         * @return the valid username entered, or null if the user cancelled/closed the dialog
+         * Gets the username wrapped in an Optional.
+         * 
+         * @return the valid username entered wrapped in an Optional, 
+         *         or Optional.empty if the user cancelled/closed the dialog
          */
-        public String getUsername() {
-            return this.username;
+        public Optional<String> getUsername() {
+            return Optional.ofNullable(this.username);
         }
 
         /**
