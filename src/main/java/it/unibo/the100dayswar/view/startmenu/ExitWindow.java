@@ -2,6 +2,11 @@ package it.unibo.the100dayswar.view.startmenu;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.UIManager;
+
+import it.unibo.the100dayswar.commons.utilities.impl.LoadPixelFont;
+
+import java.awt.Font;
 
 /**
  * Utility class that implements the Window to exit the game.
@@ -21,6 +26,13 @@ public final class ExitWindow {
      * @param parent the parent frame or null if no parent is available
      */
     public static void show(final JFrame parent) {
+        // Scegli il font (nome, stile, dimensione)
+        final Font customFont = LoadPixelFont.getFontWithSize(14f);
+
+        // Imposta il font tramite UIManager
+        UIManager.put("OptionPane.messageFont", customFont);
+        UIManager.put("OptionPane.buttonFont", customFont);
+
         final int confirm = JOptionPane.showConfirmDialog(
             parent,
             "Are you sure you want to exit?",

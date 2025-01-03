@@ -29,7 +29,7 @@ public class StartMenuView extends JFrame {
     private static final String LOADING_PATH = null;    // The LOADING_PATH is 'null' by default. 
     private static final String RESOURCES = "startmenu/";
     private static final String BUTTON_GENERAL_ICON = RESOURCES + "genericbutton.jpg";
-    private static final String BACKGROUND_IMAGE = RESOURCES + "background3.jpg";
+    private static final String BACKGROUND_IMAGE = RESOURCES + "background.jpg";
 
     private static final int WIDTH = 200;
     private static final int HEIGHT = 80;
@@ -40,7 +40,7 @@ public class StartMenuView extends JFrame {
      * 
      */
     public StartMenuView() {
-        super("Start Menu");
+        super("The100DaysWar");
     }
 
     /**

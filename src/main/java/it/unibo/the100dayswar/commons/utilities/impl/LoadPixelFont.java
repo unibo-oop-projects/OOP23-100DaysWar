@@ -46,4 +46,27 @@ public final class LoadPixelFont {
         }
         return pixelFont;
     }
+
+    /**
+     * Gets the pixel-style font from 'art2P-Regular.ttf' with a custom size.
+     * 
+     * @param size the size of the font.
+     * 
+     * @return the pixel-style font with the custom size, in case of an exception
+     *         it fallbacks on 'Arial'.
+     */
+    public static Font getFontWithSize(final float size) {
+        final Font customSizePixelFont;
+        try (InputStream fontStream = LoadPixelFont.class.getResourceAsStream("/fonts/PressStart2P-Regular.ttf")) {
+            if (fontStream == null) {
+                customSizePixelFont = new Font("Arial", Font.BOLD, (int) size);
+            } else {
+                customSizePixelFont = Font.createFont(Font.TRUETYPE_FONT, fontStream).deriveFont(size);
+            }
+        } catch (FontFormatException | IOException e) {
+            return new Font("Arial", Font.BOLD, (int) size); // Fallback
+        }
+
+        return customSizePixelFont;
+    }
 }
