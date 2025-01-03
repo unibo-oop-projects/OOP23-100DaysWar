@@ -1,6 +1,7 @@
 package it.unibo.the100dayswar.view.map;
 
 
+import it.unibo.the100dayswar.application.The100DaysWar;
 import it.unibo.the100dayswar.controller.mapcontroller.api.MapController;
 import it.unibo.the100dayswar.model.cell.api.Cell;
 import it.unibo.the100dayswar.model.unit.api.Unit;
@@ -22,6 +23,7 @@ import java.util.Optional;
 public class MapView extends JPanel {
 
     private static final int CELL_SIZE = 50;
+    private static final String MAP_IMAGE_PATH = "/map/map.png";
     private static final long serialVersionUID = 1L;
     private final MapController mapController;
     private final Image mapImage;
@@ -32,10 +34,10 @@ public class MapView extends JPanel {
      * @param mapController the map controller.
      * @param mapImagePath the path to the map background image.
      */
-    public MapView(final MapController mapController, final String mapImagePath) {
-        this.mapController = mapController;
+    public MapView() {
+        this.mapController = The100DaysWar.CONTROLLER.getMapController();
         this.cellSize = CELL_SIZE;
-        this.mapImage = loadImage(mapImagePath);
+        this.mapImage = loadImage(MAP_IMAGE_PATH);
         setLayout(null);
 
         addMouseListener(new MouseAdapter() {
