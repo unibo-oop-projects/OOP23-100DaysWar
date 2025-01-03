@@ -18,9 +18,15 @@ import javax.swing.SwingConstants;
 
 import it.unibo.the100dayswar.commons.utilities.impl.IconLoader;
 
+/**
+ * Utility class that implements the exitWindow after pressing the
+ * Exit button in StartWindow.
+ */
 public final class ExitWindow extends JDialog {
     private static final long serialVersionUID = 1L;
     private static final float FONT_BUTTON_NORMALIZER = (float) 1.5;
+    private static final int WIDTH = 400;
+    private static final int HEIGHT = 200;
 
     /**
      * Simple utility method to show the dialog.
@@ -30,12 +36,11 @@ public final class ExitWindow extends JDialog {
     }
 
     /**
-     * Creates a custom exit confirmation dialog.
+     * Created a custom exit window.
      * 
-     * @param parent the parent frame
-     * @param backgroundImage the background image to display
-     * @param labelFont the font for the text label
-     * @param buttonFont the font for the buttons
+     * @param parent the parent JFrame.
+     * @param backgroundImage the background of the window
+     * @param font the font of the text in the window
      */
     private ExitWindow(final JFrame parent, final ImageIcon backgroundImage, final Font font) {
         super(parent, "Exit Confirmation", true);
@@ -76,7 +81,7 @@ public final class ExitWindow extends JDialog {
             }
         };
         backgroundPanel.setLayout(new BorderLayout());
-        backgroundPanel.setPreferredSize(new Dimension(400, 200));
+        backgroundPanel.setPreferredSize(new Dimension(WIDTH, HEIGHT));
 
         return backgroundPanel;
     }
@@ -105,7 +110,7 @@ public final class ExitWindow extends JDialog {
      * @return the button panel
      */
     private JPanel createButtonPanel(final Font font) {
-        final float buttonFontSize = (float) (font.getSize2D() / FONT_BUTTON_NORMALIZER);
+        final float buttonFontSize = (font.getSize2D() / FONT_BUTTON_NORMALIZER);
         final Font buttonFont = font.deriveFont(buttonFontSize);
 
         final JPanel buttonPanel = new JPanel();
