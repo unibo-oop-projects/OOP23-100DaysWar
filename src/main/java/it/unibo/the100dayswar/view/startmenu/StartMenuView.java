@@ -9,6 +9,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 
 import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
@@ -132,7 +133,7 @@ public class StartMenuView extends JFrame {
      * Defines the actions after pressing EXIT.
      */
     private void exitAction() {
-        ExitWindow.show(this);
+        ExitWindow.showDialog(this, (ImageIcon) IconLoader.loadIcon(RESOURCES + "adventure.jpg"), LoadPixelFont.getFontWithSize(14f), LoadPixelFont.getFontWithSize(14f));
     }
 
     /**
