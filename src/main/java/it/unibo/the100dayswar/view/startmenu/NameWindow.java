@@ -19,6 +19,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import it.unibo.the100dayswar.commons.utilities.impl.IconLoader;
+import it.unibo.the100dayswar.commons.utilities.impl.LoadPixelFont;
 
 /**
  * Utility class that implements a custom dialog to insert the player's name.
@@ -28,6 +29,19 @@ public final class NameWindow {
     private static final int MAX_LENGTH = 8;
     private static final String RESOURCES = "startmenu/";
     private static final String BACKGROUND_IMAGE = RESOURCES + "calvry.jpg";
+    
+    private static final int COLUMNS = 15;
+
+    private static final int BACKGROUND_WIDTH = 500;
+    private static final int BACKGROUND_HEIGHT = 600;
+
+    private static final int BUTTON_WIDTH = 120;
+    private static final int BUTTON_HEIGHT = 60;
+
+    private static final float FONT_SIZE = 15f;
+    private static final Font FONT = LoadPixelFont.getFontWithSize(FONT_SIZE);
+    private static final String OK_BUTTON_TEXT = "Ok";
+    private static final String CANCEL_BUTTON_TEXT = "Cancel";
 
     /**
      * Private constructor to hide the implicit public one.
@@ -43,7 +57,7 @@ public final class NameWindow {
      */
     public static String askUsername(final JFrame parent) {
         final NameDialog dialog = new NameDialog(parent, MAX_LENGTH, BACKGROUND_IMAGE);
-        dialog.setVisible(true); // Blocks until the dialog is closed
+        dialog.setVisible(true);
         return dialog.getUsername();
     }
 
@@ -56,8 +70,8 @@ public final class NameWindow {
 
         private final int maxLength;
         private final String backgroundPath;
-        private final JTextField textField = new JTextField(15);
-        private String username; // Will hold the final username if valid
+        private final JTextField textField = new JTextField(COLUMNS);
+        private String username;
 
         /**
          * Constructs the dialog.
@@ -76,12 +90,14 @@ public final class NameWindow {
 
         /**
          * Initializes the user interface components.
+         * It creates panels, buttons, labels, and sets up event handling.
          */
         private void initUI() {
-            // Load the background image
             final ImageIcon backgroundIcon = (ImageIcon) IconLoader.loadIcon(this.backgroundPath);
 
-            // Main panel that paints the background
+            /*
+             * Main panel that paints the background
+             */
             final JPanel backgroundPanel = new JPanel() {
                 private static final long serialVersionUID = 1L;
 
@@ -99,49 +115,36 @@ public final class NameWindow {
                 }
             };
             backgroundPanel.setLayout(new BorderLayout());
-            backgroundPanel.setPreferredSize(new Dimension(500, 600));
+            backgroundPanel.setPreferredSize(new Dimension(BACKGROUND_WIDTH, BACKGROUND_HEIGHT));
 
-            // Title (or instruction) label
-            final JLabel titleLabel = new JLabel("Enter your username:");
-            titleLabel.setForeground(Color.WHITE);
-            titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
-            titleLabel.setFont(new Font("Arial", Font.BOLD, 18));
+            final JLabel nameLabel = createNameLabel();
 
-            // Panel for the title label
-            final JPanel topPanel = new JPanel();
-            topPanel.setOpaque(false); // Let the background show through
-            topPanel.add(titleLabel);
+            final JPanel topPanel = createTopPanel(nameLabel);
+            final JPanel centerPanel = createCentralPanel();
+            final JPanel buttonPanel = createButtonPanel();
 
-            // Panel for the text field
-            final JPanel centerPanel = new JPanel();
-            centerPanel.setOpaque(false);
-            this.textField.setFont(new Font("Arial", Font.PLAIN, 14));
-            centerPanel.add(this.textField);
-
-            // Panel for the buttons
-            final JPanel buttonPanel = new JPanel();
-            buttonPanel.setOpaque(false);
-
-            final JButton okButton = new JButton("OK");
-            okButton.setFont(new Font("Arial", Font.BOLD, 14));
-
-            final JButton cancelButton = new JButton("Cancel");
-            cancelButton.setFont(new Font("Arial", Font.BOLD, 14));
-
+            /*
+             * Create and add the buttons
+             */
+            final JButton okButton = createButton(OK_BUTTON_TEXT);
+            final JButton cancelButton = createButton(CANCEL_BUTTON_TEXT);
             buttonPanel.add(okButton);
             buttonPanel.add(cancelButton);
 
-            // Add panels to the background panel
+            /*
+             * Add sub-panels to background panel
+             */
             backgroundPanel.add(topPanel, BorderLayout.NORTH);
             backgroundPanel.add(centerPanel, BorderLayout.CENTER);
             backgroundPanel.add(buttonPanel, BorderLayout.SOUTH);
 
-            // Add the background panel to the dialog
-            this.getContentPane().add(backgroundPanel);
-            this.pack();
-            this.setLocationRelativeTo(getParent());
+            finalDialogSetUp(backgroundPanel);
 
-            // Action listeners for buttons
+            // this.getRootPane().setDefaultButton(okButton); TODO
+
+            /*
+             * set-up of all the action listeners
+             */
             okButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(final ActionEvent e) {
@@ -152,9 +155,15 @@ public final class NameWindow {
             cancelButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(final ActionEvent e) {
-                    // User canceled; close dialog with no username
                     username = null;
                     dispose();
+                }
+            });
+
+            this.textField.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(final ActionEvent e) {
+                    handleOk();
                 }
             });
         }
@@ -174,7 +183,6 @@ public final class NameWindow {
                 return;
             }
 
-            // If valid
             this.username = input;
             dispose();
         }
@@ -185,7 +193,6 @@ public final class NameWindow {
          * @param message the error message to display
          */
         private void showErrorDialog(final String message) {
-            // You could also place a custom label instead of a JOptionPane
             JOptionPane.showMessageDialog(
                 this,
                 message,
@@ -199,6 +206,80 @@ public final class NameWindow {
          */
         public String getUsername() {
             return this.username;
+        }
+
+        /**
+         * Creates the label that prompts the user to enter their username.
+         *
+         * @return a JLabel with the desired text and styling
+         */
+        private JLabel createNameLabel() {
+            final JLabel nameLabel = new JLabel("Enter your username:");
+            nameLabel.setForeground(Color.WHITE);
+            nameLabel.setHorizontalAlignment(SwingConstants.CENTER);
+            nameLabel.setFont(LoadPixelFont.getFontWithSize(FONT_SIZE));
+            return nameLabel;
+        }
+
+        /**
+         * Creates a transparent top panel holding the main label.
+         *
+         * @param nameLabel the label prompting for username
+         * @return a JPanel with the label
+         */
+        private JPanel createTopPanel(final JLabel nameLabel) {
+            final JPanel topPanel = new JPanel();
+            topPanel.setOpaque(false);
+            topPanel.add(nameLabel);
+            return topPanel;
+        }
+
+        /**
+         * Creates a transparent central panel holding the text field.
+         *
+         * @return a JPanel with the text field
+         */
+        private JPanel createCentralPanel() {
+            final JPanel centerPanel = new JPanel();
+            centerPanel.setOpaque(false);
+            this.textField.setFont(FONT);
+            centerPanel.add(this.textField);
+            return centerPanel;
+        }
+
+        /**
+         * Creates a transparent panel for holding buttons at the bottom.
+         *
+         * @return a JPanel to hold buttons
+         */
+        private JPanel createButtonPanel() {
+            final JPanel buttonPanel = new JPanel();
+            buttonPanel.setOpaque(false);
+            return buttonPanel;
+        }
+
+        /**
+         * Creates a JButton with a specific text and styling.
+         *
+         * @param text the text to display on the button
+         * @return a JButton with the desired properties
+         */
+        private JButton createButton(final String text) {
+            final JButton button = new JButton(text);
+            button.setPreferredSize(new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT));
+            button.setFont(FONT);
+            return button;
+        }
+
+        /**
+         * Finalize the set-up of the dialog.
+         * 
+         * @param backgroundPanel the background panel
+         */
+        private void finalDialogSetUp(final JPanel backgroundPanel) {
+            this.getContentPane().add(backgroundPanel);
+            this.pack();
+            this.setLocationRelativeTo(getParent());
         }
     }
 }

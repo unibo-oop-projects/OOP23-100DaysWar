@@ -25,8 +25,8 @@ import it.unibo.the100dayswar.commons.utilities.impl.IconLoader;
 public final class ExitWindow extends JDialog {
     private static final long serialVersionUID = 1L;
     private static final float FONT_BUTTON_NORMALIZER = (float) 1.5;
-    private static final int WIDTH = 400;
-    private static final int HEIGHT = 200;
+    private static final int WIDTH = 500;
+    private static final int HEIGHT = 600;
 
     /**
      * Simple utility method to show the dialog.
@@ -114,11 +114,13 @@ public final class ExitWindow extends JDialog {
         final Font buttonFont = font.deriveFont(buttonFontSize);
 
         final JPanel buttonPanel = new JPanel();
-        buttonPanel.setOpaque(false); // Se vuoi vedere lo sfondo dietro i pulsanti
+        buttonPanel.setOpaque(false);
         final JButton yesButton = new JButton("Yes");
         yesButton.setFont(buttonFont);
+        yesButton.setPreferredSize(new Dimension(70, 50));
         final JButton noButton = new JButton("No");
         noButton.setFont(buttonFont);
+        noButton.setPreferredSize(new Dimension(70, 50));
 
         buttonPanel.add(yesButton);
         buttonPanel.add(noButton);
