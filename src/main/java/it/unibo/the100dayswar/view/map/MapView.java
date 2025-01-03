@@ -93,7 +93,8 @@ public class MapView extends JPanel {
         final int totalHeight = mapController.getMapHeight() * cellSize;
         g.drawImage(mapImage, 0, 0, totalWidth, totalHeight, this);
 
-        final Image obstacleImage = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/map/obstacle.png"));
+        final Image obstacleImage = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/map/obstacle.png"));
+        final Image spawnImage = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/map/spawn.png"));
 
         for (int y = 0; y < mapController.getMapHeight(); y++) {
             for (int x = 0; x < mapController.getMapWidth(); x++) {
@@ -103,6 +104,11 @@ public class MapView extends JPanel {
 
                 if (!cell.isBuildable()) {
                     g.drawImage(obstacleImage, xPos, yPos, cellSize, cellSize, this);
+                }
+                if (cell.isSpawn()) {
+                    g.setColor(new Color(0, 0, 0, 50)); 
+                    g.fillRect(xPos, yPos, cellSize, cellSize);
+                    g.drawImage(spawnImage, xPos, yPos, cellSize, cellSize, this);
                 }
 
                 g.setColor(Color.BLACK);
