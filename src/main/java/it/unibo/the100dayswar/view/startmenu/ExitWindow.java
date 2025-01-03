@@ -24,6 +24,13 @@ public final class ExitWindow extends JDialog {
     private static final float FONT_BUTTON_NORMALIZER = (float) 1.5;
 
     /**
+     * Simple utility method to show the dialog.
+     */
+    public static void showDialog(final JFrame parent, final String path, final Font font) {
+        new ExitWindow(parent, (ImageIcon) IconLoader.loadIcon(path), font).setVisible(true);
+    }
+
+    /**
      * Creates a custom exit confirmation dialog.
      * 
      * @param parent the parent frame
@@ -34,6 +41,23 @@ public final class ExitWindow extends JDialog {
     private ExitWindow(final JFrame parent, final ImageIcon backgroundImage, final Font font) {
         super(parent, "Exit Confirmation", true);
 
+        final JPanel backgroundPanel = createBackgroundPanel(backgroundImage);
+
+        final JLabel label = new JLabel("Are you sure?");
+        label.setFont(font);
+        label.setForeground(Color.WHITE);
+        label.setHorizontalAlignment(SwingConstants.CENTER);
+        backgroundPanel.add(label, BorderLayout.CENTER);
+
+        final JPanel buttonPanel = createButtonPanel(font);
+        backgroundPanel.add(buttonPanel, BorderLayout.SOUTH);
+
+        this.getContentPane().add(backgroundPanel);
+        this.pack();
+        this.setLocationRelativeTo(parent);
+    }
+
+    private JPanel createBackgroundPanel(final ImageIcon backgroundImage) {
         final JPanel backgroundPanel = new JPanel() {
             private static final long serialVersionUID = 1L;
 
@@ -53,12 +77,17 @@ public final class ExitWindow extends JDialog {
         backgroundPanel.setLayout(new BorderLayout());
         backgroundPanel.setPreferredSize(new Dimension(400, 200));
 
-        final JLabel label = new JLabel("Are you sure?");
-        label.setFont(font);
-        label.setForeground(Color.WHITE);
-        label.setHorizontalAlignment(SwingConstants.CENTER);
-        backgroundPanel.add(label, BorderLayout.CENTER);
+        return backgroundPanel;
+    }
 
+    /**
+     * Creates a JPanel containing the two option buttons.
+     * 
+     * @param font the font of the texts in the button
+     * 
+     * @return the button panel
+     */
+    private JPanel createButtonPanel(final Font font) {
         final float buttonFontSize = (float) (font.getSize2D() / FONT_BUTTON_NORMALIZER);
         final Font buttonFont = font.deriveFont(buttonFontSize);
 
@@ -71,8 +100,6 @@ public final class ExitWindow extends JDialog {
 
         buttonPanel.add(yesButton);
         buttonPanel.add(noButton);
-
-        backgroundPanel.add(buttonPanel, BorderLayout.SOUTH);
 
         yesButton.addActionListener(new ActionListener() {
             @Override
@@ -89,15 +116,6 @@ public final class ExitWindow extends JDialog {
             }
         });
 
-        this.getContentPane().add(backgroundPanel);
-        this.pack();
-        this.setLocationRelativeTo(parent);
-    }
-
-    /**
-     * Simple utility method to show the dialog.
-     */
-    public static void showDialog(final JFrame parent, final String path, final Font font) {
-        new ExitWindow(parent, (ImageIcon) IconLoader.loadIcon(path), font).setVisible(true);
+        return buttonPanel;
     }
 }
