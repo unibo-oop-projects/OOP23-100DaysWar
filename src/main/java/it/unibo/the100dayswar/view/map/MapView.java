@@ -1,7 +1,10 @@
 package it.unibo.the100dayswar.view.map;
 
+import it.unibo.the100dayswar.commons.utilities.impl.Pair;
 import it.unibo.the100dayswar.controller.mapcontroller.api.MapController;
 import it.unibo.the100dayswar.model.cell.api.Cell;
+import it.unibo.the100dayswar.model.unit.api.Unit;
+
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -10,6 +13,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 
 
 /**
@@ -41,7 +45,18 @@ public class MapView extends JPanel {
              */
             @Override
             public void mouseClicked(MouseEvent e) {
-                handleCellClick(e.getX(), e.getY());
+                Pair<Optional<Unit>, Cell> result = getClickedCell(e.getX(), e.getY());
+                if (result != null) {
+                    Optional<Unit> unit = result.getFirst();
+                    Cell cell = result.getSecond();
+
+                    // Stampa informazioni per test
+                    System.out.println("Clicked on cell: " + cell.getPosition());
+                    unit.ifPresentOrElse(
+                        u -> System.out.println("Unit present: " + u),
+                        () -> System.out.println("No unit present.")
+                    );
+                }
             }
         });
     }
@@ -104,35 +119,23 @@ public class MapView extends JPanel {
         return new Dimension(mapController.getMapWidth() * cellSize, mapController.getMapHeight() * cellSize);
     }
 
+
     /**
-     * Handles a cell click event.
+     * Gets the cell and unit at the specified mouse coordinates.
      * @param mouseX the x-coordinate of the mouse click.
      * @param mouseY the y-coordinate of the mouse click.
+     * @return a Pair containing the Optional<Unit> and the Cell, or null if the click is out of bounds.
      */
-    private void handleCellClick(final int mouseX, final int mouseY) {
-        final int cellX = mouseX / cellSize;
-        final int cellY = mouseY / cellSize;
+    public Pair<Optional<Unit>, Cell> getClickedCell(int mouseX, int mouseY) {
+        int cellX = mouseX / cellSize;
+        int cellY = mouseY / cellSize;
 
         if (cellX >= 0 && cellX < mapController.getMapWidth() && cellY >= 0 && cellY < mapController.getMapHeight()) {
-            final Cell clickedCell = mapController.getMap().getMap()[cellY][cellX];
-            if (clickedCell.isBuildable() && clickedCell.isFree()) {
-                openShopView(clickedCell, mouseX, mouseY);
-            }
+            Cell clickedCell = mapController.getMap().getMap()[cellY][cellX];
+            Optional<Unit> unit = clickedCell.getUnit();
+            return new Pair<>(unit, clickedCell);
         }
+        return null;
     }
 
-    /**
-     * Opens the ShopView for the selected cell.
-     * @param cell the cell to perform actions on.
-     * @param mouseX the x-coordinate of the mouse click.
-     * @param mouseY the y-coordinate of the mouse click.
-     */
-    private void openShopView(Cell cell, int mouseX, int mouseY) {
-        JFrame shopFrame = new JFrame("Shop");
-        shopFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        shopFrame.setSize(300, 200);
-        shopFrame.setLocation(mouseX + 10, mouseY + 10);
-        shopFrame.add(new JLabel("Shop for cell: " + cell.getPosition()));
-        shopFrame.setVisible(true);
-    }
 }
