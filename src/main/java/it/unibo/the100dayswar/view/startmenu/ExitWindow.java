@@ -16,9 +16,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import it.unibo.the100dayswar.commons.utilities.impl.IconLoader;
+
 public final class ExitWindow extends JDialog {
 
     private static final long serialVersionUID = 1L;
+    private static final float FONT_BUTTON_NORMALIZER = (float) 1.5;
 
     /**
      * Creates a custom exit confirmation dialog.
@@ -28,13 +31,9 @@ public final class ExitWindow extends JDialog {
      * @param labelFont the font for the text label
      * @param buttonFont the font for the buttons
      */
-    public ExitWindow(final JFrame parent,
-                            final ImageIcon backgroundImage,
-                            final Font labelFont,
-                            final Font buttonFont) {
-        super(parent, "Exit Confirmation", true); // modal dialog
+    private ExitWindow(final JFrame parent, final ImageIcon backgroundImage, final Font font) {
+        super(parent, "Exit Confirmation", true);
 
-        // Pannello per disegnare l'immagine di sfondo
         final JPanel backgroundPanel = new JPanel() {
             private static final long serialVersionUID = 1L;
 
@@ -54,14 +53,15 @@ public final class ExitWindow extends JDialog {
         backgroundPanel.setLayout(new BorderLayout());
         backgroundPanel.setPreferredSize(new Dimension(400, 200));
 
-        // Etichetta di testo
         final JLabel label = new JLabel("Are you sure?");
-        label.setFont(labelFont);
+        label.setFont(font);
         label.setForeground(Color.WHITE);
         label.setHorizontalAlignment(SwingConstants.CENTER);
         backgroundPanel.add(label, BorderLayout.CENTER);
 
-        // Pannello per i pulsanti
+        final float buttonFontSize = (float) (font.getSize2D() / FONT_BUTTON_NORMALIZER);
+        final Font buttonFont = font.deriveFont(buttonFontSize);
+
         final JPanel buttonPanel = new JPanel();
         buttonPanel.setOpaque(false); // Se vuoi vedere lo sfondo dietro i pulsanti
         final JButton yesButton = new JButton("Yes");
@@ -74,17 +74,18 @@ public final class ExitWindow extends JDialog {
 
         backgroundPanel.add(buttonPanel, BorderLayout.SOUTH);
 
-        // Eventi pulsanti
         yesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent e) {
-                System.exit(0); // o altro tipo di logica di chiusura
+                // TODO imposta come chiudere il gioco
+                System.exit(0);
             }
         });
+
         noButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent e) {
-                dispose(); // chiudi il dialog
+                dispose();
             }
         });
 
@@ -96,11 +97,7 @@ public final class ExitWindow extends JDialog {
     /**
      * Simple utility method to show the dialog.
      */
-    public static void showDialog(final JFrame parent,
-                                  final ImageIcon backgroundImage,
-                                  final Font labelFont,
-                                  final Font buttonFont) {
-        final ExitWindow dialog = new ExitWindow(parent, backgroundImage, labelFont, buttonFont);
-        dialog.setVisible(true);
+    public static void showDialog(final JFrame parent, final String path, final Font font) {
+        new ExitWindow(parent, (ImageIcon) IconLoader.loadIcon(path), font).setVisible(true);
     }
 }
