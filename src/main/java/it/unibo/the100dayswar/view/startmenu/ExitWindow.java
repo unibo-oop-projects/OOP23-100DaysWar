@@ -19,7 +19,6 @@ import javax.swing.SwingConstants;
 import it.unibo.the100dayswar.commons.utilities.impl.IconLoader;
 
 public final class ExitWindow extends JDialog {
-
     private static final long serialVersionUID = 1L;
     private static final float FONT_BUTTON_NORMALIZER = (float) 1.5;
 
@@ -43,20 +42,22 @@ public final class ExitWindow extends JDialog {
 
         final JPanel backgroundPanel = createBackgroundPanel(backgroundImage);
 
-        final JLabel label = new JLabel("Are you sure?");
-        label.setFont(font);
-        label.setForeground(Color.WHITE);
-        label.setHorizontalAlignment(SwingConstants.CENTER);
+        final JLabel label = createLabel(font);
         backgroundPanel.add(label, BorderLayout.CENTER);
 
         final JPanel buttonPanel = createButtonPanel(font);
         backgroundPanel.add(buttonPanel, BorderLayout.SOUTH);
 
-        this.getContentPane().add(backgroundPanel);
-        this.pack();
-        this.setLocationRelativeTo(parent);
+        postInitialization(backgroundPanel, parent);
     }
 
+    /**
+     * Creates the background panel from a given backgroundImage.
+     * 
+     * @param backgroundImage the image in the background
+     * 
+     * @return the background panel
+     */
     private JPanel createBackgroundPanel(final ImageIcon backgroundImage) {
         final JPanel backgroundPanel = new JPanel() {
             private static final long serialVersionUID = 1L;
@@ -78,6 +79,22 @@ public final class ExitWindow extends JDialog {
         backgroundPanel.setPreferredSize(new Dimension(400, 200));
 
         return backgroundPanel;
+    }
+
+    /**
+     * Creates the label in which display the text.
+     * 
+     * @param font the font of the text
+     * 
+     * @return the label
+     */
+    private JLabel createLabel(final Font font) {
+        final JLabel label = new JLabel("Are you sure?");
+        label.setFont(font);
+        label.setForeground(Color.WHITE);
+        label.setHorizontalAlignment(SwingConstants.CENTER);
+
+        return label;
     }
 
     /**
@@ -117,5 +134,17 @@ public final class ExitWindow extends JDialog {
         });
 
         return buttonPanel;
+    }
+
+    /**
+     * Posts initialize the window.
+     * 
+     * @param backgroundPanel the background panel of the window
+     * @param parent the parent of the window
+     */
+    private void postInitialization(final JPanel backgroundPanel, final JFrame parent) {
+        this.getContentPane().add(backgroundPanel);
+        this.pack();
+        this.setLocationRelativeTo(parent);
     }
 }

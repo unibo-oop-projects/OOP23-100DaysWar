@@ -7,17 +7,18 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 
-// TODO guardare se serve ancora.
+// TODO forse è inutile
 /**
  * Utility class to load images using ImageIO.
  */
-public final class ImageLoader {
-    private static final Logger LOGGER = Logger.getLogger(ImageLoader.class.getName());
+public final class BufferedImageLoader {
+
+    private static final Logger LOGGER = Logger.getLogger(BufferedImageLoader.class.getName());
 
     /**
      * Private constructor to hide the implicit public one.
      */
-    private ImageLoader() {
+    private BufferedImageLoader() {
     }
 
     /**
@@ -27,7 +28,7 @@ public final class ImageLoader {
      * @return a BufferedImage if successful, or null if not found or not readable
      */
     public static BufferedImage loadImage(final String path) {
-        final URL url = ImageLoader.class.getResource(path);
+        final URL url = BufferedImageLoader.class.getResource(path);
         if (url == null) {
             LOGGER.log(Level.WARNING, "Resource not found: {0}", path);
             return null;
@@ -48,3 +49,4 @@ public final class ImageLoader {
         }
     }
 }
+
