@@ -1,24 +1,35 @@
 package it.unibo.the100dayswar.view.startmenu;
 
 import java.awt.Graphics;
-import java.awt.Image;
 
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
 import it.unibo.the100dayswar.commons.utilities.impl.IconLoader;
 
+/**
+ * Class that implements the background of the starting menu.
+ */
 public class BackgroundStartMenu extends JPanel {
     private static final long serialVersionUID = 1L;
-    private Image backgroundImage;
+    private final String imagePath;
 
+    /**
+     * Constructor of the class.
+     * It loads the Image using the IconLoader utility class.
+     * 
+     * @param imagePath
+     */
     public BackgroundStartMenu(final String imagePath) {
-        this.backgroundImage = ((ImageIcon) IconLoader.loadIcon(imagePath)).getImage();
+        this.imagePath = imagePath;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    protected void paintComponent(final Graphics g) {
-        super.paintComponent(g);
-        g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
+    protected void paintComponent(final Graphics graphic) {
+        super.paintComponent(graphic);
+        graphic.drawImage(((ImageIcon) IconLoader.loadIcon(imagePath)).getImage(), 0, 0, getWidth(), getHeight(), this);
     }
 }
