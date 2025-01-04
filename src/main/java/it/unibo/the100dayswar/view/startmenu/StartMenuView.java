@@ -130,14 +130,14 @@ public class StartMenuView extends JFrame {
      * Defines the actions after pressing RULES.
      */
     private void rulesAction() {
-       new RulesViewer().intitialize();;
+       new RulesViewer().intitialize();
     }
 
     /**
      * Defines the actions after pressing EXIT.
      */
     private void exitAction() {
-        ExitWindow.showDialog(this);  
+        ExitWindow.showDialog(this);
     }
 
     /**
