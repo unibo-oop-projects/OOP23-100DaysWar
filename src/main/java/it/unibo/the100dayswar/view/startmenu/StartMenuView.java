@@ -14,7 +14,6 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
-import javax.swing.SwingUtilities;
 
 import it.unibo.the100dayswar.application.The100DaysWar;
 import it.unibo.the100dayswar.commons.utilities.impl.IconLoader;
@@ -167,17 +166,5 @@ public class StartMenuView extends JFrame {
         button.setFocusPainted(false);
 
         return button;
-    }
-
-    /**
-     * Main to test.
-     * TODO KILL THIS MAIN
-     * @param args nothing
-     */
-    public static void main(final String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            final StartMenuView view = new StartMenuView();
-            view.initialize();
-        });
     }
 }
