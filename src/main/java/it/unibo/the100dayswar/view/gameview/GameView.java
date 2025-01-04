@@ -1,21 +1,35 @@
 package it.unibo.the100dayswar.view.gameview;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.imageio.ImageIO;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+import java.awt.Graphics;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Image;
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import it.unibo.the100dayswar.view.joystick.JoystickView;
 import it.unibo.the100dayswar.view.map.MapView;
+import it.unibo.the100dayswar.view.rules.RulesViewer;
 import it.unibo.the100dayswar.view.statistics.StatisticsView;
 
 /**
- * The main frame of the game composed by 
- * the map in the left half and the statistics of the game
- * and the joystick for the player in the right half.
+ * Class that represents the main game view, displaying the map, statistics, and joystick.
  */
 public class GameView extends JFrame {
 
     private static final long serialVersionUID = 1L;
     private static final int FRAME_WIDTH = 1200;
     private static final int FRAME_HEIGHT = 900;
+    private static final double MAP_WEIGHT_X = 0.7;
+    private static final double SIDE_PANEL_WEIGHT_X = 0.3;
+
+    private static final Logger LOGGER = Logger.getLogger(RulesViewer.class.getName());
 
     /**
      * Constructor for the GameView class.
@@ -25,7 +39,7 @@ public class GameView extends JFrame {
     }
 
     /**
-     * Initializes the frame.
+     * Initializes the frame, setting up the UI and final configuration.
      */
     public final void initialize() {
         setUI();
@@ -33,49 +47,80 @@ public class GameView extends JFrame {
     }
 
     /**
-     * Configures the main UI layout and components.
-     */
-    private void setUI() {
-        final JPanel mainPanel = new JPanel(new GridBagLayout());
-        this.setContentPane(mainPanel);
-
-        final MapView mapView = new MapView();
-        final StatisticsView statisticsView = new StatisticsView();
-        final JoystickView joystickView = new JoystickView();
-
-        final GridBagConstraints gbc = new GridBagConstraints();
-
-        // MapView (Sinistra - Quadrata)
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.gridheight = 2;
-        gbc.weightx = 0.5;
-        gbc.weighty = 1.0;
-        gbc.fill = GridBagConstraints.BOTH;
-        mainPanel.add(mapView, gbc);
-
-        // StatisticsView (Destra - Sopra)
-        gbc.gridx = 1;
-        gbc.gridy = 0;
-        gbc.gridheight = 1;
-        gbc.weightx = 0.5;
-        gbc.weighty = 0.5;
-        mainPanel.add(statisticsView, gbc);
-
-        // JoystickView (Destra - Sotto)
-        gbc.gridx = 1;
-        gbc.gridy = 1;
-        gbc.weighty = 0.5;
-        mainPanel.add(joystickView, gbc);
-    }
-
-    /**
-     * Final initialization step for frame configuration.
+     * Configures the frame settings after the UI is set up.
      */
     private void setPostInitialize() {
         this.setSize(FRAME_WIDTH, FRAME_HEIGHT);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setVisible(true);
+    }
+
+    /**
+     * Sets up the main user interface, including the background and layout.
+     */
+    private void setUI() {
+        final JPanel backgroundPanel = new JPanel() {
+            private final Image backgroundImage = loadBackgroundImage();
+
+            @Override
+            protected void paintComponent(final Graphics g) {
+                super.paintComponent(g);
+                if (backgroundImage != null) {
+                    g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
+                }
+            }
+        };
+
+        backgroundPanel.setLayout(new GridBagLayout());
+        this.setContentPane(backgroundPanel);
+
+        final MapView mapView = new MapView();
+        final StatisticsView statisticsView = new StatisticsView();
+        final JoystickView joystickView = new JoystickView();
+
+        mapView.setOpaque(false);
+        statisticsView.setOpaque(false);
+        joystickView.setOpaque(false);
+
+        final GridBagConstraints gbc = new GridBagConstraints();
+
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.gridheight = 2;
+        gbc.weightx = MAP_WEIGHT_X;
+        gbc.weighty = 1.0;
+        gbc.fill = GridBagConstraints.BOTH;
+        backgroundPanel.add(mapView, gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        gbc.gridheight = 1;
+        gbc.weightx = SIDE_PANEL_WEIGHT_X;
+        gbc.weighty = 0.5;
+        backgroundPanel.add(statisticsView, gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        gbc.weighty = 0.5;
+        backgroundPanel.add(joystickView, gbc);
+
+        backgroundPanel.revalidate();
+        backgroundPanel.repaint();
+    }
+
+    /**
+     * Loads the background image from the specified absolute path.
+     *
+     * @return the loaded image, or null if loading fails
+     */
+    private Image loadBackgroundImage() {
+        try {
+            final String absolutePath = "/Users/gimbo/Desktop/OOP23-100DaysWar/src/main/resources/gameview/background.jpg";
+            return ImageIO.read(new File(absolutePath));
+        } catch (IOException e) {
+            LOGGER.log(Level.SEVERE, "Error loading background image", e);
+            return null;
+        }
     }
 }
