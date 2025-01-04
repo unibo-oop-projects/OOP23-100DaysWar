@@ -7,14 +7,14 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 
-import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-import it.unibo.the100dayswar.commons.utilities.impl.IconLoader;
+import it.unibo.the100dayswar.commons.utilities.impl.LoadPixelFont;
+import it.unibo.the100dayswar.view.backgroundpanel.BackgroundPanel;
 import it.unibo.the100dayswar.view.startmenu.StartMenuView;
 
 /**
@@ -22,15 +22,21 @@ import it.unibo.the100dayswar.view.startmenu.StartMenuView;
  */
 public class PauseMenu extends JDialog {
     private static final long serialVersionUID = 1L;
-    private static final String SAVING_PATH = null;    // The SAVING_PATH is 'null' by default.
+    private static final String SAVING_PATH = null;    // The SAVING_PATH is 'null' by default. TODO
 
-    private static final int MARGINS = 20;
-    private static final int WIDTH = 250;
-    private static final int HEIGHT = 100;
-    private static final Dimension BUTTON_SIZE = new Dimension(WIDTH, HEIGHT);
+    private static final float PAUSE_MENU_FONT_SIZE = 30f;
+    private static final Font FONT = LoadPixelFont.getFontWithSize(PAUSE_MENU_FONT_SIZE);
 
-    private static final int POST_INIT_WIDTH = 400;
-    private static final int POST_INIT_HEIGHT = 300;
+    private static final String RESOURCES = "pausemenu/";
+    private static final String BACKGROUND_IMAGE = RESOURCES + "pausebackground.jpg";
+
+    private static final int MARGINS = 30;
+    private static final int BUTTON_WIDTH = 200;
+    private static final int BUTTON_HEIGHT = 60;
+    private static final Dimension BUTTON_SIZE = new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT);
+
+    private static final int POST_INIT_WIDTH = 500;
+    private static final int POST_INIT_HEIGHT = 600;
 
     /**
      * Constructor of the pausing window.
@@ -53,19 +59,18 @@ public class PauseMenu extends JDialog {
      * Build the UI.
      */
     private void buildUI() {
-        final JPanel panel = new JPanel(new GridBagLayout());
+        final JPanel panel = new BackgroundPanel(BACKGROUND_IMAGE);
+        panel.setLayout(new GridBagLayout());
+
         final GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(MARGINS, MARGINS, MARGINS, MARGINS);
-
-        final Font buttonFont = new Font("Arial", Font.BOLD, 24);
-        final String resources = "pausemenu/";
 
         /*
          * RESUME
          */
         gbc.gridx = 0;
         gbc.gridy = 0;
-        final JButton btnResume = createButton("RESUME", resources + "resume.png", buttonFont);
+        final JButton btnResume = createButton("RESUME", FONT);
         btnResume.addActionListener(e -> resumeGame());
         panel.add(btnResume, gbc);
 
@@ -73,7 +78,7 @@ public class PauseMenu extends JDialog {
          * MAIN MENU
          */
         gbc.gridy++;
-        final JButton btnMainMenu = createButton("MAIN MENU", resources + "mainmenu.png", buttonFont);
+        final JButton btnMainMenu = createButton("MENU", FONT);
         btnMainMenu.addActionListener(e -> returnToMainMenu());
         panel.add(btnMainMenu, gbc);
 
@@ -81,7 +86,7 @@ public class PauseMenu extends JDialog {
          * EXIT
          */
         gbc.gridy++;
-        final JButton btnExit = createButton("EXIT", resources + "exit.png", buttonFont);
+        final JButton btnExit = createButton("EXIT", FONT);
         btnExit.addActionListener(e -> exitGame());
         panel.add(btnExit, gbc);
 
@@ -108,9 +113,8 @@ public class PauseMenu extends JDialog {
      * 
      * @return the button created
      */
-    private JButton createButton(final String text, final String iconPath, final Font font) {
-        final Icon icon = IconLoader.loadIcon(iconPath);
-        final JButton button = new JButton(text, icon);
+    private JButton createButton(final String text, final Font font) {
+        final JButton button = new JButton(text);
         button.setFont(font);
         button.setPreferredSize(BUTTON_SIZE);
         button.setHorizontalTextPosition(SwingConstants.CENTER);

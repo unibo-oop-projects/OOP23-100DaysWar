@@ -23,7 +23,7 @@ public final class SaveWindow {
      * @param parent the JDialog that launch this window
      * @param savingPath the location of the saving file
      * 
-     * @return true if the game is saved correctly false otherwise
+     * @return true if the game is saved false otherwise
      */
     public static boolean saveDialog(final JDialog parent, final String savingPath) {
         final int save = JOptionPane.showConfirmDialog(
@@ -55,6 +55,6 @@ public final class SaveWindow {
             }
         }
 
-        return true;
+        return false;
     }
 }

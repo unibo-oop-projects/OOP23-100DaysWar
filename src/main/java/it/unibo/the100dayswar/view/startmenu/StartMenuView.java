@@ -12,13 +12,14 @@ import java.util.Optional;
 import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-
+import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 
 import it.unibo.the100dayswar.application.The100DaysWar;
 import it.unibo.the100dayswar.commons.utilities.impl.IconLoader;
 import it.unibo.the100dayswar.commons.utilities.impl.LoadPixelFont;
+import it.unibo.the100dayswar.view.backgroundpanel.BackgroundPanel;
 import it.unibo.the100dayswar.view.gameview.GameView;
 import it.unibo.the100dayswar.view.rules.RulesViewer;
 
@@ -59,7 +60,7 @@ public class StartMenuView extends JFrame {
      * Builds the UI components.
      */
     private void buildUI() {
-        final BackgroundStartMenu panel = new BackgroundStartMenu(BACKGROUND_IMAGE);
+        final JPanel panel = new BackgroundPanel(BACKGROUND_IMAGE);
         panel.setLayout(new GridBagLayout());
 
         final GridBagConstraints gbc = new GridBagConstraints();
@@ -122,7 +123,7 @@ public class StartMenuView extends JFrame {
             dispose();
         } else {
             NoOldGameFoundWindow.show(this);
-        }
+        } 
     }
 
     /**
