@@ -43,8 +43,6 @@ public final class ExitWindow extends JDialog {
      * Created a custom exit window.
      * 
      * @param parent the parent JFrame.
-     * @param backgroundImage the background of the window
-     * @param font the font of the text in the window
      */
     private ExitWindow(final JFrame parent) {
         super(parent, "Exit Confirmation", true);
@@ -65,8 +63,6 @@ public final class ExitWindow extends JDialog {
      * Utility method to show the dialog.
      * 
      * @param parent the parent JFrame
-     * @param path the path of the image
-     * @param font the font to use
      */
     public static void showDialog(final JFrame parent) {
         new ExitWindow(parent).setVisible(true);

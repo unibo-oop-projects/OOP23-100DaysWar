@@ -30,7 +30,7 @@ public final class NameWindow {
     private static final int MAX_LENGTH = 8;
     private static final String RESOURCES = "startmenu/";
     private static final String BACKGROUND_IMAGE = RESOURCES + "calvry.jpg";
-    
+
     private static final int COLUMNS = 15;
 
     private static final int BACKGROUND_WIDTH = 500;

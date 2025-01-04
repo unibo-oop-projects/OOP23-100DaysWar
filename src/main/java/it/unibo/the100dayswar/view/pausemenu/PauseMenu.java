@@ -108,7 +108,6 @@ public class PauseMenu extends JDialog {
      * Create a generic button from the given parameters.
      * 
      * @param text the text of the button
-     * @param iconPath the path of the icon
      * @param font the font of the text
      * 
      * @return the button created
