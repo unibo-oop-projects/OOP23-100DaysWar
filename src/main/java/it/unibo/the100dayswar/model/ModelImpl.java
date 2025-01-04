@@ -42,8 +42,6 @@ import it.unibo.the100dayswar.model.turn.impl.GameTurnManagerImpl;
  */
 public class ModelImpl implements Model {
     private static final int DEFAULT_MAP_SIZE = 10;
-    //private static final int DEFAULT_OBSTACLES = 10; li ho settati gia nel MapManager
-    //private static final int DEFAULT_BONUS_CELLS = 15; stessa cosa degli ostacoli
     private static final int MAX_USERNAME_LENGTH = 15;
     private static final int HUMAN_PLAYER = 1;
     private static final Logger LOGGER = Logger.getLogger(ModelImpl.class.getName());
@@ -149,7 +147,7 @@ public class ModelImpl implements Model {
      */
     public Player getBotPlayer() {
         if (!players.isEmpty() && players.get(0) instanceof BotPlayer) {
-            return players.get(1);
+            return players.get(0);
         } else {
             throw new IllegalStateException("No bot player is present");
         }
