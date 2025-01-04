@@ -16,7 +16,7 @@ import it.unibo.the100dayswar.view.rules.RulesViewer;
  * Class that represents the shop panel in the joystick view.
  * This panel allows the player to purchase or upgrade units.
  */
-public class GameView extends JPanel {
+public class ControlView extends JPanel {
     private static final long serialVersionUID = 1L;
     private static final int WIDTH = 200;
     private static final int HEIGHT = 150;
@@ -30,7 +30,7 @@ public class GameView extends JPanel {
     /**
      * Constructor for the ShopView class.
      */
-    public GameView() {
+    public ControlView() {
         super.setLayout(new GridBagLayout());
         this.attack = createButton("Attack");
         this.pause = createButton("Pause");
