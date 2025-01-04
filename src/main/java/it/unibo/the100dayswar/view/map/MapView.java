@@ -69,7 +69,7 @@ public class MapView extends JPanel {
      */
     private Image loadImage(final String path) {
         try {
-            final URL imageUrl = getClass().getClassLoader().getResource(path);
+            final URL imageUrl = getClass().getResource(path);
             if (imageUrl != null) {
                 return ImageIO.read(imageUrl);
             } else {

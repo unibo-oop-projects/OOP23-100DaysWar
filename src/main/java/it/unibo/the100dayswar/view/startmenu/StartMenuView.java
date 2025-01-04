@@ -107,8 +107,8 @@ public class StartMenuView extends JFrame {
         final Optional<String> name = NameWindow.askUsername(this);
         if (name.isPresent()) {
             The100DaysWar.CONTROLLER.startNewGame(name.get());
+            new GameView().initialize();
             dispose();
-            new GameView();
         }
     }
 
