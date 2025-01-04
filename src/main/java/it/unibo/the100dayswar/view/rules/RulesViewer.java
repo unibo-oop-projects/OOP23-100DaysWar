@@ -36,7 +36,6 @@ public class RulesViewer extends JFrame {
      * Final initialization step for frame configuration.
      */
     private void setPostInitialize() {
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
         setExtendedState(MAXIMIZED_BOTH);
         setVisible(true);
     }

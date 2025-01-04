@@ -15,7 +15,7 @@ import it.unibo.the100dayswar.model.turn.api.GameDay;
 public class GameTurnManagerImpl implements GameTurnManager {
     private static final long serialVersionUID = 1L;
 
-    private static final int PERIOD = 12_000;
+    private static final int PERIOD = 4000;
     private static final int MAX_TURN_WITH_NO_MOVE = 4;
     private int turn;
     private final List<Player> players;
