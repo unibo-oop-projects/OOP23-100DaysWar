@@ -27,8 +27,8 @@ public class GameView extends JFrame {
     private static final long serialVersionUID = 1L;
     private static final int FRAME_WIDTH = 1200;
     private static final int FRAME_HEIGHT = 900;
-    private static final double MAP_WEIGHT_X = 0.8;
-    private static final double SIDE_PANEL_WEIGHT_X = 0.2;
+    private static final double MAP_WEIGHT_X = 0.6;
+    private static final double SIDE_PANEL_WEIGHT_X = 0.4;
     private static final Logger LOGGER = Logger.getLogger(GameView.class.getName());
 
     /**
@@ -102,7 +102,7 @@ public class GameView extends JFrame {
         gbc.gridy = 0;
         gbc.gridheight = 1;
         gbc.weightx = SIDE_PANEL_WEIGHT_X;
-        gbc.weighty = 0.5;
+        gbc.weighty = 0.3;
         gbc.fill = GridBagConstraints.BOTH;
         gbc.insets = new Insets(10, 10, 5, 10);
         gbc.anchor = GridBagConstraints.NORTH;
@@ -110,7 +110,7 @@ public class GameView extends JFrame {
 
         gbc.gridx = 1;
         gbc.gridy = 1;
-        gbc.weighty = 0.5;
+        gbc.weighty = 0.7;
         gbc.fill = GridBagConstraints.BOTH;
         gbc.insets = new Insets(5, 10, 10, 10);
         gbc.anchor = GridBagConstraints.SOUTH;
@@ -138,5 +138,23 @@ public class GameView extends JFrame {
             LOGGER.log(Level.SEVERE, "Error loading background image", e);
             return null;
         }
+    }
+
+    /**
+     * Returns the map view component.
+     *
+     * @return the map view.
+     */
+    public MapView getMapView() {
+        return (MapView) ((JPanel) ((JPanel) this.getContentPane()).getComponent(0)).getComponent(0);
+    }
+
+    /**
+     * Returns the statistics view component.
+     *
+     * @return the statistics view.
+     */
+    public StatisticsView getStatisticView() {
+        return (StatisticsView) ((JPanel) ((JPanel) this.getContentPane()).getComponent(0)).getComponent(1);
     }
 }
