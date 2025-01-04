@@ -8,8 +8,11 @@ import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
-import java.io.File;
+
 import java.io.IOException;
+
+import java.net.URL;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -110,14 +113,19 @@ public class GameView extends JFrame {
     }
 
     /**
-     * Loads the background image from the specified absolute path.
+     * Loads the background image from the specified path.
      *
      * @return the loaded image, or null if loading fails
      */
     private Image loadBackgroundImage() {
         try {
-            final String absolutePath = "/Users/gimbo/Desktop/OOP23-100DaysWar/src/main/resources/gameview/background.jpg";
-            return ImageIO.read(new File(absolutePath));
+            final String path = "/gameview/background.jpg";
+            final URL imageUrl = getClass().getResource(path);
+            if (imageUrl != null) {
+                return ImageIO.read(imageUrl);
+            } else {
+                throw new IOException("Background image not found: " + path);
+            }
         } catch (IOException e) {
             LOGGER.log(Level.SEVERE, "Error loading background image", e);
             return null;
