@@ -1,6 +1,7 @@
 package it.unibo.the100dayswar.view.statistics;
 
 import it.unibo.the100dayswar.application.The100DaysWar;
+import it.unibo.the100dayswar.commons.utilities.impl.LoadPixelFont;
 import it.unibo.the100dayswar.controller.statisticscontoller.api.StatisticController;
 import it.unibo.the100dayswar.model.player.api.Player;
 
@@ -58,18 +59,19 @@ public class StatisticsView extends JPanel {
         panel.setBorder(BorderFactory.createTitledBorder(player.getUsername()));
 
         final JLabel soldiersLabel = new JLabel("Soldiers: " + statisticController.getSoldiers(player), JLabel.LEFT);
+        soldiersLabel.setFont(LoadPixelFont.getFont());
         final JLabel towersLabel = new JLabel("Towers: " + statisticController.getTowers(player), JLabel.LEFT);
+        towersLabel.setFont(LoadPixelFont.getFont());
         final JLabel cellsPercentageLabel = new JLabel("Cells Owned(%): " 
          + statisticController.getCellsPercentage(player), JLabel.LEFT);
+         cellsPercentageLabel.setFont(LoadPixelFont.getFont());
         final JLabel balanceLabel = new JLabel("Balance: " + statisticController.getBalance(player), JLabel.LEFT);
+        balanceLabel.setFont(LoadPixelFont.getFont());
 
-        panel.add(new JLabel("Soldiers:", JLabel.RIGHT));
+        
         panel.add(soldiersLabel);
-        panel.add(new JLabel("Towers:", JLabel.RIGHT));
         panel.add(towersLabel);
-        panel.add(new JLabel("Cells Owned (%):", JLabel.RIGHT));
         panel.add(cellsPercentageLabel);
-        panel.add(new JLabel("Balance:", JLabel.RIGHT));
         panel.add(balanceLabel);
 
         return panel;
