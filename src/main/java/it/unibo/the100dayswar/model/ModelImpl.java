@@ -89,7 +89,7 @@ public class ModelImpl implements Model {
         this.mapManager = new MapManagerImpl(data.get().getMapManager());
         ActionType.add(mapManager);
 
-        this.players = List.of(new PlayerImpl(data.get().getPlayerData1()), new PlayerImpl(data.get().getPlayerData1()));
+        this.players = List.of(new PlayerImpl(data.get().getPlayerData1()), new PlayerImpl(data.get().getPlayerData2()));
 
         this.turnManager = data.get().getGameTurnManager();
         this.gameStatistics = new GameStatisticImpl(players, mapManager);
@@ -228,6 +228,7 @@ public class ModelImpl implements Model {
     }
 
     /**
+     * TODO
      * Computes the ideal cell starting from the given cell
      * and the specified direction.
      * 
