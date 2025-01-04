@@ -1,16 +1,22 @@
 package it.unibo.the100dayswar.view.joystick;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionListener;
 
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 import it.unibo.the100dayswar.application.The100DaysWar;
+import it.unibo.the100dayswar.commons.utilities.impl.IconLoader;
 import it.unibo.the100dayswar.commons.utilities.impl.LoadPixelFont;
 
 /** 
@@ -19,9 +25,10 @@ import it.unibo.the100dayswar.commons.utilities.impl.LoadPixelFont;
  */
 public class MovementView extends JPanel {
     private static final long serialVersionUID = 1L;
-    private static final int WIDTH = 200;
-    private static final int HEIGHT = 100;
+    private static final Dimension SIZE = new Dimension(200, 200);
     private static final int INSETS = 5;
+    private static final Dimension BUTTON_SIZE = new Dimension(190, 60);
+    private static final String ICON_BUTTON = "startmenu/genericbutton.jpg";
 
     private final JButton up;
     private final JButton down;
@@ -43,7 +50,7 @@ public class MovementView extends JPanel {
         setButtonActions();
         arrangeButtons(gbc);
 
-        super.setPreferredSize(new Dimension(WIDTH, HEIGHT));
+        super.setPreferredSize(SIZE);
     }
 
     /**
@@ -73,10 +80,36 @@ public class MovementView extends JPanel {
      * @return a styled JButton
      */
     private JButton createButton(final String text) {
-        final JButton button = new JButton(text);
-        final Font customFont = LoadPixelFont.getFont().deriveFont(10f);
+        final Icon icon = getIcon();
+        if (icon == null) {
+            throw new IllegalStateException("Icon not found");
+        }
+        final JButton button = new JButton(text, icon);
+        final Font customFont = LoadPixelFont.getFont().deriveFont(8f);
         button.setFont(customFont);
+        button.setPreferredSize(BUTTON_SIZE);
+        button.setHorizontalTextPosition(SwingConstants.CENTER);
+        button.setVerticalTextPosition(SwingConstants.CENTER);
+        button.setForeground(Color.WHITE);
+        button.setContentAreaFilled(false); 
+        button.setBorderPainted(false);
+        button.setFocusPainted(false);
         return button;
+    }
+
+    /**
+     * Loads the icon for the button.
+     * 
+     * @return the icon for the button
+     */
+    private Icon getIcon() {
+        final Icon icon = IconLoader.loadIcon(ICON_BUTTON);
+        if (icon != null) {
+            final Image scaledImage = ((ImageIcon) icon).getImage()
+                .getScaledInstance(BUTTON_SIZE.width, BUTTON_SIZE.height, Image.SCALE_SMOOTH);
+            return new ImageIcon(scaledImage);
+        }
+        return null;
     }
 
     /**
