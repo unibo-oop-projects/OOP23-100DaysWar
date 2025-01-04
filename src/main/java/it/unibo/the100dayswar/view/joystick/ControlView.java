@@ -8,9 +8,10 @@ import java.awt.GridBagLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import it.unibo.the100dayswar.application.The100DaysWar;
 import it.unibo.the100dayswar.commons.utilities.impl.LoadPixelFont;
+import it.unibo.the100dayswar.view.pausemenu.PauseMenu;
 import it.unibo.the100dayswar.view.rules.RulesViewer;
+import it.unibo.the100dayswar.view.startmenu.ExitWindow;
 
 /**
  * Class that represents the shop panel in the joystick view.
@@ -82,9 +83,11 @@ public class ControlView extends JPanel {
      * Sets the actions for the buttons.
      */
     private void setButtonActions() {
-        pause.addActionListener(e -> The100DaysWar.CONTROLLER.getShopController().buyBasicTower());
-        resume.addActionListener(e -> The100DaysWar.CONTROLLER.getShopController().upgradeUnit(null));
+        attack.addActionListener(e -> attackAction());
+        pause.addActionListener(e -> pauseAction());
+        resume.addActionListener(e -> resumeAction());
         rules.addActionListener(e -> rulesAction());
+        quit.addActionListener(e -> exitAction());
     }
 
     /**
@@ -109,7 +112,36 @@ public class ControlView extends JPanel {
         super.add(quit, gbc);
     }
 
+    /**
+     * The action to be performed when the attack button is clicked.
+     */
+    private void attackAction() {
+    }
+
+    /**
+     * Defines the actions after pressing RESUME.
+     */
+    private void resumeAction() {
+    }
+
+    /** 
+     * The action to be performed when the pause button is clicked.
+     */
+    private void pauseAction() {
+        new PauseMenu(null).initialize();
+    }
+
+    /**
+     * The action to be performed when the rules button is clicked.
+     */
     private void rulesAction() {
        new RulesViewer().intitialize();
+    }
+
+    /**
+     * The action to be performed when the quit button is clicked.
+     */
+    private void exitAction() {
+        ExitWindow.showDialog(null);
     }
 }
