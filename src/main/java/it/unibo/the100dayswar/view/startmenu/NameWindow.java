@@ -119,7 +119,7 @@ public final class NameWindow {
             };
             backgroundPanel.setLayout(new BorderLayout());
             backgroundPanel.setPreferredSize(new Dimension(BACKGROUND_WIDTH, BACKGROUND_HEIGHT));
-
+ 
             final JLabel nameLabel = createNameLabel();
 
             final JPanel topPanel = createTopPanel(nameLabel);
@@ -284,6 +284,7 @@ public final class NameWindow {
          */
         private void finalDialogSetUp(final JPanel backgroundPanel) {
             this.getContentPane().add(backgroundPanel);
+            this.setResizable(false);
             this.pack();
             this.setLocationRelativeTo(getParent());
         }

@@ -167,6 +167,7 @@ public final class ExitWindow extends JDialog {
      */
     private void postInitialization(final JPanel backgroundPanel, final JFrame parent) {
         this.getContentPane().add(backgroundPanel);
+        this.setResizable(false);
         this.pack();
         this.setLocationRelativeTo(parent);
     }
