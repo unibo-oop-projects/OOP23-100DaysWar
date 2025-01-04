@@ -3,36 +3,33 @@ package it.unibo.the100dayswar.view.gameview;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
-
+import java.awt.Insets;
 import java.io.IOException;
-
 import java.net.URL;
-
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import it.unibo.the100dayswar.view.joystick.JoystickView;
 import it.unibo.the100dayswar.view.map.MapView;
-import it.unibo.the100dayswar.view.rules.RulesViewer;
 import it.unibo.the100dayswar.view.statistics.StatisticsView;
 
 /**
- * Class that represents the main game view, displaying the map, statistics, and joystick.
+ * Class that represents the main game view, displaying the map,
+ * statistics, and joystick.
  */
 public class GameView extends JFrame {
 
     private static final long serialVersionUID = 1L;
     private static final int FRAME_WIDTH = 1200;
     private static final int FRAME_HEIGHT = 900;
-    private static final double MAP_WEIGHT_X = 0.7;
-    private static final double SIDE_PANEL_WEIGHT_X = 0.3;
-
-    private static final Logger LOGGER = Logger.getLogger(RulesViewer.class.getName());
+    private static final double MAP_WEIGHT_X = 0.8;
+    private static final double SIDE_PANEL_WEIGHT_X = 0.2;
+    private static final Logger LOGGER = Logger.getLogger(GameView.class.getName());
 
     /**
      * Constructor for the GameView class.
@@ -64,6 +61,7 @@ public class GameView extends JFrame {
      */
     private void setUI() {
         final JPanel backgroundPanel = new JPanel() {
+            private static final long serialVersionUID = 1L;
             private final Image backgroundImage = loadBackgroundImage();
 
             @Override
@@ -86,6 +84,8 @@ public class GameView extends JFrame {
         statisticsView.setOpaque(false);
         joystickView.setOpaque(false);
 
+        mapView.setPreferredSize(new Dimension(1000, 850));
+
         final GridBagConstraints gbc = new GridBagConstraints();
 
         gbc.gridx = 0;
@@ -93,7 +93,9 @@ public class GameView extends JFrame {
         gbc.gridheight = 2;
         gbc.weightx = MAP_WEIGHT_X;
         gbc.weighty = 1.0;
-        gbc.fill = GridBagConstraints.BOTH;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.insets = new Insets(10, 10, 10, 10);
+        gbc.anchor = GridBagConstraints.CENTER;
         backgroundPanel.add(mapView, gbc);
 
         gbc.gridx = 1;
@@ -101,11 +103,17 @@ public class GameView extends JFrame {
         gbc.gridheight = 1;
         gbc.weightx = SIDE_PANEL_WEIGHT_X;
         gbc.weighty = 0.5;
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.insets = new Insets(10, 10, 5, 10);
+        gbc.anchor = GridBagConstraints.NORTH;
         backgroundPanel.add(statisticsView, gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 1;
         gbc.weighty = 0.5;
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.insets = new Insets(5, 10, 10, 10);
+        gbc.anchor = GridBagConstraints.SOUTH;
         backgroundPanel.add(joystickView, gbc);
 
         backgroundPanel.revalidate();
@@ -115,7 +123,7 @@ public class GameView extends JFrame {
     /**
      * Loads the background image from the specified path.
      *
-     * @return the loaded image, or null if loading fails
+     * @return the loaded image, or null if loading fails.
      */
     private Image loadBackgroundImage() {
         try {
