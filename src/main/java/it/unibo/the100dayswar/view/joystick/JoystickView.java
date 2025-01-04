@@ -15,7 +15,7 @@ public class JoystickView extends JPanel {
     private static final long serialVersionUID = 1L;
     private final ShopView shopView;
     private final MovementView movementView;
-    private final JPanel placeholderPanel;
+    private final ControlView controlView;
 
     /**
      * Constructor for the JoystickView class.
@@ -26,7 +26,7 @@ public class JoystickView extends JPanel {
 
         this.movementView = new MovementView();
         this.shopView = new ShopView();
-        this.placeholderPanel = new JPanel();
+        this.controlView = new ControlView();
 
         this.movementView.setBorder(BorderFactory.createTitledBorder(
             BorderFactory.createLineBorder(
@@ -40,7 +40,7 @@ public class JoystickView extends JPanel {
                 "Shop",
                 TitledBorder.CENTER,
                 TitledBorder.TOP));
-        this.placeholderPanel.setBorder(BorderFactory.createTitledBorder(
+        this.controlView.setBorder(BorderFactory.createTitledBorder(
             BorderFactory.createLineBorder(
                 java.awt.Color.BLACK), 
                 "Control", 
@@ -58,7 +58,7 @@ public class JoystickView extends JPanel {
         super.add(shopView, gbc);
 
         gbc.gridx = 2;
-        super.add(placeholderPanel, gbc);
+        super.add(controlView, gbc);
     }
 
     /**
