@@ -9,7 +9,7 @@ import it.unibo.the100dayswar.commons.utilities.impl.PositionImpl;
 import it.unibo.the100dayswar.model.cell.api.Cell;
 import it.unibo.the100dayswar.model.cell.impl.CellImpl;
 import it.unibo.the100dayswar.model.player.api.Player;
-import it.unibo.the100dayswar.model.player.impl.PlayerImpl;
+import it.unibo.the100dayswar.model.player.impl.HumanPlayerImpl;
 import it.unibo.the100dayswar.model.tower.api.TowerType;
 import it.unibo.the100dayswar.model.tower.impl.TowerFactoryImpl;
 import it.unibo.the100dayswar.model.tower.impl.BasicTowerImpl;
@@ -20,7 +20,7 @@ import it.unibo.the100dayswar.model.tower.impl.AdvancedTowerImpl;
  */
 class TowerFactoryTest {
     private final Cell mockCell = new CellImpl(new PositionImpl(0, 0), true, true);
-    private final Player mockPlayer = new PlayerImpl("MockPlayer", mockCell);
+    private final Player mockPlayer = new HumanPlayerImpl("MockPlayer", mockCell);
 
     /**
      * Tests the creation of a BasicTower using the TowerFactory.
