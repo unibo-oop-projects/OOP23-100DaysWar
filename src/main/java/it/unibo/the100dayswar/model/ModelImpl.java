@@ -89,7 +89,7 @@ public class ModelImpl implements Model {
         this.mapManager = new MapManagerImpl(data.get().getMapManager());
         ActionType.add(mapManager);
 
-        this.players = List.of(new SimpleBot(data.get().getBotData(), mapManager), new HumanPlayerImpl(getHumanPlayer()));
+        this.players = List.of(new SimpleBot(data.get().getBotData()), new HumanPlayerImpl(getHumanPlayer()));
 
         this.turnManager = data.get().getGameTurnManager();
         this.gameStatistics = new GameStatisticImpl(players, mapManager);
