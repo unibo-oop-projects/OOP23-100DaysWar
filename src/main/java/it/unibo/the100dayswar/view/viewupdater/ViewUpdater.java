@@ -44,11 +44,11 @@ public class ViewUpdater implements Runnable {
                  * The100DaysWar.CONTROLLER.
                  */
 
-                mapView.paintSoldiers();
-                mapView.paintTowers();
+                // mapView.paintSoldiers();
+                // mapView.paintTowers();
                 
-                statisticsView.paintStatistics();
-                mapView.paintArea();
+                // statisticsView.paintStatistics();
+                // mapView.paintArea();
 
                 // Sleep until next update
                 Thread.sleep(REFRESH_INTERVAL_MS);
