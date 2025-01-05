@@ -1,10 +1,12 @@
 package it.unibo.the100dayswar.model.savedata.impl;
 
 import it.unibo.the100dayswar.model.bot.api.BotPlayer;
+import it.unibo.the100dayswar.model.bot.impl.SimpleBot;
 import it.unibo.the100dayswar.model.map.api.MapManager;
 import it.unibo.the100dayswar.model.map.impl.MapManagerImpl;
+import it.unibo.the100dayswar.model.player.api.HumanPlayer;
 import it.unibo.the100dayswar.model.player.api.Player;
-import it.unibo.the100dayswar.model.player.impl.PlayerImpl;
+import it.unibo.the100dayswar.model.player.impl.HumanPlayerImpl;
 import it.unibo.the100dayswar.model.savedata.api.GameData;
 import it.unibo.the100dayswar.model.turn.api.GameTurnManager;
 
@@ -14,7 +16,7 @@ import it.unibo.the100dayswar.model.turn.api.GameTurnManager;
 public class GameDataImpl implements GameData {
     private static final long serialVersionUID = 1L;
 
-    private final Player playerData;
+    private final Player humanData;
     private final BotPlayer botData;
     private final MapManager mapManager;
     private final GameTurnManager gameTurnManager;
@@ -23,23 +25,19 @@ public class GameDataImpl implements GameData {
      * Constructor of GameDataImpl, initializes the object
      * with the given params.
      * 
-     * @param playerData1 the player to save
-     * @param playerData2 the player to save
+     * @param human the human player to save
+     * @param bot the bot player to save
      * @param mapManager the mapManager of the current game
      * @param gameTurnManager the game turn manager of the current game
      */
     public GameDataImpl(
-            final Player player,
+            final HumanPlayer human,
             final BotPlayer bot,
             final MapManager mapManager, 
             final GameTurnManager gameTurnManager) {
-
-        if (playerData.equals(botData)) {
-            throw new IllegalArgumentException("playerData1 and playerData2 must be different");
-        }
-
-        this.playerData = new PlayerImpl(player);
-        this.botData= new PlayerBotImpl(bot);
+    
+        this.humanData = new HumanPlayerImpl(human);
+        this.botData = new SimpleBot(bot, mapManager);
         this.mapManager = new MapManagerImpl(mapManager);   // TODO devo avere una deepCopy del mapManager
         this.gameTurnManager = gameTurnManager;
     }
@@ -48,16 +46,16 @@ public class GameDataImpl implements GameData {
      * {@inheritDoc}
      */
     @Override
-    public Player getPlayerData() {
-        return new PlayerImpl(playerData);
+    public HumanPlayer getHumanData() {
+        return new HumanPlayerImpl(humanData);
     }
 
      /**
      * {@inheritDoc}
      */
     @Override
-    public Player getBotData() {
-        return new PlayerImpl(botData);
+    public BotPlayer getBotData() {
+        return new SimpleBot(botData, mapManager);
     }
 
     /**

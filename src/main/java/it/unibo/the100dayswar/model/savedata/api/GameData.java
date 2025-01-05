@@ -2,8 +2,9 @@ package it.unibo.the100dayswar.model.savedata.api;
 
 import java.io.Serializable;
 
+import it.unibo.the100dayswar.model.bot.api.BotPlayer;
 import it.unibo.the100dayswar.model.map.api.MapManager;
-import it.unibo.the100dayswar.model.player.api.Player;
+import it.unibo.the100dayswar.model.player.api.HumanPlayer;
 import it.unibo.the100dayswar.model.turn.api.GameTurnManager;
 
 /**
@@ -12,18 +13,18 @@ import it.unibo.the100dayswar.model.turn.api.GameTurnManager;
  */
 public interface GameData extends Serializable {
     /**
-     * Getter for playerData.
+     * Getter for humanData.
      * 
-     * @return the playerData
+     * @return the humanData
      */
-    Player getPlayerData();
+    HumanPlayer getHumanData();
 
      /**
      * Getter for botData.
      * 
      * @return the botData
      */
-    Player getBotData();
+    BotPlayer getBotData();
 
      /**
      * Getter for mapManager.

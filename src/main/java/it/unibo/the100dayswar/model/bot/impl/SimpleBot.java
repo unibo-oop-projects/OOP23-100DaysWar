@@ -10,6 +10,7 @@ import it.unibo.the100dayswar.model.bot.api.BotStrategy;
 import it.unibo.the100dayswar.model.cell.api.Cell;
 import it.unibo.the100dayswar.model.cell.impl.CellImpl;
 import it.unibo.the100dayswar.model.map.api.MapManager;
+import it.unibo.the100dayswar.model.map.impl.MapManagerImpl;
 import it.unibo.the100dayswar.model.player.impl.PlayerImpl;
 
 /**
@@ -23,6 +24,7 @@ public class SimpleBot extends PlayerImpl implements BotPlayer {
     private final Cell enemySpawnPoint;
     private final Set<Cell> gameMapCells;
     private final BotStrategy strategy;
+    private final MapManager mapManager;
 
     /**
      * Constructor for the bot player.
@@ -32,6 +34,7 @@ public class SimpleBot extends PlayerImpl implements BotPlayer {
     public SimpleBot(final MapManager mapManager) {
         super(BOT_NAME, mapManager.getBotSpawn());
         ActionType.clear();
+        this.mapManager = mapManager;
         ActionType.add(mapManager);
         this.strategy = new SimpleBotStrategy();
         this.enemySpawnPoint = mapManager.getPlayerSpawn();
@@ -44,11 +47,12 @@ public class SimpleBot extends PlayerImpl implements BotPlayer {
      * @param botPlayer the bot player
      * @param mapManager the map manager of the game
      */
-    public SimpleBot(final BotPlayer botPlayer, final MapManager mapManager) {
+    public SimpleBot(final BotPlayer botPlayer) {
         super(botPlayer.getUsername(), botPlayer.getSpawnPoint());
         ActionType.clear();
+        this.mapManager = botPlayer.getMapManager();
         ActionType.add(mapManager);
-        this.strategy = new SimpleBotStrategy();
+        this.strategy = botPlayer.getStrategy();
         this.enemySpawnPoint = mapManager.getPlayerSpawn();
         this.gameMapCells = mapManager.getMapAsAStream().collect(Collectors.toSet());
     }
@@ -102,5 +106,21 @@ public class SimpleBot extends PlayerImpl implements BotPlayer {
     @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), enemySpawnPoint, gameMapCells);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public MapManager getMapManager() {
+       return new MapManagerImpl(this.mapManager);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public BotStrategy getStrategy() {
+        return this.strategy;
     }
 }

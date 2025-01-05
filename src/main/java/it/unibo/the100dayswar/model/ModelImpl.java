@@ -23,7 +23,6 @@ import it.unibo.the100dayswar.model.map.impl.MapManagerImpl;
 import it.unibo.the100dayswar.model.player.api.HumanPlayer;
 import it.unibo.the100dayswar.model.player.api.Player;
 import it.unibo.the100dayswar.model.player.impl.HumanPlayerImpl;
-import it.unibo.the100dayswar.model.player.impl.PlayerImpl;
 import it.unibo.the100dayswar.model.savedata.api.GameData;
 import it.unibo.the100dayswar.model.savedata.api.GameSaver;
 import it.unibo.the100dayswar.model.savedata.impl.GameDataImpl;
@@ -45,6 +44,7 @@ import it.unibo.the100dayswar.model.turn.impl.GameTurnManagerImpl;
 public class ModelImpl implements Model {
     private static final int DEFAULT_MAP_SIZE = 10;
     private static final int MAX_USERNAME_LENGTH = 15;
+    private static final int BOT_PLAYER = 0;
     private static final int HUMAN_PLAYER = 1;
     private static final Logger LOGGER = Logger.getLogger(ModelImpl.class.getName());
 
@@ -89,7 +89,7 @@ public class ModelImpl implements Model {
         this.mapManager = new MapManagerImpl(data.get().getMapManager());
         ActionType.add(mapManager);
 
-        this.players = List.of(new PlayerImpl(data.get().getPlayerData1()), new PlayerImpl(data.get().getPlayerData2()));
+        this.players = List.of(new SimpleBot(data.get().getBotData(), mapManager), new HumanPlayerImpl(getHumanPlayer()));
 
         this.turnManager = data.get().getGameTurnManager();
         this.gameStatistics = new GameStatisticImpl(players, mapManager);
@@ -138,8 +138,8 @@ public class ModelImpl implements Model {
      */
     @Override
     public Player getHumanPlayer() {
-        if (players.size() > 1 && players.get(1) instanceof HumanPlayer) {
-            return players.get(1);
+        if (players.size() > HUMAN_PLAYER && players.get(HUMAN_PLAYER) instanceof HumanPlayer) {
+            return players.get(HUMAN_PLAYER);
         } else {
             throw new IllegalStateException("The human player has not been added yet");
         }
@@ -150,8 +150,8 @@ public class ModelImpl implements Model {
      */
     @Override
     public Player getBotPlayer() {
-        if (!players.isEmpty() && players.get(0) instanceof BotPlayer) {
-            return players.get(0);
+        if (!players.isEmpty() && players.get(BOT_PLAYER) instanceof BotPlayer) {
+            return players.get(BOT_PLAYER);
         } else {
             throw new IllegalStateException("No bot player is present");
         }
@@ -184,8 +184,13 @@ public class ModelImpl implements Model {
     @Override
     public boolean saveGame(final String path) {
         try {
-            final GameData data = new GameDataImpl(getCurrentPlayer(), getBotPlayer(), mapManager, turnManager);
+            final GameData data = new GameDataImpl(
+                (HumanPlayer) getHumanPlayer(), 
+                (BotPlayer) getBotPlayer(), 
+                mapManager, turnManager
+            );
             final GameSaver gameSaver = new GameSaverImpl(data, path);
+
             gameSaver.saveGame();
         } catch (IOException | IllegalArgumentException e) {
             return false;
