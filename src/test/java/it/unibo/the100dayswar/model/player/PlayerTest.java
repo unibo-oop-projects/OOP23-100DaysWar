@@ -14,6 +14,8 @@ import org.junit.jupiter.api.Test;
 import it.unibo.the100dayswar.commons.utilities.impl.PositionImpl;
 import it.unibo.the100dayswar.model.cell.api.Cell;
 import it.unibo.the100dayswar.model.cell.impl.CellImpl;
+import it.unibo.the100dayswar.model.player.api.HumanPlayer;
+import it.unibo.the100dayswar.model.player.impl.HumanPlayerImpl;
 import it.unibo.the100dayswar.model.player.impl.PlayerImpl;
 import it.unibo.the100dayswar.model.soldier.api.Soldier;
 import it.unibo.the100dayswar.model.soldier.impl.SoldierImpl;
@@ -32,7 +34,7 @@ class PlayerTest {
     @BeforeEach
     void setUp() {
         spawnPoint = new CellImpl(new PositionImpl(0, 0), true, true);
-        player = new PlayerImpl(PLAYER_NAME, spawnPoint);
+        player = new HumanPlayerImpl(PLAYER_NAME, spawnPoint);
     }
 
     @Test
@@ -187,7 +189,7 @@ class PlayerTest {
 
     @Test
     void testEqualsAndHashCode() {
-        final PlayerImpl anotherPlayer = new PlayerImpl(PLAYER_NAME, spawnPoint);
+        final PlayerImpl anotherPlayer = new HumanPlayerImpl(PLAYER_NAME, spawnPoint);
         assertEquals(player, anotherPlayer,
                 "Players with the same name and spawn point should be equal");
         assertEquals(player.hashCode(), anotherPlayer.hashCode(),
@@ -196,7 +198,7 @@ class PlayerTest {
 
     @Test
     void testCopyConstructor() {
-        final PlayerImpl copiedPlayer = new PlayerImpl(player);
+        final HumanPlayerImpl copiedPlayer = new HumanPlayerImpl((HumanPlayer)player);
         assertEquals(player, copiedPlayer,
                 "The copied player should be equal to the original");
 
