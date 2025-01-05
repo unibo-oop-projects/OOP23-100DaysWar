@@ -1,6 +1,5 @@
 package it.unibo.the100dayswar.model.player.impl;
 
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -99,7 +98,7 @@ public abstract class PlayerImpl implements Player {
      */
     @Override
     public Set<Unit> getUnits() {
-        return Collections.unmodifiableSet(units);
+        return new HashSet<>(units);
     }
 
     /**
@@ -110,7 +109,7 @@ public abstract class PlayerImpl implements Player {
         return units.stream()
                 .filter(u -> u instanceof Soldier)
                 .map(u -> (Soldier) u)
-                .collect(Collectors.toUnmodifiableSet());
+                .collect(Collectors.toSet());
     }
 
     /**
@@ -121,7 +120,7 @@ public abstract class PlayerImpl implements Player {
         return units.stream()
                 .filter(u -> u instanceof Tower)
                 .map(u -> (Tower) u)
-                .collect(Collectors.toUnmodifiableSet());
+                .collect(Collectors.toSet());
     }
 
     /**

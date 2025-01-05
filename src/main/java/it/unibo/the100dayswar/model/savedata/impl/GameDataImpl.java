@@ -37,7 +37,7 @@ public class GameDataImpl implements GameData {
     
         this.humanData = new HumanPlayerImpl(human);
         this.botData = new SimpleBot(bot);
-        this.mapManager = new MapManagerImpl(mapManager);   // TODO devo avere una deepCopy del mapManager
+        this.mapManager = new MapManagerImpl(mapManager);
         this.gameTurnManager = gameTurnManager;
     }
 
@@ -62,7 +62,7 @@ public class GameDataImpl implements GameData {
      */
     @Override
     public MapManager getMapManager() {
-        return new MapManagerImpl(mapManager);  // TODO devo ritornare una deepCopy del mapManager
+        return new MapManagerImpl(mapManager);
     }
 
     /**
