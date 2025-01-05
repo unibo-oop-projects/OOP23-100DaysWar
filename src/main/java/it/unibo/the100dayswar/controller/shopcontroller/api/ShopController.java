@@ -1,7 +1,5 @@
 package it.unibo.the100dayswar.controller.shopcontroller.api;
 
-import it.unibo.the100dayswar.model.unit.api.Unit;
-
 /**
  * Interface that represents the controller of the shop.
  */
@@ -26,5 +24,5 @@ public interface ShopController {
      * 
      * @param unit the unit to upgrade
      */
-    void upgradeUnit(Unit unit);
+    void upgradeUnit();
 }

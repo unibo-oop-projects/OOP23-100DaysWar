@@ -1,7 +1,9 @@
 package it.unibo.the100dayswar.controller.shopcontroller.impl;
 
 import it.unibo.the100dayswar.application.The100DaysWar;
+import it.unibo.the100dayswar.commons.utilities.impl.Pair;
 import it.unibo.the100dayswar.controller.shopcontroller.api.ShopController;
+import it.unibo.the100dayswar.model.cell.api.Cell;
 import it.unibo.the100dayswar.model.tower.api.TowerType;
 import it.unibo.the100dayswar.model.unit.api.Unit;
 
@@ -22,7 +24,8 @@ public class ShopControllerImpl implements ShopController {
      */
     @Override
     public void buyBasicTower() {
-        The100DaysWar.CONTROLLER.getGameInstance().buyTower(TowerType.BASIC, null);
+        final Pair<Unit, Cell> selectedCell = The100DaysWar.CONTROLLER.getMapController().getSelectedCell();
+        The100DaysWar.CONTROLLER.getGameInstance().buyTower(TowerType.BASIC, selectedCell.getSecond());
     }
 
     /** 
@@ -30,14 +33,20 @@ public class ShopControllerImpl implements ShopController {
      */
     @Override
     public void buyAdvancedTower() {
-        The100DaysWar.CONTROLLER.getGameInstance().buyTower(TowerType.ADVANCED, null);
+        final Pair<Unit, Cell> selectedCell = The100DaysWar.CONTROLLER.getMapController().getSelectedCell();
+        The100DaysWar.CONTROLLER.getGameInstance().buyTower(TowerType.ADVANCED, selectedCell.getSecond());
     }
 
     /** 
      * {@inheritDoc}
      */
     @Override
-    public void upgradeUnit(final Unit unit) {
+    public void upgradeUnit() {
+        final Pair<Unit, Cell> selectedCell = The100DaysWar.CONTROLLER.getMapController().getSelectedCell();
+        final Unit unit = selectedCell.getFirst();
+        if (unit == null) {
+            throw new IllegalStateException("No unit selected");
+        }
         The100DaysWar.CONTROLLER.getGameInstance().upgradeUnit(unit);
     }
 }
