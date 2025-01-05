@@ -3,18 +3,14 @@ package it.unibo.the100dayswar.view.map;
 
 import it.unibo.the100dayswar.application.The100DaysWar;
 import it.unibo.the100dayswar.controller.mapcontroller.api.MapController;
-import it.unibo.the100dayswar.model.cell.api.Cell;
-import it.unibo.the100dayswar.model.unit.api.Unit;
-
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.net.URL;
-import java.util.Optional;
+
+import java.util.List;
 
 
 /**
@@ -39,27 +35,6 @@ public class MapView extends JPanel {
         this.cellSize = CELL_SIZE;
         this.mapImage = loadImage(MAP_IMAGE_PATH);
         setLayout(null);
-
-        addMouseListener(new MouseAdapter() {
-            /**
-             * Handles a mouse click event.
-             * @param e the mouse event.
-             */
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                Cell clickedCell = getClickedCell(e.getX(), e.getY());
-                if (clickedCell != null) {
-                    Optional <Unit> unit = clickedCell.getUnit();
-
-                    // Stampa informazioni per test
-                    System.out.println("Clicked on cell: " + clickedCell.getPosition());
-                    unit.ifPresentOrElse(
-                        u -> System.out.println("Unit present: " + u),
-                        () -> System.out.println("No unit present.")
-                    );
-                }
-            }
-        });
     }
 
     /**
@@ -88,32 +63,24 @@ public class MapView extends JPanel {
     @Override
     protected void paintComponent(final Graphics g) {
         super.paintComponent(g);
-
-        final int totalWidth = mapController.getMapWidth() * cellSize;
-        final int totalHeight = mapController.getMapHeight() * cellSize;
+        final MapController mapController = The100DaysWar.CONTROLLER.getMapController();
+        final int totalWidth = mapController.getMapWidth() * CELL_SIZE;
+        final int totalHeight = mapController.getMapHeight() * CELL_SIZE;
         g.drawImage(mapImage, 0, 0, totalWidth, totalHeight, this);
 
-        final Image obstacleImage = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/map/obstacle.png"));
-        final Image spawnImage = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/map/spawn.png"));
+        final List<CellView> cellsView = mapController.getCellsView();
 
-        for (int y = 0; y < mapController.getMapHeight(); y++) {
-            for (int x = 0; x < mapController.getMapWidth(); x++) {
-                Cell cell = mapController.getMap().getMap()[y][x];
-                final int xPos = x * cellSize;
-                final int yPos = y * cellSize;
+        for (CellView cellView : cellsView) {
+            final int xPos = cellView.getX() * CELL_SIZE;
+            final int yPos = cellView.getY() * CELL_SIZE;
 
-                if (!cell.isBuildable()) {
-                    g.drawImage(obstacleImage, xPos, yPos, cellSize, cellSize, this);
-                }
-                if (cell.isSpawn()) {
-                    g.setColor(new Color(0, 0, 0, 50)); 
-                    g.fillRect(xPos, yPos, cellSize, cellSize);
-                    g.drawImage(spawnImage, xPos, yPos, cellSize, cellSize, this);
-                }
-
-                g.setColor(Color.BLACK);
-                g.drawRect(xPos, yPos, cellSize, cellSize);
+            final Image cellImage = loadImage(cellView.getImagePath());
+            if (cellImage != null) {
+                g.drawImage(cellImage, xPos, yPos, CELL_SIZE, CELL_SIZE, this);
             }
+
+            g.setColor(Color.BLACK);
+            g.drawRect(xPos, yPos, CELL_SIZE, CELL_SIZE);
         }
     }
 
@@ -125,22 +92,4 @@ public class MapView extends JPanel {
     public Dimension getPreferredSize() {
         return new Dimension(mapController.getMapWidth() * cellSize, mapController.getMapHeight() * cellSize);
     }
-
-
-    /**
-     * Gets the cell and unit at the specified mouse coordinates.
-     * @param mouseX the x-coordinate of the mouse click.
-     * @param mouseY the y-coordinate of the mouse click.
-     * @return a Pair containing the Optional<Unit> and the Cell, or null if the click is out of bounds.
-     */
-    public Cell getClickedCell(int mouseX, int mouseY) {
-        int cellX = mouseX / cellSize;
-        int cellY = mouseY / cellSize;
-
-        if (cellX >= 0 && cellX < mapController.getMapWidth() && cellY >= 0 && cellY < mapController.getMapHeight()) {
-            return mapController.getMap().getMap()[cellY][cellX];
-        }
-        return null;
-    }
-
 }

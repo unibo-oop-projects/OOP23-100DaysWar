@@ -15,7 +15,7 @@ import it.unibo.the100dayswar.controller.gamecontroller.api.GameController;
 import it.unibo.the100dayswar.controller.gamecontroller.impl.GameControllerImpl;
 import it.unibo.the100dayswar.controller.maincontroller.api.MainController;
 import it.unibo.the100dayswar.controller.mapcontroller.api.MapController;
-import it.unibo.the100dayswar.controller.mapcontroller.impl.MapControllerIImpl;
+import it.unibo.the100dayswar.controller.mapcontroller.impl.MapControllerImpl;
 import it.unibo.the100dayswar.controller.shopcontroller.api.ShopController;
 import it.unibo.the100dayswar.controller.shopcontroller.impl.ShopControllerImpl;
 import it.unibo.the100dayswar.controller.statisticscontoller.api.StatisticController;
@@ -48,7 +48,7 @@ public class MainControllerImpl implements MainController {
     public MainControllerImpl() {
         this.statisticController = new StatisticControllerImpl();
         this.shopController = new ShopControllerImpl();
-        this.mapController = new MapControllerIImpl();
+        this.mapController = new MapControllerImpl();
         this.gameController = new GameControllerImpl();
     }
 
