@@ -26,7 +26,7 @@ import it.unibo.the100dayswar.model.unit.api.Unit;
 /**
  * An abstract class that implements the Player interface.
  */
-public class PlayerImpl implements Player {
+public abstract class PlayerImpl implements Player {
     private static final long serialVersionUID = 1L;
 
     private final String username;
