@@ -71,6 +71,8 @@ public class SoldierImpl extends UnitImpl implements Soldier {
             this.setLevel(this.getLevel() + 1);
             final int increaseFactor = INCREASE_HEALTH * (this.getLevel() - 1);
             this.setHealth(this.currentHealth() + increaseFactor);
+        } else {
+            throw new UnsupportedOperationException("Cannot upgrade this unit");
         }
     }
 }

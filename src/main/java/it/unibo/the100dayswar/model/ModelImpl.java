@@ -101,7 +101,7 @@ public class ModelImpl implements Model {
     public void buyTower(final TowerType type, final Cell position) {
         final Tower tower = factory.createTower(players.get(HUMAN_PLAYER), type, position);
         players.get(HUMAN_PLAYER).buyUnit(tower);
-        updateAfterCreation(tower, List.of(mapManager));
+        updateMap(tower, List.of(mapManager));
     }
 
     /** 
@@ -111,7 +111,8 @@ public class ModelImpl implements Model {
     public void buySoldier() {
         final Soldier soldier = factory.createSoldier(getHumanPlayer());
         players.get(1).buyUnit(soldier);
-        updateAfterCreation(soldier, List.of(mapManager));
+        updateMap(soldier, List.of(mapManager));
+        soldier.attach(mapManager);
     }
 
     /** 
@@ -333,7 +334,7 @@ public class ModelImpl implements Model {
      * @param unit the unit created
      * @param observers the observer to update
      */
-    private void updateAfterCreation(final Unit unit, final List<Observer<Pair<Unit, Cell>>> observers) {
+    private void updateMap(final Unit unit, final List<Observer<Pair<Unit, Cell>>> observers) {
         observers.forEach(o -> o.update(new Pair<>(unit, unit.getPosition())));
     }
 }
