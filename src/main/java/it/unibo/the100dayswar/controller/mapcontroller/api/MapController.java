@@ -33,4 +33,12 @@ public interface MapController {
      * @return the game map
      */
     GameMap getMap();
+
+    /**
+     * Handles the cell click event.
+     *
+     * @param cellX the X coordinate of the clicked cell
+     * @param cellY the Y coordinate of the clicked cell
+     */
+    void onCellClick(int cellX, int cellY);
 }
