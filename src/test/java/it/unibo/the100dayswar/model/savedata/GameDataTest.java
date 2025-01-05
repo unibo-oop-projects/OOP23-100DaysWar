@@ -1,25 +1,20 @@
 package it.unibo.the100dayswar.model.savedata;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
 import org.junit.jupiter.api.Test;
 
-import it.unibo.the100dayswar.commons.utilities.impl.PositionImpl;
 import it.unibo.the100dayswar.model.bot.api.BotPlayer;
 import it.unibo.the100dayswar.model.bot.impl.SimpleBot;
-import it.unibo.the100dayswar.model.cell.impl.CellImpl;
 import it.unibo.the100dayswar.model.map.api.MapManager;
 import it.unibo.the100dayswar.model.map.impl.GameMapBuilderImpl;
 import it.unibo.the100dayswar.model.map.impl.MapManagerImpl;
 import it.unibo.the100dayswar.model.player.api.HumanPlayer;
 import it.unibo.the100dayswar.model.player.api.Player;
 import it.unibo.the100dayswar.model.player.impl.HumanPlayerImpl;
-import it.unibo.the100dayswar.model.player.impl.PlayerImpl;
 import it.unibo.the100dayswar.model.savedata.impl.GameDataImpl;
 import it.unibo.the100dayswar.model.turn.api.GameTurnManager;
 import it.unibo.the100dayswar.model.turn.impl.GameTurnManagerImpl;
@@ -51,20 +46,37 @@ class GameDataTest {
     }
 
     /**
-     * Test to verify getPlayerData1 returns a deep copy.
+     * Test to verify getHumanData returns a deep copy.
      */
     @Test
-    void testGetPlayerData1ReturnsDeepCopy() {
+    void testGetPlayerDataReturnsDeepCopy() {
         final Player copy = mockGameData.getHumanData();
 
-        assertNotSame(mockPlayer1, copy);
+        assertNotSame(mockHumanPlayer, copy);
 
-        assertEquals(mockPlayer1.getBankAccount(), copy.getBankAccount());
-        assertEquals(mockPlayer1.getSoldiers(), copy.getSoldiers());
-        assertEquals(mockPlayer1.getSpawnPoint(), copy.getSpawnPoint());
-        assertEquals(mockPlayer1.getTowers(), copy.getTowers());
-        assertEquals(mockPlayer1.getUnits(), copy.getUnits());
-        assertEquals(mockPlayer1.getUsername(), copy.getUsername());
+        assertEquals(mockHumanPlayer.getBankAccount(), copy.getBankAccount());
+        assertEquals(mockHumanPlayer.getSoldiers(), copy.getSoldiers());
+        assertEquals(mockHumanPlayer.getSpawnPoint(), copy.getSpawnPoint());
+        assertEquals(mockHumanPlayer.getTowers(), copy.getTowers());
+        assertEquals(mockHumanPlayer.getUnits(), copy.getUnits());
+        assertEquals(mockHumanPlayer.getUsername(), copy.getUsername());
+    }
+
+    /**
+     * Test to verify getBotData returns a deep copy.
+     */
+    @Test
+    void testGetBotDataReturnsDeepCopy() {
+        final Player copy = mockGameData.getBotData();
+
+        assertNotSame(mockBotPlayer, copy);
+
+        assertEquals(mockBotPlayer.getBankAccount(), copy.getBankAccount());
+        assertEquals(mockBotPlayer.getSoldiers(), copy.getSoldiers());
+        assertEquals(mockBotPlayer.getSpawnPoint(), copy.getSpawnPoint());
+        assertEquals(mockBotPlayer.getTowers(), copy.getTowers());
+        assertEquals(mockBotPlayer.getUnits(), copy.getUnits());
+        assertEquals(mockBotPlayer.getUsername(), copy.getUsername());
     }
 
     /**
