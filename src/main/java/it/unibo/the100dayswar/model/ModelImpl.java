@@ -74,7 +74,7 @@ public class ModelImpl implements Model {
      * @throws IllegalStateException if the data aren't laoded correctly
      */
     public ModelImpl(final Optional<String> path) {
-        final GameLoader loader = (path.isPresent()) ? new GameLoaderImpl(path.get()) : new GameLoaderImpl();
+        final GameLoader loader = path.isPresent() ? new GameLoaderImpl(path.get()) : new GameLoaderImpl();
         final Optional<GameData> data = loader.loadGame();
 
         if (data.isEmpty()) {
@@ -134,6 +134,7 @@ public class ModelImpl implements Model {
     /** 
      * {@inheritDoc}
      */
+    @Override
     public Player getHumanPlayer() {
         if (players.size() > 1) {
             return players.get(1);
@@ -145,6 +146,7 @@ public class ModelImpl implements Model {
     /** 
      * {@inheritDoc}
      */
+    @Override
     public Player getBotPlayer() {
         if (!players.isEmpty() && players.get(0) instanceof BotPlayer) {
             return players.get(0);
@@ -156,6 +158,7 @@ public class ModelImpl implements Model {
     /** 
      * {@inheritDoc}
      */
+    @Override
     public Player getCurrentPlayer() {
         return turnManager.getCurrentPlayer();
     }
@@ -163,6 +166,7 @@ public class ModelImpl implements Model {
     /** 
      * {@inheritDoc}
      */
+    @Override
     public boolean isOver() {
         //  mapManager.getBotSpawn() - mapMnaager.getHumanSpawn()
         /* return mapManager.getPlayersCells()
@@ -275,7 +279,12 @@ public class ModelImpl implements Model {
      */
     @Override
     public GameMap getMap() {
-        return  new GameMapImpl ( (int) mapManager.getMapDimension().getWidth(), (int) mapManager.getMapDimension().getHeight(),MapManager.createMapFromStream((int) getMapWidth(), (int) getMapHeight(), mapManager.getMapAsAStream()));
+        return new GameMapImpl(
+            (int) mapManager.getMapDimension().getWidth(), 
+            (int) mapManager.getMapDimension().getHeight(),
+            MapManager.createMapFromStream((int) getMapWidth(),
+            (int) getMapHeight(), mapManager.getMapAsAStream())
+            );
     }
 
     /**
@@ -305,10 +314,8 @@ public class ModelImpl implements Model {
             } catch (IllegalStateException e) {
                 return false;
             }
-
             return true;
         }
-
         LOGGER.log(Level.WARNING, "The unit is not a soldier");
         throw new IllegalArgumentException("The unit is not a soldier");
     }
