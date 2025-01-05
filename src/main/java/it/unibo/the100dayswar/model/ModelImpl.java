@@ -20,8 +20,9 @@ import it.unibo.the100dayswar.model.map.api.MapManager;
 import it.unibo.the100dayswar.model.map.impl.GameMapBuilderImpl;
 import it.unibo.the100dayswar.model.map.impl.GameMapImpl;
 import it.unibo.the100dayswar.model.map.impl.MapManagerImpl;
+import it.unibo.the100dayswar.model.player.api.HumanPlayer;
 import it.unibo.the100dayswar.model.player.api.Player;
-import it.unibo.the100dayswar.model.player.impl.PlayerImpl;
+import it.unibo.the100dayswar.model.player.impl.HumanPlayerImpl;
 import it.unibo.the100dayswar.model.savedata.api.GameData;
 import it.unibo.the100dayswar.model.savedata.api.GameSaver;
 import it.unibo.the100dayswar.model.savedata.impl.GameDataImpl;
@@ -42,9 +43,8 @@ import it.unibo.the100dayswar.model.turn.impl.GameTurnManagerImpl;
  */
 public class ModelImpl implements Model {
     private static final int DEFAULT_MAP_SIZE = 10;
-    //private static final int DEFAULT_OBSTACLES = 10; li ho settati gia nel MapManager
-    //private static final int DEFAULT_BONUS_CELLS = 15; stessa cosa degli ostacoli
     private static final int MAX_USERNAME_LENGTH = 15;
+    private static final int BOT_PLAYER = 0;
     private static final int HUMAN_PLAYER = 1;
     private static final Logger LOGGER = Logger.getLogger(ModelImpl.class.getName());
 
@@ -63,7 +63,7 @@ public class ModelImpl implements Model {
         this.mapManager = new MapManagerImpl(new GameMapBuilderImpl(DEFAULT_MAP_SIZE, DEFAULT_MAP_SIZE));
         ActionType.add(mapManager);
 
-        this.players = List.of(new SimpleBot(mapManager), new PlayerImpl(namePlayer, mapManager.getPlayerSpawn()));
+        this.players = List.of(new SimpleBot(mapManager), new HumanPlayerImpl(namePlayer, mapManager.getPlayerSpawn()));
         this.turnManager = new GameTurnManagerImpl(players);
         this.gameStatistics = new GameStatisticImpl(players, mapManager);
         gameStatistics.updateAllStatistics();
@@ -76,7 +76,7 @@ public class ModelImpl implements Model {
      * @throws IllegalStateException if the data aren't laoded correctly
      */
     public ModelImpl(final Optional<String> path) {
-        final GameLoader loader = (path.isPresent()) ? new GameLoaderImpl(path.get()) : new GameLoaderImpl();
+        final GameLoader loader = path.isPresent() ? new GameLoaderImpl(path.get()) : new GameLoaderImpl();
         final Optional<GameData> data = loader.loadGame();
 
         if (data.isEmpty()) {
@@ -89,7 +89,7 @@ public class ModelImpl implements Model {
         this.mapManager = new MapManagerImpl(data.get().getMapManager());
         ActionType.add(mapManager);
 
-        this.players = List.of(new PlayerImpl(data.get().getPlayerData1()), new PlayerImpl(data.get().getPlayerData1()));
+        this.players = List.of(new SimpleBot(data.get().getBotData()), new HumanPlayerImpl(getHumanPlayer()));
 
         this.turnManager = data.get().getGameTurnManager();
         this.gameStatistics = new GameStatisticImpl(players, mapManager);
@@ -124,7 +124,7 @@ public class ModelImpl implements Model {
             throw new IllegalArgumentException("The username is too long");
         }
         if (players.size() == 1) {
-            players.add(new PlayerImpl(
+            players.add(new HumanPlayerImpl(
                 username,
                 mapManager.getPlayerSpawn()
                 ));
@@ -136,9 +136,10 @@ public class ModelImpl implements Model {
     /** 
      * {@inheritDoc}
      */
+    @Override
     public Player getHumanPlayer() {
-        if (players.size() > 1) {
-            return players.get(1);
+        if (players.size() > HUMAN_PLAYER && players.get(HUMAN_PLAYER) instanceof HumanPlayer) {
+            return players.get(HUMAN_PLAYER);
         } else {
             throw new IllegalStateException("The human player has not been added yet");
         }
@@ -147,9 +148,10 @@ public class ModelImpl implements Model {
     /** 
      * {@inheritDoc}
      */
+    @Override
     public Player getBotPlayer() {
-        if (!players.isEmpty() && players.get(0) instanceof BotPlayer) {
-            return players.get(1);
+        if (!players.isEmpty() && players.get(BOT_PLAYER) instanceof BotPlayer) {
+            return players.get(BOT_PLAYER);
         } else {
             throw new IllegalStateException("No bot player is present");
         }
@@ -158,6 +160,7 @@ public class ModelImpl implements Model {
     /** 
      * {@inheritDoc}
      */
+    @Override
     public Player getCurrentPlayer() {
         return turnManager.getCurrentPlayer();
     }
@@ -165,6 +168,7 @@ public class ModelImpl implements Model {
     /** 
      * {@inheritDoc}
      */
+    @Override
     public boolean isOver() {
         //  mapManager.getBotSpawn() - mapMnaager.getHumanSpawn()
         /* return mapManager.getPlayersCells()
@@ -180,8 +184,13 @@ public class ModelImpl implements Model {
     @Override
     public boolean saveGame(final String path) {
         try {
-            final GameData data = new GameDataImpl(getCurrentPlayer(), getBotPlayer(), mapManager, turnManager);
+            final GameData data = new GameDataImpl(
+                (HumanPlayer) getHumanPlayer(), 
+                (BotPlayer) getBotPlayer(), 
+                mapManager, turnManager
+            );
             final GameSaver gameSaver = new GameSaverImpl(data, path);
+
             gameSaver.saveGame();
         } catch (IOException | IllegalArgumentException e) {
             return false;
@@ -224,6 +233,7 @@ public class ModelImpl implements Model {
     }
 
     /**
+     * TODO
      * Computes the ideal cell starting from the given cell
      * and the specified direction.
      * 
@@ -277,7 +287,12 @@ public class ModelImpl implements Model {
      */
     @Override
     public GameMap getMap() {
-        return  new GameMapImpl ( (int) mapManager.getMapDimension().getWidth(), (int) mapManager.getMapDimension().getHeight(),MapManager.createMapFromStream((int) getMapWidth(), (int) getMapHeight(), mapManager.getMapAsAStream()));
+        return new GameMapImpl(
+            (int) mapManager.getMapDimension().getWidth(), 
+            (int) mapManager.getMapDimension().getHeight(),
+            MapManager.createMapFromStream((int) getMapWidth(),
+            (int) getMapHeight(), mapManager.getMapAsAStream())
+            );
     }
 
     /**
@@ -307,10 +322,8 @@ public class ModelImpl implements Model {
             } catch (IllegalStateException e) {
                 return false;
             }
-
             return true;
         }
-
         LOGGER.log(Level.WARNING, "The unit is not a soldier");
         throw new IllegalArgumentException("The unit is not a soldier");
     }

@@ -54,8 +54,8 @@ class GameDataTest {
      */
     @Test
     void testConstructorInitializesFields() {
-        assertNotNull(mockGameData.getPlayerData1());
-        assertNotNull(mockGameData.getPlayerData2());
+        assertNotNull(mockGameData.getHumanData());
+        assertNotNull(mockGameData.getBotData());
         assertNotNull(mockGameData.getMapManager());
         assertNotNull(mockGameData.getGameTurnManager());
     }
@@ -65,7 +65,7 @@ class GameDataTest {
      */
     @Test
     void testGetPlayerData1ReturnsDeepCopy() {
-        final Player copy = mockGameData.getPlayerData1();
+        final Player copy = mockGameData.getHumanData();
 
         assertNotSame(mockPlayer1, copy);
 

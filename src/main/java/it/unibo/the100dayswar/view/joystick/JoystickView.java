@@ -4,6 +4,7 @@ import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 import javax.swing.BorderFactory;
 import java.awt.GridBagLayout;
+import java.awt.Color;
 import java.awt.GridBagConstraints;
 
 /**
@@ -30,19 +31,19 @@ public class JoystickView extends JPanel {
 
         this.movementView.setBorder(BorderFactory.createTitledBorder(
             BorderFactory.createLineBorder(
-                java.awt.Color.BLACK),
+                Color.BLACK),
                 "Movement",
                 TitledBorder.CENTER,
                 TitledBorder.TOP));
         this.shopView.setBorder(BorderFactory.createTitledBorder(
             BorderFactory.createLineBorder(
-                java.awt.Color.BLACK),
+                Color.BLACK),
                 "Shop",
                 TitledBorder.CENTER,
                 TitledBorder.TOP));
         this.controlView.setBorder(BorderFactory.createTitledBorder(
             BorderFactory.createLineBorder(
-                java.awt.Color.BLACK), 
+                Color.BLACK), 
                 "Control", 
                 TitledBorder.CENTER, 
                 TitledBorder.TOP));
