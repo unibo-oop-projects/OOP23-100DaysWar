@@ -16,6 +16,7 @@ import javax.swing.SwingConstants;
 
 import it.unibo.the100dayswar.commons.utilities.impl.IconLoader;
 import it.unibo.the100dayswar.commons.utilities.impl.LoadPixelFont;
+import it.unibo.the100dayswar.view.map.MapView;
 import it.unibo.the100dayswar.view.pausemenu.PauseMenu;
 import it.unibo.the100dayswar.view.rules.RulesViewer;
 import it.unibo.the100dayswar.view.startmenu.ExitWindow;
@@ -33,20 +34,20 @@ public class ControlView extends JPanel {
 
     private final JButton attack;
     private final JButton pause;
-    private final JButton resume;
+    private final JButton skip;
     private final JButton rules;
     private final JButton quit;
 
     /**
      * Constructor for the ControlView class.
      */
-    public ControlView() {
+    public ControlView(MapView mapView) {
         super.setLayout(new GridBagLayout());
         final GridBagConstraints gbc = createGridBagConstraints();
 
         this.attack = createButton("Attack");
         this.pause = createButton("Pause");
-        this.resume = createButton("Resume");
+        this.skip = createButton("Skip Turn");
         this.rules = createButton("Read Rules");
         this.quit = createButton("Quit");
 
@@ -62,7 +63,7 @@ public class ControlView extends JPanel {
     public void disableButtons() {
         this.attack.setEnabled(false);
         this.pause.setEnabled(false);
-        this.resume.setEnabled(false);
+        this.skip.setEnabled(false);
         this.rules.setEnabled(false);
         this.quit.setEnabled(false);
     }
@@ -73,7 +74,7 @@ public class ControlView extends JPanel {
     public void enableButtons() {
         this.attack.setEnabled(true);
         this.pause.setEnabled(true);
-        this.resume.setEnabled(true);
+        this.skip.setEnabled(true);
         this.rules.setEnabled(true);
         this.quit.setEnabled(true);
     }
@@ -123,7 +124,7 @@ public class ControlView extends JPanel {
     private void setButtonActions() {
         attack.addActionListener(e -> attackAction());
         pause.addActionListener(e -> pauseAction());
-        resume.addActionListener(e -> resumeAction());
+        skip.addActionListener(e -> skipTurn());
         rules.addActionListener(e -> rulesAction());
         quit.addActionListener(e -> exitAction());
     }
@@ -142,7 +143,7 @@ public class ControlView extends JPanel {
         super.add(pause, gbc);
 
         gbc.gridy = 2;
-        super.add(resume, gbc);
+        super.add(skip, gbc);
 
         gbc.gridy = 3;
         super.add(rules, gbc);
@@ -172,9 +173,9 @@ public class ControlView extends JPanel {
     }
 
     /**
-     * Defines the actions after pressing RESUME.
+     * Skip the current turn without doing nothing.
      */
-    private void resumeAction() {
+    private void skipTurn() {
     }
 
     /** 

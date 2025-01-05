@@ -15,13 +15,13 @@ import org.junit.jupiter.api.AfterEach;
 import it.unibo.the100dayswar.model.savedata.impl.GameSaverImpl;
 import it.unibo.the100dayswar.model.turn.api.GameTurnManager;
 import it.unibo.the100dayswar.model.turn.impl.GameTurnManagerImpl;
-import it.unibo.the100dayswar.commons.utilities.impl.PositionImpl;
-import it.unibo.the100dayswar.model.cell.impl.CellImpl;
+import it.unibo.the100dayswar.model.bot.api.BotPlayer;
+import it.unibo.the100dayswar.model.bot.impl.SimpleBot;
 import it.unibo.the100dayswar.model.map.api.MapManager;
 import it.unibo.the100dayswar.model.map.impl.GameMapBuilderImpl;
 import it.unibo.the100dayswar.model.map.impl.MapManagerImpl;
-import it.unibo.the100dayswar.model.player.api.Player;
-import it.unibo.the100dayswar.model.player.impl.PlayerImpl;
+import it.unibo.the100dayswar.model.player.api.HumanPlayer;
+import it.unibo.the100dayswar.model.player.impl.HumanPlayerImpl;
 import it.unibo.the100dayswar.model.savedata.impl.GameDataImpl;
 
 /**
@@ -30,14 +30,13 @@ import it.unibo.the100dayswar.model.savedata.impl.GameDataImpl;
 class GameSaverTest {
     private static final String TEST_CUSTOM_PATH = generateSavePath("data");
     private static final String DEFAULT_PATH = System.getProperty("user.home") + "/saved_game.ser";
-    private static final int SIZE = 10;
+    private static final int MAP_DIMENSION = 10;
 
-    private final Player mockPlayer1 = new PlayerImpl("MockPlayer1", new CellImpl(new PositionImpl(2, 2), true, true));
-    private final Player mockPlayer2 = new PlayerImpl("MockPlayer2", new CellImpl(new PositionImpl(8, 8), true, true));
-    private final GameTurnManager mockGameTurnManager = new GameTurnManagerImpl(List.of(mockPlayer1, mockPlayer2));
-    private final MapManager mockMapManager = new MapManagerImpl(new GameMapBuilderImpl(SIZE, SIZE));
-
-    private final GameDataImpl mockGameData = new GameDataImpl(mockPlayer2, mockPlayer1, mockMapManager, mockGameTurnManager);
+    private final MapManager mockGameMapManager = new MapManagerImpl(new GameMapBuilderImpl(MAP_DIMENSION, MAP_DIMENSION));
+    private final BotPlayer mockBotPlayer = new SimpleBot(mockGameMapManager);
+    private final HumanPlayer mockHumanPlayer = new HumanPlayerImpl("Mock human player", mockGameMapManager.getPlayerSpawn());
+    private final GameTurnManager mockGameTurnManager = new GameTurnManagerImpl(List.of(mockBotPlayer, mockHumanPlayer));
+    private final GameDataImpl mockGameData = new GameDataImpl(mockHumanPlayer, mockBotPlayer, mockGameMapManager, mockGameTurnManager);
 
     /**
      * Cleans up the files.

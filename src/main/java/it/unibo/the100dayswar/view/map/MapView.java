@@ -3,17 +3,20 @@ package it.unibo.the100dayswar.view.map;
 
 import it.unibo.the100dayswar.application.The100DaysWar;
 import it.unibo.the100dayswar.controller.mapcontroller.api.MapController;
-import it.unibo.the100dayswar.model.cell.api.Cell;
-import it.unibo.the100dayswar.model.unit.api.Unit;
-
 
 import javax.imageio.ImageIO;
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.MouseAdapter;
+import javax.swing.JPanel;
+
 import java.awt.event.MouseEvent;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.event.MouseAdapter;
 import java.io.IOException;
 import java.net.URL;
+
+import java.util.List;
 import java.util.Optional;
 
 
@@ -27,120 +30,110 @@ public class MapView extends JPanel {
     private static final long serialVersionUID = 1L;
     private final MapController mapController;
     private final Image mapImage;
-    private final int cellSize;
-
-    /**
-     * Constructor for MapView.
-     * @param mapController the map controller.
-     * @param mapImagePath the path to the map background image.
-     */
-    public MapView() {
-        this.mapController = The100DaysWar.CONTROLLER.getMapController();
-        this.cellSize = CELL_SIZE;
-        this.mapImage = loadImage(MAP_IMAGE_PATH);
-        setLayout(null);
-
-        addMouseListener(new MouseAdapter() {
-            /**
-             * Handles a mouse click event.
-             * @param e the mouse event.
-             */
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                Cell clickedCell = getClickedCell(e.getX(), e.getY());
-                if (clickedCell != null) {
-                    Optional <Unit> unit = clickedCell.getUnit();
-
-                    // Stampa informazioni per test
-                    System.out.println("Clicked on cell: " + clickedCell.getPosition());
-                    unit.ifPresentOrElse(
-                        u -> System.out.println("Unit present: " + u),
-                        () -> System.out.println("No unit present.")
-                    );
+    private CellView selectedCell;
+        
+    
+        /**
+         * Constructor for MapView.
+         * @param mapController the map controller.
+         * @param mapImagePath the path to the map background image.
+         */
+        public MapView() {
+            this.mapController = The100DaysWar.CONTROLLER.getMapController();
+            this.mapImage = loadImage(MAP_IMAGE_PATH);
+            setLayout(null);
+    
+            addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    handleCellClick(e.getX(), e.getY());
                 }
+            });
+        }
+    
+        /**
+         * Loads an image from the given path.
+         * @param path the image path.
+         * @return the loaded Image.
+         */
+        private Image loadImage(final String path) {
+            try {
+                final URL imageUrl = getClass().getResource(path);
+                if (imageUrl != null) {
+                    return ImageIO.read(imageUrl);
+                } else {
+                    throw new IOException("Image not found: " + path);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+                return null;
             }
+        }
+    
+        /**
+         * Paints the map view.
+         * @param g the graphics object.
+         */
+        @Override
+        protected void paintComponent(final Graphics g) {
+            super.paintComponent(g);
+            final MapController mapController = The100DaysWar.CONTROLLER.getMapController();
+            final int totalWidth = mapController.getMapWidth() * CELL_SIZE;
+            final int totalHeight = mapController.getMapHeight() * CELL_SIZE;
+            g.drawImage(mapImage, 0, 0, totalWidth, totalHeight, this);
+    
+            final List<CellView> cellsView = mapController.getCellsView();
+    
+            for (CellView cellView : cellsView) {
+                final int xPos = cellView.getX() * CELL_SIZE;
+                final int yPos = cellView.getY() * CELL_SIZE;
+    
+                final Image cellImage = loadImage(cellView.getImagePath());
+                if (cellImage != null) {
+                    g.drawImage(cellImage, xPos, yPos, CELL_SIZE, CELL_SIZE, this);
+                }
+    
+                g.setColor(Color.BLACK);
+                g.drawRect(xPos, yPos, CELL_SIZE, CELL_SIZE);
+            }
+        }
+    
+        /**
+         * Returns the preferred size of the map view.
+         * @return the preferred size.
+         */
+        @Override
+        public Dimension getPreferredSize() {
+            return new Dimension(mapController.getMapWidth() * CELL_SIZE, mapController.getMapHeight() * CELL_SIZE);
+        }
+    
+        /**
+         * Handles cell click and retrieves the clicked cell data.
+         *
+         * @param mouseX the X coordinate of the mouse click
+         * @param mouseY the Y coordinate of the mouse click
+         */
+        private void handleCellClick(int mouseX, int mouseY) {
+            final int cellX = mouseX / CELL_SIZE;
+            final int cellY = mouseY / CELL_SIZE;
+            final Optional<CellView> clickedCell = mapController.getCellsView().stream()
+                .filter(cell -> cell.getX() == cellX && cell.getY() == cellY)
+                .findFirst();
+    
+            clickedCell.ifPresent(cell -> {
+                this.selectedCell = cell;
+            repaint();
+
+            mapController.onCellClick(cellX, cellY);
         });
     }
 
     /**
-     * Loads an image from the given path.
-     * @param path the image path.
-     * @return the loaded Image.
+     * Gets the selected cell.
+     * @return the selected cell.
      */
-    private Image loadImage(final String path) {
-        try {
-            final URL imageUrl = getClass().getResource(path);
-            if (imageUrl != null) {
-                return ImageIO.read(imageUrl);
-            } else {
-                throw new IOException("Image not found: " + path);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    /**
-     * Paints the map view.
-     * @param g the graphics object.
-     */
-    @Override
-    protected void paintComponent(final Graphics g) {
-        super.paintComponent(g);
-
-        final int totalWidth = mapController.getMapWidth() * cellSize;
-        final int totalHeight = mapController.getMapHeight() * cellSize;
-        g.drawImage(mapImage, 0, 0, totalWidth, totalHeight, this);
-
-        final Image obstacleImage = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/map/obstacle.png"));
-        final Image spawnImage = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/map/spawn.png"));
-
-        for (int y = 0; y < mapController.getMapHeight(); y++) {
-            for (int x = 0; x < mapController.getMapWidth(); x++) {
-                Cell cell = mapController.getMap().getMap()[y][x];
-                final int xPos = x * cellSize;
-                final int yPos = y * cellSize;
-
-                if (!cell.isBuildable()) {
-                    g.drawImage(obstacleImage, xPos, yPos, cellSize, cellSize, this);
-                }
-                if (cell.isSpawn()) {
-                    g.setColor(new Color(0, 0, 0, 50)); 
-                    g.fillRect(xPos, yPos, cellSize, cellSize);
-                    g.drawImage(spawnImage, xPos, yPos, cellSize, cellSize, this);
-                }
-
-                g.setColor(Color.BLACK);
-                g.drawRect(xPos, yPos, cellSize, cellSize);
-            }
-        }
-    }
-
-    /**
-     * Returns the preferred size of the map view.
-     * @return the preferred size.
-     */
-    @Override
-    public Dimension getPreferredSize() {
-        return new Dimension(mapController.getMapWidth() * cellSize, mapController.getMapHeight() * cellSize);
-    }
-
-
-    /**
-     * Gets the cell and unit at the specified mouse coordinates.
-     * @param mouseX the x-coordinate of the mouse click.
-     * @param mouseY the y-coordinate of the mouse click.
-     * @return a Pair containing the Optional<Unit> and the Cell, or null if the click is out of bounds.
-     */
-    public Cell getClickedCell(int mouseX, int mouseY) {
-        int cellX = mouseX / cellSize;
-        int cellY = mouseY / cellSize;
-
-        if (cellX >= 0 && cellX < mapController.getMapWidth() && cellY >= 0 && cellY < mapController.getMapHeight()) {
-            return mapController.getMap().getMap()[cellY][cellX];
-        }
-        return null;
+    public CellView getSelectedCell() {
+        return this.selectedCell;
     }
 
 }

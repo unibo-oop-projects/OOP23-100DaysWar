@@ -11,10 +11,11 @@ import java.util.Optional;
 import it.unibo.the100dayswar.commons.utilities.impl.PositionImpl;
 import it.unibo.the100dayswar.model.cell.impl.CellImpl;
 import it.unibo.the100dayswar.model.cell.api.Cell;
-import it.unibo.the100dayswar.model.player.impl.PlayerImpl;
+import it.unibo.the100dayswar.model.player.impl.HumanPlayerImpl;
 import it.unibo.the100dayswar.model.player.api.Player;
 import it.unibo.the100dayswar.model.soldier.impl.SoldierImpl;
 import it.unibo.the100dayswar.model.soldier.api.Soldier;
+import it.unibo.the100dayswar.model.player.api.HumanPlayer;
 
 class CellTest {
 
@@ -32,7 +33,7 @@ class CellTest {
 
         assertTrue(cell.isFree());
 
-        final Player player = new PlayerImpl("Player1", cell);
+        final HumanPlayer player = new HumanPlayerImpl("Player1", cell);
         final Soldier soldier = new SoldierImpl(player);
         cell.setOccupation(Optional.of(soldier));
 
@@ -45,7 +46,7 @@ class CellTest {
 
         assertTrue(cell.getUnit().isEmpty());
 
-        final Player player = new PlayerImpl("Player1", cell);
+        final Player player = new HumanPlayerImpl("Player1", cell);
         final Soldier soldier = new SoldierImpl(player);
         cell.setOccupation(Optional.of(soldier));
 

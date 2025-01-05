@@ -7,7 +7,6 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Insets;
-import java.awt.event.ActionListener;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -18,6 +17,7 @@ import javax.swing.SwingConstants;
 import it.unibo.the100dayswar.application.The100DaysWar;
 import it.unibo.the100dayswar.commons.utilities.impl.IconLoader;
 import it.unibo.the100dayswar.commons.utilities.impl.LoadPixelFont;
+import it.unibo.the100dayswar.view.map.MapView;
 
 /** 
  * Class that represents the part of the joystick that 
@@ -38,7 +38,7 @@ public class MovementView extends JPanel {
     /**
      * Constructor for the MovementView class.
      */
-    public MovementView() {
+    public MovementView(MapView mapView) {
         super.setLayout(new GridBagLayout());
         final GridBagConstraints gbc = createGridBagConstraints();
 
@@ -47,7 +47,7 @@ public class MovementView extends JPanel {
         this.left = createButton("LEFT");
         this.right = createButton("RIGHT");
 
-        setButtonActions();
+        setButtonActions(mapView);
         arrangeButtons(gbc);
 
         super.setPreferredSize(SIZE);
@@ -115,12 +115,47 @@ public class MovementView extends JPanel {
     /**
      * Sets actions for the joystick buttons.
      */
-    private void setButtonActions() {
-        final ActionListener fakeActionListener = e -> The100DaysWar.CONTROLLER.startGame();
-        up.addActionListener(fakeActionListener);
-        down.addActionListener(fakeActionListener);
-        left.addActionListener(fakeActionListener);
-        right.addActionListener(fakeActionListener);
+    private void setButtonActions(MapView mapView) {
+        up.addActionListener(e -> moveUp(mapView));
+        down.addActionListener(e -> moveDown(mapView));
+        left.addActionListener(e -> moveLeft(mapView));
+        right.addActionListener(e -> moveRight(mapView));
+    }
+
+    /**
+     * Moves the soldier up.
+     * @param mapView the map view to repaint.
+     */
+    private void moveUp(MapView mapView) {
+        The100DaysWar.CONTROLLER.getMovementController().moveUp();
+        mapView.repaint();
+    }
+
+    /**
+     * Moves the soldier down.
+     * @param mapView the map view to repaint.
+     */
+    private void moveDown(MapView mapView) {
+        The100DaysWar.CONTROLLER.getMovementController().moveDown();
+        mapView.repaint();
+    }
+
+    /**
+     * Moves the soldier to the left.
+     * @param mapView the map view to repaint.
+     */
+    private void moveLeft(MapView mapView) {
+        The100DaysWar.CONTROLLER.getMovementController().moveLeft();
+        mapView.repaint();
+    }
+
+    /**
+     * Moves the soldier to the right.
+     * @param mapView the map view to repaint.
+     */
+    private void moveRight(MapView mapView) {
+        The100DaysWar.CONTROLLER.getMovementController().moveRight();
+        mapView.repaint();
     }
 
     /**

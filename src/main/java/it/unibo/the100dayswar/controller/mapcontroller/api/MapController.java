@@ -1,45 +1,44 @@
 package it.unibo.the100dayswar.controller.mapcontroller.api;
 
-import it.unibo.the100dayswar.commons.utilities.api.Position;
-import it.unibo.the100dayswar.model.cell.api.Cell;
+import java.util.List;
+
 import it.unibo.the100dayswar.model.map.api.GameMap;
+import it.unibo.the100dayswar.view.map.CellView;
 
-/**
- * Interface that models the map controller.
- */
 public interface MapController {
+    /**
+     * Gets the width of the map.
+     *
+     * @return the width of the map in cells
+     */
+    int getMapWidth();
 
     /**
-    * @return the height of the map.
-    */
-    Integer getMapHeight();
+     * Gets the height of the map.
+     *
+     * @return the height of the map in cells
+     */
+    int getMapHeight();
 
     /**
-     * @return the width of the map.
-     */ 
-    Integer getMapWidth();
+     * Retrieves a list of CellView objects for rendering the map.
+     *
+     * @return a list of CellView objects
+     */
+    List<CellView> getCellsView();
 
     /**
-     * @return the map.
+     * Gets the game map.
+     *
+     * @return the game map
      */
     GameMap getMap();
 
     /**
-     * @return the number of bonus cells of the map.
+     * Handles the cell click event.
+     *
+     * @param cellX the X coordinate of the clicked cell
+     * @param cellY the Y coordinate of the clicked cell
      */
-    Integer getBonusCells();
-
-    /**
-     * @return the number of obstacles of the map.
-     */
-    Integer getObstacles(); 
-
-    /**
-     * @return the cell at the given position.
-     * @param x the x coordinate of the cell.
-     * @param y the y coordinate of the cell.
-     */
-    Cell getCellAtPosition(Position pos);
-
-
+    void onCellClick(int cellX, int cellY);
 }

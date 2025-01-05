@@ -11,9 +11,13 @@ import java.util.concurrent.TimeoutException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import it.unibo.the100dayswar.controller.gamecontroller.api.GameController;
+import it.unibo.the100dayswar.controller.gamecontroller.impl.GameControllerImpl;
 import it.unibo.the100dayswar.controller.maincontroller.api.MainController;
 import it.unibo.the100dayswar.controller.mapcontroller.api.MapController;
-import it.unibo.the100dayswar.controller.mapcontroller.impl.MapControllerIImpl;
+import it.unibo.the100dayswar.controller.mapcontroller.impl.MapControllerImpl;
+import it.unibo.the100dayswar.controller.movementcontroller.api.MovementController;
+import it.unibo.the100dayswar.controller.movementcontroller.impl.MovementControllerImpl;
 import it.unibo.the100dayswar.controller.shopcontroller.api.ShopController;
 import it.unibo.the100dayswar.controller.shopcontroller.impl.ShopControllerImpl;
 import it.unibo.the100dayswar.controller.statisticscontoller.api.StatisticController;
@@ -28,15 +32,13 @@ import it.unibo.the100dayswar.view.startmenu.StartMenuView;
  */
 public class MainControllerImpl implements MainController {
     private static final Logger LOGGER = Logger.getLogger(MainController.class.getName());
-    private static final int TIMEOUT = 30; // Timeout is setted at 30 seconds
+    private static final int TIMEOUT = 30;
 
     private final StatisticController statisticController;
     private final ShopController shopController;
+    private final MovementController movementController;
     private final MapController mapController;
-    /*
-     * TODO il model non deve essere final perchè può essere 
-     * inizializzato in due modi diversi.
-     */
+    private final GameController gameController;
     private Model model;
 
     /**
@@ -45,7 +47,9 @@ public class MainControllerImpl implements MainController {
     public MainControllerImpl() {
         this.statisticController = new StatisticControllerImpl();
         this.shopController = new ShopControllerImpl();
-        this.mapController = new MapControllerIImpl();
+        this.mapController = new MapControllerImpl();
+        this.gameController = new GameControllerImpl();
+        this.movementController = new MovementControllerImpl();
     }
 
     /** 
@@ -92,8 +96,16 @@ public class MainControllerImpl implements MainController {
      * {@inheritDoc}
      */
     @Override
+    public MovementController getMovementController() {
+        return this.movementController;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public boolean saveGame(final String path) {
-       return this.getGameInstance().saveGame(path);    // TODO è meglio model.saveGame?
+       return this.getGameInstance().saveGame(path);
     }
 
     /**
@@ -146,4 +158,12 @@ public class MainControllerImpl implements MainController {
             return true;
         }
     */
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public GameController getGameController() {
+        return this.gameController;
+    }
 }

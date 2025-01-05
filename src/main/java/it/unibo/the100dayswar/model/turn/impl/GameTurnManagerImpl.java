@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import it.unibo.the100dayswar.model.bot.api.BotPlayer;
 import it.unibo.the100dayswar.model.player.api.Player;
 import it.unibo.the100dayswar.model.turn.api.GameTurnManager;
 import it.unibo.the100dayswar.model.turn.api.GameDay;
@@ -78,6 +80,10 @@ public class GameTurnManagerImpl implements GameTurnManager {
         this.currentPlayerIndex = (this.currentPlayerIndex == 0) ? 1 : 0;
         increaseTurn();
         playerStartTurn();
+        if (getCurrentPlayer() instanceof BotPlayer) {
+            ((BotPlayer) getCurrentPlayer()).makeMove();
+            switchTurn();
+        }
     }
     /**
      * increase the Turn counter.

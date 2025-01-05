@@ -12,8 +12,8 @@ import it.unibo.the100dayswar.model.map.api.GameMapBuilder;
 import it.unibo.the100dayswar.model.map.api.MapManager;
 import it.unibo.the100dayswar.model.map.impl.GameMapBuilderImpl;
 import it.unibo.the100dayswar.model.map.impl.MapManagerImpl;
-import it.unibo.the100dayswar.model.player.api.Player;
-import it.unibo.the100dayswar.model.player.impl.PlayerImpl;
+import it.unibo.the100dayswar.model.player.api.HumanPlayer;
+import it.unibo.the100dayswar.model.player.impl.HumanPlayerImpl;
 import it.unibo.the100dayswar.model.soldier.impl.SoldierImpl;
 import it.unibo.the100dayswar.model.soldier.api.Soldier;
 
@@ -64,7 +64,7 @@ class MapMangerTest {
 
     @Test
     void testPlayerOwnership() {
-        final Player player1  = new PlayerImpl(PLAYER_NAME, spawnCell);
+        final HumanPlayer player1  = new HumanPlayerImpl(PLAYER_NAME, spawnCell);
         final Soldier soldier1 = new SoldierImpl(player1);
 
         mapManager.update(new Pair<>(soldier1, spawnCell));
@@ -78,7 +78,7 @@ class MapMangerTest {
 
     @Test
     void testSoldierMovement() {
-        final Player player1 = new PlayerImpl(PLAYER_NAME, spawnCell);
+        final HumanPlayer player1 = new HumanPlayerImpl(PLAYER_NAME, spawnCell);
         final Soldier soldier1 = new SoldierImpl(player1);
 
         mapManager.update(new Pair<>(soldier1, spawnCell));
@@ -94,7 +94,7 @@ class MapMangerTest {
 
     @Test
     void testSpawnCellOccupiedByNewSoldier() {
-        final Player player1 = new PlayerImpl(PLAYER_NAME, spawnCell);
+        final HumanPlayer player1 = new HumanPlayerImpl(PLAYER_NAME, spawnCell);
         final Soldier soldier1 = new SoldierImpl(player1);
         final Soldier soldier2 = new SoldierImpl(player1);
         mapManager.update(new Pair<>(soldier1, spawnCell));
