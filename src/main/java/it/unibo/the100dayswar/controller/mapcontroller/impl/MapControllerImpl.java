@@ -47,7 +47,7 @@ public class MapControllerImpl implements MapController {
             if (cell.getUnit().isPresent()) {
                 final Unit unit = cell.getUnit().get();
                 if (unit instanceof Soldier) {
-                    imagePath = "/units/soldier" + unit.getLevel() + ".png";
+                    imagePath = "/units/soldier/soldier" + unit.getLevel() + ".png";
                 } else if (unit instanceof Tower) {
                     imagePath = "/units/tower" + unit.getLevel() + ".png";
                 }
