@@ -1,16 +1,70 @@
-- Objective of the Game
-The goal is to conquer as many tiles as possible within the 100 days available.
+Initial Setup
+	At the start of the game:
+	• Both the player and the enemy start with 0 troops.
+	• Both have 1000 coins in their bank accounts.
 
-- Initial Setup
-Each player is given a spawn tile. Every player starts with 0 troops. The player can perform various actions:
+Game Structure
+	• The game is played over a 100-day cycle, where each day represents a turn for the player and the enemy.
+	The player can choose from a variety of actions during their turn, and each turn lasts for a few seconds in real time.
 
-Buy soldiers for their army.
-Buy towers, which can be either basic towers or advanced towers.
-Upgrade towers and soldiers to become stronger.
-Attack enemy troops using towers and units.
-Take no action and skip the turn.
-- Victory Conditions
-There are two ways to win:
+Actions Available
 
-Conquer the enemy's spawn tile.
-Conquer more tiles than the opponent.
+During their turn, the player can perform the following actions:
+
+	1. Buy Soldiers:
+	    Soldiers are offensive units that can move across the map and attack enemy troops or conquer cells.
+	    Soldiers can be upgraded to become stronger, up to a maximum level of 3.
+
+	2. Build Towers:
+	    Towers are defensive units that remain stationary on the map and attack enemy troops within their range.
+	    Players can build two types of towers:
+	        • Basic Towers: Cost less and have limited strength.
+	        • Advanced Towers: Cost more but have superior strength.
+		Towers can be upgraded to a maximum level of 4.
+
+	3. Upgrade Units:
+	        Both soldiers and towers can be upgraded to increase their combat effectiveness.
+	        Upgrading units requires coins, and higher levels provide better stats.
+
+	4. Move Soldiers:
+	        Soldiers can be moved across the map.
+	        If a soldier moves to a cell occupied by an enemy unit, a battle is triggered.
+
+	5. Skip Turn:
+	        Players can choose to skip their turn and save their resources for later actions.
+
+    6. Attack:
+        When a soldier is near another unit it can attack it.
+
+Resource Management
+	• Each turn, the player accumulates coins as a resource. Coins are used for:
+
+Combat Mechanics
+	• Initiating Combat:
+	        When a soldier enters a cell near another cell occupied by an enemy unit, you can choose to start a comabt.
+	The combat between 2 soldiers outcome is determined by a dice-rolling system:
+	    The number of dice rolled is proportional to the level of the soldiers involved.
+	    The unit with the highest total score wins the battle and the defeated is destroyed.
+
+Game Objectives
+
+The game can be won in one of two ways:
+	1. Conquer the Enemy’s Spawn Point:
+	    If one of your soldiers successfully reaches and occupies the enemy’s spawn point, you win immediately.
+
+	2.	Control the Majority of the Map:
+	    If no spawn point is conquered by the end of the 100 days, the player who controls the majority of the map’s cells is declared the winner.
+
+Additional Notes
+	The map cells can have different properties:
+	    • Buildable Cells: Where towers can be constructed.
+	    • Non-Buildable Cells: Impassable terrain or obstacles.
+	    • Spawn Cells: Critical cells representing the bases of the players.
+
+Victory Conditions
+	Immediate Victory:
+	•	Conquering the enemy’s spawn point.
+	Final Victory:
+	•	At the end of the game, the player with the highest percentage of cells conquered wins.
+
+Enjoy planning your strategy, managing resources, and engaging in tactical combat to achieve victory!
