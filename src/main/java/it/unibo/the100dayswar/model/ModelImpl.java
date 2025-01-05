@@ -137,9 +137,9 @@ public class ModelImpl implements Model {
      * {@inheritDoc}
      */
     @Override
-    public Player getHumanPlayer() {
+    public HumanPlayer getHumanPlayer() {
         if (players.size() > HUMAN_PLAYER && players.get(HUMAN_PLAYER) instanceof HumanPlayer) {
-            return players.get(HUMAN_PLAYER);
+            return (HumanPlayer) players.get(HUMAN_PLAYER);
         } else {
             throw new IllegalStateException("The human player has not been added yet");
         }

@@ -5,7 +5,6 @@ import it.unibo.the100dayswar.model.bot.impl.SimpleBot;
 import it.unibo.the100dayswar.model.map.api.MapManager;
 import it.unibo.the100dayswar.model.map.impl.MapManagerImpl;
 import it.unibo.the100dayswar.model.player.api.HumanPlayer;
-import it.unibo.the100dayswar.model.player.api.Player;
 import it.unibo.the100dayswar.model.player.impl.HumanPlayerImpl;
 import it.unibo.the100dayswar.model.savedata.api.GameData;
 import it.unibo.the100dayswar.model.turn.api.GameTurnManager;
@@ -16,7 +15,7 @@ import it.unibo.the100dayswar.model.turn.api.GameTurnManager;
 public class GameDataImpl implements GameData {
     private static final long serialVersionUID = 1L;
 
-    private final Player humanData;
+    private final HumanPlayer humanData;
     private final BotPlayer botData;
     private final MapManager mapManager;
     private final GameTurnManager gameTurnManager;
