@@ -119,9 +119,14 @@ public class ShopView extends JPanel {
             The100DaysWar.CONTROLLER.getShopController().buyBasicTower();
             mapView.repaint();
         });
-        buyAdvancedTower.addActionListener(e -> The100DaysWar.CONTROLLER.getShopController().buyAdvancedTower());
-        upgradeUnit.addActionListener(e -> The100DaysWar.CONTROLLER.getShopController().upgradeUnit(null));
-        //  todo: Implementare la selezione di una cella/un'unità
+        buyAdvancedTower.addActionListener(e -> {
+            The100DaysWar.CONTROLLER.getShopController().buyAdvancedTower();
+            mapView.repaint();
+        });
+        upgradeUnit.addActionListener(e -> {
+            The100DaysWar.CONTROLLER.getShopController().upgradeUnit();
+            mapView.repaint();
+        });
     }
 
     /**
