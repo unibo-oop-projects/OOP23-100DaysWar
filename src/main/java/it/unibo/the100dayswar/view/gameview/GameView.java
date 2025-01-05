@@ -29,6 +29,11 @@ public class GameView extends JFrame {
     private static final int FRAME_HEIGHT = 900;
     private static final double MAP_WEIGHT_X = 0.6;
     private static final double SIDE_PANEL_WEIGHT_X = 0.4;
+    private static final int MAP_HEIGHT = 850;
+    private static final double STATISTICS_WEIGHT_Y = 0.3;
+    private static final int TOP_BOTTOM_PADDING = 5;
+    private static final double JOYSTICK_WEIGHT_Y = 0.7;
+    private static final int SIDE_PADDING = 10;
     private static final Logger LOGGER = Logger.getLogger(GameView.class.getName());
 
     /**
@@ -84,7 +89,7 @@ public class GameView extends JFrame {
         statisticsView.setOpaque(false);
         joystickView.setOpaque(false);
 
-        mapView.setPreferredSize(new Dimension(1000, 850));
+        mapView.setPreferredSize(new Dimension(FRAME_WIDTH, MAP_HEIGHT));
 
         final GridBagConstraints gbc = new GridBagConstraints();
 
@@ -94,7 +99,7 @@ public class GameView extends JFrame {
         gbc.weightx = MAP_WEIGHT_X;
         gbc.weighty = 1.0;
         gbc.fill = GridBagConstraints.NONE;
-        gbc.insets = new Insets(10, 10, 10, 10);
+        gbc.insets = new Insets(SIDE_PADDING, SIDE_PADDING, SIDE_PADDING, SIDE_PADDING);
         gbc.anchor = GridBagConstraints.CENTER;
         backgroundPanel.add(mapView, gbc);
 
@@ -102,17 +107,17 @@ public class GameView extends JFrame {
         gbc.gridy = 0;
         gbc.gridheight = 1;
         gbc.weightx = SIDE_PANEL_WEIGHT_X;
-        gbc.weighty = 0.3;
+        gbc.weighty = STATISTICS_WEIGHT_Y;
         gbc.fill = GridBagConstraints.BOTH;
-        gbc.insets = new Insets(10, 10, 5, 10);
+        gbc.insets = new Insets(SIDE_PADDING, SIDE_PADDING, TOP_BOTTOM_PADDING, SIDE_PADDING);
         gbc.anchor = GridBagConstraints.NORTH;
         backgroundPanel.add(statisticsView, gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 1;
-        gbc.weighty = 0.7;
+        gbc.weighty = JOYSTICK_WEIGHT_Y;
         gbc.fill = GridBagConstraints.BOTH;
-        gbc.insets = new Insets(5, 10, 10, 10);
+        gbc.insets = new Insets(TOP_BOTTOM_PADDING, SIDE_PADDING, SIDE_PADDING, SIDE_PADDING);
         gbc.anchor = GridBagConstraints.SOUTH;
         backgroundPanel.add(joystickView, gbc);
 
@@ -129,11 +134,11 @@ public class GameView extends JFrame {
         try {
             final String path = "/gameview/background.jpg";
             final URL imageUrl = getClass().getResource(path);
-            if (imageUrl != null) {
-                return ImageIO.read(imageUrl);
-            } else {
-                throw new IOException("Background image not found: " + path);
+            if (imageUrl == null) {
+                LOGGER.log(Level.WARNING, "Background image not found at path: " + path);
+                return null;
             }
+            return ImageIO.read(imageUrl);
         } catch (IOException e) {
             LOGGER.log(Level.SEVERE, "Error loading background image", e);
             return null;

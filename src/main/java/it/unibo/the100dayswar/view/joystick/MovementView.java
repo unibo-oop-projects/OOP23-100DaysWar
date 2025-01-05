@@ -26,8 +26,8 @@ import it.unibo.the100dayswar.commons.utilities.impl.LoadPixelFont;
 public class MovementView extends JPanel {
     private static final long serialVersionUID = 1L;
     private static final Dimension SIZE = new Dimension(200, 200);
-    private static final int INSETS = 5;
-    private static final Dimension BUTTON_SIZE = new Dimension(190, 60);
+    private static final int INSETS = 1;
+    private static final Dimension BUTTON_SIZE = new Dimension(210, 70);
     private static final String ICON_BUTTON = "startmenu/genericbutton.jpg";
 
     private final JButton up;
@@ -85,7 +85,7 @@ public class MovementView extends JPanel {
             throw new IllegalStateException("Icon not found");
         }
         final JButton button = new JButton(text, icon);
-        final Font customFont = LoadPixelFont.getFont().deriveFont(8f);
+        final Font customFont = LoadPixelFont.getFont().deriveFont(9f);
         button.setFont(customFont);
         button.setPreferredSize(BUTTON_SIZE);
         button.setHorizontalTextPosition(SwingConstants.CENTER);

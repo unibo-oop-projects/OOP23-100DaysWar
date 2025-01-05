@@ -90,7 +90,7 @@ public class ControlView extends JPanel {
             throw new IllegalStateException("Icon not found");
         }
         final JButton button = new JButton(text, icon);
-        final Font customFont = LoadPixelFont.getFont().deriveFont(8f);
+        final Font customFont = LoadPixelFont.getFont().deriveFont(12f);
         button.setFont(customFont);
         button.setPreferredSize(BUTTON_SIZE);
         button.setHorizontalTextPosition(SwingConstants.CENTER);

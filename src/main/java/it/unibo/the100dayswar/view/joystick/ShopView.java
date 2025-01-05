@@ -24,7 +24,7 @@ import it.unibo.the100dayswar.commons.utilities.impl.LoadPixelFont;
 public class ShopView extends JPanel {
     private static final long serialVersionUID = 1L;
     private static final Dimension SIZE = new Dimension(200, 150);
-    private static final Dimension BUTTON_SIZE = new Dimension(200, 50);
+    private static final Dimension BUTTON_SIZE = new Dimension(200, 55);
     private static final String ICON_BUTTON = "startmenu/genericbutton.jpg";
 
     private final JButton buySoldier;
