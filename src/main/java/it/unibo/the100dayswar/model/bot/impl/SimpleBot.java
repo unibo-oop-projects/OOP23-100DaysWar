@@ -39,6 +39,21 @@ public class SimpleBot extends PlayerImpl implements BotPlayer {
     }
 
     /**
+     * Constructor for the bot player.
+     *
+     * @param botPlayer the bot player
+     * @param mapManager the map manager of the game
+     */
+    public SimpleBot(final BotPlayer botPlayer, final MapManager mapManager) {
+        super(botPlayer.getUsername(), botPlayer.getSpawnPoint());
+        ActionType.clear();
+        ActionType.add(mapManager);
+        this.strategy = new SimpleBotStrategy();
+        this.enemySpawnPoint = mapManager.getPlayerSpawn();
+        this.gameMapCells = mapManager.getMapAsAStream().collect(Collectors.toSet());
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override

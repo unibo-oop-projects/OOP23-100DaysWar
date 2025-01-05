@@ -20,7 +20,9 @@ import it.unibo.the100dayswar.model.map.api.MapManager;
 import it.unibo.the100dayswar.model.map.impl.GameMapBuilderImpl;
 import it.unibo.the100dayswar.model.map.impl.GameMapImpl;
 import it.unibo.the100dayswar.model.map.impl.MapManagerImpl;
+import it.unibo.the100dayswar.model.player.api.HumanPlayer;
 import it.unibo.the100dayswar.model.player.api.Player;
+import it.unibo.the100dayswar.model.player.impl.HumanPlayerImpl;
 import it.unibo.the100dayswar.model.player.impl.PlayerImpl;
 import it.unibo.the100dayswar.model.savedata.api.GameData;
 import it.unibo.the100dayswar.model.savedata.api.GameSaver;
@@ -61,7 +63,7 @@ public class ModelImpl implements Model {
         this.mapManager = new MapManagerImpl(new GameMapBuilderImpl(DEFAULT_MAP_SIZE, DEFAULT_MAP_SIZE));
         ActionType.add(mapManager);
 
-        this.players = List.of(new SimpleBot(mapManager), new PlayerImpl(namePlayer, mapManager.getPlayerSpawn()));
+        this.players = List.of(new SimpleBot(mapManager), new HumanPlayerImpl(namePlayer, mapManager.getPlayerSpawn()));
         this.turnManager = new GameTurnManagerImpl(players);
         this.gameStatistics = new GameStatisticImpl(players, mapManager);
         gameStatistics.updateAllStatistics();
@@ -122,7 +124,7 @@ public class ModelImpl implements Model {
             throw new IllegalArgumentException("The username is too long");
         }
         if (players.size() == 1) {
-            players.add(new PlayerImpl(
+            players.add(new HumanPlayerImpl(
                 username,
                 mapManager.getPlayerSpawn()
                 ));
@@ -136,7 +138,7 @@ public class ModelImpl implements Model {
      */
     @Override
     public Player getHumanPlayer() {
-        if (players.size() > 1) {
+        if (players.size() > 1 && players.get(1) instanceof HumanPlayer) {
             return players.get(1);
         } else {
             throw new IllegalStateException("The human player has not been added yet");
