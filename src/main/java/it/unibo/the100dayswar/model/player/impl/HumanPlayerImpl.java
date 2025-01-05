@@ -2,7 +2,6 @@ package it.unibo.the100dayswar.model.player.impl;
 
 import it.unibo.the100dayswar.model.cell.api.Cell;
 import it.unibo.the100dayswar.model.player.api.HumanPlayer;
-import it.unibo.the100dayswar.model.player.api.Player;
 
 /**
  * Implementation of the HumanPlayer interface.
@@ -23,7 +22,7 @@ public class HumanPlayerImpl extends PlayerImpl implements HumanPlayer {
      * 
      * @param player player to copy
      */
-	public HumanPlayerImpl(Player player) {
+	public HumanPlayerImpl(HumanPlayer player) {
 		super(player);
 	}
 }
