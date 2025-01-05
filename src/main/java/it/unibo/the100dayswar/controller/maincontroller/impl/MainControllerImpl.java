@@ -11,6 +11,8 @@ import java.util.concurrent.TimeoutException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import it.unibo.the100dayswar.controller.gamecontroller.api.GameController;
+import it.unibo.the100dayswar.controller.gamecontroller.impl.GameControllerImpl;
 import it.unibo.the100dayswar.controller.maincontroller.api.MainController;
 import it.unibo.the100dayswar.controller.mapcontroller.api.MapController;
 import it.unibo.the100dayswar.controller.mapcontroller.impl.MapControllerIImpl;
@@ -33,6 +35,7 @@ public class MainControllerImpl implements MainController {
     private final StatisticController statisticController;
     private final ShopController shopController;
     private final MapController mapController;
+    private final GameController gameController;
     /*
      * TODO il model non deve essere final perchè può essere 
      * inizializzato in due modi diversi.
@@ -46,6 +49,7 @@ public class MainControllerImpl implements MainController {
         this.statisticController = new StatisticControllerImpl();
         this.shopController = new ShopControllerImpl();
         this.mapController = new MapControllerIImpl();
+        this.gameController = new GameControllerImpl();
     }
 
     /** 
@@ -146,4 +150,9 @@ public class MainControllerImpl implements MainController {
             return true;
         }
     */
+
+    @Override
+    public GameController getGameController() {
+        return this.gameController;
+    }
 }

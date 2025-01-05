@@ -9,15 +9,7 @@ public interface GameController {
      */
     void attack();
     /**
-     * method for pauseing the game.
-     */
-    void pause();
-    /**
      * method for resume the game.
      */
-    void resume();
-    /**
-     * method for quitting the game.
-     */
-    void quit();
+    void skip();
 }
