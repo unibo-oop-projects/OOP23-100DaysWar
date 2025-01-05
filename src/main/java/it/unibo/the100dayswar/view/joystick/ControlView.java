@@ -1,102 +1,140 @@
 package it.unibo.the100dayswar.view.joystick;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Image;
+import java.awt.Insets;
 
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
+import it.unibo.the100dayswar.commons.utilities.impl.IconLoader;
 import it.unibo.the100dayswar.commons.utilities.impl.LoadPixelFont;
 import it.unibo.the100dayswar.view.pausemenu.PauseMenu;
 import it.unibo.the100dayswar.view.rules.RulesViewer;
 import it.unibo.the100dayswar.view.startmenu.ExitWindow;
 
-/**
- * Class that represents the shop panel in the joystick view.
- * This panel allows the player to purchase or upgrade units.
+/** 
+ * Class that represents the control panel in the joystick view.
+ * This panel allows the player to manage game actions such as pause, resume, and quit.
  */
 public class ControlView extends JPanel {
     private static final long serialVersionUID = 1L;
-    private static final int WIDTH = 200;
-    private static final int HEIGHT = 150;
+    private static final Dimension SIZE = new Dimension(200, 200);
+    private static final int INSETS = 5;
+    private static final Dimension BUTTON_SIZE = new Dimension(200, 60);
+    private static final String ICON_BUTTON = "startmenu/genericbutton.jpg";
 
     private final JButton attack;
     private final JButton pause;
-    private final JButton resume;
+    private final JButton skip;
     private final JButton rules;
     private final JButton quit;
 
     /**
-     * Constructor for the ShopView class.
+     * Constructor for the ControlView class.
      */
     public ControlView() {
         super.setLayout(new GridBagLayout());
+        final GridBagConstraints gbc = createGridBagConstraints();
+
         this.attack = createButton("Attack");
         this.pause = createButton("Pause");
-        this.resume = createButton("Resume");
+        this.skip = createButton("Skip Turn");
         this.rules = createButton("Read Rules");
         this.quit = createButton("Quit");
 
         setButtonActions();
-        setupLayout();
-        super.setPreferredSize(new Dimension(WIDTH, HEIGHT));
+        arrangeButtons(gbc);
+
+        super.setPreferredSize(SIZE);
     }
 
     /**
-     * Disables all shop buttons.
+     * Disables all control buttons.
      */
     public void disableButtons() {
         this.attack.setEnabled(false);
         this.pause.setEnabled(false);
-        this.resume.setEnabled(false);
+        this.skip.setEnabled(false);
         this.rules.setEnabled(false);
         this.quit.setEnabled(false);
     }
 
     /**
-     * Enables all shop buttons.
+     * Enables all control buttons.
      */
     public void enableButtons() {
         this.attack.setEnabled(true);
         this.pause.setEnabled(true);
-        this.resume.setEnabled(true);
+        this.skip.setEnabled(true);
         this.rules.setEnabled(true);
         this.quit.setEnabled(true);
     }
 
     /**
      * Creates a button with consistent styling.
-     *
+     * 
      * @param text the text to display on the button
      * @return a styled JButton
      */
     private JButton createButton(final String text) {
-        final JButton button = new JButton(text);
-        final Font customFont = LoadPixelFont.getFont().deriveFont(10f);
+        final Icon icon = getIcon();
+        if (icon == null) {
+            throw new IllegalStateException("Icon not found");
+        }
+        final JButton button = new JButton(text, icon);
+        final Font customFont = LoadPixelFont.getFont().deriveFont(12f);
         button.setFont(customFont);
+        button.setPreferredSize(BUTTON_SIZE);
+        button.setHorizontalTextPosition(SwingConstants.CENTER);
+        button.setVerticalTextPosition(SwingConstants.CENTER);
+        button.setForeground(Color.WHITE);
+        button.setContentAreaFilled(false);
+        button.setBorderPainted(false);
+        button.setFocusPainted(false);
         return button;
     }
 
     /**
-     * Sets the actions for the buttons.
+     * Loads the icon for the button.
+     * 
+     * @return the icon for the button
+     */
+    private Icon getIcon() {
+        final Icon icon = IconLoader.loadIcon(ICON_BUTTON);
+        if (icon != null) {
+            final Image scaledImage = ((ImageIcon) icon).getImage()
+                .getScaledInstance(BUTTON_SIZE.width, BUTTON_SIZE.height, Image.SCALE_SMOOTH);
+            return new ImageIcon(scaledImage);
+        }
+        return null;
+    }
+
+    /**
+     * Sets actions for the control buttons.
      */
     private void setButtonActions() {
         attack.addActionListener(e -> attackAction());
         pause.addActionListener(e -> pauseAction());
-        resume.addActionListener(e -> resumeAction());
+        skip.addActionListener(e -> skipTurn());
         rules.addActionListener(e -> rulesAction());
         quit.addActionListener(e -> exitAction());
     }
 
     /**
-     * Arranges the buttons in the layout.
+     * Arranges the buttons in the panel.
+     * 
+     * @param gbc the GridBagConstraints to use.
      */
-    private void setupLayout() {
-        final GridBagConstraints gbc = new GridBagConstraints();
-
-        gbc.gridx = 0;
+    private void arrangeButtons(final GridBagConstraints gbc) {
+        gbc.gridx = 1;
         gbc.gridy = 0;
         super.add(attack, gbc);
 
@@ -104,12 +142,27 @@ public class ControlView extends JPanel {
         super.add(pause, gbc);
 
         gbc.gridy = 2;
-        super.add(resume, gbc);
+        super.add(skip, gbc);
 
         gbc.gridy = 3;
         super.add(rules, gbc);
+
         gbc.gridy = 4;
         super.add(quit, gbc);
+    }
+
+    /**
+     * Creates and configures the GridBagConstraints.
+     * 
+     * @return a configured GridBagConstraints object
+     */
+    private GridBagConstraints createGridBagConstraints() {
+        final GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(INSETS, INSETS, INSETS, INSETS);
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.0;
+        return gbc;
     }
 
     /**
@@ -119,9 +172,9 @@ public class ControlView extends JPanel {
     }
 
     /**
-     * Defines the actions after pressing RESUME.
+     * Skip the current turn without doing nothing.
      */
-    private void resumeAction() {
+    private void skipTurn() {
     }
 
     /** 

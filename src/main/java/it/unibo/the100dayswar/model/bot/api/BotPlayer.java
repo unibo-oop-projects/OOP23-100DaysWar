@@ -3,6 +3,7 @@ package it.unibo.the100dayswar.model.bot.api;
 import java.util.Set;
 
 import it.unibo.the100dayswar.model.cell.api.Cell;
+import it.unibo.the100dayswar.model.map.api.MapManager;
 import it.unibo.the100dayswar.model.player.api.Player;
 
 /**
@@ -26,4 +27,16 @@ public interface BotPlayer extends Player {
      * @return a set of all the cells in the game map
      */
     Set<Cell> getAllCells();
+    /**
+     * Getter for mapManager.
+     * 
+     * @return the mapManager
+     */
+    MapManager getMapManager();
+    /**
+     * Getter for Strategy.
+     * 
+     * @return the strategy
+     */
+    BotStrategy getStrategy();
 }

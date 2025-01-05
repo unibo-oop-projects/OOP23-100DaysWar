@@ -12,19 +12,7 @@ public class GameControllerImpl implements GameController {
     }
 
     @Override
-    public void pause() {
-        The100DaysWar.CONTROLLER.getGameInstance().pauseGame();
+    public void skip() {
+        The100DaysWar.CONTROLLER.getGameInstance().skipTurn();
     }
-
-    @Override
-    public void resume() {
-        The100DaysWar.CONTROLLER.getGameInstance().reasumeGame();
-    }
-
-    @Override
-    public void quit() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'quit'");
-    }
-    
 }

@@ -118,7 +118,7 @@ public class StartMenuView extends JFrame {
     private void resumeAction() {
         // TODO Implement resume logic
         if (The100DaysWar.CONTROLLER.loadOldGame(LOADING_PATH)) {
-            // TODO launch game window
+            new GameView().initialize();
             dispose();
         } else {
             NoOldGameFoundWindow.show(this);

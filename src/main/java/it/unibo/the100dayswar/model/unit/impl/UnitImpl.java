@@ -5,9 +5,12 @@ import java.util.List;
 
 import it.unibo.the100dayswar.commons.patterns.Observer;
 import it.unibo.the100dayswar.commons.utilities.impl.Pair;
+import it.unibo.the100dayswar.model.bot.api.BotPlayer;
+import it.unibo.the100dayswar.model.bot.impl.SimpleBot;
 import it.unibo.the100dayswar.model.cell.api.Cell;
+import it.unibo.the100dayswar.model.player.api.HumanPlayer;
 import it.unibo.the100dayswar.model.player.api.Player;
-import it.unibo.the100dayswar.model.player.impl.PlayerImpl;
+import it.unibo.the100dayswar.model.player.impl.HumanPlayerImpl;
 import it.unibo.the100dayswar.model.unit.api.Combatant;
 import it.unibo.the100dayswar.model.unit.api.Unit;
 
@@ -38,7 +41,7 @@ public abstract class UnitImpl implements Unit {
      */
     public UnitImpl(final Player owner, final int health, final int costToBuy, final int costToUpgrade,
             final int maxLevel) {
-        this.owner = new PlayerImpl(owner);
+        this.owner = (owner instanceof HumanPlayer)? new HumanPlayerImpl((HumanPlayer) owner) : new SimpleBot((BotPlayer) owner);
         this.health = health;
         this.level = DEFAULT_LEVEL;
         this.costToBuy = costToBuy;
@@ -139,7 +142,7 @@ public abstract class UnitImpl implements Unit {
      */
     @Override
     public Player getOwner() {
-        return new PlayerImpl(this.owner);
+        return (owner instanceof HumanPlayer)? new HumanPlayerImpl((HumanPlayer) owner) : new SimpleBot((BotPlayer) owner);
     }
 
     /**

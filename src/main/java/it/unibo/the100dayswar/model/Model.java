@@ -1,10 +1,10 @@
 package it.unibo.the100dayswar.model;
 
 import java.util.stream.Stream;
-
 import it.unibo.the100dayswar.commons.utilities.impl.Pair;
 import it.unibo.the100dayswar.model.cell.api.Cell;
 import it.unibo.the100dayswar.model.map.api.GameMap;
+import it.unibo.the100dayswar.model.player.api.Player;
 import it.unibo.the100dayswar.model.statistic.api.GameStatistics;
 import it.unibo.the100dayswar.model.tower.api.TowerType;
 import it.unibo.the100dayswar.model.unit.api.Unit;
@@ -13,98 +13,127 @@ import it.unibo.the100dayswar.model.unit.api.Unit;
  * The interface of the model of the game.
  */
 public interface Model {
-  /**
-   * Buy a tower of the specified type.
-   * 
-   * @param type the type of the tower
-   * @param position the position of the tower
-   */
-  void buyTower(TowerType type, Cell position);
 
-  /**
-   * Buy a soldier.
-   */
-  void buySoldier();
+    /**
+     * Buy a tower of the specified type.
+     * 
+     * @param type the type of the tower
+     * @param position the position of the tower
+     */
+    void buyTower(TowerType type, Cell position);
 
-  /**
-   * Add a player to the game.
-   * 
-   * @param username the name of the player
-   */
-  void addPlayer(String username);
+    /**
+     * Buy a soldier.
+     */
+    void buySoldier();
 
-  /**
-   * Move a soldier following the specified direction.
-   * 
-   * @param source the pair of the soldier and the cell
-   * 
-   * @return true if the soldier was moved correctly false otherwise
-   */
-  boolean moveSoldier(Pair<Unit, Cell> source);
+    /**
+     * Add a player to the game.
+     * 
+     * @param username the name of the player
+     */
+    void addPlayer(String username);
 
-  /**
-   * Save the current game.
-   * 
-   * @param path the path of the saved file
-   * 
-   * @return true if the game is saved correctly
-   */
-  boolean saveGame(String path);
+    /**
+     * Move a soldier following the specified direction.
+     * 
+     * @param source the pair of the soldier and the cell
+     * 
+     * @return true if the soldier was moved correctly, false otherwise
+     */
+    boolean moveSoldier(Pair<Unit, Cell> source);
 
-  /**
-   * Upgrade the unit.
-   * 
-   * @param unit the unit to upgrade
-   */
-  void upgradeUnit(Unit unit);
+    /**
+     * Save the current game.
+     * 
+     * @param path the path of the saved file
+     * 
+     * @return true if the game is saved correctly
+     */
+    boolean saveGame(String path);
 
-  /**
-   * Gets the width of the map.
-   * 
-   * @return the width of the map
-   */
-  double getMapWidth();
+    /**
+     * Upgrade the unit.
+     * 
+     * @param unit the unit to upgrade
+     */
+    void upgradeUnit(Unit unit);
 
-  /**
-   * Gets the height of the map.
-   * 
-   * @return the height of the map
-   */
-  double getMapHeight();
+    /**
+     * Gets the width of the map.
+     * 
+     * @return the width of the map
+     */
+    double getMapWidth();
 
-  /**
-   * Gets the map as a 2D array of cells.
-   * 
-   * @return the map
-   */
-  GameMap getMap();
+    /**
+     * Gets the height of the map.
+     * 
+     * @return the height of the map
+     */
+    double getMapHeight();
 
-  /**
-   * Get the map as a stream of cells.
-   * 
-   * @return the map as a stream of cells
-   */
-  Stream<Cell> getMapStream();
+    /**
+     * Gets the map as a 2D array of cells.
+     * 
+     * @return the map
+     */
+    GameMap getMap();
 
-  /**
-   * Gets the GameStatistics.
-   * 
-   * @return the GameStatistics
-   */
-  GameStatistics getGameStatistics();
+    /**
+     * Get the map as a stream of cells.
+     * 
+     * @return the map as a stream of cells
+     */
+    Stream<Cell> getMapStream();
 
-  /**
-   * Skip the current turn.
-   */
-  void skipTurn();
+    /**
+     * Gets the GameStatistics.
+     * 
+     * @return the GameStatistics
+     */
+    GameStatistics getGameStatistics();
 
-  /**
-   * Pause the game.
-   */
-  void pauseGame();
+    /**
+     * Skip the current turn.
+     */
+    void skipTurn();
 
-  /**
-   * Reasume the game.
-   */
-  void reasumeGame();
+    /**
+     * Pause the game.
+     */
+    void pauseGame();
+
+    /**
+     * Resume the game.
+     */
+    void reasumeGame();
+
+    /**
+     * Gets the human player in the game.
+     * 
+     * @return the human player
+     */
+    Player getHumanPlayer();
+
+    /**
+     * Gets the bot player in the game.
+     * 
+     * @return the bot player
+     */
+    Player getBotPlayer();
+
+    /**
+     * Gets the current player whose turn is active.
+     * 
+     * @return the current player
+     */
+    Player getCurrentPlayer();
+
+    /**
+     * Checks if the game is over.
+     * 
+     * @return true if the game is over, false otherwise
+     */
+    boolean isOver();
 }

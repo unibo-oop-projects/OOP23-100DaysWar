@@ -15,8 +15,10 @@ import it.unibo.the100dayswar.model.cell.api.Cell;
 import it.unibo.the100dayswar.model.map.api.GameMap;
 import it.unibo.the100dayswar.model.map.api.GameMapBuilder;
 import it.unibo.the100dayswar.model.map.impl.GameMapBuilderImpl;
-import it.unibo.the100dayswar.model.player.impl.PlayerImpl;
+import it.unibo.the100dayswar.model.player.impl.HumanPlayerImpl;
 import it.unibo.the100dayswar.model.soldier.impl.SoldierImpl;
+import it.unibo.the100dayswar.model.player.api.HumanPlayer;
+import it.unibo.the100dayswar.model.soldier.api.Soldier;
 
 class GameMapTest {
     private static final int WIDTH = 10;
@@ -63,8 +65,8 @@ class GameMapTest {
     @Test
     void testBonusCellActivation() {
         final Cell baseCell = bonusCell;
-        final PlayerImpl player1 = new PlayerImpl(PLAYER_NAME, baseCell);
-        final SoldierImpl soldier = new SoldierImpl(player1);
+        final HumanPlayer player1 = new HumanPlayerImpl(PLAYER_NAME, baseCell);
+        final Soldier soldier = new SoldierImpl(player1);
 
         gameMap.setOccupationOnCell(baseCell, Optional.of(soldier));
         ((BonusCell) bonusCell).notify(player1);
