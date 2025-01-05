@@ -2,7 +2,10 @@ package it.unibo.the100dayswar.controller.mapcontroller.impl;
 
 import it.unibo.the100dayswar.view.map.CellView;
 import it.unibo.the100dayswar.application.The100DaysWar;
+import it.unibo.the100dayswar.commons.utilities.impl.Pair;
+import it.unibo.the100dayswar.commons.utilities.impl.PositionImpl;
 import it.unibo.the100dayswar.controller.mapcontroller.api.MapController;
+import it.unibo.the100dayswar.model.cell.api.Cell;
 import it.unibo.the100dayswar.model.map.api.GameMap;
 import it.unibo.the100dayswar.model.soldier.api.Soldier;
 import it.unibo.the100dayswar.model.tower.api.Tower;
@@ -10,12 +13,18 @@ import it.unibo.the100dayswar.model.unit.api.Unit;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+
 
 /**
  * Implementation of the MapController interface.
  */
 public class MapControllerImpl implements MapController {
+
+    private  Pair<Unit, Cell> selectedCell;
+
+    public MapControllerImpl() {
+        this.selectedCell = new Pair<>(null, null);
+    }
 
     /**
      * {@inheritDoc}
@@ -55,7 +64,7 @@ public class MapControllerImpl implements MapController {
             } else if (!cell.isBuildable()) {
                 imagePath = "/map/obstacle.png";
             }
-            cellDataList.add(new CellView(cell.getPosition().getX(), cell.getPosition().getY(), imagePath));
+            cellDataList.add(new CellView(cell.getPosition(), imagePath));
         });
         return cellDataList;
     }
@@ -73,14 +82,18 @@ public class MapControllerImpl implements MapController {
      */
     @Override
     public void onCellClick(int cellX, int cellY) {
-        The100DaysWar.CONTROLLER.getGameInstance().getMap().getAllCells()
-            .filter(cell -> cell.getPosition().getX() == cellX && cell.getPosition().getY() == cellY)
-            .findFirst()
-            .ifPresent(cell -> {
-                final Optional<Unit> unit = cell.getUnit();
+         final GameMap map = The100DaysWar.CONTROLLER.getGameInstance().getMap();
+         final Cell clickedCell = map.getCell(new PositionImpl(cellX, cellY));
+         selectedCell = new Pair<>(clickedCell.getUnit().orElse(null), clickedCell);
+         System.out.println("Selected cell: " + selectedCell.getSecond().getPosition().toString());
+    }
 
-                System.out.println("Cell clicked at (" + cellX + ", " + cellY + ")");
-                System.out.println("Unit present: " + (unit.isPresent() ? unit.get().toString() : "None"));
-            });
-    }   
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Pair<Unit, Cell> getSelectedCell() {
+        return this.selectedCell;
+    }
+
 }

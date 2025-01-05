@@ -2,7 +2,11 @@ package it.unibo.the100dayswar.controller.mapcontroller.api;
 
 import java.util.List;
 
+
+import it.unibo.the100dayswar.commons.utilities.impl.Pair;
+import it.unibo.the100dayswar.model.cell.api.Cell;
 import it.unibo.the100dayswar.model.map.api.GameMap;
+import it.unibo.the100dayswar.model.unit.api.Unit;
 import it.unibo.the100dayswar.view.map.CellView;
 
 public interface MapController {
@@ -41,4 +45,11 @@ public interface MapController {
      * @param cellY the Y coordinate of the clicked cell
      */
     void onCellClick(int cellX, int cellY);
+
+    /**
+     * Gets the selected cell.
+     *
+     * @return the selected cell
+     */ 
+    Pair<Unit, Cell> getSelectedCell();
 }

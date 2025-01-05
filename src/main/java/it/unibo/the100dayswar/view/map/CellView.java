@@ -1,11 +1,12 @@
 package it.unibo.the100dayswar.view.map;
 
+import it.unibo.the100dayswar.commons.utilities.api.Position;
+
 /**
  * Represents a cell view.
  */
 public class CellView {
-    private final int x;
-    private final int y;
+    private final Position position;
     private final String imagePath;
 
     /**
@@ -14,9 +15,8 @@ public class CellView {
      * @param y the y coordinate.
      * @param imagePath the path of the image.
      */
-    public CellView(int x, int y, String imagePath) {
-        this.x = x;
-        this.y = y;
+    public CellView(Position pos, String imagePath) {
+       this.position = pos;
         this.imagePath = imagePath;
     }
 
@@ -25,7 +25,7 @@ public class CellView {
      * @return the x coordinate.
       */
     public int getX() {
-        return x;
+        return this.position.getX();
     }
 
     /**
@@ -33,7 +33,7 @@ public class CellView {
      * @return the y coordinate.
      */
     public int getY() {
-        return y;
+        return this.position.getY();
     }
 
     /**
