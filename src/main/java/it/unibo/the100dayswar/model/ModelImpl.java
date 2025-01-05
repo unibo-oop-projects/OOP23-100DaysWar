@@ -110,7 +110,7 @@ public class ModelImpl implements Model {
     @Override
     public void buySoldier() {
         final Soldier soldier = factory.createSoldier(getHumanPlayer());
-        players.get(1).buyUnit(soldier);
+        players.get(HUMAN_PLAYER).buyUnit(soldier);
         updateMap(soldier, List.of(mapManager));
         soldier.attach(mapManager);
     }
@@ -127,7 +127,7 @@ public class ModelImpl implements Model {
             players.add(new HumanPlayerImpl(
                 username,
                 mapManager.getPlayerSpawn()
-                ));
+            ));
         } else {
             throw new IllegalStateException("Error: the bot player is not added yet or maximum number of players reached");
         }
