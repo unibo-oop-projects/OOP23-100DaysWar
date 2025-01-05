@@ -12,18 +12,18 @@ import it.unibo.the100dayswar.model.turn.api.GameTurnManager;
  */
 public interface GameData extends Serializable {
     /**
-     * Getter for playerData1.
+     * Getter for playerData.
      * 
-     * @return the playerData1
+     * @return the playerData
      */
-    Player getPlayerData1();
+    Player getPlayerData();
 
      /**
-     * Getter for playerData2.
+     * Getter for botData.
      * 
-     * @return the playerData2
+     * @return the botData
      */
-    Player getPlayerData2();
+    Player getBotData();
 
      /**
      * Getter for mapManager.

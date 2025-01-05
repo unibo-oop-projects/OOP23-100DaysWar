@@ -93,7 +93,7 @@ public class MainControllerImpl implements MainController {
      */
     @Override
     public boolean saveGame(final String path) {
-       return model.saveGame(path);
+       return this.getGameInstance().saveGame(path);    // TODO è meglio model.saveGame?
     }
 
     /**

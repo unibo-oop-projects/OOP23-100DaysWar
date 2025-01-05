@@ -159,8 +159,8 @@ class GameLoaderTest {
 
         // Verify the Players data
         assertAll("Verify player data and turns",
-            () -> assertEquals(expected.getPlayerData1(), actual.getPlayerData1(), "PlayerData1 does not match"),
-            () -> assertEquals(expected.getPlayerData2(), actual.getPlayerData2(), "PlayerData2 does not match"),
+            () -> assertEquals(expected.getPlayerData(), actual.getPlayerData(), "PlayerData1 does not match"),
+            () -> assertEquals(expected.getBotData(), actual.getBotData(), "PlayerData2 does not match"),
             () -> assertEquals(expected.getGameTurnManager().getCurrentPlayer(), 
                 actual.getGameTurnManager().getCurrentPlayer(), 
                 "CurrentPlayer does not match"

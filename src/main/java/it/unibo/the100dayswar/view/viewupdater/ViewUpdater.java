@@ -47,7 +47,7 @@ public class ViewUpdater implements Runnable {
                 mapView.paintSoldiers();
                 mapView.paintTowers();
                 
-                mapView.paintStatistics();
+                statisticsView.paintStatistics();
                 mapView.paintArea();
 
                 // Sleep until next update
