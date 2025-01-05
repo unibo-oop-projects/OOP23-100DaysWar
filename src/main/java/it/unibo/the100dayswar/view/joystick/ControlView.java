@@ -16,6 +16,7 @@ import javax.swing.SwingConstants;
 
 import it.unibo.the100dayswar.commons.utilities.impl.IconLoader;
 import it.unibo.the100dayswar.commons.utilities.impl.LoadPixelFont;
+import it.unibo.the100dayswar.view.map.MapView;
 import it.unibo.the100dayswar.view.pausemenu.PauseMenu;
 import it.unibo.the100dayswar.view.rules.RulesViewer;
 import it.unibo.the100dayswar.view.startmenu.ExitWindow;
@@ -40,7 +41,7 @@ public class ControlView extends JPanel {
     /**
      * Constructor for the ControlView class.
      */
-    public ControlView() {
+    public ControlView(MapView mapView) {
         super.setLayout(new GridBagLayout());
         final GridBagConstraints gbc = createGridBagConstraints();
 

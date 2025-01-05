@@ -2,6 +2,9 @@ package it.unibo.the100dayswar.view.joystick;
 
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
+
+import it.unibo.the100dayswar.view.map.MapView;
+
 import javax.swing.BorderFactory;
 import java.awt.GridBagLayout;
 import java.awt.Color;
@@ -21,13 +24,13 @@ public class JoystickView extends JPanel {
     /**
      * Constructor for the JoystickView class.
      */
-    public JoystickView() {
+    public JoystickView(MapView mapView) {
         super.setLayout(new GridBagLayout());
         final GridBagConstraints gbc = new GridBagConstraints();
 
-        this.movementView = new MovementView();
-        this.shopView = new ShopView();
-        this.controlView = new ControlView();
+        this.movementView = new MovementView(mapView);
+        this.shopView = new ShopView(mapView);
+        this.controlView = new ControlView(mapView);
 
         this.movementView.setBorder(BorderFactory.createTitledBorder(
             BorderFactory.createLineBorder(

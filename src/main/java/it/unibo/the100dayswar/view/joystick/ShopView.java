@@ -16,6 +16,7 @@ import javax.swing.SwingConstants;
 import it.unibo.the100dayswar.application.The100DaysWar;
 import it.unibo.the100dayswar.commons.utilities.impl.IconLoader;
 import it.unibo.the100dayswar.commons.utilities.impl.LoadPixelFont;
+import it.unibo.the100dayswar.view.map.MapView;
 
 /**
  * Class that represents the shop panel in the joystick view.
@@ -35,14 +36,14 @@ public class ShopView extends JPanel {
     /**
      * Constructor for the ShopView class.
      */
-    public ShopView() {
+    public ShopView(MapView mapView) {
         super.setLayout(new GridBagLayout());
         this.buySoldier = createButton("Buy Soldier");
         this.buyBasicTower = createButton("Buy Basic Tower");
         this.buyAdvancedTower = createButton("Buy Advanced Tower");
         this.upgradeUnit = createButton("Upgrade Unit");
 
-        setButtonActions();
+        setButtonActions(mapView);
         setupLayout();
         super.setPreferredSize(SIZE);
     }
@@ -109,9 +110,15 @@ public class ShopView extends JPanel {
     /**
      * Sets the actions for the buttons.
      */
-    private void setButtonActions() {
-        buyBasicTower.addActionListener(e -> The100DaysWar.CONTROLLER.getShopController().buyBasicTower());
-        buySoldier.addActionListener(e -> The100DaysWar.CONTROLLER.getShopController().buySoldier());
+    private void setButtonActions(MapView mapView) {
+        buySoldier.addActionListener(e -> {
+            The100DaysWar.CONTROLLER.getShopController().buySoldier();
+            mapView.repaint();
+        });
+        buyBasicTower.addActionListener(e -> {
+            The100DaysWar.CONTROLLER.getShopController().buyBasicTower();
+            mapView.repaint();
+        });
         buyAdvancedTower.addActionListener(e -> The100DaysWar.CONTROLLER.getShopController().buyAdvancedTower());
         upgradeUnit.addActionListener(e -> The100DaysWar.CONTROLLER.getShopController().upgradeUnit(null));
         //  todo: Implementare la selezione di una cella/un'unità
