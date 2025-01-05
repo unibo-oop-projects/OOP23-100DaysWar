@@ -21,8 +21,6 @@ public interface ShopController {
 
     /**
      * Method that allows the player to upgrade a unit.
-     * 
-     * @param unit the unit to upgrade
      */
     void upgradeUnit();
 }

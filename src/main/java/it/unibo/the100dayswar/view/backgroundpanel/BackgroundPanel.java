@@ -7,6 +7,9 @@ import javax.swing.JPanel;
 
 import it.unibo.the100dayswar.commons.utilities.impl.IconLoader;
 
+/**
+ * Class that represents a panel with a background image.
+ */
 public class BackgroundPanel extends JPanel {
     private static final long serialVersionUID = 1L;
     private final String imagePath;
@@ -27,6 +30,6 @@ public class BackgroundPanel extends JPanel {
     @Override
     protected void paintComponent(final Graphics graphic) {
         super.paintComponent(graphic);
-        graphic.drawImage(((ImageIcon) IconLoader.loadIcon(imagePath)).getImage(), 0, 0,getWidth(), getHeight(), this);
+        graphic.drawImage(((ImageIcon) IconLoader.loadIcon(imagePath)).getImage(), 0, 0, getWidth(), getHeight(), this);
     }
 }

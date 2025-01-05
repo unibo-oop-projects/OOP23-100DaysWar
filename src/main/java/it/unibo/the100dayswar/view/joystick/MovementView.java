@@ -37,8 +37,10 @@ public class MovementView extends JPanel {
 
     /**
      * Constructor for the MovementView class.
+     * 
+     * @param mapView the map view to repaint
      */
-    public MovementView(MapView mapView) {
+    public MovementView(final MapView mapView) {
         super.setLayout(new GridBagLayout());
         final GridBagConstraints gbc = createGridBagConstraints();
 
@@ -114,8 +116,10 @@ public class MovementView extends JPanel {
 
     /**
      * Sets actions for the joystick buttons.
+     * 
+     * @param mapView the map view to repaint
      */
-    private void setButtonActions(MapView mapView) {
+    private void setButtonActions(final MapView mapView) {
         up.addActionListener(e -> moveUp(mapView));
         down.addActionListener(e -> moveDown(mapView));
         left.addActionListener(e -> moveLeft(mapView));
@@ -124,36 +128,40 @@ public class MovementView extends JPanel {
 
     /**
      * Moves the soldier up.
+     * 
      * @param mapView the map view to repaint.
      */
-    private void moveUp(MapView mapView) {
+    private void moveUp(final MapView mapView) {
         The100DaysWar.CONTROLLER.getMovementController().moveUp();
         mapView.repaint();
     }
 
     /**
      * Moves the soldier down.
+     * 
      * @param mapView the map view to repaint.
      */
-    private void moveDown(MapView mapView) {
+    private void moveDown(final MapView mapView) {
         The100DaysWar.CONTROLLER.getMovementController().moveDown();
         mapView.repaint();
     }
 
     /**
      * Moves the soldier to the left.
+     * 
      * @param mapView the map view to repaint.
      */
-    private void moveLeft(MapView mapView) {
+    private void moveLeft(final MapView mapView) {
         The100DaysWar.CONTROLLER.getMovementController().moveLeft();
         mapView.repaint();
     }
 
     /**
      * Moves the soldier to the right.
+     * 
      * @param mapView the map view to repaint.
      */
-    private void moveRight(MapView mapView) {
+    private void moveRight(final MapView mapView) {
         The100DaysWar.CONTROLLER.getMovementController().moveRight();
         mapView.repaint();
     }

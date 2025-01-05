@@ -44,8 +44,7 @@ public class SimpleBot extends PlayerImpl implements BotPlayer {
     /**
      * Constructor for the bot player.
      *
-     * @param botPlayer the bot player
-     * @param mapManager the map manager of the game
+     * @param botPlayer the bot player to copy
      */
     public SimpleBot(final BotPlayer botPlayer) {
         super(botPlayer.getUsername(), botPlayer.getSpawnPoint());

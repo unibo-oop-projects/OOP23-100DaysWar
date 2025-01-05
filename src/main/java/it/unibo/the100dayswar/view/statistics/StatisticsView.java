@@ -68,7 +68,6 @@ public class StatisticsView extends JPanel {
         final JLabel balanceLabel = new JLabel("Balance: " + statisticController.getBalance(player), JLabel.LEFT);
         balanceLabel.setFont(LoadPixelFont.getFont());
 
-        
         panel.add(soldiersLabel);
         panel.add(towersLabel);
         panel.add(cellsPercentageLabel);
@@ -76,5 +75,4 @@ public class StatisticsView extends JPanel {
 
         return panel;
     }
-
 }

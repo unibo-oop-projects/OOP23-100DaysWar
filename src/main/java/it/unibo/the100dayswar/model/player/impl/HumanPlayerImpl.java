@@ -8,9 +8,10 @@ import it.unibo.the100dayswar.model.player.api.HumanPlayer;
  * It has only the constructors.
  */
 public class HumanPlayerImpl extends PlayerImpl implements HumanPlayer {
+    private static final long serialVersionUID = 1L;
     /**
      * Constructor for the human player from the given parameters.
-     * 
+     *
      * @param username   the username of the player
      * @param spawnPoint the spawn point of the player
      */
@@ -22,7 +23,7 @@ public class HumanPlayerImpl extends PlayerImpl implements HumanPlayer {
      * 
      * @param player player to copy
      */
-	public HumanPlayerImpl(HumanPlayer player) {
-		super(player);
-	}
+    public HumanPlayerImpl(final HumanPlayer player) {
+        super(player);
+    }
 }

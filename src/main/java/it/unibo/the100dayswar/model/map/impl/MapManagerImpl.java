@@ -63,12 +63,10 @@ public class MapManagerImpl implements MapManager {
                                         .map(cell -> new CellImpl(cell)) 
                                         .collect(Collectors.toSet());
             if (player instanceof HumanPlayer) {
-                this.playersCells.put(new HumanPlayerImpl((HumanPlayer)player), copiedCells);    
+                this.playersCells.put(new HumanPlayerImpl((HumanPlayer) player), copiedCells);
             }
-    });
-
-}
-
+        });
+    }
 
     /**
      * the builder of the map with all objects.
@@ -84,8 +82,7 @@ public class MapManagerImpl implements MapManager {
     }
 
     /**
-     *{@inheritDoc}
-     * map.getsize for fixing intermediate error by the unusing of map object.
+     * {@inheritDoc}
      */
     @Override
     public void update(final Pair<Unit, Cell> source) {
@@ -101,7 +98,7 @@ public class MapManagerImpl implements MapManager {
     }
 
     /**
-     *{@inheritDoc}
+     * {@inheritDoc}
      */
     @Override
     public Map<Player, Set<Cell>> getPlayersCells() {
@@ -176,6 +173,7 @@ public class MapManagerImpl implements MapManager {
             throw new IllegalStateException("Target cell is not free for tower placement.");
             }
     }
+
     /**
      * move the soldier.
      * @param source is the pair of the soldier and the cell.
@@ -273,5 +271,4 @@ public class MapManagerImpl implements MapManager {
     public Dimension getMapDimension() {
         return new Dimension(map.getSize().width, map.getSize().height).getSize();
     }
-
 }

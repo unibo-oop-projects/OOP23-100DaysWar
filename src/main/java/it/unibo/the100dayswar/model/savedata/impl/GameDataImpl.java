@@ -33,8 +33,8 @@ public class GameDataImpl implements GameData {
             final HumanPlayer human,
             final BotPlayer bot,
             final MapManager mapManager, 
-            final GameTurnManager gameTurnManager) {
-    
+            final GameTurnManager gameTurnManager
+            ) {
         this.humanData = new HumanPlayerImpl(human);
         this.botData = new SimpleBot(bot);
         this.mapManager = new MapManagerImpl(mapManager);

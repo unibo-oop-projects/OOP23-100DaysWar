@@ -11,11 +11,11 @@ public class CellView {
 
     /**
      * Creates a new cell view.
-     * @param x the x coordinate.
-     * @param y the y coordinate.
+     * 
+     * @param pos the position of the cell.
      * @param imagePath the path of the image.
      */
-    public CellView(Position pos, String imagePath) {
+    public CellView(final Position pos, final String imagePath) {
        this.position = pos;
         this.imagePath = imagePath;
     }

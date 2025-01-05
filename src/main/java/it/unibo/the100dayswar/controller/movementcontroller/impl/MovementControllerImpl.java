@@ -22,7 +22,6 @@ public class MovementControllerImpl implements MovementController {
     public void moveUp() {
         move(Direction.UP);
     }
-    
     /** 
      * {@inheritDoc}
      */
@@ -30,7 +29,6 @@ public class MovementControllerImpl implements MovementController {
     public void moveDown() {
         move(Direction.DOWN);
     }
-    
     /** 
      * {@inheritDoc}
      */
@@ -38,7 +36,6 @@ public class MovementControllerImpl implements MovementController {
     public void moveLeft() {
         move(Direction.LEFT);
     }
-    
     /** 
      * {@inheritDoc}
      */
@@ -46,17 +43,16 @@ public class MovementControllerImpl implements MovementController {
     public void moveRight() {
         move(Direction.RIGHT);
     }
-    
     /**
      * Moves the selected soldier in the specified direction.
      * @param direction the direction in which the soldier should move
      */
-    private void move(Direction direction) {
+    private void move(final Direction direction) {
         final Pair<Unit, Cell> selectedCell = The100DaysWar.CONTROLLER.getMapController().getSelectedCell();
         final Unit unit = selectedCell.getFirst();
         final Cell currentCell = selectedCell.getSecond();
-    
-        if (unit != null && unit instanceof Soldier) {
+
+        if (unit instanceof Soldier) {
             int targetX = currentCell.getPosition().getX();
             int targetY = currentCell.getPosition().getY();
             switch (direction) {
@@ -64,9 +60,15 @@ public class MovementControllerImpl implements MovementController {
                 case DOWN -> targetY += 1;
                 case LEFT -> targetX -= 1;
                 case RIGHT -> targetX += 1;
+                default -> throw new UnsupportedOperationException("Invalid direction");
             }
-            
-            ((Soldier) unit).movementRequest(new CellImpl(new PositionImpl(targetX, targetY), currentCell.isBuildable(), currentCell.isSpawn()));
+
+            ((Soldier) unit).movementRequest(
+                new CellImpl(
+                    new PositionImpl(targetX, targetY),
+                    currentCell.isBuildable(),
+                    currentCell.isSpawn()
+                ));
         } else {
             throw new UnsupportedOperationException(
                 unit == null ? "No unit selected" : "The unit selected is not a soldier"

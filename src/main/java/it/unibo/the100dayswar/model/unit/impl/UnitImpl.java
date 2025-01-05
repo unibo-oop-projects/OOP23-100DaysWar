@@ -41,7 +41,7 @@ public abstract class UnitImpl implements Unit {
      */
     public UnitImpl(final Player owner, final int health, final int costToBuy, final int costToUpgrade,
             final int maxLevel) {
-        this.owner = (owner instanceof HumanPlayer)? new HumanPlayerImpl((HumanPlayer) owner) : new SimpleBot((BotPlayer) owner);
+        this.owner = owner instanceof HumanPlayer ? new HumanPlayerImpl((HumanPlayer) owner) : new SimpleBot((BotPlayer) owner);
         this.health = health;
         this.level = DEFAULT_LEVEL;
         this.costToBuy = costToBuy;
@@ -142,7 +142,7 @@ public abstract class UnitImpl implements Unit {
      */
     @Override
     public Player getOwner() {
-        return (owner instanceof HumanPlayer)? new HumanPlayerImpl((HumanPlayer) owner) : new SimpleBot((BotPlayer) owner);
+        return owner instanceof HumanPlayer ? new HumanPlayerImpl((HumanPlayer) owner) : new SimpleBot((BotPlayer) owner);
     }
 
     /**

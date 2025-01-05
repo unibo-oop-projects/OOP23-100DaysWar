@@ -149,9 +149,9 @@ public class ModelImpl implements Model {
      * {@inheritDoc}
      */
     @Override
-    public Player getBotPlayer() {
+    public BotPlayer getBotPlayer() {
         if (!players.isEmpty() && players.get(BOT_PLAYER) instanceof BotPlayer) {
-            return players.get(BOT_PLAYER);
+            return (BotPlayer) players.get(BOT_PLAYER);
         } else {
             throw new IllegalStateException("No bot player is present");
         }
@@ -185,8 +185,8 @@ public class ModelImpl implements Model {
     public boolean saveGame(final String path) {
         try {
             final GameData data = new GameDataImpl(
-                (HumanPlayer) getHumanPlayer(), 
-                (BotPlayer) getBotPlayer(), 
+                getHumanPlayer(), 
+                getBotPlayer(), 
                 mapManager, turnManager
             );
             final GameSaver gameSaver = new GameSaverImpl(data, path);

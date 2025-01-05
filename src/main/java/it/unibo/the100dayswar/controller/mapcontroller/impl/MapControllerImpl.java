@@ -20,8 +20,10 @@ import java.util.List;
  */
 public class MapControllerImpl implements MapController {
 
-    private  Pair<Unit, Cell> selectedCell;
-
+    private Pair<Unit, Cell> selectedCell;
+    /**
+     * Constructor for the MapControllerImpl.
+     */
     public MapControllerImpl() {
         this.selectedCell = new Pair<>(null, null);
     }
@@ -31,14 +33,15 @@ public class MapControllerImpl implements MapController {
      */
     @Override
     public int getMapWidth() {
-        return (int)The100DaysWar.CONTROLLER.getGameInstance().getMap().getSize().getWidth();
+        return (int) The100DaysWar.CONTROLLER.getGameInstance().getMap().getSize().getWidth();
     }
+
     /**
      * {@inheritDoc}
      */
     @Override
     public int getMapHeight() {
-        return (int)The100DaysWar.CONTROLLER.getGameInstance().getMap().getSize().getHeight();
+        return (int) The100DaysWar.CONTROLLER.getGameInstance().getMap().getSize().getHeight();
     }
 
     /**
@@ -81,7 +84,7 @@ public class MapControllerImpl implements MapController {
      * {@inheritDoc}
      */
     @Override
-    public void onCellClick(int cellX, int cellY) {
+    public void onCellClick(final int cellX, final int cellY) {
          final GameMap map = The100DaysWar.CONTROLLER.getGameInstance().getMap();
          final Cell clickedCell = map.getCell(new PositionImpl(cellX, cellY));
          selectedCell = new Pair<>(clickedCell.getUnit().orElse(null), clickedCell);
@@ -95,5 +98,4 @@ public class MapControllerImpl implements MapController {
     public Pair<Unit, Cell> getSelectedCell() {
         return this.selectedCell;
     }
-
 }

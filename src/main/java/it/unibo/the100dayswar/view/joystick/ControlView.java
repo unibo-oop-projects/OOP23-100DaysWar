@@ -14,6 +14,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import it.unibo.the100dayswar.application.The100DaysWar;
 import it.unibo.the100dayswar.commons.utilities.impl.IconLoader;
 import it.unibo.the100dayswar.commons.utilities.impl.LoadPixelFont;
 import it.unibo.the100dayswar.view.map.MapView;
@@ -40,8 +41,10 @@ public class ControlView extends JPanel {
 
     /**
      * Constructor for the ControlView class.
+     * 
+     * @param mapView the map view to repaint
      */
-    public ControlView(MapView mapView) {
+    public ControlView(final MapView mapView) {
         super.setLayout(new GridBagLayout());
         final GridBagConstraints gbc = createGridBagConstraints();
 
@@ -51,7 +54,7 @@ public class ControlView extends JPanel {
         this.rules = createButton("Read Rules");
         this.quit = createButton("Quit");
 
-        setButtonActions();
+        setButtonActions(mapView);
         arrangeButtons(gbc);
 
         super.setPreferredSize(SIZE);
@@ -120,9 +123,11 @@ public class ControlView extends JPanel {
 
     /**
      * Sets actions for the control buttons.
+     * 
+     * @param mapView the map view to repaint
      */
-    private void setButtonActions() {
-        attack.addActionListener(e -> attackAction());
+    private void setButtonActions(final MapView mapView) {
+        attack.addActionListener(e -> attackAction(mapView));
         pause.addActionListener(e -> pauseAction());
         skip.addActionListener(e -> skipTurn());
         rules.addActionListener(e -> rulesAction());
@@ -168,14 +173,19 @@ public class ControlView extends JPanel {
 
     /**
      * The action to be performed when the attack button is clicked.
+     * 
+     * @param mapView the map view to repaint
      */
-    private void attackAction() {
+    private void attackAction(final MapView mapView) {
+        The100DaysWar.CONTROLLER.getGameController().attack();
+        mapView.repaint();
     }
 
     /**
      * Skip the current turn without doing nothing.
      */
     private void skipTurn() {
+        The100DaysWar.CONTROLLER.getGameController().skip();
     }
 
     /** 

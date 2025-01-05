@@ -35,8 +35,10 @@ public class ShopView extends JPanel {
 
     /**
      * Constructor for the ShopView class.
+     * 
+     * @param mapView the map view to repaint
      */
-    public ShopView(MapView mapView) {
+    public ShopView(final MapView mapView) {
         super.setLayout(new GridBagLayout());
         this.buySoldier = createButton("Buy Soldier");
         this.buyBasicTower = createButton("Buy Basic Tower");
@@ -109,8 +111,10 @@ public class ShopView extends JPanel {
 
     /**
      * Sets the actions for the buttons.
+     * 
+     * @param mapView the map view to repaint
      */
-    private void setButtonActions(MapView mapView) {
+    private void setButtonActions(final MapView mapView) {
         buySoldier.addActionListener(e -> {
             The100DaysWar.CONTROLLER.getShopController().buySoldier();
             mapView.repaint();

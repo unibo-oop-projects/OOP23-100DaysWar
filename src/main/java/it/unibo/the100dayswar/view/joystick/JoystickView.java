@@ -23,8 +23,10 @@ public class JoystickView extends JPanel {
 
     /**
      * Constructor for the JoystickView class.
+     * 
+     * @param mapView the map view to repaint
      */
-    public JoystickView(MapView mapView) {
+    public JoystickView(final MapView mapView) {
         super.setLayout(new GridBagLayout());
         final GridBagConstraints gbc = new GridBagConstraints();
 

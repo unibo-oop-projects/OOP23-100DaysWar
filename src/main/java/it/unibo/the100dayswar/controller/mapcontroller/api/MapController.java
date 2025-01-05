@@ -9,6 +9,9 @@ import it.unibo.the100dayswar.model.map.api.GameMap;
 import it.unibo.the100dayswar.model.unit.api.Unit;
 import it.unibo.the100dayswar.view.map.CellView;
 
+/**
+ * The controller of the map of the game.
+ */
 public interface MapController {
     /**
      * Gets the width of the map.
@@ -50,6 +53,6 @@ public interface MapController {
      * Gets the selected cell.
      *
      * @return the selected cell
-     */ 
+     */
     Pair<Unit, Cell> getSelectedCell();
 }
