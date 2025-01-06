@@ -55,6 +55,6 @@ public final class SaveWindow {
             }
         }
 
-        return false;
+        return true;
     }
 }

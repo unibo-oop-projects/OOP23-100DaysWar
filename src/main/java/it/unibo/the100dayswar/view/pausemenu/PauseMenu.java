@@ -134,7 +134,6 @@ public class PauseMenu extends JDialog {
      */
     private void returnToMainMenu() {
         if (SaveWindow.saveDialog(this, SAVING_PATH)) {
-
             for (final Window window : getWindows()) {
             if (window instanceof JFrame || window instanceof JDialog) {
                 window.dispose();
