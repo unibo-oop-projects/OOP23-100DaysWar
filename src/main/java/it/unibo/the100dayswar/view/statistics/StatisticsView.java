@@ -78,7 +78,7 @@ public class StatisticsView extends JPanel {
                 super.paintComponent(g);
                 if (backgroundImage != null) {
                     Graphics2D g2d = (Graphics2D) g.create();
-                    g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f)); // Semi-trasparenza
+                    g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f));
                     g2d.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
                     g2d.dispose();
                 }
