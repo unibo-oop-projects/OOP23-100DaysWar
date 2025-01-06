@@ -13,10 +13,10 @@ import it.unibo.the100dayswar.model.unit.api.Unit;
 public  class CellImpl implements Cell {
     private static final long serialVersionUID = 1L;
 
-    private final  Position position;
+    private final Position position;
     private final boolean isBuildable;
     private final boolean isSpawn;
-    private transient Unit currentUnit;
+    private Unit currentUnit;
 
     /**
      * Constructor from coordinates and cell characteristics.
@@ -25,6 +25,9 @@ public  class CellImpl implements Cell {
      * @param isSpawn true if the cell is a spawn point.
      */
     public CellImpl(final Position coordinate, final boolean isBuildable, final boolean isSpawn) {
+        if (coordinate == null) {
+            throw new IllegalArgumentException("Position cannot be null");
+        }
         this.position = new PositionImpl(coordinate);
         this.isBuildable = isBuildable;
         this.isSpawn = isSpawn;
@@ -38,7 +41,7 @@ public  class CellImpl implements Cell {
         this.position = cell.getPosition();
         this.isBuildable = cell.isBuildable();
         this.isSpawn = cell.isSpawn();
-        this.currentUnit = null;
+        this.currentUnit = cell.getUnit().orElse(null);
     }
 
     /**
@@ -102,15 +105,16 @@ public  class CellImpl implements Cell {
         final Cell other = (Cell) obj;
         return Objects.equals(this.getPosition(), other.getPosition())
                 && Objects.equals(this.isSpawn, other.isSpawn())
-                && Objects.equals(this.isBuildable, other.isBuildable());
+                && Objects.equals(this.isBuildable, other.isBuildable())
+                && Objects.equals(this.currentUnit, other.getUnit().orElse(null));
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public   int hashCode() {
-        return Objects.hash(this.getPosition(), this.isSpawn, this.isBuildable);
+    public int hashCode() {
+        return Objects.hash(this.getPosition(), this.isSpawn, this.isBuildable, this.currentUnit);
     }
 
     /**

@@ -14,6 +14,7 @@ import java.util.ArrayList;
  * Implementation of GameStatistics.
  */
 public class GameStatisticImpl implements GameStatistics {
+    private static final long serialVersionUID = 1L;
 
     private final Map<Player, Integer> soldiers = new HashMap<>();
     private final Map<Player, Integer> towers = new HashMap<>();

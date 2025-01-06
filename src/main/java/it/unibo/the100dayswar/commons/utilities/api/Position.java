@@ -1,9 +1,11 @@
 package it.unibo.the100dayswar.commons.utilities.api;
 
+import java.io.Serializable;
+
 /**
  * Interface that rapresent the postion of an object in the game map.
  */
-public interface Position {
+public interface Position extends Serializable {
     /**
      * X getter.
      * @return the value of x

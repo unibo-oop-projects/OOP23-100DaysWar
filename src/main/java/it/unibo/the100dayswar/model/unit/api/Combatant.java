@@ -1,9 +1,11 @@
 package it.unibo.the100dayswar.model.unit.api;
 
+import java.io.Serializable;
+
 /** 
  * An interface for the objects that can fight with other ones.
  */
-public interface Combatant {
+public interface Combatant extends Serializable {
     /**
      * Getter for the current health of the object.
      * 

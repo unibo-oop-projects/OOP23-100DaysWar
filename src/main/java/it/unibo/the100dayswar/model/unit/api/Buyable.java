@@ -1,9 +1,11 @@
 package it.unibo.the100dayswar.model.unit.api;
 
+import java.io.Serializable;
+
 /**
  * An interface for a buyable and upgradable object.
  */
-public interface Buyable {
+public interface Buyable extends Serializable {
     /**
      * This method returns the cost to buy the object.
      * 

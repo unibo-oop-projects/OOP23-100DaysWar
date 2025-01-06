@@ -1,5 +1,6 @@
 package it.unibo.the100dayswar.model.player.api;
 
+import java.io.Serializable;
 import java.util.Set;
 
 import it.unibo.the100dayswar.commons.patterns.Observer;
@@ -19,7 +20,7 @@ import it.unibo.the100dayswar.model.unit.api.Unit;
  * corresponding to the actions
  * that a player can perform.
  */
-public interface Player extends Observer<ResourceGenerator> {
+public interface Player extends Observer<ResourceGenerator>, Serializable {
     /**
      * Returns the username of the player.
      *

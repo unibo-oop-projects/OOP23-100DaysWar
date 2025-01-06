@@ -14,21 +14,25 @@ public interface Soldier extends Unit, Movable {
      * The cost to purchase a soldier.
      */
     int DEFAULT_COST = 50;
+
     /**
      * {@inheritDoc}
      */
     @Override
     void performAttack(Combatant target);
+
     /**
      * {@inheritDoc}
      */
     @Override
     void move(Cell cell);
+
     /**
      * {@inheritDoc}
      */
     @Override
     void movementRequest(Cell target);
+
     /**
      * {@inheritDoc}
      */

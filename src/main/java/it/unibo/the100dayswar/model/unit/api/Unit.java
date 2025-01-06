@@ -1,6 +1,5 @@
 package it.unibo.the100dayswar.model.unit.api;
 
-
 import it.unibo.the100dayswar.commons.patterns.Observable;
 import it.unibo.the100dayswar.commons.utilities.impl.Pair;
 import it.unibo.the100dayswar.model.cell.api.Cell;

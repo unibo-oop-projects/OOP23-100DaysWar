@@ -1,13 +1,12 @@
 package it.unibo.the100dayswar.commons.utilities.impl;
 
-import java.io.Serializable;
 import java.util.Objects;
 
 import it.unibo.the100dayswar.commons.utilities.api.Position;
 /**
  * Class that model the concept of the postion.
  */
-public class PositionImpl implements Position, Serializable {
+public class PositionImpl implements Position {
     private static final long serialVersionUID = 1L;
 
     private int x;

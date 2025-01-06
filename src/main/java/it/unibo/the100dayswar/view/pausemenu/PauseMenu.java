@@ -6,6 +6,7 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.Window;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -133,8 +134,13 @@ public class PauseMenu extends JDialog {
      */
     private void returnToMainMenu() {
         if (SaveWindow.saveDialog(this, SAVING_PATH)) {
+
+            for (final Window window : getWindows()) {
+            if (window instanceof JFrame || window instanceof JDialog) {
+                window.dispose();
+                }
+            }
             new StartMenuView().initialize();
-            dispose();
         }
     }
 

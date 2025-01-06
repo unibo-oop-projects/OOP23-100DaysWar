@@ -1,5 +1,6 @@
 package it.unibo.the100dayswar.model.bot.impl;
 
+import java.io.Serializable;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
@@ -271,7 +272,7 @@ public enum ActionType {
      * A static class, shared by all types of this enum, that has the 
      * task of manage the observers of the actions.
      */
-    private static final class ActionNotifier implements Observable<Pair<Unit, Cell>> {
+    private static final class ActionNotifier implements Observable<Pair<Unit, Cell>>, Serializable {
         private static final long serialVersionUID = 1L;
         private final Set<Observer<Pair<Unit, Cell>>> observers = new HashSet<>();
 

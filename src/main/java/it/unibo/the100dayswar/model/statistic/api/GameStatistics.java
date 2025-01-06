@@ -3,12 +3,13 @@ package it.unibo.the100dayswar.model.statistic.api;
 import it.unibo.the100dayswar.model.player.api.Player;
 import it.unibo.the100dayswar.commons.utilities.impl.Pair;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Interface that models the game statistics.
  */
-public interface GameStatistics {
+public interface GameStatistics extends Serializable {
 
     /**
      * Update all the statistics.

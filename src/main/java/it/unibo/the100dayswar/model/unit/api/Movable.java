@@ -1,11 +1,13 @@
 package it.unibo.the100dayswar.model.unit.api;
 
+import java.io.Serializable;
+
 import it.unibo.the100dayswar.model.cell.api.Cell;
 
 /**
  * An interface for the objects that can move around the map.
  */
-public interface Movable {
+public interface Movable extends Serializable {
     /**
      * This method helpa the movement of an object to a specified cell
      * to connect it to a manager that will check and handle it in 

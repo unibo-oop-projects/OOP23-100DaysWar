@@ -187,7 +187,8 @@ public class ModelImpl implements Model {
             final GameData data = new GameDataImpl(
                 getHumanPlayer(), 
                 getBotPlayer(), 
-                mapManager, turnManager
+                mapManager,
+                turnManager
             );
             final GameSaver gameSaver = new GameSaverImpl(data, path);
 

@@ -88,7 +88,8 @@ public class MapControllerImpl implements MapController {
          final GameMap map = The100DaysWar.CONTROLLER.getGameInstance().getMap();
          final Cell clickedCell = map.getCell(new PositionImpl(cellX, cellY));
          selectedCell = new Pair<>(clickedCell.getUnit().orElse(null), clickedCell);
-         System.out.println("Selected cell: " + selectedCell.getSecond().getPosition().toString());
+         System.out.println("Selected cell:\t" + selectedCell.getSecond().getPosition().toString());
+         System.out.println("Occupied:\t" + !selectedCell.getSecond().isFree());
     }
 
     /**
