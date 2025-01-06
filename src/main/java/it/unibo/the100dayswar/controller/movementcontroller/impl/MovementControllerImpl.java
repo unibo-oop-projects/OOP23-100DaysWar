@@ -8,7 +8,7 @@ import it.unibo.the100dayswar.commons.utilities.impl.PositionImpl;
 import it.unibo.the100dayswar.controller.movementcontroller.api.MovementController;
 import it.unibo.the100dayswar.model.cell.api.Cell;
 import it.unibo.the100dayswar.model.cell.impl.CellImpl;
-import it.unibo.the100dayswar.model.soldier.api.Soldier;
+import it.unibo.the100dayswar.model.unit.api.Movable;
 import it.unibo.the100dayswar.model.unit.api.Unit;
 
 /**
@@ -51,20 +51,16 @@ public class MovementControllerImpl implements MovementController {
         final Pair<Unit, Cell> selectedCell = The100DaysWar.CONTROLLER.getMapController().getSelectedCell();
         final Unit unit = selectedCell.getFirst();
         final Cell currentCell = selectedCell.getSecond();
-
-        if (unit instanceof Soldier) {
-            final Position targetPosition = currentCell.getPosition();
-            switch (direction) {
-                case UP -> targetPosition.setY(targetPosition.getY() - 1);
-                case DOWN -> targetPosition.setY(targetPosition.getY() + 1);
-                case LEFT -> targetPosition.setX(targetPosition.getX() - 1);
-                case RIGHT -> targetPosition.setX(targetPosition.getX() + 1);
-                default -> throw new UnsupportedOperationException("Invalid direction");
-            }
-
-            ((Soldier) unit).movementRequest(
+    
+        if (unit instanceof Movable) {
+            final Position currentPosition = unit.getPosition().getPosition();
+            final Position targetPosition = new PositionImpl(
+                currentPosition.getX() + direction.getDeltaX(),
+                currentPosition.getY() + direction.getDeltaY()
+            );
+            ((Movable) unit).movementRequest(
                 new CellImpl(
-                    new PositionImpl(targetPosition),
+                    targetPosition,
                     currentCell.isBuildable(),
                     currentCell.isSpawn()
                 ));
