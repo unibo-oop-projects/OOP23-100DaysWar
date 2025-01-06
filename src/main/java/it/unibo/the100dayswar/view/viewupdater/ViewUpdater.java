@@ -49,7 +49,7 @@ public class ViewUpdater implements Runnable {
                 
                 // statisticsView.paintStatistics();
                 // mapView.paintArea();
-                statisticsView.refreshStatistics();
+                //statisticsView.refreshStatistics();
                 // Sleep until next update
                 Thread.sleep(REFRESH_INTERVAL_MS);
 

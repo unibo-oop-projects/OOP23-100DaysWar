@@ -114,7 +114,7 @@ public  class CellImpl implements Cell {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(this.getPosition(), this.isSpawn, this.isBuildable, this.currentUnit);
+        return Objects.hash(this.position, this.isSpawn, this.isBuildable, this.currentUnit);
     }
 
     /**
