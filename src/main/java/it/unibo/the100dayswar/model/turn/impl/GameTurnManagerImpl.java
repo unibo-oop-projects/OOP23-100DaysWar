@@ -18,6 +18,7 @@ public class GameTurnManagerImpl implements GameTurnManager {
     private static final long serialVersionUID = 1L;
 
     private static final int PERIOD = 4000;
+    private static final int DELAY = 4000;
     private static final int MAX_TURN_WITH_NO_MOVE = 4;
     private int turn;
     private final List<Player> players;
@@ -43,6 +44,7 @@ public class GameTurnManagerImpl implements GameTurnManager {
         this.gameDay = new GameDayImpl();
         gameDay.attach(players.get(0));
         gameDay.attach(players.get(1));
+        
 
     }
     /**
@@ -76,7 +78,7 @@ public class GameTurnManagerImpl implements GameTurnManager {
      * switch Turn to the other player.
      */
     @Override
-    public void switchTurn() {
+    public synchronized void switchTurn() {
         this.currentPlayerIndex = (this.currentPlayerIndex == 0) ? 1 : 0;
         increaseTurn();
         playerStartTurn();
@@ -89,7 +91,7 @@ public class GameTurnManagerImpl implements GameTurnManager {
      * increase the Turn counter.
      */
     @Override
-    public void increaseTurn() {
+    public synchronized void increaseTurn() {
         this.turn++;
     }
     /**
@@ -104,14 +106,14 @@ public class GameTurnManagerImpl implements GameTurnManager {
      * called when a player start his turn.
      */
     @Override
-    public void playerStartTurn() {
+    public synchronized void playerStartTurn() {
         this.daysNoMove = 0;
     }
     /**
      * unsed to automatically change turn when day passes.
      */
     @Override
-    public void onDayPassed() {
+    public synchronized void onDayPassed() {
         this.gameDay.increaseDay();
         this.daysNoMove++;
         if (daysNoMove >= MAX_TURN_WITH_NO_MOVE) {
@@ -127,7 +129,14 @@ public class GameTurnManagerImpl implements GameTurnManager {
      */
     @Override
     public void startTimer() {
-        timer.schedule(dayTimer, 0, PERIOD);
+        this.timer = new Timer();
+        this.dayTimer = new TimerTask() {
+            @Override
+            public void run() {
+                onDayPassed();
+            }
+        };
+        timer.schedule(dayTimer, DELAY, PERIOD);
     }
     /**
      * stop the timer for the day.
@@ -146,12 +155,5 @@ public class GameTurnManagerImpl implements GameTurnManager {
      */
     private void readObject(final java.io.ObjectInputStream input) throws IOException, ClassNotFoundException {
         input.defaultReadObject();
-        this.timer = new Timer();
-        this.dayTimer = new TimerTask() {
-            @Override
-            public void run() {
-                onDayPassed();
-            }
-        };
     }
 }
