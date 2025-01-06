@@ -195,5 +195,4 @@ public class GameMapBuilderImpl implements GameMapBuilder {
         }
         return breadthFirstSearch(spawn1, spawn2);
     }
-
 }

@@ -17,6 +17,7 @@ public class ShopControllerImpl implements ShopController {
     @Override
     public void buySoldier() {
         The100DaysWar.CONTROLLER.getGameInstance().buySoldier();
+        The100DaysWar.CONTROLLER.getGameController().skip();
     }
 
     /** 
@@ -26,6 +27,7 @@ public class ShopControllerImpl implements ShopController {
     public void buyBasicTower() {
         final Pair<Unit, Cell> selectedCell = The100DaysWar.CONTROLLER.getMapController().getSelectedCell();
         The100DaysWar.CONTROLLER.getGameInstance().buyTower(TowerType.BASIC, selectedCell.getSecond());
+        The100DaysWar.CONTROLLER.getGameController().skip();
     }
 
     /** 
@@ -35,6 +37,7 @@ public class ShopControllerImpl implements ShopController {
     public void buyAdvancedTower() {
         final Pair<Unit, Cell> selectedCell = The100DaysWar.CONTROLLER.getMapController().getSelectedCell();
         The100DaysWar.CONTROLLER.getGameInstance().buyTower(TowerType.ADVANCED, selectedCell.getSecond());
+        The100DaysWar.CONTROLLER.getGameController().skip();
     }
 
     /** 
@@ -48,5 +51,6 @@ public class ShopControllerImpl implements ShopController {
             throw new IllegalStateException("No unit selected");
         }
         The100DaysWar.CONTROLLER.getGameInstance().upgradeUnit(unit);
+        The100DaysWar.CONTROLLER.getGameController().skip();
     }
 }

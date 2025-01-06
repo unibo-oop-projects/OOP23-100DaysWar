@@ -12,6 +12,8 @@ import java.util.stream.Stream;
 import java.awt.Dimension;
 
 import it.unibo.the100dayswar.commons.utilities.impl.Pair;
+import it.unibo.the100dayswar.model.bot.api.BotPlayer;
+import it.unibo.the100dayswar.model.bot.impl.SimpleBot;
 import it.unibo.the100dayswar.model.cell.api.BonusCell;
 import it.unibo.the100dayswar.model.cell.api.Cell;
 import it.unibo.the100dayswar.model.cell.impl.CellImpl;
@@ -60,10 +62,13 @@ public class MapManagerImpl implements MapManager {
         this.playersCells = new HashMap<>();
         original.getPlayersCells().forEach((player, cells) -> {
             final Set<Cell> copiedCells = cells.stream()
-                                        .map(cell -> new CellImpl(cell)) 
+                                        .map(CellImpl::new) 
                                         .collect(Collectors.toSet());
             if (player instanceof HumanPlayer) {
                 this.playersCells.put(new HumanPlayerImpl((HumanPlayer) player), copiedCells);
+            }
+            if (player instanceof BotPlayer) {
+                this.playersCells.put(new SimpleBot((BotPlayer) player), copiedCells);
             }
         });
     }

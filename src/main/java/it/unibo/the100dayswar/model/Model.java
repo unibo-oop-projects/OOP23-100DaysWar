@@ -107,7 +107,7 @@ public interface Model {
     /**
      * Resume the game.
      */
-    void reasumeGame();
+    void resumeGame();
 
     /**
      * Gets the human player in the game.

@@ -142,13 +142,10 @@ public class ShopView extends JPanel {
         gbc.gridx = 0;
         gbc.gridy = 0;
         super.add(buySoldier, gbc);
-
         gbc.gridy = 1;
         super.add(buyBasicTower, gbc);
-
         gbc.gridy = 2;
         super.add(buyAdvancedTower, gbc);
-
         gbc.gridy = 3;
         super.add(upgradeUnit, gbc);
     }

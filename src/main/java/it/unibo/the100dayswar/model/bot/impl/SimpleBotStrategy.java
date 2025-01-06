@@ -16,14 +16,12 @@ public class SimpleBotStrategy implements BotStrategy {
     private static final long serialVersionUID = 1L;
 
     private final DecisionMaker decisionMaker;
-
     /**
      * Constructor of the class.
      */
     public SimpleBotStrategy() {
         this.decisionMaker = new DecisionMakerImpl();
     }
-
     /**
      * {@inheritDoc}
      */

@@ -248,12 +248,18 @@ public enum ActionType {
          */
         private Cell determineDestination(final BotPlayer botPlayer, final Unit unit) {
             final BfsPathFinder pathFinder = new BfsPathFinder(botPlayer.getAllCells());
-
             final Cell start = unit.getPosition();
             final Cell destination = botPlayer.getEnemySpawnPoint();
-
+            if (start == null || destination == null) {
+                System.err.println("Error: Start or destination cell is null.");
+                return null;
+            }
             final List<Cell> path = pathFinder.findPath(start, destination);
-            // Return the second cell of the path because the first one is the start cell
+            if (path == null || path.isEmpty()) {
+                System.err.println("Error: No path found between " + start + " and " + destination);
+                return null;
+            }
+            System.out.println("Path found: " + path);
             return (path.size() > 1) ? path.get(1) : null;
         }
     };
@@ -307,6 +313,7 @@ public enum ActionType {
         public void notifyObservers(final Pair<Unit, Cell> data) {
             for (final Observer<Pair<Unit, Cell>> observer : observers) {
                 observer.update(data);
+                System.out.println(data.getFirst().getPosition().getPosition());
             }
         }
     }

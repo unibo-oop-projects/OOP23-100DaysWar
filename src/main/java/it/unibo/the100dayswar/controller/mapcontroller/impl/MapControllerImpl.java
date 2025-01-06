@@ -67,18 +67,24 @@ public class MapControllerImpl implements MapController {
 
             if (cell.getUnit().isPresent()) {
                 final Unit unit = cell.getUnit().get();
-                if (unit instanceof Soldier && unit.getOwner() instanceof HumanPlayer) {
-                    imagePath = SOLDIER_IMAGE_PATH + "soldier" + unit.getLevel() + DEFAULT_FORMAT;
-                } else if (unit instanceof Soldier && unit instanceof BotPlayer) {
-                    imagePath = SOLDIER_IMAGE_PATH + "enemy" + unit.getLevel() + DEFAULT_FORMAT;
-                } else if (unit instanceof BasicTower && unit.getOwner() instanceof HumanPlayer) {
-                    imagePath = TOWER_IMAGE_PATH + "human_basic" + unit.getLevel() + DEFAULT_FORMAT;
-                } else if (unit instanceof AdvancedTower && unit.getOwner() instanceof HumanPlayer) {
-                    imagePath = TOWER_IMAGE_PATH + "human_advanced" + unit.getLevel() + DEFAULT_FORMAT; 
-                } else if (unit instanceof BasicTower && unit.getOwner() instanceof BotPlayer) {
-                    imagePath = TOWER_IMAGE_PATH + "enemy_basic" + unit.getLevel() + DEFAULT_FORMAT;
-                } else if (unit instanceof AdvancedTower && unit.getOwner() instanceof BotPlayer) {
-                    imagePath = TOWER_IMAGE_PATH + "enemy_advanced" + unit.getLevel() + DEFAULT_FORMAT;
+                if (unit instanceof Soldier) {
+                    if (unit.getOwner() instanceof HumanPlayer) {
+                        imagePath = SOLDIER_IMAGE_PATH + "soldier" + unit.getLevel() + DEFAULT_FORMAT;
+                    } else if (unit.getOwner() instanceof BotPlayer) {
+                        imagePath = SOLDIER_IMAGE_PATH + "enemy" + unit.getLevel() + DEFAULT_FORMAT;
+                    }
+                } else if (unit instanceof BasicTower) {
+                    if (unit.getOwner() instanceof HumanPlayer) {
+                        imagePath = TOWER_IMAGE_PATH + "human_basic" + unit.getLevel() + DEFAULT_FORMAT;
+                    } else if (unit.getOwner() instanceof BotPlayer) {
+                        imagePath = TOWER_IMAGE_PATH + "enemy_basic" + unit.getLevel() + DEFAULT_FORMAT;
+                    }
+                } else if (unit instanceof AdvancedTower) {
+                    if (unit.getOwner() instanceof HumanPlayer) {
+                        imagePath = TOWER_IMAGE_PATH + "human_advanced" + unit.getLevel() + DEFAULT_FORMAT;
+                    } else if (unit.getOwner() instanceof BotPlayer) {
+                        imagePath = TOWER_IMAGE_PATH + "enemy_advanced" + unit.getLevel() + DEFAULT_FORMAT;
+                    }
                 }
             } else if (!cell.isBuildable()) {
                 imagePath = OBSTACLE_PATH;

@@ -175,15 +175,12 @@ public class MovementView extends JPanel {
         gbc.gridx = 1;
         gbc.gridy = 0;
         super.add(up, gbc);
-
         gbc.gridx = 0;
         gbc.gridy = 1;
         super.add(left, gbc);
-
         gbc.gridx = 2;
         gbc.gridy = 1;
         super.add(right, gbc);
-
         gbc.gridx = 1;
         gbc.gridy = 2;
         super.add(down, gbc);

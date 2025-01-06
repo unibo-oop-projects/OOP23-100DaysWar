@@ -1,15 +1,15 @@
 package it.unibo.the100dayswar.controller.gamecontroller.api;
 
 /**
- * interface for the controller of the game.
+ * Interface for the controller of the game.
  */
 public interface GameController {
     /**
-     * moethod for attack.
+     * Method for attack.
      */
     void attack();
     /**
-     * method for resume the game.
+     * Method for resume the game.
      */
     void skip();
 }

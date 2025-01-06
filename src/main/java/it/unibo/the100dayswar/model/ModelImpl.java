@@ -61,8 +61,6 @@ public class ModelImpl implements Model {
      */
     public ModelImpl(final String namePlayer) {
         this.mapManager = new MapManagerImpl(new GameMapBuilderImpl(DEFAULT_MAP_SIZE, DEFAULT_MAP_SIZE));
-        ActionType.add(mapManager);
-
         this.players = List.of(new SimpleBot(mapManager), new HumanPlayerImpl(namePlayer, mapManager.getPlayerSpawn()));
         this.turnManager = new GameTurnManagerImpl(players);
         this.gameStatistics = new GameStatisticImpl(players, mapManager);
@@ -85,10 +83,8 @@ public class ModelImpl implements Model {
              * TODO in questo caso possiamo lanciare una schermata di errore
              */
         }
-
         this.mapManager = new MapManagerImpl(data.get().getMapManager());
         ActionType.add(mapManager);
-
         this.turnManager = data.get().getGameTurnManager();
         this.players = List.of(new SimpleBot(data.get().getBotData()), data.get().getHumanData());
         this.gameStatistics = new GameStatisticImpl(players, mapManager);
@@ -196,8 +192,6 @@ public class ModelImpl implements Model {
         } catch (IOException | IllegalArgumentException e) {
             return false;
         }
-
-        // TODO isOver? o un metodo per chiudere il gioco?
         return true;
     }
 
@@ -229,7 +223,7 @@ public class ModelImpl implements Model {
      * {@inheritDoc}
      */
     @Override
-    public void reasumeGame() {
+    public void resumeGame() {
         turnManager.startTimer();
     }
 

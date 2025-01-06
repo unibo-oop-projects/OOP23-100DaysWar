@@ -104,6 +104,14 @@ public class MainControllerImpl implements MainController {
      * {@inheritDoc}
      */
     @Override
+    public GameController getGameController() {
+        return this.gameController;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public boolean saveGame(final String path) {
        return this.getGameInstance().saveGame(path);
     }
@@ -143,27 +151,5 @@ public class MainControllerImpl implements MainController {
         } finally {
             executor.shutdownNow();
         }
-    }
-     /*
-      * TODO scegliere quale usare.
-      *
-      * public boolean loadOldGame(String path) {
-            try {
-                this.model = new ModelImpl(Optional.ofNullable(path));
-            } catch (IllegalStateException e) {
-                System.err.println(e);
-                return false;
-            }
-
-            return true;
-        }
-    */
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public GameController getGameController() {
-        return this.gameController;
     }
 }

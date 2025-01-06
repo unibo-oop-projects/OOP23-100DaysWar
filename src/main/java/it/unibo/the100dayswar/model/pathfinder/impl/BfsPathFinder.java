@@ -1,106 +1,117 @@
 package it.unibo.the100dayswar.model.pathfinder.impl;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Queue;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import it.unibo.the100dayswar.model.cell.api.Cell;
-import it.unibo.the100dayswar.model.pathfinder.api.PathFinder;
 
 /**
- * Implementation of PathFinder using the BFS algorithm.
+ * A pathfinding implementation using Breadth-First Search (BFS).
  */
-public class BfsPathFinder implements PathFinder {
-    private final Map<Cell, List<Cell>> adjacencyMap = new HashMap<>();
+public class BfsPathFinder {
+
+    private final List<Cell> allCells;
+
     /**
-     * Constructs a BfsPathFinder with all cells in the map.
-     * 
-     * @param allCells A collection of all cells in the game map.
+     * Constructor for BfsPathFinder.
+     *
+     * @param allCells the list of all cells in the map
      */
-    public BfsPathFinder(final Collection<Cell> allCells) {
-        Objects.requireNonNull(allCells, "The cells of the map cannot be null");
-        calculateAdjacency(allCells);
+    public BfsPathFinder(final Set<Cell> allCells) {
+        this.allCells = new ArrayList<>(allCells);
     }
+
     /**
-     * A helper method that calculate the adjacency of the cells of the map
-     * to get this algorithm lighter instead of compute the adjacencies
-     * for every cell each time.
-     * 
-     * @param allCells the collection of all cells in the game map
+     * Finds the shortest path between a start cell and a destination cell.
+     *
+     * @param start the starting cell
+     * @param destination the destination cell
+     * @return a list of cells representing the path, or an empty list if no path exists
      */
-    private void calculateAdjacency(final Collection<Cell> allCells) {
-        for (final Cell cell : allCells) {
-            final List<Cell> adjacentCells = new ArrayList<>();
-            for (final Cell potentialNeighbor : allCells) {
-                if (cell.isAdiacent(potentialNeighbor)) {
-                    adjacentCells.add(potentialNeighbor);
-                }
-            }
-            adjacencyMap.put(cell, adjacentCells);
-        }
-    }
-    /**
-     * Finds all cells adjacent to the given cell.
-     * 
-     * @param cell the cell to find adjacent cells
-     * @return a collection of adjacent cells
-     */
-    private Collection<Cell> getAdjacents(final Cell cell) {
-        return adjacencyMap.getOrDefault(cell, Collections.emptyList());
-    }
-    /** 
-     * {@inheritDoc}
-     */
-    @Override
     public List<Cell> findPath(final Cell start, final Cell destination) {
         if (start.equals(destination)) {
             return Collections.singletonList(start);
         }
-        final Queue<Cell> frontier = new LinkedList<>();
-        final Map<Cell, Cell> predecessors = new HashMap<>();
+
+        final Map<Cell, Cell> cameFrom = new HashMap<>();
+        final Queue<Cell> queue = new LinkedList<>();
         final Set<Cell> visited = new HashSet<>();
-        frontier.add(start);
+
+        queue.add(start);
         visited.add(start);
 
-        while (!frontier.isEmpty()) {
-            final Cell current = frontier.poll();
+        while (!queue.isEmpty()) {
+            final Cell current = queue.poll();
 
             if (current.equals(destination)) {
-                return reconstructPath(predecessors, current);
+                return reconstructPath(cameFrom, start, destination);
             }
 
-            getAdjacents(current).forEach(neighbor -> {
-                if (!visited.contains(neighbor) && neighbor.isFree()) {
-                    frontier.add(neighbor);
+            for (final Cell neighbor : getNeighbors(current)) {
+                if (!visited.contains(neighbor) && neighbor.isBuildable()) {
                     visited.add(neighbor);
-                    predecessors.put(neighbor, current);
+                    cameFrom.put(neighbor, current);
+                    queue.add(neighbor);
                 }
-            });
+            }
         }
-        return Collections.emptyList();
+
+        return Collections.emptyList(); // No path found
     }
+
     /**
      * Reconstructs the path from the start cell to the destination cell.
-     * 
-     * @param predecessors a map of predecessors for each cell.
-     * @param destination the destination cell.
-     * @return a list of cells representing the path from start to destination.
+     *
+     * @param cameFrom a map tracking the previous cell for each visited cell
+     * @param start the starting cell
+     * @param destination the destination cell
+     * @return the list of cells representing the path
      */
-    private List<Cell> reconstructPath(final Map<Cell, Cell> predecessors, final Cell destination) {
+    private List<Cell> reconstructPath(final Map<Cell, Cell> cameFrom, final Cell start, final Cell destination) {
         final List<Cell> path = new ArrayList<>();
-        Cell tempCell = destination;
-        while (tempCell != null) {
-            path.add(0, tempCell);
-            tempCell = predecessors.get(tempCell);
+        Cell current = destination;
+
+        while (!current.equals(start)) {
+            path.add(current);
+            current = cameFrom.get(current);
         }
+
+        path.add(start);
+        Collections.reverse(path);
+
         return path;
+    }
+
+    /**
+     * Gets the neighbors of a cell.
+     *
+     * @param cell the cell for which to get neighbors
+     * @return a list of adjacent cells
+     */
+    private List<Cell> getNeighbors(final Cell cell) {
+        return allCells.stream()
+                .filter(c -> isNeighbor(cell, c))
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * Checks if two cells are neighbors.
+     *
+     * @param cell1 the first cell
+     * @param cell2 the second cell
+     * @return true if the cells are adjacent, false otherwise
+     */
+    private boolean isNeighbor(final Cell cell1, final Cell cell2) {
+        final int dx = Math.abs(cell1.getPosition().getX() - cell2.getPosition().getX());
+        final int dy = Math.abs(cell1.getPosition().getY() - cell2.getPosition().getY());
+        return (dx + dy) == 1; // Manhattan distance of 1
     }
 }
