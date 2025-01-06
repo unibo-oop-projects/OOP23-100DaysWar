@@ -5,11 +5,13 @@ package it.unibo.the100dayswar.controller.gamecontroller.api;
  */
 public interface GameController {
     /**
-     * Method for attack.
+     * This method allows the player to attack another enemy.
      */
     void attack();
+
     /**
-     * Method for resume the game.
+     * This method allows the player to skip his turn.
+     * This method also checks the end of the game.
      */
     void skip();
 }

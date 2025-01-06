@@ -2,6 +2,7 @@ package it.unibo.the100dayswar.controller.mapcontroller.impl;
 
 import it.unibo.the100dayswar.view.map.CellView;
 import it.unibo.the100dayswar.application.The100DaysWar;
+import it.unibo.the100dayswar.commons.utilities.api.Position;
 import it.unibo.the100dayswar.commons.utilities.impl.Pair;
 import it.unibo.the100dayswar.commons.utilities.impl.PositionImpl;
 import it.unibo.the100dayswar.controller.mapcontroller.api.MapController;
@@ -118,5 +119,50 @@ public class MapControllerImpl implements MapController {
     @Override
     public Pair<Unit, Cell> getSelectedCell() {
         return this.selectedCell;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<Cell> getAdjacentCells(final Cell cell) {
+        final List<Cell> adjacentCells = new ArrayList<>();
+        final Position position = cell.getPosition();
+        final int x = position.getX();
+        final int y = position.getY();
+
+        final List<Position> potentialPositions = List.of(
+            new PositionImpl(x - 1, y),
+            new PositionImpl(x + 1, y),
+            new PositionImpl(x, y - 1),
+            new PositionImpl(x, y + 1) 
+        );
+        for (final Position pos : potentialPositions) {
+            if (isWithinBounds(pos)) {
+                adjacentCells.add(getCellAt(pos));
+            }
+        }
+        return adjacentCells;
+    }
+
+    /**
+     * Checks if the specified position is within the bounds of the map.
+     *
+     * @param position the position to check
+     * @return true if the position is within the bounds, false otherwise
+     */
+    private boolean isWithinBounds(final Position position) {
+        return position.getX() >= 0 && position.getX() < getMapWidth()
+            && position.getY() >= 0 && position.getY() < getMapHeight();
+    }
+
+    /**
+     * Returns the cell at the specified position.
+     *
+     * @param position the position of the cell
+     * @return the cell at the specified position
+     */
+    private Cell getCellAt(final Position position) {
+        return getMap().getCell(position);
     }
 }

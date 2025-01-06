@@ -2,8 +2,10 @@ package it.unibo.the100dayswar.model;
 
 import java.util.stream.Stream;
 import it.unibo.the100dayswar.commons.utilities.impl.Pair;
+import it.unibo.the100dayswar.model.bot.api.BotPlayer;
 import it.unibo.the100dayswar.model.cell.api.Cell;
 import it.unibo.the100dayswar.model.map.api.GameMap;
+import it.unibo.the100dayswar.model.player.api.HumanPlayer;
 import it.unibo.the100dayswar.model.player.api.Player;
 import it.unibo.the100dayswar.model.statistic.api.GameStatistics;
 import it.unibo.the100dayswar.model.tower.api.TowerType;
@@ -114,14 +116,14 @@ public interface Model {
      * 
      * @return the human player
      */
-    Player getHumanPlayer();
+    HumanPlayer getHumanPlayer();
 
     /**
      * Gets the bot player in the game.
      * 
      * @return the bot player
      */
-    Player getBotPlayer();
+    BotPlayer getBotPlayer();
 
     /**
      * Gets the current player whose turn is active.
@@ -136,4 +138,17 @@ public interface Model {
      * @return true if the game is over, false otherwise
      */
     boolean isOver();
+    /**
+     * Determines the winner of the game.
+     * 
+     * These are the conditions for winning the game:
+     * - A player has captured the opposing player's spawn point by moving one of 
+     *   their soldiers onto the spawn cell.
+     * - If neither player has captured the other's spawn point by the end of the 
+     *   100th day, the player controlling the majority of cells on the map is 
+     *   declared the winner.
+     * 
+     * @return the player who won the game
+     */
+    Player getWinner();
 }

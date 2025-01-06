@@ -34,7 +34,7 @@ public interface MainController {
      * Returns the movement controller.
      * 
      * @return the movement controller
-      */
+    */
     MovementController getMovementController();
 
     /** 
@@ -87,4 +87,9 @@ public interface MainController {
      * laoded following the default path.
      */
     boolean loadOldGame(String path);
+
+    /**
+     * Check if the game is over.
+     */
+    void checkGameOver();
 }

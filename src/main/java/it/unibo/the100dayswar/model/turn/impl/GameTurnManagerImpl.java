@@ -24,7 +24,6 @@ public class GameTurnManagerImpl implements GameTurnManager {
     private final List<Player> players;
     private int currentPlayerIndex;
     private int daysNoMove;
-    private boolean gameEnd;
     private final GameDay gameDay;
     private transient Timer timer;
 
@@ -35,10 +34,8 @@ public class GameTurnManagerImpl implements GameTurnManager {
      */
     public GameTurnManagerImpl(final List<Player> players) {
         this.turn = 1;
-        this.players = new ArrayList<>();
-        this.players.addAll(players);
+        this.players = new ArrayList<>(players);
         this.currentPlayerIndex = 0;
-        this.gameEnd = false;
         this.daysNoMove = 0;
         this.gameDay = new GameDayImpl();
         gameDay.attach(players.get(0));
@@ -52,6 +49,13 @@ public class GameTurnManagerImpl implements GameTurnManager {
     @Override
     public Player getCurrentPlayer() {
         return this.players.get(getCurrentPlayerIndex());
+    }
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public int getDay() {
+        return this.gameDay.getCurrentDay();
     }
     /**
      * get the current player.
@@ -93,14 +97,6 @@ public class GameTurnManagerImpl implements GameTurnManager {
         this.turn++;
     }
     /**
-     * check if the game end.
-     * @return boolean value if game ends
-     */
-    @Override
-    public boolean isGameEnd() {
-        return this.gameEnd;
-    }
-    /**
      * called when a player start his turn.
      */
     @Override
@@ -118,7 +114,6 @@ public class GameTurnManagerImpl implements GameTurnManager {
             switchTurn();
         }
         if (this.gameDay.getCurrentDay() >= this.gameDay.getMaxDay()) {
-            this.gameEnd = true;
             stopTimer();
         }
     }

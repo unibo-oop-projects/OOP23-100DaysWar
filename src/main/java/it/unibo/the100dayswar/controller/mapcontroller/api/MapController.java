@@ -55,4 +55,12 @@ public interface MapController {
      * @return the selected cell
      */
     Pair<Unit, Cell> getSelectedCell();
+
+    /**
+     * Gets the adjacent cells of the specified cell.
+     *
+     * @param cell the cell
+     * @return a list of adjacent cells
+     */
+    List<Cell> getAdjacentCells(Cell cell);
 }

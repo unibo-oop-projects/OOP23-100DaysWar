@@ -2,6 +2,7 @@ package it.unibo.the100dayswar.model;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -46,6 +47,7 @@ public class ModelImpl implements Model {
     private static final int MAX_USERNAME_LENGTH = 15;
     private static final int BOT_PLAYER = 0;
     private static final int HUMAN_PLAYER = 1;
+    private static final int MAX_DAY = 100;
     private static final Logger LOGGER = Logger.getLogger(ModelImpl.class.getName());
 
     private final GameTurnManager turnManager;
@@ -65,6 +67,7 @@ public class ModelImpl implements Model {
         this.turnManager = new GameTurnManagerImpl(players);
         this.gameStatistics = new GameStatisticImpl(players, mapManager);
         gameStatistics.updateAllStatistics();
+        this.turnManager.startTimer();
     }
 
     /**
@@ -166,14 +169,35 @@ public class ModelImpl implements Model {
      */
     @Override
     public boolean isOver() {
-        //  mapManager.getBotSpawn() - mapMnaager.getHumanSpawn()
-        /* return mapManager.getPlayersCells()
-            .values().stream()
-            .anyMatch(c -> c.stream().anyMatch(c -> c.equals() && c.equals())); */
-        // Placeholder
-        return true;
+        return turnManager.getDay() >= MAX_DAY || players.stream().anyMatch(player ->
+            players.stream()
+                .filter(p -> !p.equals(player))
+                .map(Player::getSpawnPoint)
+                .anyMatch(spawn -> player.getSoldiers().stream()
+                                            .map(Soldier::getPosition)
+                                            .anyMatch(pos -> pos.equals(spawn)))
+        );
     }
-
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public Player getWinner() {
+        if (!isOver()) {
+            throw new IllegalStateException("The game is not over yet.");
+        }
+        return players.stream()
+            .filter(player -> players.stream()
+                .filter(opponent -> !opponent.equals(player))
+                .anyMatch(opponent -> player.getSoldiers().stream()
+                    .map(Soldier::getPosition)
+                    .anyMatch(pos -> pos.equals(opponent.getSpawnPoint()))))
+            .findFirst()
+            .or(() -> mapManager.getPlayersCells().entrySet().stream()
+                .max((entry1, entry2) -> Integer.compare(entry1.getValue().size(), entry2.getValue().size()))
+                .map(Map.Entry::getKey))
+            .orElseThrow(() -> new IllegalStateException("No winner could be determined."));
+    }
     /**
      * {@inheritDoc}
      */

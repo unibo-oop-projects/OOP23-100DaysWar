@@ -1,6 +1,7 @@
 package it.unibo.the100dayswar.model.bot.impl;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
@@ -287,7 +288,9 @@ public enum ActionType {
          */
         @Override
         public void attach(final Observer<Pair<Unit, Cell>> observer) {
-            observers.add(observer);
+            synchronized (this.observers) {
+                observers.add(observer);
+            }
         }
 
         /**
@@ -295,14 +298,18 @@ public enum ActionType {
          */
         @Override
         public void detach(final Observer<Pair<Unit, Cell>> observer) {
-            observers.remove(observer);
+            synchronized (this.observers) {
+                observers.remove(observer);
+            }
         }
 
         /**
          * Removes all attached observers.
          */
         public void removeAllObservers() {
-            observers.clear();
+            synchronized (this.observers) {
+                observers.clear();
+            }
         }
 
         /**
@@ -311,9 +318,11 @@ public enum ActionType {
          * @param data the data to pass to the observers
          */
         public void notifyObservers(final Pair<Unit, Cell> data) {
-            for (final Observer<Pair<Unit, Cell>> observer : observers) {
-                observer.update(data);
-                System.out.println(data.getFirst().getPosition().getPosition());
+            synchronized (this.observers) {
+                final List<Observer<Pair<Unit, Cell>>> observersCopy = new ArrayList<>(this.observers);
+                for (final Observer<Pair<Unit, Cell>> observer : observersCopy) {
+                    observer.update(data);
+                }
             }
         }
     }

@@ -40,7 +40,6 @@ public class BfsPathFinder {
         if (start.equals(destination)) {
             return Collections.singletonList(start);
         }
-
         final Map<Cell, Cell> cameFrom = new HashMap<>();
         final Queue<Cell> queue = new LinkedList<>();
         final Set<Cell> visited = new HashSet<>();
@@ -54,16 +53,14 @@ public class BfsPathFinder {
             if (current.equals(destination)) {
                 return reconstructPath(cameFrom, start, destination);
             }
-
             for (final Cell neighbor : getNeighbors(current)) {
-                if (!visited.contains(neighbor) && neighbor.isBuildable()) {
+                if (!visited.contains(neighbor) && neighbor.isFree()) {
                     visited.add(neighbor);
                     cameFrom.put(neighbor, current);
                     queue.add(neighbor);
                 }
             }
         }
-
         return Collections.emptyList(); // No path found
     }
 
@@ -83,10 +80,8 @@ public class BfsPathFinder {
             path.add(current);
             current = cameFrom.get(current);
         }
-
         path.add(start);
         Collections.reverse(path);
-
         return path;
     }
 
@@ -94,11 +89,11 @@ public class BfsPathFinder {
      * Gets the neighbors of a cell.
      *
      * @param cell the cell for which to get neighbors
-     * @return a list of adjacent cells
+     * @return a list of adjacent cells that are free
      */
     private List<Cell> getNeighbors(final Cell cell) {
         return allCells.stream()
-                .filter(c -> isNeighbor(cell, c))
+                .filter(c -> isNeighbor(cell, c) && c.isFree())
                 .collect(Collectors.toList());
     }
 
@@ -112,6 +107,6 @@ public class BfsPathFinder {
     private boolean isNeighbor(final Cell cell1, final Cell cell2) {
         final int dx = Math.abs(cell1.getPosition().getX() - cell2.getPosition().getX());
         final int dy = Math.abs(cell1.getPosition().getY() - cell2.getPosition().getY());
-        return (dx + dy) == 1; // Manhattan distance of 1
+        return (dx + dy) == 1;
     }
 }

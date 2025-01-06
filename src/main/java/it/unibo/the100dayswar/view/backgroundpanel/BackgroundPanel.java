@@ -30,6 +30,11 @@ public class BackgroundPanel extends JPanel {
     @Override
     protected void paintComponent(final Graphics graphic) {
         super.paintComponent(graphic);
-        graphic.drawImage(((ImageIcon) IconLoader.loadIcon(imagePath)).getImage(), 0, 0, getWidth(), getHeight(), this);
+        final ImageIcon icon = (ImageIcon) IconLoader.loadIcon(imagePath);
+        if (icon != null && icon.getImage() != null) {
+            graphic.drawImage(icon.getImage(), 0, 0, getWidth(), getHeight(), this);
+        } else {
+            System.err.println("Error: Background image not loaded for path: " + imagePath);
+        }
     }
 }

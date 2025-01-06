@@ -14,6 +14,11 @@ public interface GameTurnManager extends Serializable {
      */
     Player getCurrentPlayer();
     /**
+     * get the current GameDay.
+     * @return the current GameDay
+     */
+    int getDay();
+    /**
      * get the current player.
      * @return the index of the current player in the list
      */
@@ -31,12 +36,6 @@ public interface GameTurnManager extends Serializable {
      * increase the Turn counter.
      */
     void increaseTurn();
-    /**
-     * check if the game end.
-     * 
-     * @return true if game end
-     */
-    boolean isGameEnd();
     /**
      * called when a player start his turn.
      */
