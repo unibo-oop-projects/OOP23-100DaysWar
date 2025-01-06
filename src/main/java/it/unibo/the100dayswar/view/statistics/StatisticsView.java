@@ -8,11 +8,19 @@ import it.unibo.the100dayswar.model.player.api.Player;
 
 import javax.swing.JPanel;
 import javax.swing.JLabel;
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+
+import java.awt.AlphaComposite;
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.GridLayout;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -54,9 +62,37 @@ public class StatisticsView extends JPanel {
      * @return a JPanel containing the player's statistics.
      */
     private JPanel createPlayerStatisticsPanel(final StatisticController statisticController, final Player player) {
-        final JPanel panel = new JPanel();
+       final JPanel panel = new JPanel() {
+            private BufferedImage backgroundImage;
+
+            {
+                try {
+                    backgroundImage = ImageIO.read(getClass().getResource("/statistic/statistics_background.png"));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                if (backgroundImage != null) {
+                    Graphics2D g2d = (Graphics2D) g.create();
+                    g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f)); // Semi-trasparenza
+                    g2d.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
+                    g2d.dispose();
+                }
+            }
+        };
+
         panel.setLayout(new GridLayout(ROWS, COLUMNS, HORIZONTAL_GAP, VERTICAL_GAP));
-        panel.setBorder(BorderFactory.createTitledBorder(player.getUsername()));
+        panel.setBorder(BorderFactory.createTitledBorder(
+            BorderFactory.createLineBorder(Color.BLACK, 5),
+            player.getUsername(),
+            javax.swing.border.TitledBorder.CENTER,
+            javax.swing.border.TitledBorder.TOP,
+            LoadPixelFont.getFont().deriveFont(15f)
+        ));
 
         final JLabel soldiersLabel = new JLabel("Soldiers: " + statisticController.getSoldiers(player), JLabel.LEFT);
         soldiersLabel.setFont(LoadPixelFont.getFont());
