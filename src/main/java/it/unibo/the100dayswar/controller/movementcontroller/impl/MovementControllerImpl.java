@@ -1,7 +1,7 @@
 package it.unibo.the100dayswar.controller.movementcontroller.impl;
 
 import it.unibo.the100dayswar.application.The100DaysWar;
-
+import it.unibo.the100dayswar.commons.utilities.api.Position;
 import it.unibo.the100dayswar.commons.utilities.impl.Direction;
 import it.unibo.the100dayswar.commons.utilities.impl.Pair;
 import it.unibo.the100dayswar.commons.utilities.impl.PositionImpl;
@@ -53,19 +53,18 @@ public class MovementControllerImpl implements MovementController {
         final Cell currentCell = selectedCell.getSecond();
 
         if (unit instanceof Soldier) {
-            int targetX = currentCell.getPosition().getX();
-            int targetY = currentCell.getPosition().getY();
+            final Position targetPosition = currentCell.getPosition();
             switch (direction) {
-                case UP -> targetY -= 1;
-                case DOWN -> targetY += 1;
-                case LEFT -> targetX -= 1;
-                case RIGHT -> targetX += 1;
+                case UP -> targetPosition.setY(targetPosition.getY() - 1);
+                case DOWN -> targetPosition.setY(targetPosition.getY() + 1);
+                case LEFT -> targetPosition.setX(targetPosition.getX() - 1);
+                case RIGHT -> targetPosition.setX(targetPosition.getX() + 1);
                 default -> throw new UnsupportedOperationException("Invalid direction");
             }
 
             ((Soldier) unit).movementRequest(
                 new CellImpl(
-                    new PositionImpl(targetX, targetY),
+                    new PositionImpl(targetPosition),
                     currentCell.isBuildable(),
                     currentCell.isSpawn()
                 ));
