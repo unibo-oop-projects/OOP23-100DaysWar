@@ -18,7 +18,7 @@ public abstract class AbstractTower extends UnitImpl implements Tower {
     /**
      * The the maximum level of the tower.
      */
-    protected static final int MAX_LEVEL = 4;
+    protected static final int MAX_LEVEL = 3;
     private final TowerType towerType;
     private final Cell position;
     /**

@@ -23,6 +23,11 @@ import java.util.List;
  */
 public class MapControllerImpl implements MapController {
 
+    private static final String SOLDIER_IMAGE_PATH = "/units/soldier/";
+    private static final String TOWER_IMAGE_PATH = "/units/towers/";
+    private static final String DEFAULT_FORMAT = ".png";
+    private static final String OBSTACLE_PATH = "/map/obstacle.png";
+
     private Pair<Unit, Cell> selectedCell;
     /**
      * Constructor for the MapControllerImpl.
@@ -62,21 +67,21 @@ public class MapControllerImpl implements MapController {
 
             if (cell.getUnit().isPresent()) {
                 final Unit unit = cell.getUnit().get();
-                if (unit instanceof Soldier && unit.getOwner() instanceof HumanPlayer ) {
-                    imagePath = "/units/soldier/soldier" + unit.getLevel() + ".png";
-                } else if (unit instanceof Soldier && unit instanceof BotPlayer ){
-                    imagePath = "/units/soldier/enemy" + unit.getLevel() + ".png";
+                if (unit instanceof Soldier && unit.getOwner() instanceof HumanPlayer) {
+                    imagePath = SOLDIER_IMAGE_PATH + "soldier" + unit.getLevel() + DEFAULT_FORMAT;
+                } else if (unit instanceof Soldier && unit instanceof BotPlayer) {
+                    imagePath = SOLDIER_IMAGE_PATH + "enemy" + unit.getLevel() + DEFAULT_FORMAT;
                 } else if (unit instanceof BasicTower && unit.getOwner() instanceof HumanPlayer) {
-                    imagePath = "/units/tower/human_basic" + unit.getLevel() + ".png";
+                    imagePath = TOWER_IMAGE_PATH + "human_basic" + unit.getLevel() + DEFAULT_FORMAT;
                 } else if (unit instanceof AdvancedTower && unit.getOwner() instanceof HumanPlayer) {
-                    imagePath = "/units/tower/human_advanced" + unit.getLevel() + ".png";    
+                    imagePath = TOWER_IMAGE_PATH + "human_advanced" + unit.getLevel() + DEFAULT_FORMAT; 
                 } else if (unit instanceof BasicTower && unit.getOwner() instanceof BotPlayer) {
-                    imagePath = "/units/tower/enemy_basic" + unit.getLevel() + ".png";
+                    imagePath = TOWER_IMAGE_PATH + "enemy_basic" + unit.getLevel() + DEFAULT_FORMAT;
                 } else if (unit instanceof AdvancedTower && unit.getOwner() instanceof BotPlayer) {
-                    imagePath = "/units/tower/enemy_advanced" + unit.getLevel() + ".png";
+                    imagePath = TOWER_IMAGE_PATH + "enemy_advanced" + unit.getLevel() + DEFAULT_FORMAT;
                 }
             } else if (!cell.isBuildable()) {
-                imagePath = "/map/obstacle.png";
+                imagePath = OBSTACLE_PATH;
             }
             cellDataList.add(new CellView(cell.getPosition(), imagePath));
         });
@@ -99,8 +104,6 @@ public class MapControllerImpl implements MapController {
          final GameMap map = The100DaysWar.CONTROLLER.getGameInstance().getMap();
          final Cell clickedCell = map.getCell(new PositionImpl(cellX, cellY));
          selectedCell = new Pair<>(clickedCell.getUnit().orElse(null), clickedCell);
-         System.out.println("Selected cell:\t" + selectedCell.getSecond().getPosition().toString());
-         System.out.println("Occupied:\t" + !selectedCell.getSecond().isFree());
     }
 
     /**

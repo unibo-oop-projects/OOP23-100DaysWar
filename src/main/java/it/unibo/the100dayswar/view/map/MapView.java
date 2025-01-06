@@ -25,9 +25,10 @@ import java.util.logging.Logger;
  */
 public class MapView extends JPanel {
 
-    private static final int CELL_SIZE = 50;
-    private static final String MAP_IMAGE_PATH = "/map/map.png";
     private static final long serialVersionUID = 1L;
+    private static final int CELL_SIZE = 50;
+    private static final int OPACITY = 64;
+    private static final String MAP_IMAGE_PATH = "/map/map.png";
     private final MapController mapController;
     private final Image mapImage;
     private CellView selectedCell;
@@ -93,6 +94,11 @@ public class MapView extends JPanel {
 
             g.setColor(Color.BLACK);
             g.drawRect(xPos, yPos, CELL_SIZE, CELL_SIZE);
+
+            if (cellView.equals(selectedCell)) {
+                g.setColor(new Color(0, 0, 0, OPACITY));
+                g.fillRect(xPos, yPos, CELL_SIZE, CELL_SIZE);
+            }
         }
     }
 

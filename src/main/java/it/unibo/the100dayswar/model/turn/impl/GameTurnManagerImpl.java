@@ -27,7 +27,6 @@ public class GameTurnManagerImpl implements GameTurnManager {
     private boolean gameEnd;
     private final GameDay gameDay;
     private transient Timer timer;
-    private transient TimerTask dayTimer;
 
     /**
      * Constructor of GameTurnManagerImpl.
@@ -44,8 +43,6 @@ public class GameTurnManagerImpl implements GameTurnManager {
         this.gameDay = new GameDayImpl();
         gameDay.attach(players.get(0));
         gameDay.attach(players.get(1));
-        
-
     }
     /**
      * get the current player.
@@ -129,8 +126,9 @@ public class GameTurnManagerImpl implements GameTurnManager {
      */
     @Override
     public void startTimer() {
+        final TimerTask dayTimer;
         this.timer = new Timer();
-        this.dayTimer = new TimerTask() {
+        dayTimer = new TimerTask() {
             @Override
             public void run() {
                 onDayPassed();

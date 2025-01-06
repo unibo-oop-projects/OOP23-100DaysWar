@@ -22,12 +22,15 @@ import java.awt.GridLayout;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.List;
+import java.util.logging.Logger;
 
 /**
  * The view that displays the statistics of the players.
  */
 public class StatisticsView extends JPanel {
     private static final long serialVersionUID = 1L;
+    private static final int BORDER_THICKNESS = 5;
+    private static final float TITLE_FONT_SIZE = 15f;
     private static final int ROWS = 5;
     private static final int COLUMNS = 2;
     private static final int HORIZONTAL_GAP = 10;
@@ -64,20 +67,18 @@ public class StatisticsView extends JPanel {
     private JPanel createPlayerStatisticsPanel(final StatisticController statisticController, final Player player) {
        final JPanel panel = new JPanel() {
             private BufferedImage backgroundImage;
-
             {
                 try {
                     backgroundImage = ImageIO.read(getClass().getResource("/statistic/statistics_background.png"));
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    Logger.getLogger(getClass().getName()).log(java.util.logging.Level.SEVERE, e.getMessage());
                 }
             }
-
             @Override
-            protected void paintComponent(Graphics g) {
+            protected void paintComponent(final Graphics g) {
                 super.paintComponent(g);
                 if (backgroundImage != null) {
-                    Graphics2D g2d = (Graphics2D) g.create();
+                    final Graphics2D g2d = (Graphics2D) g.create();
                     g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f));
                     g2d.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
                     g2d.dispose();
@@ -87,20 +88,22 @@ public class StatisticsView extends JPanel {
 
         panel.setLayout(new GridLayout(ROWS, COLUMNS, HORIZONTAL_GAP, VERTICAL_GAP));
         panel.setBorder(BorderFactory.createTitledBorder(
-            BorderFactory.createLineBorder(Color.BLACK, 5),
+            BorderFactory.createLineBorder(Color.BLACK, BORDER_THICKNESS),
             player.getUsername(),
             javax.swing.border.TitledBorder.CENTER,
             javax.swing.border.TitledBorder.TOP,
-            LoadPixelFont.getFont().deriveFont(15f)
+            LoadPixelFont.getFont().deriveFont(TITLE_FONT_SIZE)
         ));
 
         final JLabel soldiersLabel = new JLabel("Soldiers: " + statisticController.getSoldiers(player), JLabel.LEFT);
         soldiersLabel.setFont(LoadPixelFont.getFont());
         final JLabel towersLabel = new JLabel("Towers: " + statisticController.getTowers(player), JLabel.LEFT);
         towersLabel.setFont(LoadPixelFont.getFont());
-        final JLabel cellsPercentageLabel = new JLabel("Cells Owned(%): " 
-         + statisticController.getCellsPercentage(player), JLabel.LEFT);
-         cellsPercentageLabel.setFont(LoadPixelFont.getFont());
+        final JLabel cellsPercentageLabel = new JLabel(
+            "Cells Owned(%): " + statisticController.getCellsPercentage(player), 
+            JLabel.LEFT
+            );
+        cellsPercentageLabel.setFont(LoadPixelFont.getFont());
         final JLabel balanceLabel = new JLabel("Balance: " + statisticController.getBalance(player), JLabel.LEFT);
         balanceLabel.setFont(LoadPixelFont.getFont());
 
@@ -108,7 +111,6 @@ public class StatisticsView extends JPanel {
         panel.add(towersLabel);
         panel.add(cellsPercentageLabel);
         panel.add(balanceLabel);
-
         return panel;
     }
 }

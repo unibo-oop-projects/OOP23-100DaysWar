@@ -1,5 +1,7 @@
 package it.unibo.the100dayswar.view.map;
 
+import java.util.Objects;
+
 import it.unibo.the100dayswar.commons.utilities.api.Position;
 
 /**
@@ -43,4 +45,27 @@ public class CellView {
     public String getImagePath() {
         return imagePath;
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean equals(final Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        final CellView cellView = (CellView) obj;
+        return this.getX() == cellView.getX() && this.getY() == cellView.getY();
+    }
+
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.getX(), this.getY());
+}
 }

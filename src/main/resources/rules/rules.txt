@@ -20,7 +20,7 @@ During their turn, the player can perform the following actions:
 	    Players can build two types of towers:
 	        • Basic Towers: Cost less and have limited strength.
 	        • Advanced Towers: Cost more but have superior strength.
-		Towers can be upgraded to a maximum level of 4.
+		Towers can be upgraded to a maximum level of 3.
 
 	3. Upgrade Units:
 	        Both soldiers and towers can be upgraded to increase their combat effectiveness.
