@@ -5,10 +5,13 @@ import it.unibo.the100dayswar.application.The100DaysWar;
 import it.unibo.the100dayswar.commons.utilities.impl.Pair;
 import it.unibo.the100dayswar.commons.utilities.impl.PositionImpl;
 import it.unibo.the100dayswar.controller.mapcontroller.api.MapController;
+import it.unibo.the100dayswar.model.bot.api.BotPlayer;
 import it.unibo.the100dayswar.model.cell.api.Cell;
 import it.unibo.the100dayswar.model.map.api.GameMap;
+import it.unibo.the100dayswar.model.player.api.HumanPlayer;
 import it.unibo.the100dayswar.model.soldier.api.Soldier;
-import it.unibo.the100dayswar.model.tower.api.Tower;
+import it.unibo.the100dayswar.model.tower.api.AdvancedTower;
+import it.unibo.the100dayswar.model.tower.api.BasicTower;
 import it.unibo.the100dayswar.model.unit.api.Unit;
 
 import java.util.ArrayList;
@@ -59,10 +62,18 @@ public class MapControllerImpl implements MapController {
 
             if (cell.getUnit().isPresent()) {
                 final Unit unit = cell.getUnit().get();
-                if (unit instanceof Soldier) {
+                if (unit instanceof Soldier && unit.getOwner() instanceof HumanPlayer ) {
                     imagePath = "/units/soldier/soldier" + unit.getLevel() + ".png";
-                } else if (unit instanceof Tower) {
-                    imagePath = "/units/tower" + unit.getLevel() + ".png";
+                } else if (unit instanceof Soldier && unit instanceof BotPlayer ){
+                    imagePath = "/units/soldier/enemy" + unit.getLevel() + ".png";
+                } else if (unit instanceof BasicTower && unit.getOwner() instanceof HumanPlayer) {
+                    imagePath = "/units/tower/human_basic" + unit.getLevel() + ".png";
+                } else if (unit instanceof AdvancedTower && unit.getOwner() instanceof HumanPlayer) {
+                    imagePath = "/units/tower/human_advanced" + unit.getLevel() + ".png";    
+                } else if (unit instanceof BasicTower && unit.getOwner() instanceof BotPlayer) {
+                    imagePath = "/units/tower/enemy_basic" + unit.getLevel() + ".png";
+                } else if (unit instanceof AdvancedTower && unit.getOwner() instanceof BotPlayer) {
+                    imagePath = "/units/tower/enemy_advanced" + unit.getLevel() + ".png";
                 }
             } else if (!cell.isBuildable()) {
                 imagePath = "/map/obstacle.png";
