@@ -198,7 +198,7 @@ class PlayerTest {
 
     @Test
     void testCopyConstructor() {
-        final HumanPlayerImpl copiedPlayer = new HumanPlayerImpl((HumanPlayer)player);
+        final HumanPlayerImpl copiedPlayer = new HumanPlayerImpl((HumanPlayer) player);
         assertEquals(player, copiedPlayer,
                 "The copied player should be equal to the original");
 

@@ -36,7 +36,12 @@ class GameSaverTest {
     private final BotPlayer mockBotPlayer = new SimpleBot(mockGameMapManager);
     private final HumanPlayer mockHumanPlayer = new HumanPlayerImpl("Mock human player", mockGameMapManager.getPlayerSpawn());
     private final GameTurnManager mockGameTurnManager = new GameTurnManagerImpl(List.of(mockBotPlayer, mockHumanPlayer));
-    private final GameDataImpl mockGameData = new GameDataImpl(mockHumanPlayer, mockBotPlayer, mockGameMapManager, mockGameTurnManager);
+    private final GameDataImpl mockGameData = new GameDataImpl(
+            mockHumanPlayer,
+            mockBotPlayer,
+            mockGameMapManager,
+            mockGameTurnManager
+            );
 
     /**
      * Cleans up the files.

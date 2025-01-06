@@ -39,7 +39,7 @@ public enum Direction {
      * @param deltaX the change in the X-coordinate.
      * @param deltaY the change in the Y-coordinate.
      */
-    Direction(int deltaX, int deltaY) {
+    Direction(final int deltaX, final int deltaY) {
         this.deltaX = deltaX;
         this.deltaY = deltaY;
     }

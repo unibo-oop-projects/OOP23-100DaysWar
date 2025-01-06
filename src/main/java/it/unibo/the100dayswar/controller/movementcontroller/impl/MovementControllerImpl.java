@@ -51,7 +51,7 @@ public class MovementControllerImpl implements MovementController {
         final Pair<Unit, Cell> selectedCell = The100DaysWar.CONTROLLER.getMapController().getSelectedCell();
         final Unit unit = selectedCell.getFirst();
         final Cell currentCell = selectedCell.getSecond();
-    
+
         if (unit instanceof Movable) {
             final Position currentPosition = unit.getPosition().getPosition();
             final Position targetPosition = new PositionImpl(
