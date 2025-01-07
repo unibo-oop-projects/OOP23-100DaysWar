@@ -35,7 +35,6 @@ public class GameStatisticImpl implements GameStatistics {
             towers.put(player, 0);
             cellsPercentage.put(player, 0.0);
             balances.put(player, 0);
-            updateAllStatistics();
         });
     }
 

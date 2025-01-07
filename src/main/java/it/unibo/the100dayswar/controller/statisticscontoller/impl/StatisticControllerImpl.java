@@ -83,4 +83,12 @@ public class StatisticControllerImpl implements StatisticController {
         .getFirst());
 }
 
+    /**
+     * {@inheritDoc}
+     */
+   @Override 
+    public void updateStatistics() {
+        The100DaysWar.CONTROLLER.getGameInstance().getGameStatistics().updateAllStatistics();
+    }
+
 }

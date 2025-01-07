@@ -38,4 +38,9 @@ public interface StatisticController {
      * @return the list of players. 
      */
     List<Player> getPlayers();
+
+    /**
+     * Update all the statistics. 
+     */
+    void updateStatistics();
 }
