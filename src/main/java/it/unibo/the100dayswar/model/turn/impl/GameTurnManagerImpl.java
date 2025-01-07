@@ -84,7 +84,7 @@ public class GameTurnManagerImpl implements GameTurnManager {
      * switch Turn to the other player.
      */
     @Override
-    public synchronized void switchTurn() {
+    public void switchTurn() {
         final int otherPlayer = this.currentPlayerIndex;
         this.currentPlayerIndex = (this.currentPlayerIndex == 0) ? 1 : 0;
         increaseTurn();
@@ -99,21 +99,21 @@ public class GameTurnManagerImpl implements GameTurnManager {
      * increase the Turn counter.
      */
     @Override
-    public synchronized void increaseTurn() {
+    public void increaseTurn() {
         this.turn++;
     }
     /**
      * called when a player start his turn.
      */
     @Override
-    public synchronized void playerStartTurn() {
+    public void playerStartTurn() {
         this.daysNoMove = 0;
     }
     /**
      * unsed to automatically change turn when day passes.
      */
     @Override
-    public synchronized void onDayPassed() {
+    public void onDayPassed() {
         this.gameDay.increaseDay();
         this.daysNoMove++;
         if (daysNoMove >= MAX_TURN_WITH_NO_MOVE) {
@@ -136,7 +136,7 @@ public class GameTurnManagerImpl implements GameTurnManager {
                 onDayPassed();
             }
         };
-        timer.schedule(dayTimer, DELAY, PERIOD);
+        timer.scheduleAtFixedRate(dayTimer, DELAY, PERIOD);
     }
     /**
      * stop the timer for the day.
