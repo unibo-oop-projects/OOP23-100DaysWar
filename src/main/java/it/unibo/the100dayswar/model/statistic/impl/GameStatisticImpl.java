@@ -34,7 +34,7 @@ public class GameStatisticImpl implements GameStatistics {
             soldiers.put(player, 0);
             towers.put(player, 0);
             cellsPercentage.put(player, 0.0);
-            balances.put(player, 0);
+            balances.put(player, player.getBankAccount().getBalance());
         });
     }
 

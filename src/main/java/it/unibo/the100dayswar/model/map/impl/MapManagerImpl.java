@@ -9,23 +9,17 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.awt.Dimension;
 
 import it.unibo.the100dayswar.commons.patterns.Observer;
 import it.unibo.the100dayswar.commons.utilities.impl.Pair;
-import it.unibo.the100dayswar.model.bot.api.BotPlayer;
-import it.unibo.the100dayswar.model.bot.impl.SimpleBot;
 import it.unibo.the100dayswar.model.cell.api.BonusCell;
 import it.unibo.the100dayswar.model.cell.api.Cell;
-import it.unibo.the100dayswar.model.cell.impl.CellImpl;
 import it.unibo.the100dayswar.model.map.api.GameMap;
 import it.unibo.the100dayswar.model.map.api.GameMapBuilder;
 import it.unibo.the100dayswar.model.map.api.MapManager;
-import it.unibo.the100dayswar.model.player.api.HumanPlayer;
 import it.unibo.the100dayswar.model.player.api.Player;
-import it.unibo.the100dayswar.model.player.impl.HumanPlayerImpl;
 import it.unibo.the100dayswar.model.soldier.api.Soldier;
 import it.unibo.the100dayswar.model.tower.api.Tower;
 import it.unibo.the100dayswar.model.unit.api.Unit;
@@ -63,7 +57,10 @@ public class MapManagerImpl implements MapManager {
 
         this.map = new GameMapImpl(width, height, MapManager.createMapFromStream(width, height, original.getMapAsAStream()));
 
-        this.playersCells = new HashMap<>();
+        this.playersCells = new HashMap<>(original.getPlayersCells());
+
+        //TODO
+        /* 
         original.getPlayersCells().forEach((player, cells) -> {
             final Set<Cell> copiedCells = cells.stream()
                                         .map(CellImpl::new) 
@@ -75,6 +72,7 @@ public class MapManagerImpl implements MapManager {
                 this.playersCells.put(new SimpleBot((BotPlayer) player), copiedCells);
             }
         });
+        */
     }
 
     /**

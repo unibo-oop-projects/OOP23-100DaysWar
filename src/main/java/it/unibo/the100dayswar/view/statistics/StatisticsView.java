@@ -36,6 +36,8 @@ public class StatisticsView extends JPanel {
     private static final int HORIZONTAL_GAP = 10;
     private static final int VERTICAL_GAP = 10;
 
+    final StatisticController statisticController = The100DaysWar.CONTROLLER.getStatisticController();
+
     /**
      * Constructor of the statistics view.
      */
@@ -47,7 +49,6 @@ public class StatisticsView extends JPanel {
      * Initializes the layout and components of the view.
      */
     private void initializeView() {
-        final StatisticController statisticController = The100DaysWar.CONTROLLER.getStatisticController();
         final List<Player> players = statisticController.getPlayers();
 
         super.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -112,5 +113,10 @@ public class StatisticsView extends JPanel {
         panel.add(cellsPercentageLabel);
         panel.add(balanceLabel);
         return panel;
+    }
+
+    public void updateStatisticView() {
+       statisticController.updateStatistics();
+       initializeView();
     }
 }
