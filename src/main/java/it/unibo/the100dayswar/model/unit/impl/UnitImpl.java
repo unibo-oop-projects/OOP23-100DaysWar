@@ -64,7 +64,7 @@ public abstract class UnitImpl implements Unit {
     @Override
     public void setHealth(final int health) {
         this.health = health;
-        // Notify observers
+        this.notifyObservers(this.getPosition());
     }
 
     /**
