@@ -8,8 +8,12 @@ import java.util.TimerTask;
 
 import it.unibo.the100dayswar.model.bot.api.BotPlayer;
 import it.unibo.the100dayswar.model.player.api.Player;
+import it.unibo.the100dayswar.model.soldier.api.Soldier;
+import it.unibo.the100dayswar.model.tower.api.Tower;
 import it.unibo.the100dayswar.model.turn.api.GameTurnManager;
+import it.unibo.the100dayswar.model.unit.api.Unit;
 import it.unibo.the100dayswar.model.turn.api.GameDay;
+import it.unibo.the100dayswar.model.fight.impl.GenericBattleCommand;
 
 /**
  * Class that implement the interface GameTurnManager.
@@ -80,9 +84,11 @@ public class GameTurnManagerImpl implements GameTurnManager {
      */
     @Override
     public synchronized void switchTurn() {
+        final int otherPlayer = this.currentPlayerIndex;
         this.currentPlayerIndex = (this.currentPlayerIndex == 0) ? 1 : 0;
         increaseTurn();
         playerStartTurn();
+        towerAttack(getCurrentPlayer(), this.players.get(otherPlayer));
         if (this.getCurrentPlayer() instanceof BotPlayer) {
             ((BotPlayer) getCurrentPlayer()).makeMove();
             switchTurn();
@@ -139,6 +145,20 @@ public class GameTurnManagerImpl implements GameTurnManager {
         this.timer.cancel();
     }
 
+    /**
+     * a method for tower for the attacker to attack the defender soldier.
+     * @param attacker
+     * @param defender
+     */
+    private void towerAttack(final Player attacker, final Player defender) {
+        final GenericBattleCommand<Tower, Unit> battle = new GenericBattleCommand<>();
+        for (final Tower t : attacker.getTowers()) {
+            for (final Soldier u : defender.getSoldiers()) {
+                battle.execute(t, u);
+                System.out.println("LA TORRE HA ATTACCATO");
+            }
+        }
+    }
     /**
      * writeObject method for serialization.
      * 
