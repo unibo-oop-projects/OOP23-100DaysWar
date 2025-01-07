@@ -15,7 +15,6 @@ public class GameControllerImpl implements GameController {
     @Override
     public void attack() {
         final var selectedCell = The100DaysWar.CONTROLLER.getMapController().getSelectedCell();
-
         if (selectedCell.getSecond().getUnit().isPresent()) {
             final var unit = selectedCell.getSecond().getUnit().get();
             if (unit instanceof Soldier) {
@@ -25,6 +24,9 @@ public class GameControllerImpl implements GameController {
                     if (cell.getUnit().isPresent() && cell.getUnit().get() instanceof Combatant) {
                         final var defender = cell.getUnit().get();
                         soldier.performAttack(defender);
+                        System.out.println("ATTACKING");
+                        System.out.println("HEALTH SOLDIER:\t" + soldier.currentHealth());
+                        System.out.println("HEALTH DEFENDER\t" + defender.currentHealth());
                     }
                 }
             }

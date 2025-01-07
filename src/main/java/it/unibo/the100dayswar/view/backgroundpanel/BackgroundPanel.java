@@ -34,7 +34,7 @@ public class BackgroundPanel extends JPanel {
         if (icon != null && icon.getImage() != null) {
             graphic.drawImage(icon.getImage(), 0, 0, getWidth(), getHeight(), this);
         } else {
-            System.err.println("Error: Background image not loaded for path: " + imagePath);
+            throw new IllegalArgumentException("Image not found");
         }
     }
 }

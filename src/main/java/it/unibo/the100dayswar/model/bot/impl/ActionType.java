@@ -42,7 +42,7 @@ public enum ActionType {
         @Override
         protected boolean canPerform(final BotPlayer botPlayer) {
             return botPlayer.getBankAccount().getBalance() >= Soldier.DEFAULT_COST
-                    && botPlayer.getSpawnPoint().isFree();
+                    && botPlayer.getMapManager().getBotSpawn().isFree();
         }
 
         /**
@@ -53,7 +53,7 @@ public enum ActionType {
             return evaluateOrNonPerformable(botPlayer, () -> {
                 final int soldierCount = botPlayer.getSoldiers().size();
                 // Higher priority if soldier count is low
-                return new Score(DEFAULT_SCORE + Math.max(0, 3 - soldierCount));
+                return new Score(DEFAULT_SCORE + Math.max(0, 3 - soldierCount) + 1);
             });
         }
 
@@ -64,8 +64,8 @@ public enum ActionType {
         protected void execute(final BotPlayer botPlayer) {
             if (canPerform(botPlayer)) {
                 final Soldier soldier = new SoldierImpl(botPlayer);
-                botPlayer.buyUnit(soldier);
                 notifyObservers(new Pair<>(soldier, botPlayer.getSpawnPoint()));
+                botPlayer.buyUnit(soldier);
             }
         }
     },
@@ -93,7 +93,7 @@ public enum ActionType {
             return evaluateOrNonPerformable(botPlayer, () -> {
                 final int soldierCount = botPlayer.getSoldiers().size();
                 final int towerCount = botPlayer.getTowers().size();
-                if (towerCount < soldierCount / 2) {
+                if (towerCount <= soldierCount / 2) {
                     // If the bot has less towers than half of the soldiers, it should buy one
                     return new Score(HIGH_PRIORITY_SCORE);
                 }
@@ -129,6 +129,7 @@ public enum ActionType {
             final List<Cell> validCells = botPlayer.getAllCells().stream()
                     .filter(cell -> !cell.isAdiacent(spawnPoint))
                     .filter(cell -> isNearSpawn(cell, spawnPoint))
+                    .filter(Cell::isFree)
                     .collect(Collectors.toList());
 
             return validCells.isEmpty() ? null : validCells.get(RANDOM.nextInt(validCells.size()));
@@ -233,8 +234,7 @@ public enum ActionType {
                 final Soldier unitToMove = Iterables.get(soldiers, RANDOM.nextInt(soldiers.size()));
                 // Using BFS algorithm to find the next cell in the path to the enemy spawn point
                 final Cell destination = determineDestination(botPlayer, unitToMove);
-                if (destination != null) {
-                    botPlayer.moveUnit(unitToMove, destination);
+                if (destination != null && destination.isFree()) {
                     notifyObservers(new Pair<>(unitToMove, destination));
                 }
             }
@@ -252,15 +252,12 @@ public enum ActionType {
             final Cell start = unit.getPosition();
             final Cell destination = botPlayer.getEnemySpawnPoint();
             if (start == null || destination == null) {
-                System.err.println("Error: Start or destination cell is null.");
                 return null;
             }
             final List<Cell> path = pathFinder.findPath(start, destination);
             if (path == null || path.isEmpty()) {
-                System.err.println("Error: No path found between " + start + " and " + destination);
                 return null;
             }
-            System.out.println("Path found: " + path);
             return (path.size() > 1) ? path.get(1) : null;
         }
     };
@@ -288,9 +285,7 @@ public enum ActionType {
          */
         @Override
         public void attach(final Observer<Pair<Unit, Cell>> observer) {
-            synchronized (this.observers) {
-                observers.add(observer);
-            }
+            observers.add(observer);
         }
 
         /**
@@ -298,18 +293,14 @@ public enum ActionType {
          */
         @Override
         public void detach(final Observer<Pair<Unit, Cell>> observer) {
-            synchronized (this.observers) {
-                observers.remove(observer);
-            }
+            observers.remove(observer);
         }
 
         /**
          * Removes all attached observers.
          */
         public void removeAllObservers() {
-            synchronized (this.observers) {
-                observers.clear();
-            }
+            observers.clear();
         }
 
         /**
@@ -318,11 +309,9 @@ public enum ActionType {
          * @param data the data to pass to the observers
          */
         public void notifyObservers(final Pair<Unit, Cell> data) {
-            synchronized (this.observers) {
-                final List<Observer<Pair<Unit, Cell>>> observersCopy = new ArrayList<>(this.observers);
-                for (final Observer<Pair<Unit, Cell>> observer : observersCopy) {
-                    observer.update(data);
-                }
+            final List<Observer<Pair<Unit, Cell>>> observersCopy = new ArrayList<>(this.observers);
+            for (final Observer<Pair<Unit, Cell>> observer : observersCopy) {
+                observer.update(data);
             }
         }
     }

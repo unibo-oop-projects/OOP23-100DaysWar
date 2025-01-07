@@ -11,7 +11,6 @@ import java.util.stream.Stream;
 import it.unibo.the100dayswar.commons.patterns.Observer;
 import it.unibo.the100dayswar.commons.utilities.impl.Pair;
 import it.unibo.the100dayswar.model.bot.api.BotPlayer;
-import it.unibo.the100dayswar.model.bot.impl.ActionType;
 import it.unibo.the100dayswar.model.bot.impl.SimpleBot;
 import it.unibo.the100dayswar.model.cell.api.Cell;
 import it.unibo.the100dayswar.model.loaddata.api.GameLoader;
@@ -87,7 +86,6 @@ public class ModelImpl implements Model {
              */
         }
         this.mapManager = new MapManagerImpl(data.get().getMapManager());
-        ActionType.add(mapManager);
         this.turnManager = data.get().getGameTurnManager();
         this.players = List.of(new SimpleBot(data.get().getBotData()), data.get().getHumanData());
         this.gameStatistics = new GameStatisticImpl(players, mapManager);

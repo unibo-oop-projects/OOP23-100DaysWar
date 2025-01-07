@@ -216,7 +216,8 @@ public class MapManagerImpl implements MapManager {
     private boolean isNewSoldier(final Pair<Unit, Cell> source) {
         return source.getFirst() instanceof Soldier
         && source.getSecond().equals(((Soldier) source.getFirst()).getPosition())
-        && ((Soldier) source.getFirst()).getPosition().isSpawn();
+        && ((Soldier) source.getFirst()).getPosition().isSpawn()
+        && ((Soldier) source.getFirst()).getOwner().getSpawnPoint().equals(source.getSecond());
     }
 
     /**

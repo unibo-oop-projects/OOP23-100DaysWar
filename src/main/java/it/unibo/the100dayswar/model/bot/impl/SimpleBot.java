@@ -48,9 +48,7 @@ public class SimpleBot extends PlayerImpl implements BotPlayer {
      */
     public SimpleBot(final BotPlayer botPlayer) {
         super(botPlayer.getUsername(), botPlayer.getSpawnPoint());
-        ActionType.clear();
         this.mapManager = botPlayer.getMapManager();
-        ActionType.add(mapManager);
         this.strategy = botPlayer.getStrategy();
         this.enemySpawnPoint = mapManager.getPlayerSpawn();
         this.gameMapCells = mapManager.getMapAsAStream().collect(Collectors.toSet());

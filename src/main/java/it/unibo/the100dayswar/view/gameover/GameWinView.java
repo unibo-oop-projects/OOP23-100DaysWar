@@ -14,6 +14,7 @@ import java.awt.Window;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Arrays;
+import java.util.logging.Logger;
 
 import it.unibo.the100dayswar.application.The100DaysWar;
 import it.unibo.the100dayswar.commons.utilities.impl.LoadPixelFont;
@@ -112,12 +113,11 @@ public class GameWinView extends JFrame {
         try {
             final URL imageUrl = getClass().getResource(path);
             if (imageUrl == null) {
-                throw new IOException("Image not found at path: " + path);
+                throw new IllegalArgumentException("Image not found at path: " + path);
             }
             return ImageIO.read(imageUrl);
         } catch (IOException e) {
-            System.err.println("Error loading image: " + path);
-            e.printStackTrace();
+            Logger.getGlobal().severe("Error loading image: " + e.getMessage());
             return null;
         }
     }

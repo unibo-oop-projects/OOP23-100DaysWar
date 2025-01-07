@@ -85,7 +85,6 @@ public class GameTurnManagerImpl implements GameTurnManager {
         playerStartTurn();
         if (this.getCurrentPlayer() instanceof BotPlayer) {
             ((BotPlayer) getCurrentPlayer()).makeMove();
-            System.out.println("Bot Turn");
             switchTurn();
         }
     }

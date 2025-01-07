@@ -8,7 +8,7 @@ import it.unibo.the100dayswar.model.tower.api.Tower;
  * Implementation of the battle between a soldier (attacker) and a tower (defender).
  */
 public class BattleTowerSoldierImpl implements BattleTowerSoldier {
-    private static final int TOWER_RANGE = 3;
+    private static final int TOWER_RANGE = 2;
     /**
      * start a fight between a tower and a soldier.
      */
