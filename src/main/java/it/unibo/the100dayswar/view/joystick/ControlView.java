@@ -2,21 +2,14 @@ package it.unibo.the100dayswar.view.joystick;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Image;
 import java.awt.Insets;
 
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
 
 import it.unibo.the100dayswar.application.The100DaysWar;
-import it.unibo.the100dayswar.commons.utilities.impl.IconLoader;
-import it.unibo.the100dayswar.commons.utilities.impl.LoadPixelFont;
 import it.unibo.the100dayswar.view.map.MapView;
 import it.unibo.the100dayswar.view.pausemenu.PauseMenu;
 import it.unibo.the100dayswar.view.rules.RulesViewer;
@@ -33,6 +26,7 @@ public class ControlView extends JPanel {
     private static final int INSETS = 5;
     private static final Dimension BUTTON_SIZE = new Dimension(200, 60);
     private static final String ICON_BUTTON = "startmenu/genericbutton.jpg";
+    private static final float FONT_SIZE = 12f;
 
     private final JButton attack;
     private final JButton pause;
@@ -50,11 +44,11 @@ public class ControlView extends JPanel {
         super.setLayout(new GridBagLayout());
         final GridBagConstraints gbc = createGridBagConstraints();
 
-        this.attack = createButton("Attack");
-        this.pause = createButton("Pause");
-        this.skip = createButton("Skip Turn");
-        this.rules = createButton("Read Rules");
-        this.quit = createButton("Quit");
+        this.attack = ButtonFactory.createCustomButton("Attack", ICON_BUTTON, BUTTON_SIZE, FONT_SIZE, Color.WHITE);
+        this.pause = ButtonFactory.createCustomButton("Pause", ICON_BUTTON, BUTTON_SIZE, FONT_SIZE, Color.WHITE);
+        this.skip = ButtonFactory.createCustomButton("Skip Turn", ICON_BUTTON, BUTTON_SIZE, FONT_SIZE, Color.WHITE);
+        this.rules = ButtonFactory.createCustomButton("Read Rules", ICON_BUTTON, BUTTON_SIZE, FONT_SIZE, Color.WHITE);
+        this.quit = ButtonFactory.createCustomButton("Quit", ICON_BUTTON, BUTTON_SIZE, FONT_SIZE, Color.WHITE);
 
         setButtonActions(mapView, statisticsView);
         arrangeButtons(gbc);
@@ -82,45 +76,6 @@ public class ControlView extends JPanel {
         this.skip.setEnabled(true);
         this.rules.setEnabled(true);
         this.quit.setEnabled(true);
-    }
-
-    /**
-     * Creates a button with consistent styling.
-     * 
-     * @param text the text to display on the button
-     * @return a styled JButton
-     */
-    private JButton createButton(final String text) {
-        final Icon icon = getIcon();
-        if (icon == null) {
-            throw new IllegalStateException("Icon not found");
-        }
-        final JButton button = new JButton(text, icon);
-        final Font customFont = LoadPixelFont.getFont().deriveFont(12f);
-        button.setFont(customFont);
-        button.setPreferredSize(BUTTON_SIZE);
-        button.setHorizontalTextPosition(SwingConstants.CENTER);
-        button.setVerticalTextPosition(SwingConstants.CENTER);
-        button.setForeground(Color.WHITE);
-        button.setContentAreaFilled(false);
-        button.setBorderPainted(false);
-        button.setFocusPainted(false);
-        return button;
-    }
-
-    /**
-     * Loads the icon for the button.
-     * 
-     * @return the icon for the button
-     */
-    private Icon getIcon() {
-        final Icon icon = IconLoader.loadIcon(ICON_BUTTON);
-        if (icon != null) {
-            final Image scaledImage = ((ImageIcon) icon).getImage()
-                .getScaledInstance(BUTTON_SIZE.width, BUTTON_SIZE.height, Image.SCALE_SMOOTH);
-            return new ImageIcon(scaledImage);
-        }
-        return null;
     }
 
     /**
@@ -187,7 +142,7 @@ public class ControlView extends JPanel {
     }
 
     /**
-     * Skip the current turn without doing nothing.
+     * Skip the current turn without doing anything.
      * 
      * @param mapView the map view to repaint
      * @param statisticsView the statistics view to update

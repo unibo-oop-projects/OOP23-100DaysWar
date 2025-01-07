@@ -5,43 +5,19 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.AfterEach;
 
 import it.unibo.the100dayswar.model.savedata.impl.GameSaverImpl;
-import it.unibo.the100dayswar.model.turn.api.GameTurnManager;
-import it.unibo.the100dayswar.model.turn.impl.GameTurnManagerImpl;
-import it.unibo.the100dayswar.model.bot.api.BotPlayer;
-import it.unibo.the100dayswar.model.bot.impl.SimpleBot;
-import it.unibo.the100dayswar.model.map.api.MapManager;
-import it.unibo.the100dayswar.model.map.impl.GameMapBuilderImpl;
-import it.unibo.the100dayswar.model.map.impl.MapManagerImpl;
-import it.unibo.the100dayswar.model.player.api.HumanPlayer;
-import it.unibo.the100dayswar.model.player.impl.HumanPlayerImpl;
-import it.unibo.the100dayswar.model.savedata.impl.GameDataImpl;
 
 /**
  * Test suite for GameSaverImpl.
  */
-class GameSaverTest {
+class GameSaverTest extends AbstractGameTest {
     private static final String TEST_CUSTOM_PATH = generateSavePath("data");
     private static final String DEFAULT_PATH = System.getProperty("user.home") + "/saved_game.ser";
-    private static final int MAP_DIMENSION = 10;
-
-    private final MapManager mockGameMapManager = new MapManagerImpl(new GameMapBuilderImpl(MAP_DIMENSION, MAP_DIMENSION));
-    private final BotPlayer mockBotPlayer = new SimpleBot(mockGameMapManager);
-    private final HumanPlayer mockHumanPlayer = new HumanPlayerImpl("Mock human player", mockGameMapManager.getPlayerSpawn());
-    private final GameTurnManager mockGameTurnManager = new GameTurnManagerImpl(List.of(mockBotPlayer, mockHumanPlayer));
-    private final GameDataImpl mockGameData = new GameDataImpl(
-            mockHumanPlayer,
-            mockBotPlayer,
-            mockGameMapManager,
-            mockGameTurnManager
-            );
 
     /**
      * Cleans up the files.
@@ -60,7 +36,7 @@ class GameSaverTest {
      */
     @Test
     void testSaveGameWithCustomPath() throws IOException {
-        final GameSaverImpl saver = new GameSaverImpl(mockGameData, TEST_CUSTOM_PATH);
+        final GameSaverImpl saver = new GameSaverImpl(getMockGameData(), TEST_CUSTOM_PATH);
         saver.saveGame();
 
         // Verify file creation
@@ -73,7 +49,7 @@ class GameSaverTest {
      */
     @Test
     void testSaveGameWithDefaultPath() throws IOException {
-        final GameSaverImpl saver = new GameSaverImpl(mockGameData);
+        final GameSaverImpl saver = new GameSaverImpl(getMockGameData());
         saver.saveGame();
 
         // Verify file creation
@@ -86,7 +62,7 @@ class GameSaverTest {
     @Test
     void testSaveGameThrowsIOException() {
         final String invalidPath = "/invalid_path/saved_game.ser";
-        final GameSaverImpl saver = new GameSaverImpl(mockGameData, invalidPath);
+        final GameSaverImpl saver = new GameSaverImpl(getMockGameData(), invalidPath);
 
         final Exception exception = assertThrows(IOException.class, saver::saveGame);
 
@@ -98,7 +74,7 @@ class GameSaverTest {
      */
     @Test
     void testConstructorWithNullGameDataThrowsException() {
-        final Exception exception = assertThrows(IllegalArgumentException.class, () -> 
+        final Exception exception = assertThrows(IllegalArgumentException.class, () ->
             new GameSaverImpl(null, TEST_CUSTOM_PATH)
         );
 
@@ -112,10 +88,10 @@ class GameSaverTest {
     void testSaveGameOverwritesExistingFile() throws IOException {
         Files.createFile(Paths.get(TEST_CUSTOM_PATH));
 
-        final GameSaverImpl saver = new GameSaverImpl(mockGameData, TEST_CUSTOM_PATH);
+        final GameSaverImpl saver = new GameSaverImpl(getMockGameData(), TEST_CUSTOM_PATH);
         saver.saveGame();
 
-        // Verify file is still present
+        // Verify file is still present (i.e. overwritten)
         assertTrue(Files.exists(Paths.get(TEST_CUSTOM_PATH)), "File should be overwritten at the custom path.");
     }
 
@@ -127,9 +103,6 @@ class GameSaverTest {
      */
     static String generateSavePath(final String gameName) {
         final String userHome = System.getProperty("user.home");
-
-        final Path savePath = Paths.get(userHome, "Documents", gameName + ".sav");
-
-        return savePath.toString();
+        return Paths.get(userHome, "Documents", gameName + ".sav").toString();
     }
 }

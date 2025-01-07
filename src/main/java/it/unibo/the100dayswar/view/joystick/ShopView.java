@@ -2,20 +2,13 @@ package it.unibo.the100dayswar.view.joystick;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Image;
 
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
 
 import it.unibo.the100dayswar.application.The100DaysWar;
-import it.unibo.the100dayswar.commons.utilities.impl.IconLoader;
-import it.unibo.the100dayswar.commons.utilities.impl.LoadPixelFont;
 import it.unibo.the100dayswar.view.map.MapView;
 import it.unibo.the100dayswar.view.statistics.StatisticsView;
 
@@ -28,6 +21,7 @@ public class ShopView extends JPanel {
     private static final Dimension SIZE = new Dimension(200, 150);
     private static final Dimension BUTTON_SIZE = new Dimension(200, 55);
     private static final String ICON_BUTTON = "startmenu/genericbutton.jpg";
+    private static final float FONT_SIZE = 10f;
 
     private final JButton buySoldier;
     private final JButton buyBasicTower;
@@ -42,10 +36,35 @@ public class ShopView extends JPanel {
      */
     public ShopView(final MapView mapView, final StatisticsView statisticsView) {
         super.setLayout(new GridBagLayout());
-        this.buySoldier = createButton("Buy Soldier");
-        this.buyBasicTower = createButton("Buy Basic Tower");
-        this.buyAdvancedTower = createButton("Buy Advanced Tower");
-        this.upgradeUnit = createButton("Upgrade Unit");
+
+        this.buySoldier = ButtonFactory.createCustomButton(
+            "Buy Soldier", 
+            ICON_BUTTON, 
+            BUTTON_SIZE, 
+            FONT_SIZE, 
+            Color.WHITE
+        );
+        this.buyBasicTower = ButtonFactory.createCustomButton(
+            "Buy Basic Tower", 
+            ICON_BUTTON, 
+            BUTTON_SIZE, 
+            FONT_SIZE, 
+            Color.WHITE
+        );
+        this.buyAdvancedTower = ButtonFactory.createCustomButton(
+            "Buy Advanced Tower", 
+            ICON_BUTTON, 
+            BUTTON_SIZE, 
+            FONT_SIZE, 
+            Color.WHITE
+        );
+        this.upgradeUnit = ButtonFactory.createCustomButton(
+            "Upgrade Unit", 
+            ICON_BUTTON, 
+            BUTTON_SIZE, 
+            FONT_SIZE, 
+            Color.WHITE
+        );
 
         setButtonActions(mapView, statisticsView);
         setupLayout();
@@ -70,45 +89,6 @@ public class ShopView extends JPanel {
         this.buySoldier.setEnabled(true);
         this.buyAdvancedTower.setEnabled(true);
         this.upgradeUnit.setEnabled(true);
-    }
-
-    /**
-     * Creates a button with consistent styling.
-     *
-     * @param text the text to display on the button
-     * @return a styled JButton
-     */
-    private JButton createButton(final String text) {
-        final Icon icon = getIcon();
-        if (icon == null) {
-            throw new IllegalStateException("Icon not found");
-        }
-        final JButton button = new JButton(text, icon);
-        final Font customFont = LoadPixelFont.getFont().deriveFont(10f);
-        button.setFont(customFont);
-        button.setPreferredSize(BUTTON_SIZE);
-        button.setHorizontalTextPosition(SwingConstants.CENTER);
-        button.setVerticalTextPosition(SwingConstants.CENTER);
-        button.setForeground(Color.WHITE);
-        button.setContentAreaFilled(false); 
-        button.setBorderPainted(false);
-        button.setFocusPainted(false);
-        return button;
-    }
-
-    /**
-     * Loads the icon for the button.
-     * 
-     * @return the icon for the button
-     */
-    private Icon getIcon() {
-        final Icon icon = IconLoader.loadIcon(ICON_BUTTON);
-        if (icon != null) {
-            final Image scaledImage = ((ImageIcon) icon).getImage()
-                .getScaledInstance(BUTTON_SIZE.width, BUTTON_SIZE.height, Image.SCALE_SMOOTH);
-            return new ImageIcon(scaledImage);
-        }
-        return null;
     }
 
     /**
@@ -145,7 +125,6 @@ public class ShopView extends JPanel {
      */
     private void setupLayout() {
         final GridBagConstraints gbc = new GridBagConstraints();
-
         gbc.gridx = 0;
         gbc.gridy = 0;
         super.add(buySoldier, gbc);

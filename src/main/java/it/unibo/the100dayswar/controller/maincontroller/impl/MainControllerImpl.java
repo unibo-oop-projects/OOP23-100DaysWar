@@ -179,9 +179,9 @@ public class MainControllerImpl implements MainController {
         if (winner == null) {
             throw new IllegalStateException("Game ended in a draw");
         } else if (winner.equals(model.getHumanPlayer())) {
-            new GameWinView();
+            new GameWinView().initialize();
         } else {
-            new GameLoseView();
+            new GameLoseView().initialize();
         }
     }
 }
