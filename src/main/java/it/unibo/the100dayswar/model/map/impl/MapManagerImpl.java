@@ -142,6 +142,7 @@ public class MapManagerImpl implements MapManager {
      */
     private void createSoldier(final Pair<Unit, Cell> source) {
         final Soldier soldier = (Soldier) source.getFirst();
+        soldier.setJustCreated();
         final Cell targetCell = this.map.getCell(source.getSecond().getPosition());
 
         if (!targetCell.isSpawn()) {
@@ -188,7 +189,6 @@ public class MapManagerImpl implements MapManager {
      */
     private void soldierMovement(final Pair<Unit, Cell> source) {
         final Soldier soldier = (Soldier) source.getFirst();
-        soldier.setJustCreated();
         final Cell targetCell = this.map.getCell(source.getSecond().getPosition());
         final Cell currentCell = this.map.getCell(soldier.getPosition().getPosition());
         if (!targetCell.isFree()) {
