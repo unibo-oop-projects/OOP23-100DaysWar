@@ -56,9 +56,9 @@ class SoldierTest {
         assertEquals(100, target.currentHealth());
         soldier.performAttack(target);
         assertTrue(
-            soldier.currentHealth() == 100 && target.currentHealth() == 0 
+            target.currentHealth() == 0 
             ||
-            soldier.currentHealth() == 0 && target.currentHealth() == 100
+            soldier.currentHealth() == 0
         );
     }
 

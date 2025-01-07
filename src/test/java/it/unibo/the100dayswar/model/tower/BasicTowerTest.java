@@ -4,8 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
-
-
 import it.unibo.the100dayswar.commons.utilities.impl.PositionImpl;
 import it.unibo.the100dayswar.model.cell.api.Cell;
 import it.unibo.the100dayswar.model.cell.impl.CellImpl;
@@ -56,10 +54,10 @@ class BasicTowerTest {
      */
     @Test
     void testMaxLevelUpgrade() {
-        final int maxLevel = 5;
-        for (int i = 0; i < maxLevel; i++) {
+        final int maxLevel = 3;
+        for (int i = 1; i <= maxLevel; i++) {
             mockBasicTower.upgrade();
         }
-        assertEquals(4, mockBasicTower.getLevel(), "Tower should not exceed MAX_LEVEL");
+        assertEquals(maxLevel, mockBasicTower.getLevel(), "Tower should not exceed MAX_LEVEL");
     }
 }

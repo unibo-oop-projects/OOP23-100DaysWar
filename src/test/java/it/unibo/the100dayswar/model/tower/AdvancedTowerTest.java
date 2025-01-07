@@ -54,11 +54,11 @@ class AdvancedTowerTest {
      */
     @Test
     void testMaxLevelUpgrade() {
-        final int maxLevel = 5;
+        final int maxLevel = 3;
 
-        for (int i = 0; i < maxLevel; i++) {
+        for (int i = 1; i <= maxLevel; i++) {
             mockAdvancedTower.upgrade();
         }
-        assertEquals(4, mockAdvancedTower.getLevel(), "Tower should not exceed MAX_LEVEL");
+        assertEquals(maxLevel, mockAdvancedTower.getLevel(), "Tower should not exceed MAX_LEVEL");
     }
 }

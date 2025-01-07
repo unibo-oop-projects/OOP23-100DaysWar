@@ -1,7 +1,6 @@
 package it.unibo.the100dayswar.model.tower;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-// TODO import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 
@@ -40,34 +39,8 @@ class TowerFactoryTest {
     @Test
     void testCreateAdvancedTower() {
         final TowerFactoryImpl factory = new TowerFactoryImpl();
-
         final var tower = factory.buildTower(mockPlayer, TowerType.ADVANCED, mockCell);
         assertTrue(tower instanceof AdvancedTowerImpl, "Tower should be of type AdvancedTowerImpl");
         assertEquals(TowerType.ADVANCED, tower.getTowerType(), "Tower type should be ADVANCED");
     }
-
-    /**
-     * Tests that an exception is thrown for an invalid tower type.
-     */
-    /*
-    @Test TODO
-    void testInvalidTowerType() {
-        final TowerFactoryImpl factory = new TowerFactoryImpl();
-
-        final Exception exception1 = assertThrows(IllegalArgumentException.class, () -> 
-            factory.buildTower(null, null, mockCell)
-        );
-        assertTrue(exception1.getMessage().contains("All arguments must be non null"));
-
-        final Exception exception2 = assertThrows(IllegalArgumentException.class, () -> 
-            factory.buildTower(mockPlayer, null, mockCell)
-        );
-        assertTrue(exception2.getMessage().contains("All arguments must be non null"));
-
-        final Exception exception3 = assertThrows(IllegalArgumentException.class, () -> 
-            factory.buildTower(mockPlayer, TowerType.BASIC, null)
-        );
-        assertTrue(exception3.getMessage().contains("All arguments must be non null"));
-    }
-    */
 }

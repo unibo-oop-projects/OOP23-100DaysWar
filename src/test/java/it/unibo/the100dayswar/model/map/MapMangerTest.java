@@ -99,16 +99,17 @@ class MapMangerTest {
         final Soldier soldier2 = new SoldierImpl(player1);
         mapManager.update(new Pair<>(soldier1, spawnCell));
 
-    assertTrue(spawnCell.isSpawn(), "The spawn cell should is a spawnCell.");
-    assertTrue(spawnCell.getUnit().isPresent(), "The spawn cell should contain the first soldier.");
+        assertTrue(spawnCell.isSpawn(), "The spawn cell should is a spawnCell.");
+        assertTrue(spawnCell.getUnit().isPresent(), "The spawn cell should contain the first soldier.");
 
-    final Exception exception = assertThrows(IllegalStateException.class, () -> {
-        mapManager.update(new Pair<>(soldier2, spawnCell));
-    });
+        final Exception exception = assertThrows(IllegalStateException.class, () -> {
+            mapManager.update(new Pair<>(soldier2, spawnCell));
+        });
 
-    assertEquals("Spawn cell is occupied. Move the existing soldier.", exception.getMessage());
-    assertTrue(spawnCell.getUnit().isPresent(), "The spawn cell should still contain the first soldier.");
-}
+        assertEquals("Target cell is not free for soldier movement.", exception.getMessage());
+        assertTrue(spawnCell.getUnit().isPresent(), "The spawn cell should still contain the first soldier.");
+    }
+
     @Test
     void testObstaclePlacement() {
         final long obstacleCount = mapManager.getMapAsAStream()
