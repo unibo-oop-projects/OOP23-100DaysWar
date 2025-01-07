@@ -1,22 +1,15 @@
 package it.unibo.the100dayswar.view.viewupdater;
 
-import it.unibo.the100dayswar.application.The100DaysWar;
 import it.unibo.the100dayswar.view.gameview.GameView;
-import it.unibo.the100dayswar.view.map.MapView;
-import it.unibo.the100dayswar.view.statistics.StatisticsView;
 
 /**
  * A class that periodically reloads the map background image on a separate thread.
  */
 public class ViewUpdater implements Runnable {
     private static final long REFRESH_INTERVAL_MS = 50;
-    private final MapView mapView;
-    private final StatisticsView statisticsView;
     private boolean running;
 
     public ViewUpdater(final GameView mainframe) {
-        this.mapView = mainframe.getMapView();
-        this.statisticsView = mainframe.getStatisticView(); 
         this.running = false;
     }
 

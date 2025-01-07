@@ -1,13 +1,16 @@
 package it.unibo.the100dayswar.view.map;
 
 import java.util.Objects;
+import java.io.Serializable;
 
 import it.unibo.the100dayswar.commons.utilities.api.Position;
+import it.unibo.the100dayswar.commons.utilities.impl.PositionImpl;
 
 /**
  * Represents a cell view.
  */
-public class CellView {
+public class CellView implements Serializable {
+    private static final long serialVersionUID = 1L;
     private final Position position;
     private final String imagePath;
 
@@ -18,7 +21,7 @@ public class CellView {
      * @param imagePath the path of the image.
      */
     public CellView(final Position pos, final String imagePath) {
-       this.position = pos;
+       this.position = new PositionImpl(pos);
         this.imagePath = imagePath;
     }
 

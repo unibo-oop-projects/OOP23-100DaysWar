@@ -113,7 +113,7 @@ public class GameLoseView extends JFrame {
      */
     private Image loadImage(final String path) {
         try {
-            final URL imageUrl = getClass().getResource(path);
+            final URL imageUrl = GameLoseView.class.getResource(path);
             if (imageUrl == null) {
                 throw new IllegalArgumentException("Image not found at path: " + path);
             }

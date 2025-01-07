@@ -11,6 +11,7 @@ import java.util.concurrent.TimeoutException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.the100dayswar.controller.gamecontroller.api.GameController;
 import it.unibo.the100dayswar.controller.gamecontroller.impl.GameControllerImpl;
 import it.unibo.the100dayswar.controller.maincontroller.api.MainController;
@@ -53,6 +54,7 @@ public class MainControllerImpl implements MainController {
         this.mapController = new MapControllerImpl();
         this.gameController = new GameControllerImpl();
         this.movementController = new MovementControllerImpl();
+        this.model = null;
     }
 
     /** 
@@ -66,6 +68,8 @@ public class MainControllerImpl implements MainController {
     /**
      * {@inheritDoc}
      */
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP", 
+        justification = "Exposing 'model' is intentional for design reasons.")
     @Override
     public Model getGameInstance() {
         return this.model;

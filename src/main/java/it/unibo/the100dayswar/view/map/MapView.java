@@ -29,16 +29,12 @@ public class MapView extends JPanel {
     private static final int CELL_SIZE = 50;
     private static final int OPACITY = 64;
     private static final String MAP_IMAGE_PATH = "/map/map.png";
-    private final MapController mapController;
-    private final Image mapImage;
     private CellView selectedCell;
 
     /**
      * Constructor for MapView.
      */
     public MapView() {
-        this.mapController = The100DaysWar.CONTROLLER.getMapController();
-        this.mapImage = loadImage(MAP_IMAGE_PATH);
         this.selectedCell = null;
         super.setLayout(null);
 
@@ -57,7 +53,7 @@ public class MapView extends JPanel {
      */
     private Image loadImage(final String path) {
         try {
-            final URL imageUrl = getClass().getResource(path);
+            final URL imageUrl = MapView.class.getResource(path);
             if (imageUrl != null) {
                 return ImageIO.read(imageUrl);
             } else {
@@ -79,7 +75,7 @@ public class MapView extends JPanel {
         final MapController mapController = The100DaysWar.CONTROLLER.getMapController();
         final int totalWidth = mapController.getMapWidth() * CELL_SIZE;
         final int totalHeight = mapController.getMapHeight() * CELL_SIZE;
-        g.drawImage(mapImage, 0, 0, totalWidth, totalHeight, this);
+        g.drawImage(loadImage(MAP_IMAGE_PATH), 0, 0, totalWidth, totalHeight, this);
 
         final List<CellView> cellsView = mapController.getCellsView();
 
@@ -108,7 +104,10 @@ public class MapView extends JPanel {
      */
     @Override
     public Dimension getPreferredSize() {
-        return new Dimension(mapController.getMapWidth() * CELL_SIZE, mapController.getMapHeight() * CELL_SIZE);
+        return new Dimension(
+            The100DaysWar.CONTROLLER.getMapController().getMapWidth() * CELL_SIZE, 
+            The100DaysWar.CONTROLLER.getMapController().getMapHeight() * CELL_SIZE
+            );
     }
 
     /**
@@ -120,14 +119,14 @@ public class MapView extends JPanel {
     private void handleCellClick(final int mouseX, final int mouseY) {
         final int cellX = mouseX / CELL_SIZE;
         final int cellY = mouseY / CELL_SIZE;
-        final Optional<CellView> clickedCell = mapController.getCellsView().stream()
+        final Optional<CellView> clickedCell = The100DaysWar.CONTROLLER.getMapController().getCellsView().stream()
                 .filter(cell -> cell.getX() == cellX && cell.getY() == cellY)
                 .findFirst();
 
         clickedCell.ifPresent(cell -> {
             this.selectedCell = cell;
             repaint();
-            mapController.onCellClick(cellX, cellY);
+            The100DaysWar.CONTROLLER.getMapController().onCellClick(cellX, cellY);
         });
     }
 
