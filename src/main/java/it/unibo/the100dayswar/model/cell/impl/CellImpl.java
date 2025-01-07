@@ -99,14 +99,14 @@ public  class CellImpl implements Cell {
         if (this == obj) {
             return true;
         }
-        if (!(obj instanceof Cell)) {
+        if (!(obj instanceof CellImpl)) {
             return false;
         }
-        final Cell other = (Cell) obj;
-        return Objects.equals(this.getPosition(), other.getPosition())
-                && Objects.equals(this.isSpawn, other.isSpawn())
-                && Objects.equals(this.isBuildable, other.isBuildable())
-                && Objects.equals(this.currentUnit, other.getUnit().orElse(null));
+        final CellImpl other = (CellImpl) obj;
+        return Objects.equals(this.position, other.position)
+                && Objects.equals(this.isSpawn, other.isSpawn)
+                && Objects.equals(this.isBuildable, other.isBuildable)
+                && Objects.equals(this.currentUnit, other.currentUnit);
     }
 
     /**

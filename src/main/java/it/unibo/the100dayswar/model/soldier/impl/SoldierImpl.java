@@ -17,6 +17,7 @@ public class SoldierImpl extends UnitImpl implements Soldier {
     private static final int MAX_LEVEL = 3;
     private static final int INITIAL_HEALTH = 100;
     private static final int INCREASE_HEALTH = 25;
+    private boolean isJustCreated = true;
 
     private Cell position;
 
@@ -74,5 +75,21 @@ public class SoldierImpl extends UnitImpl implements Soldier {
         } else {
             throw new UnsupportedOperationException("Cannot upgrade this unit");
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isJustCreated() {
+        return this.isJustCreated;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setJustCreated() {
+        this.isJustCreated = false;
     }
 }
