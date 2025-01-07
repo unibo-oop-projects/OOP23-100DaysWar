@@ -11,7 +11,6 @@ import it.unibo.the100dayswar.model.player.api.Player;
 import it.unibo.the100dayswar.model.soldier.api.Soldier;
 import it.unibo.the100dayswar.model.tower.api.Tower;
 import it.unibo.the100dayswar.model.turn.api.GameTurnManager;
-import it.unibo.the100dayswar.model.unit.api.Unit;
 import it.unibo.the100dayswar.model.turn.api.GameDay;
 import it.unibo.the100dayswar.model.fight.impl.GenericBattleCommand;
 
