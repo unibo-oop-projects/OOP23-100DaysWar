@@ -151,10 +151,10 @@ public class GameTurnManagerImpl implements GameTurnManager {
      * @param defender
      */
     private void towerAttack(final Player attacker, final Player defender) {
-        final GenericBattleCommand<Tower, Unit> battle = new GenericBattleCommand<>();
+        final GenericBattleCommand<Tower, Soldier> battle = new GenericBattleCommand<>();
         for (final Tower t : attacker.getTowers()) {
-            for (final Soldier u : defender.getSoldiers()) {
-                battle.execute(t, u);
+            for (final Soldier s : defender.getSoldiers()) {
+                battle.execute(t, s);
                 System.out.println("LA TORRE HA ATTACCATO");
             }
         }
