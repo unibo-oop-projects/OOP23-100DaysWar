@@ -38,4 +38,17 @@ public interface Soldier extends Unit, Movable {
      */
     @Override
     Cell getPosition();
+
+    /**
+     * Returns true if the soldier has just been created.
+     * Returns false if the soldier is not created in this turn.
+     * 
+     * @return true if the soldier has just been created
+     */
+    boolean isJustCreated();
+
+    /**
+     * Sets the soldier as not just created.
+     */
+    void setJustCreated();
 }

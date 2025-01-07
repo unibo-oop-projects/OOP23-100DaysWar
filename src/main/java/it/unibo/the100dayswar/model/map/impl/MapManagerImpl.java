@@ -142,6 +142,7 @@ public class MapManagerImpl implements MapManager {
      */
     private void createSoldier(final Pair<Unit, Cell> source) {
         final Soldier soldier = (Soldier) source.getFirst();
+        soldier.setJustCreated();
         final Cell targetCell = this.map.getCell(source.getSecond().getPosition());
 
         if (!targetCell.isSpawn()) {
@@ -232,8 +233,8 @@ public class MapManagerImpl implements MapManager {
     private boolean isNewSoldier(final Pair<Unit, Cell> source) {
         return source.getFirst() instanceof Soldier
         && source.getSecond().equals(((Soldier) source.getFirst()).getPosition())
-        && ((Soldier) source.getFirst()).getPosition().isSpawn()
-        && ((Soldier) source.getFirst()).getOwner().getSpawnPoint().equals(source.getSecond());
+        && ((Soldier) source.getFirst()).getOwner().getSpawnPoint().equals(source.getSecond())
+        && ((Soldier) source.getFirst()).isJustCreated();
     }
 
     /**

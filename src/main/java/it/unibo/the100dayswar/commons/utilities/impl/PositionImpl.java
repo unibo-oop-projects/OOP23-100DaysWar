@@ -79,8 +79,8 @@ public class PositionImpl implements Position {
     public boolean equals(final Object o) {
         if (o instanceof PositionImpl) {
             final PositionImpl positionObject = (PositionImpl) o;
-            return this.getX() == positionObject.getX()
-                && this.getY() == positionObject.getY();
+            return this.x == positionObject.x
+                && this.y == positionObject.y;
         }
         return false;
     }
