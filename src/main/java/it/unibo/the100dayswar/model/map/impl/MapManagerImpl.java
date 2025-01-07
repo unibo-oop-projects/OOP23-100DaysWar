@@ -100,6 +100,9 @@ public class MapManagerImpl implements MapManager {
             if (isTower(source)) {
                 createTower(source);
             }
+            if(isUnitAttacked(source)){
+                updateUnitStatus(source);
+            }
     }
 
     /**
@@ -206,6 +209,33 @@ public class MapManagerImpl implements MapManager {
                 ((BonusCell) targetCell).notify(soldier.getOwner());
             }
         }
+    }
+
+    /**
+     * update the unit status.
+     * @param source is the pair of the unit and the cell.
+     */
+    private void updateUnitStatus(final Pair<Unit,Cell> source) {
+        final Unit unit = source.getFirst();
+        final Cell currentCell = this.map.getCell(source.getSecond().getPosition());
+        if (unit.currentHealth() <= 0) {
+            map.setOccupationOnCell(currentCell, Optional.empty());
+            playersCells.keySet().forEach( p ->{
+                if  (p.getUnits().contains( unit )){
+                    p.removeUnit(unit);
+                }
+            });
+        }
+    }
+
+    /**
+     * check if the unit is attacked.
+     * @param source is the pair of the unit and the cell.
+     * @return true if the unit is attacked.
+     */
+    private boolean isUnitAttacked(final Pair<Unit, Cell> source) {
+        return source.getSecond().equals(((Soldier) source.getFirst()).getPosition())
+        && source.getSecond().getUnit().isPresent();
     }
 
     /**
