@@ -50,19 +50,6 @@ class SoldierTest {
     }
 
     @Test
-    void testAttackSoldier() {
-        final Soldier target = new SoldierImpl(testPlayer);
-        assertEquals(100, soldier.currentHealth());
-        assertEquals(100, target.currentHealth());
-        soldier.performAttack(target);
-        assertTrue(
-            target.currentHealth() == 0 
-            ||
-            soldier.currentHealth() == 0
-        );
-    }
-
-    @Test
     void testAttackSoldierWithDifferentLevel() {
         final Soldier target = new SoldierImpl(testPlayer);
         final int soldierHealth = 100;

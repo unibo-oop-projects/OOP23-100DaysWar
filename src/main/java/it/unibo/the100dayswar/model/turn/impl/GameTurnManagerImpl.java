@@ -143,7 +143,9 @@ public class GameTurnManagerImpl implements GameTurnManager {
      */
     @Override
     public void stopTimer() {
-        this.timer.cancel();
+        if (this.timer != null) {
+            this.timer.cancel();
+        }
     }
 
     /**

@@ -133,7 +133,7 @@ public class GameView extends JFrame {
     private Image loadBackgroundImage() {
         try {
             final String path = "/gameview/background.jpg";
-            final URL imageUrl = getClass().getResource(path);
+            final URL imageUrl = GameView.class.getResource(path);
             if (imageUrl == null) {
                 LOGGER.log(Level.WARNING, "Background image not found at path: " + path);
                 return null;
@@ -143,23 +143,5 @@ public class GameView extends JFrame {
             LOGGER.log(Level.SEVERE, "Error loading background image", e);
             return null;
         }
-    }
-
-    /**
-     * Returns the map view component.
-     *
-     * @return the map view.
-     */
-    public MapView getMapView() {
-        return (MapView) ((JPanel) ((JPanel) this.getContentPane()).getComponent(0)).getComponent(0);
-    }
-
-    /**
-     * Returns the statistics view component.
-     *
-     * @return the statistics view.
-     */
-    public StatisticsView getStatisticView() {
-        return (StatisticsView) ((JPanel) ((JPanel) this.getContentPane()).getComponent(0)).getComponent(1);
     }
 }

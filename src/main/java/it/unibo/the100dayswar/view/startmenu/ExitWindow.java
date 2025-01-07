@@ -140,8 +140,9 @@ public final class ExitWindow extends JDialog {
         yesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent e) {
-                // TODO imposta come chiudere il gioco
-                System.exit(0);
+                for (final var window : getWindows()) {
+                    window.dispose();
+                }
             }
         });
 

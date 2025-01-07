@@ -9,7 +9,7 @@ import it.unibo.the100dayswar.view.map.MapView;
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import java.awt.GridBagLayout;
-import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.logging.Logger;
@@ -32,7 +32,6 @@ public class JoystickView extends JPanel {
     private final ShopView shopView;
     private final MovementView movementView;
     private final ControlView controlView;
-    private Image backgroundImage;
 
     /**
      * Constructor for the JoystickView class.
@@ -68,16 +67,17 @@ public class JoystickView extends JPanel {
     /**
      * Loads the background image.
      */
-    private void loadBackgroundImage() {
-        try (InputStream is = getClass().getResourceAsStream("/joystick/joystick_background.png")) {
+    private BufferedImage loadBackgroundImage() {
+        try (InputStream is = JoystickView.class.getResourceAsStream("/joystick/joystick_background.png")) {
             if (is != null) {
-                backgroundImage = ImageIO.read(is);
+                return ImageIO.read(is);
             } else {
                 throw new IllegalStateException("Image not found: /joystick/joystick_background.png");
             }
         } catch (IOException e) {
             Logger.getLogger(JoystickView.class.getName()).severe("Error loading image: /joystick/joystick_background.png");
         }
+        return null;
     }
 
     /**
@@ -104,29 +104,11 @@ public class JoystickView extends JPanel {
     @Override
     protected void paintComponent(final Graphics g) {
         super.paintComponent(g);
-    if (backgroundImage != null) {
+    if (loadBackgroundImage() != null) {
         final Graphics2D g2d = (Graphics2D) g.create();
         g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, BACKGROUND_OPACITY));
-        g2d.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
+        g2d.drawImage(loadBackgroundImage(), 0, 0, getWidth(), getHeight(), this);
         g2d.dispose();
     }
-    }
-
-    /**
-     * Get the ShopView instance.
-     *
-     * @return the ShopView.
-     */
-    public ShopView getShopView() {
-        return this.shopView;
-    }
-
-    /**
-     * Get the MovementView instance.
-     *
-     * @return the MovementView.
-     */
-    public MovementView getMovementView() {
-        return this.movementView;
     }
 }
