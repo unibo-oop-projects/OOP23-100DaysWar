@@ -203,8 +203,6 @@ public abstract class PlayerImpl implements Player {
         }
         final PlayerImpl other = (PlayerImpl) obj;
         return Objects.equals(username, other.username)
-                && Objects.equals(bankAccount, other.bankAccount)
-                && Objects.equals(units, other.units)
                 && Objects.equals(spawnPoint, other.spawnPoint);
     }
 

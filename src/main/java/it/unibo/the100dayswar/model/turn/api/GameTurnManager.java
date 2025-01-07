@@ -2,12 +2,15 @@ package it.unibo.the100dayswar.model.turn.api;
 
 import java.io.Serializable;
 
+import it.unibo.the100dayswar.commons.patterns.Observer;
+import it.unibo.the100dayswar.commons.utilities.impl.Pair;
 import it.unibo.the100dayswar.model.player.api.Player;
+import it.unibo.the100dayswar.model.unit.api.Unit;
 
 /**
  * An Interface for managing the turn swith between the two player.
  */
-public interface GameTurnManager extends Serializable {
+public interface GameTurnManager extends Observer<Pair<Player, Unit>>, Serializable {
     /**
      * get the current player.
      * @return the current player
@@ -52,4 +55,12 @@ public interface GameTurnManager extends Serializable {
      * stop the timer for the day.
      */
     void stopTimer();
+
+    /** 
+     * Update the turn manager.
+     * 
+     * @param source the source of the update
+     */
+    @Override
+    void update(Pair<Player, Unit> source);
 }

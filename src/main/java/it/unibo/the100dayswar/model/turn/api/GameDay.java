@@ -1,13 +1,11 @@
 package it.unibo.the100dayswar.model.turn.api;
 
-import java.io.Serializable;
-
 import it.unibo.the100dayswar.commons.utilities.api.ResourceGenerator;
 
 /** 
  * An interface for the day in the game.
  */
-public interface GameDay extends ResourceGenerator, Serializable {
+public interface GameDay extends ResourceGenerator {
     /**
      * Increase the counter of the day.
      */

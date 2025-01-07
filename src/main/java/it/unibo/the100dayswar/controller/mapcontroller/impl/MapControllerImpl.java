@@ -118,7 +118,9 @@ public class MapControllerImpl implements MapController {
      */
     @Override
     public Pair<Unit, Cell> getSelectedCell() {
-        return this.selectedCell;
+        final var copySelectedCell = new Pair<>(selectedCell.getFirst(), selectedCell.getSecond());
+        this.selectedCell = new Pair<>(null, null);
+        return copySelectedCell;
     }
 
     /**

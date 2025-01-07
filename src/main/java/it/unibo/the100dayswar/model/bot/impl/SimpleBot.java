@@ -89,12 +89,8 @@ public class SimpleBot extends PlayerImpl implements BotPlayer {
         if (!(obj instanceof SimpleBot)) {
             return false;
         }
-        if (!super.equals(obj)) {
-            return false;
-        }
         final SimpleBot other = (SimpleBot) obj;
-        return Objects.equals(this.enemySpawnPoint, other.enemySpawnPoint)
-                && Objects.equals(this.gameMapCells, other.gameMapCells);
+        return Objects.equals(this.enemySpawnPoint, other.enemySpawnPoint);
     }
 
     /** 

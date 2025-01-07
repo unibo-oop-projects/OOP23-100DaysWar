@@ -1,7 +1,9 @@
 package it.unibo.the100dayswar.model.map.impl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -11,6 +13,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.awt.Dimension;
 
+import it.unibo.the100dayswar.commons.patterns.Observer;
 import it.unibo.the100dayswar.commons.utilities.impl.Pair;
 import it.unibo.the100dayswar.model.bot.api.BotPlayer;
 import it.unibo.the100dayswar.model.bot.impl.SimpleBot;
@@ -37,6 +40,7 @@ public class MapManagerImpl implements MapManager {
     private final GameMap map;
     private static final Logger LOGGER = Logger.getLogger(MapManagerImpl.class.getName());
     private final Map<Player, Set<Cell>> playersCells;
+    private final List<Observer<Pair<Player, Unit>>> observers = new ArrayList<>();
 
     /**
      * the builder of the map.
@@ -93,14 +97,11 @@ public class MapManagerImpl implements MapManager {
     public void update(final Pair<Unit, Cell> source) {
             if (isSoldierWantsToMove(source)) {
                 soldierMovement(source);
-            }
-            if (isNewSoldier(source)) {
+            } else if (isNewSoldier(source)) {
                 createSoldier(source);
-            }
-            if (isTower(source)) {
+            } else if (isTower(source)) {
                 createTower(source);
-            }
-            if(isUnitAttacked(source)){
+            } else {
                 updateUnitStatus(source);
             }
     }
@@ -118,9 +119,9 @@ public class MapManagerImpl implements MapManager {
      * @param player is the player.
      * @param targetCell is the cell.
      */
-    private void  addCell(final Player player, final Cell targetCell) {
+    private void addCell(final Player player, final Cell targetCell) {
         final Set<Cell> cells = playersCells.computeIfAbsent(player, p -> new HashSet<>());
-        cells.add(targetCell); 
+        cells.add(targetCell);
     }
 
     /**
@@ -162,14 +163,13 @@ public class MapManagerImpl implements MapManager {
     private void createTower(final Pair<Unit, Cell> source) {
         final Tower tower = (Tower) source.getFirst();
         final Cell targetCell = this.map.getCell(source.getSecond().getPosition());
-
         if (!targetCell.isBuildable()) {
             LOGGER.log(Level.WARNING, "Target cell is not buildable for tower placement: {0}", targetCell.getPosition());
             throw new IllegalStateException("Target cell is not buildable for tower placement.");
         }
         if (targetCell.isFree()) {
-           map.setOccupationOnCell(targetCell, Optional.of(tower));
-           playersCells.forEach((p, s) -> {
+            map.setOccupationOnCell(targetCell, Optional.of(tower));
+            new HashMap<>(playersCells).forEach((p, s) -> {
                 if (p.equals(tower.getOwner())) {
                     addCell(p, targetCell);
                 } else if (s.contains(targetCell)) {
@@ -179,11 +179,11 @@ public class MapManagerImpl implements MapManager {
         } else {
             LOGGER.log(Level.WARNING, "Target cell is not free for tower placement: {0}", targetCell.getPosition());
             throw new IllegalStateException("Target cell is not free for tower placement.");
-            }
+        }
     }
 
     /**
-     * move the soldier.
+     * Move the soldier.
      * @param source is the pair of the soldier and the cell.
      */
     private void soldierMovement(final Pair<Unit, Cell> source) {
@@ -198,7 +198,7 @@ public class MapManagerImpl implements MapManager {
             soldier.move(targetCell);
             map.setOccupationOnCell(currentCell, Optional.empty());
             map.setOccupationOnCell(targetCell, Optional.of(soldier));
-            playersCells.forEach((p, s) -> {
+            new HashMap<>(playersCells).forEach((p, s) -> {
                 if (p.equals(soldier.getOwner())) {
                     addCell(p, targetCell);
                 } else if (s.contains(targetCell)) {
@@ -215,27 +215,13 @@ public class MapManagerImpl implements MapManager {
      * update the unit status.
      * @param source is the pair of the unit and the cell.
      */
-    private void updateUnitStatus(final Pair<Unit,Cell> source) {
+    private void updateUnitStatus(final Pair<Unit, Cell> source) {
         final Unit unit = source.getFirst();
         final Cell currentCell = this.map.getCell(source.getSecond().getPosition());
         if (unit.currentHealth() <= 0) {
             map.setOccupationOnCell(currentCell, Optional.empty());
-            playersCells.keySet().forEach( p ->{
-                if  (p.getUnits().contains( unit )){
-                    p.removeUnit(unit);
-                }
-            });
+            notifyObservers(new Pair<>(unit.getOwner(), unit));
         }
-    }
-
-    /**
-     * check if the unit is attacked.
-     * @param source is the pair of the unit and the cell.
-     * @return true if the unit is attacked.
-     */
-    private boolean isUnitAttacked(final Pair<Unit, Cell> source) {
-        return source.getSecond().equals(((Soldier) source.getFirst()).getPosition())
-        && source.getSecond().getUnit().isPresent();
     }
 
     /**
@@ -256,7 +242,9 @@ public class MapManagerImpl implements MapManager {
      * @return true if the unit is a tower.
      */
     private boolean isTower(final Pair<Unit, Cell> source) {
-        return source.getFirst() instanceof Tower && source.getFirst().getPosition().equals(source.getSecond());
+        return source.getFirst() instanceof Tower
+            && map.getCell(source.getSecond().getPosition()).isFree()
+            && source.getFirst().getPosition().equals(source.getSecond());
     }
 
     /**
@@ -306,5 +294,29 @@ public class MapManagerImpl implements MapManager {
     @Override
     public Dimension getMapDimension() {
         return new Dimension(map.getSize().width, map.getSize().height).getSize();
+    }
+
+    /**
+     *{@inheritDoc}
+     */
+    @Override
+    public void attach(final Observer<Pair<Player, Unit>> observer) {
+        observers.add(observer);
+    }
+
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public void detach(final Observer<Pair<Player, Unit>> observer) {
+        observers.remove(observer);
+    }
+
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public void notifyObservers(final Pair<Player, Unit> source) {
+        observers.forEach(o -> o.update(source));
     }
 }

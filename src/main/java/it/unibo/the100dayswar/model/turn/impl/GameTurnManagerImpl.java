@@ -6,11 +6,13 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import it.unibo.the100dayswar.commons.utilities.impl.Pair;
 import it.unibo.the100dayswar.model.bot.api.BotPlayer;
 import it.unibo.the100dayswar.model.player.api.Player;
 import it.unibo.the100dayswar.model.soldier.api.Soldier;
 import it.unibo.the100dayswar.model.tower.api.Tower;
 import it.unibo.the100dayswar.model.turn.api.GameTurnManager;
+import it.unibo.the100dayswar.model.unit.api.Unit;
 import it.unibo.the100dayswar.model.turn.api.GameDay;
 import it.unibo.the100dayswar.model.fight.impl.GenericBattleCommand;
 
@@ -154,7 +156,6 @@ public class GameTurnManagerImpl implements GameTurnManager {
         for (final Tower t : attacker.getTowers()) {
             for (final Soldier s : defender.getSoldiers()) {
                 battle.execute(t, s);
-                System.out.println("LA TORRE HA ATTACCATO");
             }
         }
     }
@@ -167,5 +168,17 @@ public class GameTurnManagerImpl implements GameTurnManager {
      */
     private void readObject(final java.io.ObjectInputStream input) throws IOException, ClassNotFoundException {
         input.defaultReadObject();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void update(final Pair<Player, Unit> source) {
+        players.forEach(p -> {
+            if (p.equals(source.getFirst())) {
+                p.removeUnit(source.getSecond());
+            }
+        });
     }
 }

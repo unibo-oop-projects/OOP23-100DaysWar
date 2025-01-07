@@ -64,6 +64,7 @@ public class ModelImpl implements Model {
         this.mapManager = new MapManagerImpl(new GameMapBuilderImpl(DEFAULT_MAP_SIZE, DEFAULT_MAP_SIZE));
         this.players = List.of(new SimpleBot(mapManager), new HumanPlayerImpl(namePlayer, mapManager.getPlayerSpawn()));
         this.turnManager = new GameTurnManagerImpl(players);
+        this.mapManager.attach(turnManager);
         this.gameStatistics = new GameStatisticImpl(players, mapManager);
         gameStatistics.updateAllStatistics();
         this.turnManager.startTimer();
@@ -248,40 +249,6 @@ public class ModelImpl implements Model {
     public void resumeGame() {
         turnManager.startTimer();
     }
-
-    /**
-     * TODO
-     * Computes the ideal cell starting from the given cell
-     * and the specified direction.
-     * 
-     * @param currentCell the current cell of the soldier
-     * @param direction the direction the soldier has to follow
-     * @return the ideal cell
-     * 
-     * @implNote This method computes the ideal cell, which may be invalid.
-     *           The returned cell must be validated to ensure it is within
-     *           the boundaries of the map.
-     */
-    /* 
-    private Cell idealCell(final Cell currentCell, final Direction direction) {
-        final Cell idCell = new CellImpl(currentCell);
-        final Position idPos = idCell.getPosition();
-        final int x = idPos.getX();
-        final int y = idPos.getY();
-
-        if (direction == Direction.UP) {
-            idPos.setY(y - 1);
-        } else if (direction == Direction.DOWN) {
-            idPos.setY(y + 1);
-        } else if (direction == Direction.RIGHT) {
-            idPos.setX(x + 1);
-        } else if (direction == Direction.LEFT) {
-            idPos.setX(x - 1);
-        }
-
-        return idCell;
-    }
-        */
 
     /**
      * {@inheritDoc}

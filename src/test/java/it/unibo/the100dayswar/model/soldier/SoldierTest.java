@@ -32,7 +32,7 @@ class SoldierTest {
 
     @Test
     void testInitialization() {
-        assertEquals(testPlayer.getUsername(), soldier.getOwner().getUsername());
+        assertEquals(testPlayer, soldier.getOwner());
         assertEquals(testPlayer.getSpawnPoint().getPosition(), soldier.getPosition().getPosition());
         final Cell testCell = new CellImpl(new PositionImpl(2, 2), true, true);
         soldier.move(testCell);

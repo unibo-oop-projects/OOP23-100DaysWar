@@ -24,6 +24,7 @@ import it.unibo.the100dayswar.model.soldier.impl.SoldierImpl;
 import it.unibo.the100dayswar.model.tower.api.TowerType;
 import it.unibo.the100dayswar.model.tower.impl.BasicTowerImpl;
 import it.unibo.the100dayswar.model.unit.api.Unit;
+import it.unibo.the100dayswar.model.tower.api.Tower;
 
 /**
  * An enum that represents the possible actions that a bot can take.
@@ -64,7 +65,8 @@ public enum ActionType {
         protected void execute(final BotPlayer botPlayer) {
             if (canPerform(botPlayer)) {
                 final Soldier soldier = new SoldierImpl(botPlayer);
-                notifyObservers(new Pair<>(soldier, botPlayer.getSpawnPoint()));
+                attachObserverToUnit(soldier);
+                //notifyObservers(new Pair<>(soldier, botPlayer.getSpawnPoint()));
                 botPlayer.buyUnit(soldier);
             }
         }
@@ -109,9 +111,10 @@ public enum ActionType {
             if (canPerform(botPlayer)) {
                 final Cell towerPosition = findRandomTowerPosition(botPlayer);
                 if (towerPosition != null) {
-                    final Unit tower = new BasicTowerImpl(botPlayer, towerPosition);
+                    final Tower tower = new BasicTowerImpl(botPlayer, towerPosition);
+                    attachObserverToUnit(tower);
                     botPlayer.buyUnit(tower);
-                    notifyObservers(new Pair<>(tower, tower.getPosition()));
+                    //notifyObservers(new Pair<>(tower, tower.getPosition()));
                 }
             }
         }
@@ -281,6 +284,14 @@ public enum ActionType {
         private final Set<Observer<Pair<Unit, Cell>>> observers = new HashSet<>();
 
         /**
+         * Return the set of observers.
+         * @return the set of observers
+         */
+        public Set<Observer<Pair<Unit, Cell>>> getObservers() {
+            return new HashSet<>(observers);
+        }
+
+        /**
          * @param observer the observer to attach
          */
         @Override
@@ -323,6 +334,15 @@ public enum ActionType {
      */
     public static void add(final Observer<Pair<Unit, Cell>> observer) {
         NOTIFIER.attach(observer);
+    }
+
+    /**
+     * Registers an observer to the given observable.
+     *
+     * @param observable the observable to attach the observer to
+     */
+    public void attachObserverToUnit(final Observable<Pair<Unit, Cell>> observable) {
+        NOTIFIER.getObservers().forEach(observable::attach);
     }
 
     /**

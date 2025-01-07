@@ -1,6 +1,5 @@
 package it.unibo.the100dayswar.model.map.api;
 
-
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
@@ -8,17 +7,17 @@ import java.util.stream.Stream;
 import java.awt.Dimension;
 import java.io.Serializable;
 
+import it.unibo.the100dayswar.commons.patterns.Observable;
 import it.unibo.the100dayswar.commons.patterns.Observer;
 import it.unibo.the100dayswar.commons.utilities.impl.Pair;
 import it.unibo.the100dayswar.model.cell.api.Cell;
 import it.unibo.the100dayswar.model.player.api.Player;
 import it.unibo.the100dayswar.model.unit.api.Unit;
 
-
 /**
- * interface that model the concept of Mapmanager for the managment of the iteration between the soldiers and the bonus cells.
+ * Interface that model the concept of Mapmanager for the managment of the iteration between the soldiers and the bonus cells.
  */
-public interface MapManager extends Observer<Pair<Unit, Cell>>, Serializable {
+public interface MapManager extends Observer<Pair<Unit, Cell>>, Observable<Pair<Player, Unit>>, Serializable {
 
     /**
      * method that update the map with the new position of the soldier.
@@ -50,6 +49,13 @@ public interface MapManager extends Observer<Pair<Unit, Cell>>, Serializable {
      * @return the dimension of the map.
      */
     Dimension getMapDimension();
+
+    /**
+     * Notify the observers.
+     * 
+     * @param source the source of the notification.
+     */
+    void notifyObservers(Pair<Player, Unit> source);
 
     /**
      * @param width the width of the map.
