@@ -21,6 +21,7 @@ import it.unibo.the100dayswar.view.map.MapView;
 import it.unibo.the100dayswar.view.pausemenu.PauseMenu;
 import it.unibo.the100dayswar.view.rules.RulesViewer;
 import it.unibo.the100dayswar.view.startmenu.ExitWindow;
+import it.unibo.the100dayswar.view.statistics.StatisticsView;
 
 /** 
  * Class that represents the control panel in the joystick view.
@@ -44,7 +45,7 @@ public class ControlView extends JPanel {
      * 
      * @param mapView the map view to repaint
      */
-    public ControlView(final MapView mapView) {
+    public ControlView(final MapView mapView, final StatisticsView statisticsView) {
         super.setLayout(new GridBagLayout());
         final GridBagConstraints gbc = createGridBagConstraints();
 
@@ -54,7 +55,7 @@ public class ControlView extends JPanel {
         this.rules = createButton("Read Rules");
         this.quit = createButton("Quit");
 
-        setButtonActions(mapView);
+        setButtonActions(mapView, statisticsView);
         arrangeButtons(gbc);
 
         super.setPreferredSize(SIZE);
@@ -126,10 +127,10 @@ public class ControlView extends JPanel {
      * 
      * @param mapView the map view to repaint
      */
-    private void setButtonActions(final MapView mapView) {
-        attack.addActionListener(e -> attackAction(mapView));
+    private void setButtonActions(final MapView mapView, final StatisticsView statisticsView) {
+        attack.addActionListener(e -> attackAction(mapView, statisticsView));
         pause.addActionListener(e -> pauseAction());
-        skip.addActionListener(e -> skipTurn());
+        skip.addActionListener(e -> skipTurn(mapView, statisticsView));
         rules.addActionListener(e -> rulesAction());
         quit.addActionListener(e -> exitAction());
     }
@@ -176,16 +177,19 @@ public class ControlView extends JPanel {
      * 
      * @param mapView the map view to repaint
      */
-    private void attackAction(final MapView mapView) {
+    private void attackAction(final MapView mapView, final StatisticsView statisticsView) {
         The100DaysWar.CONTROLLER.getGameController().attack();
         mapView.repaint();
+        statisticsView.updateStatisticView();
     }
 
     /**
      * Skip the current turn without doing nothing.
      */
-    private void skipTurn() {
+    private void skipTurn(final MapView mapView, final StatisticsView statisticsView) {
         The100DaysWar.CONTROLLER.getGameController().skip();
+        mapView.repaint();
+        statisticsView.updateStatisticView();
     }
 
     /** 

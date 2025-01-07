@@ -17,6 +17,7 @@ import it.unibo.the100dayswar.application.The100DaysWar;
 import it.unibo.the100dayswar.commons.utilities.impl.IconLoader;
 import it.unibo.the100dayswar.commons.utilities.impl.LoadPixelFont;
 import it.unibo.the100dayswar.view.map.MapView;
+import it.unibo.the100dayswar.view.statistics.StatisticsView;
 
 /**
  * Class that represents the shop panel in the joystick view.
@@ -38,14 +39,14 @@ public class ShopView extends JPanel {
      * 
      * @param mapView the map view to repaint
      */
-    public ShopView(final MapView mapView) {
+    public ShopView(final MapView mapView, final StatisticsView statisticsView) {
         super.setLayout(new GridBagLayout());
         this.buySoldier = createButton("Buy Soldier");
         this.buyBasicTower = createButton("Buy Basic Tower");
         this.buyAdvancedTower = createButton("Buy Advanced Tower");
         this.upgradeUnit = createButton("Upgrade Unit");
 
-        setButtonActions(mapView);
+        setButtonActions(mapView, statisticsView);
         setupLayout();
         super.setPreferredSize(SIZE);
     }
@@ -114,22 +115,26 @@ public class ShopView extends JPanel {
      * 
      * @param mapView the map view to repaint
      */
-    private void setButtonActions(final MapView mapView) {
+    private void setButtonActions(final MapView mapView, final StatisticsView statisticsView) {
         buySoldier.addActionListener(e -> {
             The100DaysWar.CONTROLLER.getShopController().buySoldier();
             mapView.repaint();
+            statisticsView.updateStatisticView();
         });
         buyBasicTower.addActionListener(e -> {
             The100DaysWar.CONTROLLER.getShopController().buyBasicTower();
             mapView.repaint();
+            statisticsView.updateStatisticView();
         });
         buyAdvancedTower.addActionListener(e -> {
             The100DaysWar.CONTROLLER.getShopController().buyAdvancedTower();
             mapView.repaint();
+            statisticsView.updateStatisticView();
         });
         upgradeUnit.addActionListener(e -> {
             The100DaysWar.CONTROLLER.getShopController().upgradeUnit();
             mapView.repaint();
+            statisticsView.updateStatisticView();
         });
     }
 

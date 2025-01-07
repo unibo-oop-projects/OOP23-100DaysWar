@@ -117,6 +117,6 @@ public class StatisticsView extends JPanel {
 
     public void updateStatisticView() {
        statisticController.updateStatistics();
-       initializeView();
+       repaint();
     }
 }

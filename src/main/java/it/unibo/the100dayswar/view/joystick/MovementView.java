@@ -18,6 +18,7 @@ import it.unibo.the100dayswar.application.The100DaysWar;
 import it.unibo.the100dayswar.commons.utilities.impl.IconLoader;
 import it.unibo.the100dayswar.commons.utilities.impl.LoadPixelFont;
 import it.unibo.the100dayswar.view.map.MapView;
+import it.unibo.the100dayswar.view.statistics.StatisticsView;
 
 /** 
  * Class that represents the part of the joystick that 
@@ -40,7 +41,7 @@ public class MovementView extends JPanel {
      * 
      * @param mapView the map view to repaint
      */
-    public MovementView(final MapView mapView) {
+    public MovementView(final MapView mapView, final StatisticsView statisticsView) {
         super.setLayout(new GridBagLayout());
         final GridBagConstraints gbc = createGridBagConstraints();
 
@@ -49,7 +50,7 @@ public class MovementView extends JPanel {
         this.left = createButton("LEFT");
         this.right = createButton("RIGHT");
 
-        setButtonActions(mapView);
+        setButtonActions(mapView, statisticsView);
         arrangeButtons(gbc);
 
         super.setPreferredSize(SIZE);
@@ -119,11 +120,11 @@ public class MovementView extends JPanel {
      * 
      * @param mapView the map view to repaint
      */
-    private void setButtonActions(final MapView mapView) {
-        up.addActionListener(e -> moveUp(mapView));
-        down.addActionListener(e -> moveDown(mapView));
-        left.addActionListener(e -> moveLeft(mapView));
-        right.addActionListener(e -> moveRight(mapView));
+    private void setButtonActions(final MapView mapView, final StatisticsView statisticsView) {
+        up.addActionListener(e -> moveUp(mapView, statisticsView));
+        down.addActionListener(e -> moveDown(mapView, statisticsView));
+        left.addActionListener(e -> moveLeft(mapView, statisticsView));
+        right.addActionListener(e -> moveRight(mapView, statisticsView));
     }
 
     /**
@@ -131,9 +132,10 @@ public class MovementView extends JPanel {
      * 
      * @param mapView the map view to repaint.
      */
-    private void moveUp(final MapView mapView) {
+    private void moveUp(final MapView mapView, final StatisticsView statisticsView) {
         The100DaysWar.CONTROLLER.getMovementController().moveUp();
         mapView.repaint();
+        statisticsView.updateStatisticView();
     }
 
     /**
@@ -141,9 +143,11 @@ public class MovementView extends JPanel {
      * 
      * @param mapView the map view to repaint.
      */
-    private void moveDown(final MapView mapView) {
+    private void moveDown(final MapView mapView, final StatisticsView statisticsView) {
         The100DaysWar.CONTROLLER.getMovementController().moveDown();
         mapView.repaint();
+        statisticsView.updateStatisticView();
+
     }
 
     /**
@@ -151,9 +155,10 @@ public class MovementView extends JPanel {
      * 
      * @param mapView the map view to repaint.
      */
-    private void moveLeft(final MapView mapView) {
+    private void moveLeft(final MapView mapView, final StatisticsView statisticsView) {
         The100DaysWar.CONTROLLER.getMovementController().moveLeft();
         mapView.repaint();
+        statisticsView.updateStatisticView();
     }
 
     /**
@@ -161,9 +166,10 @@ public class MovementView extends JPanel {
      * 
      * @param mapView the map view to repaint.
      */
-    private void moveRight(final MapView mapView) {
+    private void moveRight(final MapView mapView, final StatisticsView statisticsView) {
         The100DaysWar.CONTROLLER.getMovementController().moveRight();
         mapView.repaint();
+        statisticsView.updateStatisticView();
     }
 
     /**

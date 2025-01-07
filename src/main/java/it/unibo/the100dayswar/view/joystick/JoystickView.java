@@ -5,6 +5,7 @@ import javax.swing.border.TitledBorder;
 
 import it.unibo.the100dayswar.commons.utilities.impl.LoadPixelFont;
 import it.unibo.the100dayswar.view.map.MapView;
+import it.unibo.the100dayswar.view.statistics.StatisticsView;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
@@ -38,14 +39,14 @@ public class JoystickView extends JPanel {
      * 
      * @param mapView the map view to repaint
      */
-    public JoystickView(final MapView mapView) {
+    public JoystickView(final MapView mapView, final StatisticsView statisticView) {
         loadBackgroundImage();
         super.setLayout(new GridBagLayout());
         final GridBagConstraints gbc = new GridBagConstraints();
 
-        this.movementView = new MovementView(mapView);
-        this.shopView = new ShopView(mapView);
-        this.controlView = new ControlView(mapView);
+        this.movementView = new MovementView(mapView, statisticView);
+        this.shopView = new ShopView(mapView, statisticView);
+        this.controlView = new ControlView(mapView, statisticView);
 
         customizePanel(this.movementView, "Movement");
         customizePanel(this.shopView, "Shop");

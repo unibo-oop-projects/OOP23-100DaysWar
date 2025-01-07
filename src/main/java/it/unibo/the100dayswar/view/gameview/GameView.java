@@ -3,6 +3,8 @@ package it.unibo.the100dayswar.view.gameview;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
+
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.GridBagConstraints;
@@ -83,7 +85,7 @@ public class GameView extends JFrame {
 
         final MapView mapView = new MapView();
         final StatisticsView statisticsView = new StatisticsView();
-        final JoystickView joystickView = new JoystickView(mapView);
+        final JoystickView joystickView = new JoystickView(mapView, statisticsView);
 
         mapView.setOpaque(false);
         statisticsView.setOpaque(false);
