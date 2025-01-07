@@ -38,6 +38,7 @@ public class JoystickView extends JPanel {
      * Constructor for the JoystickView class.
      * 
      * @param mapView the map view to repaint
+     * @param statisticView the statistics view to update
      */
     public JoystickView(final MapView mapView, final StatisticsView statisticView) {
         loadBackgroundImage();
@@ -67,6 +68,8 @@ public class JoystickView extends JPanel {
 
     /**
      * Loads the background image.
+     * 
+     * @return the loaded image
      */
     private BufferedImage loadBackgroundImage() {
         try (InputStream is = JoystickView.class.getResourceAsStream("/joystick/joystick_background.png")) {

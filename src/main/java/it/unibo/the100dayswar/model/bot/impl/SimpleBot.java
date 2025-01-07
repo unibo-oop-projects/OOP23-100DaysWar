@@ -1,7 +1,6 @@
 package it.unibo.the100dayswar.model.bot.impl;
 
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -76,29 +75,6 @@ public class SimpleBot extends PlayerImpl implements BotPlayer {
     @Override
     public Set<Cell> getAllCells() {
         return new HashSet<>(gameMapCells);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean equals(final Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (!(obj instanceof SimpleBot)) {
-            return false;
-        }
-        final SimpleBot other = (SimpleBot) obj;
-        return Objects.equals(this.enemySpawnPoint, other.enemySpawnPoint);
-    }
-
-    /** 
-     * {@inheritDoc}
-     */
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), enemySpawnPoint, gameMapCells);
     }
 
     /**

@@ -40,6 +40,7 @@ public class MovementView extends JPanel {
      * Constructor for the MovementView class.
      * 
      * @param mapView the map view to repaint
+     * @param statisticsView the statistics view to update
      */
     public MovementView(final MapView mapView, final StatisticsView statisticsView) {
         super.setLayout(new GridBagLayout());
@@ -119,6 +120,7 @@ public class MovementView extends JPanel {
      * Sets actions for the joystick buttons.
      * 
      * @param mapView the map view to repaint
+     * @param statisticsView the statistics view to update
      */
     private void setButtonActions(final MapView mapView, final StatisticsView statisticsView) {
         up.addActionListener(e -> moveUp(mapView, statisticsView));
@@ -131,6 +133,7 @@ public class MovementView extends JPanel {
      * Moves the soldier up.
      * 
      * @param mapView the map view to repaint.
+     * @param statisticsView the statistics view to update.
      */
     private void moveUp(final MapView mapView, final StatisticsView statisticsView) {
         The100DaysWar.CONTROLLER.getMovementController().moveUp();
@@ -142,6 +145,7 @@ public class MovementView extends JPanel {
      * Moves the soldier down.
      * 
      * @param mapView the map view to repaint.
+     * @param statisticsView the statistics view to update.
      */
     private void moveDown(final MapView mapView, final StatisticsView statisticsView) {
         The100DaysWar.CONTROLLER.getMovementController().moveDown();
@@ -154,6 +158,7 @@ public class MovementView extends JPanel {
      * Moves the soldier to the left.
      * 
      * @param mapView the map view to repaint.
+     * @param statisticsView the statistics view to update.
      */
     private void moveLeft(final MapView mapView, final StatisticsView statisticsView) {
         The100DaysWar.CONTROLLER.getMovementController().moveLeft();
@@ -165,6 +170,7 @@ public class MovementView extends JPanel {
      * Moves the soldier to the right.
      * 
      * @param mapView the map view to repaint.
+     * @param statisticsView the statistics view to update.
      */
     private void moveRight(final MapView mapView, final StatisticsView statisticsView) {
         The100DaysWar.CONTROLLER.getMovementController().moveRight();

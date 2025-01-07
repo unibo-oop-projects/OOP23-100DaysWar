@@ -44,6 +44,7 @@ public class ControlView extends JPanel {
      * Constructor for the ControlView class.
      * 
      * @param mapView the map view to repaint
+     * @param statisticsView the statistics view to update
      */
     public ControlView(final MapView mapView, final StatisticsView statisticsView) {
         super.setLayout(new GridBagLayout());
@@ -126,6 +127,7 @@ public class ControlView extends JPanel {
      * Sets actions for the control buttons.
      * 
      * @param mapView the map view to repaint
+     * @param statisticsView the statistics view to update
      */
     private void setButtonActions(final MapView mapView, final StatisticsView statisticsView) {
         attack.addActionListener(e -> attackAction(mapView, statisticsView));
@@ -176,6 +178,7 @@ public class ControlView extends JPanel {
      * The action to be performed when the attack button is clicked.
      * 
      * @param mapView the map view to repaint
+     * @param statisticsView the statistics view to update
      */
     private void attackAction(final MapView mapView, final StatisticsView statisticsView) {
         The100DaysWar.CONTROLLER.getGameController().attack();
@@ -185,6 +188,9 @@ public class ControlView extends JPanel {
 
     /**
      * Skip the current turn without doing nothing.
+     * 
+     * @param mapView the map view to repaint
+     * @param statisticsView the statistics view to update
      */
     private void skipTurn(final MapView mapView, final StatisticsView statisticsView) {
         The100DaysWar.CONTROLLER.getGameController().skip();

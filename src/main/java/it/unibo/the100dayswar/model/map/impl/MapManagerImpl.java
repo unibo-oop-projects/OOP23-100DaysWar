@@ -58,21 +58,6 @@ public class MapManagerImpl implements MapManager {
         this.map = new GameMapImpl(width, height, MapManager.createMapFromStream(width, height, original.getMapAsAStream()));
 
         this.playersCells = new HashMap<>(original.getPlayersCells());
-
-        //TODO
-        /* 
-        original.getPlayersCells().forEach((player, cells) -> {
-            final Set<Cell> copiedCells = cells.stream()
-                                        .map(CellImpl::new) 
-                                        .collect(Collectors.toSet());
-            if (player instanceof HumanPlayer) {
-                this.playersCells.put(new HumanPlayerImpl((HumanPlayer) player), copiedCells);
-            }
-            if (player instanceof BotPlayer) {
-                this.playersCells.put(new SimpleBot((BotPlayer) player), copiedCells);
-            }
-        });
-        */
     }
 
     /**

@@ -38,6 +38,7 @@ public class ShopView extends JPanel {
      * Constructor for the ShopView class.
      * 
      * @param mapView the map view to repaint
+     * @param statisticsView the statistics view to update
      */
     public ShopView(final MapView mapView, final StatisticsView statisticsView) {
         super.setLayout(new GridBagLayout());
@@ -114,6 +115,7 @@ public class ShopView extends JPanel {
      * Sets the actions for the buttons.
      * 
      * @param mapView the map view to repaint
+     * @param statisticsView the statistics view to update
      */
     private void setButtonActions(final MapView mapView, final StatisticsView statisticsView) {
         buySoldier.addActionListener(e -> {

@@ -20,6 +20,7 @@ public class GameStatisticImpl implements GameStatistics {
     private final Map<Player, Integer> towers = new HashMap<>();
     private final Map<Player, Double> cellsPercentage = new HashMap<>();
     private final Map<Player, Integer> balances = new HashMap<>();
+    private final List<Player> players;
     private final MapManager mapManager;
 
     /**
@@ -29,7 +30,7 @@ public class GameStatisticImpl implements GameStatistics {
      */
     public GameStatisticImpl(final List<Player> players, final MapManager mapManager) {
         this.mapManager = mapManager;
-
+        this.players = new ArrayList<>(players);
         players.forEach(player -> {
             soldiers.put(player, 0);
             towers.put(player, 0);
@@ -42,7 +43,7 @@ public class GameStatisticImpl implements GameStatistics {
      * Updates the number of soldiers for each player.
      */
     private void updateSoldiers() {
-        mapManager.getPlayersCells().keySet().forEach(player -> 
+        players.forEach(player -> 
             soldiers.put(player, player.getSoldiers().size())
         );
     }
@@ -51,7 +52,7 @@ public class GameStatisticImpl implements GameStatistics {
      * Updates the number of towers for each player.
      */
     private void updateTowers() {
-        mapManager.getPlayersCells().keySet().forEach(player -> 
+        players.forEach(player -> 
             towers.put(player, player.getTowers().size())
         );
     }
@@ -60,9 +61,9 @@ public class GameStatisticImpl implements GameStatistics {
      * Updates the percentage of cells owned for each player.
      */
     private void updateCellsPercentage() {
-        final long totalCells = mapManager.getMapAsAStream().count();
+        final long totalCellsPercentage = mapManager.getMapAsAStream().count() / 100;
         mapManager.getPlayersCells().forEach((player, cells) -> 
-            cellsPercentage.put(player, (double) cells.size() / totalCells * 100)
+            cellsPercentage.put(player, (double) cells.size() / totalCellsPercentage)
         );
     }
 
@@ -70,7 +71,7 @@ public class GameStatisticImpl implements GameStatistics {
      * Updates the balance for each player.
      */
     private void updateBalances() {
-        mapManager.getPlayersCells().keySet().forEach(player -> 
+        players.forEach(player -> 
             balances.put(player, player.getBankAccount().getBalance())
         );
     }

@@ -2,11 +2,10 @@ package it.unibo.the100dayswar.view.statistics;
 
 import it.unibo.the100dayswar.application.The100DaysWar;
 import it.unibo.the100dayswar.commons.utilities.impl.LoadPixelFont;
-import it.unibo.the100dayswar.controller.statisticscontoller.api.StatisticController;
 import it.unibo.the100dayswar.model.player.api.Player;
 
-
 import javax.swing.JPanel;
+import javax.swing.border.TitledBorder;
 import javax.swing.JLabel;
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
@@ -21,7 +20,10 @@ import java.awt.Graphics2D;
 import java.awt.GridLayout;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.text.DecimalFormat;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 /**
@@ -35,13 +37,14 @@ public class StatisticsView extends JPanel {
     private static final int COLUMNS = 2;
     private static final int HORIZONTAL_GAP = 10;
     private static final int VERTICAL_GAP = 10;
-
-    final StatisticController statisticController = The100DaysWar.CONTROLLER.getStatisticController();
+    private final DecimalFormat df;
+    private final Map<Player, Map<String, JLabel>> playerLabels = new HashMap<>();
 
     /**
      * Constructor of the statistics view.
      */
     public StatisticsView() {
+        df = new DecimalFormat("#.##");
         initializeView();
     }
 
@@ -49,25 +52,31 @@ public class StatisticsView extends JPanel {
      * Initializes the layout and components of the view.
      */
     private void initializeView() {
-        final List<Player> players = statisticController.getPlayers();
-
-        super.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        final List<Player> players = The100DaysWar.CONTROLLER.getStatisticController().getPlayers();
 
         players.forEach(player -> {
-            add(createPlayerStatisticsPanel(statisticController, player));
+            add(createPlayerStatisticsPanel(player));
             add(Box.createRigidArea(new Dimension(0, 10)));
         });
     }
 
-     /**
+    /**
+     * Post-initializes the view.
+     */
+    public void postInitializeView() {
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+    }
+
+    /**
      * Creates a panel for displaying the statistics of a single player.
-     * @param statisticController the statistics controller.
+     *
      * @param player the player whose statistics are displayed.
      * @return a JPanel containing the player's statistics.
      */
-    private JPanel createPlayerStatisticsPanel(final StatisticController statisticController, final Player player) {
-       final JPanel panel = new JPanel() {
+    private JPanel createPlayerStatisticsPanel(final Player player) {
+        final JPanel panel = new JPanel() {
             private BufferedImage backgroundImage;
+
             {
                 try {
                     backgroundImage = ImageIO.read(getClass().getResource("/statistic/statistics_background.png"));
@@ -75,6 +84,7 @@ public class StatisticsView extends JPanel {
                     Logger.getLogger(getClass().getName()).log(java.util.logging.Level.SEVERE, e.getMessage());
                 }
             }
+
             @Override
             protected void paintComponent(final Graphics g) {
                 super.paintComponent(g);
@@ -91,32 +101,54 @@ public class StatisticsView extends JPanel {
         panel.setBorder(BorderFactory.createTitledBorder(
             BorderFactory.createLineBorder(Color.BLACK, BORDER_THICKNESS),
             player.getUsername(),
-            javax.swing.border.TitledBorder.CENTER,
-            javax.swing.border.TitledBorder.TOP,
+            TitledBorder.CENTER,
+            TitledBorder.TOP,
             LoadPixelFont.getFont().deriveFont(TITLE_FONT_SIZE)
         ));
 
-        final JLabel soldiersLabel = new JLabel("Soldiers: " + statisticController.getSoldiers(player), JLabel.LEFT);
-        soldiersLabel.setFont(LoadPixelFont.getFont());
-        final JLabel towersLabel = new JLabel("Towers: " + statisticController.getTowers(player), JLabel.LEFT);
-        towersLabel.setFont(LoadPixelFont.getFont());
-        final JLabel cellsPercentageLabel = new JLabel(
-            "Cells Owned(%): " + statisticController.getCellsPercentage(player), 
-            JLabel.LEFT
-            );
-        cellsPercentageLabel.setFont(LoadPixelFont.getFont());
-        final JLabel balanceLabel = new JLabel("Balance: " + statisticController.getBalance(player), JLabel.LEFT);
-        balanceLabel.setFont(LoadPixelFont.getFont());
+        final Map<String, JLabel> labels = new HashMap<>();
+        labels.put("Soldiers", createLabel("Soldiers: "
+            + The100DaysWar.CONTROLLER.getStatisticController().getSoldiers(player)));
+        labels.put("Towers", createLabel("Towers: "
+            + The100DaysWar.CONTROLLER.getStatisticController().getTowers(player)));
+        labels.put("CellsOwned", createLabel("Cells Owned(%): "
+            + The100DaysWar.CONTROLLER.getStatisticController().getCellsPercentage(player)));
+        labels.put("Balance", createLabel("Balance: "
+            + The100DaysWar.CONTROLLER.getStatisticController().getBalance(player)));
 
-        panel.add(soldiersLabel);
-        panel.add(towersLabel);
-        panel.add(cellsPercentageLabel);
-        panel.add(balanceLabel);
+        labels.values().forEach(panel::add);
+        playerLabels.put(player, labels);
+
         return panel;
     }
 
+    /**
+     * Helper method to create a JLabel with consistent styling.
+     *
+     * @param text the text for the label.
+     * @return a styled JLabel.
+     */
+    private JLabel createLabel(final String text) {
+        final JLabel label = new JLabel(text, JLabel.LEFT);
+        label.setFont(LoadPixelFont.getFont());
+        return label;
+    }
+
+    /**
+     * Updates the view with the latest statistics for all players.
+     */
     public void updateStatisticView() {
-       statisticController.updateStatistics();
-       repaint();
+        The100DaysWar.CONTROLLER.getStatisticController().updateStatistics();
+        playerLabels.forEach((player, labels) -> {
+            labels.get("Soldiers").setText("Soldiers: "
+                + The100DaysWar.CONTROLLER.getStatisticController().getSoldiers(player));
+            labels.get("Towers").setText("Towers: "
+                + The100DaysWar.CONTROLLER.getStatisticController().getTowers(player));
+            labels.get("CellsOwned").setText("Cells Owned(%): "
+                + df.format(The100DaysWar.CONTROLLER.getStatisticController().getCellsPercentage(player)));
+            labels.get("Balance").setText("Balance: "
+                + The100DaysWar.CONTROLLER.getStatisticController().getBalance(player));
+        });
+        repaint();
     }
 }
