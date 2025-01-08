@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -140,7 +141,8 @@ public final class ExitWindow extends JDialog {
         yesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent e) {
-                for (final var window : getWindows()) {
+                final Window[] windows = getWindows();
+                for (final Window window : windows) {
                     window.dispose();
                 }
             }
