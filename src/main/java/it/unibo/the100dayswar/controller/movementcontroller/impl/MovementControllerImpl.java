@@ -65,10 +65,6 @@ public class MovementControllerImpl implements MovementController {
                     currentCell.isSpawn()
                 ));
             The100DaysWar.CONTROLLER.getGameController().skip();
-        } else {
-            throw new UnsupportedOperationException(
-                unit == null ? "No unit selected" : "The unit selected is not a soldier"
-            );
         }
     }
 }

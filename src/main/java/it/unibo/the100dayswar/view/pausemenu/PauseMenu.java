@@ -16,14 +16,14 @@ import javax.swing.SwingConstants;
 
 import it.unibo.the100dayswar.commons.utilities.impl.LoadPixelFont;
 import it.unibo.the100dayswar.view.backgroundpanel.BackgroundPanel;
-import it.unibo.the100dayswar.view.startmenu.StartMenuView;
+import it.unibo.the100dayswar.view.quit.StartMenuView;
 
 /**
  * Class that implements the pause menu window.
  */
 public class PauseMenu extends JDialog {
     private static final long serialVersionUID = 1L;
-    private static final String SAVING_PATH = null;    // The SAVING_PATH is 'null' by default. TODO
+    private static final String SAVING_PATH = null;
 
     private static final float PAUSE_MENU_FONT_SIZE = 30f;
     private static final Font FONT = LoadPixelFont.getFontWithSize(PAUSE_MENU_FONT_SIZE);

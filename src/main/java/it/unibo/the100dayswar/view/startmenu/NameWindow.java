@@ -143,8 +143,6 @@ public final class NameWindow {
 
             finalDialogSetUp(backgroundPanel);
 
-            // this.getRootPane().setDefaultButton(okButton); TODO
-
             /*
              * set-up of all the action listeners
              */

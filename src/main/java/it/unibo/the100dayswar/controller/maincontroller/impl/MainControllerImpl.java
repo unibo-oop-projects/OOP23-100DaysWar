@@ -28,7 +28,7 @@ import it.unibo.the100dayswar.model.ModelImpl;
 import it.unibo.the100dayswar.model.player.api.Player;
 import it.unibo.the100dayswar.view.gameover.GameLoseView;
 import it.unibo.the100dayswar.view.gameover.GameWinView;
-import it.unibo.the100dayswar.view.startmenu.StartMenuView;
+import it.unibo.the100dayswar.view.quit.StartMenuView;
 
 
 /**

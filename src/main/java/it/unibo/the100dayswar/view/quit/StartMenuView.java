@@ -1,4 +1,4 @@
-package it.unibo.the100dayswar.view.startmenu;
+package it.unibo.the100dayswar.view.quit;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -21,6 +21,9 @@ import it.unibo.the100dayswar.commons.utilities.impl.LoadPixelFont;
 import it.unibo.the100dayswar.view.backgroundpanel.BackgroundPanel;
 import it.unibo.the100dayswar.view.gameview.GameView;
 import it.unibo.the100dayswar.view.rules.RulesViewer;
+import it.unibo.the100dayswar.view.startmenu.ExitWindow;
+import it.unibo.the100dayswar.view.startmenu.NameWindow;
+import it.unibo.the100dayswar.view.startmenu.NoOldGameFoundWindow;
 
 /**
  * Class that models the starting menu of the game.

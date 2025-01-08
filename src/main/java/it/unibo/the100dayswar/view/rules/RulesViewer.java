@@ -30,8 +30,8 @@ import java.util.logging.Logger;
  */
 public class RulesViewer extends JFrame {
     private static final long serialVersionUID = 1L;
-    private static final int DEFAULT_WIDTH = 600;
-    private static final int DEFAULT_HEIGHT = 400;
+    private static final int DEFAULT_WIDTH = 500;
+    private static final int DEFAULT_HEIGHT = 600;
     private static final String PATH_STRING = "rules/rules.txt";
     private static final String BACKGROUND_PATH = "rules/rulesBackground.jpg";
     private static final int OVERLAY_OPACITY = 150;

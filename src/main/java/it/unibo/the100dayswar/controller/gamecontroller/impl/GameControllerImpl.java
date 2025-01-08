@@ -4,6 +4,7 @@ import it.unibo.the100dayswar.application.The100DaysWar;
 import it.unibo.the100dayswar.controller.gamecontroller.api.GameController;
 import it.unibo.the100dayswar.model.soldier.api.Soldier;
 import it.unibo.the100dayswar.model.unit.api.Combatant;
+import it.unibo.the100dayswar.view.diceview.DiceAnimationFrame;
 
 /**
  * The implementation of the game controller of the game.
@@ -23,6 +24,7 @@ public class GameControllerImpl implements GameController {
                 for (final var cell : adjacentCells) {
                     if (cell.getUnit().isPresent() && cell.getUnit().get() instanceof Combatant) {
                         final var defender = cell.getUnit().get();
+                        DiceAnimationFrame.showDiceFrame();
                         soldier.performAttack(defender);
                     }
                 }
