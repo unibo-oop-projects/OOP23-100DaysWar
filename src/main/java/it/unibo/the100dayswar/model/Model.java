@@ -112,6 +112,11 @@ public interface Model {
     void resumeGame();
 
     /**
+     * Stop the timer and release the resources.
+     */
+    void stopTimer();
+
+    /**
      * Gets the human player in the game.
      * 
      * @return the human player
