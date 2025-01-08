@@ -12,13 +12,14 @@ import it.unibo.the100dayswar.model.tower.api.TowerType;
 public class AdvancedTowerImpl extends AbstractTower implements AdvancedTower {
     private static final long serialVersionUID = 1L;
 
-    private static final int HEALTH_MULTYPLIER_ADVANCED = 12;
+    private static final int HEALTH_MULTYPLIER_ADVANCED = 4;
     private static final int UPGRADE_MULTYPLIER_ADVANCED = 2;
-    private static final int DAMAGE_MULTYPLIER_ADVANCED = 2;
+    private static final int DAMAGE_MULTYPLAYER = 75;
+    private static final int DAMAGE_DIVISOR = 100;
 
     private static final int ADVANCED_HEALTH = TowerType.ADVANCED.getPrice() * HEALTH_MULTYPLIER_ADVANCED;
     private static final int ADVANCED_UPGRADE = TowerType.ADVANCED.getPrice() * UPGRADE_MULTYPLIER_ADVANCED;
-    private static final int ADVANCED_DAMAGE = TowerType.ADVANCED.getPrice() * DAMAGE_MULTYPLIER_ADVANCED;
+    private static final int ADVANCED_DAMAGE = TowerType.ADVANCED.getPrice() * DAMAGE_MULTYPLAYER / DAMAGE_DIVISOR;
 
     /**
      * Constructs an advanced tower.

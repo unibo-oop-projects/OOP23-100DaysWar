@@ -5,14 +5,14 @@ package it.unibo.the100dayswar.model.tower.api;
  */
 public enum TowerType {
     /**
-     * Basic tower type, which has a price of 3.
+     * Basic tower type, which has a price of 50.
      */
     BASIC(50),
 
     /**
-     * Advanced tower type, which has a price of 5.
+     * Advanced tower type, which has a price of 100.
      */
-    ADVANCED(200);    // TODO add others type
+    ADVANCED(100);
 
     /**
      * The price associated with the tower type.

@@ -16,11 +16,25 @@ import it.unibo.the100dayswar.model.player.impl.HumanPlayerImpl;
 import it.unibo.the100dayswar.model.cell.api.Cell;
 import it.unibo.the100dayswar.model.cell.impl.CellImpl;
 
+/**
+ * Test suite for SoldierImpl.
+ */
 class SoldierTest {
+
+    private static final int INITIAL_SOLDIER_HEALTH = 200;
+    private static final int HEALTH_AFTER_UPGRADE = 250;
+    private static final int DEF_SOLDIER_DAMAGE = 30;
+    private static final int INITIAL_SOLDIER_LEVEL = 1;
+    private static final int UPGRADED_SOLDIER_LEVEL = 2;
+    private static final int TARGET_HEALTH = 350;
+    private static final int SOLDIER_HEALTH_AFTER_ATTACK = 100;
 
     private Player testPlayer;
     private Soldier soldier;
 
+    /** 
+     * Setup the test environment.
+     */
     @BeforeEach
     void setUp() {
         testPlayer = new HumanPlayerImpl("testPlayer", 
@@ -41,28 +55,27 @@ class SoldierTest {
 
     @Test
     void testUpgrade() {
-        final int healthAfterUpgrade = 125;
-        assertEquals(1, soldier.getLevel());
-        assertEquals(100, soldier.currentHealth());
+        assertEquals(INITIAL_SOLDIER_LEVEL, soldier.getLevel());
+        assertEquals(INITIAL_SOLDIER_HEALTH, soldier.currentHealth());
         soldier.upgrade();
-        assertEquals(2, soldier.getLevel());
-        assertEquals(healthAfterUpgrade, soldier.currentHealth());
+        assertEquals(UPGRADED_SOLDIER_LEVEL, soldier.getLevel());
+        assertEquals(HEALTH_AFTER_UPGRADE, soldier.currentHealth());
     }
 
     @Test
     void testAttackSoldierWithDifferentLevel() {
         final Soldier target = new SoldierImpl(testPlayer);
-        final int soldierHealth = 100;
-        final int targetHealth = 175;
         target.upgrade();
         target.upgrade();
-        assertEquals(100, soldier.currentHealth());
-        assertEquals(targetHealth, target.currentHealth());
+        assertEquals(INITIAL_SOLDIER_HEALTH, soldier.currentHealth());
+        assertEquals(TARGET_HEALTH, target.currentHealth());
         soldier.performAttack(target);
         assertTrue(
-            soldier.currentHealth() == soldierHealth && target.currentHealth() == 0
+            soldier.currentHealth() == SOLDIER_HEALTH_AFTER_ATTACK 
+            && target.currentHealth() == 0
             ||
-            soldier.currentHealth() == 0 && target.currentHealth() == targetHealth
+            soldier.currentHealth() == 0 
+            && target.currentHealth() == TARGET_HEALTH
         );
     }
 
@@ -70,11 +83,11 @@ class SoldierTest {
     void testAttackTower() {
         final Tower tower = new AdvancedTowerImpl(testPlayer, new CellImpl(new PositionImpl(1, 1), true, true));
         final int towerHealth = tower.currentHealth();
-        final int defSoldierDamage = 30;
-        assertEquals(100, soldier.currentHealth());
+        assertEquals(INITIAL_SOLDIER_HEALTH, soldier.currentHealth());
         soldier.performAttack(tower);
         assertTrue(
-            soldier.currentHealth() == 100 && tower.currentHealth() == towerHealth - defSoldierDamage * soldier.getLevel()
+            soldier.currentHealth() == INITIAL_SOLDIER_HEALTH 
+            && tower.currentHealth() == towerHealth - DEF_SOLDIER_DAMAGE * soldier.getLevel()
         );
     }
 }

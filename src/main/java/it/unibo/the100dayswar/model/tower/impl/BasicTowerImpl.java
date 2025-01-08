@@ -12,13 +12,12 @@ import it.unibo.the100dayswar.model.tower.api.TowerType;
 public class BasicTowerImpl extends AbstractTower implements BasicTower {
     private static final long serialVersionUID = 1L;
 
-    private static final int HEALTH_MULTYPLIER_BASIC = 10;
+    private static final int HEALTH_MULTYPLIER_BASIC = 3;
     private static final int UPGRADE_MULTYPLIER_BASIC = 2;
-    private static final int DAMAGE_MULTYPLIER_BASIC = 2;
 
     private static final int BASIC_HEALTH = TowerType.BASIC.getPrice() * HEALTH_MULTYPLIER_BASIC;
     private static final int BASIC_UPGRADE = TowerType.BASIC.getPrice() * UPGRADE_MULTYPLIER_BASIC;
-    private static final int BASIC_DAMAGE = TowerType.BASIC.getPrice() * DAMAGE_MULTYPLIER_BASIC;
+    private static final int BASIC_DAMAGE = TowerType.BASIC.getPrice();
 
 
     /**
@@ -39,12 +38,6 @@ public class BasicTowerImpl extends AbstractTower implements BasicTower {
         );
     }
 
-    /*
-     * TODO metodo identico a quello in advanced
-     * cambia solamente il nome delle costanti.
-     * Probabilmente è meglio metterlo nella classe
-     * astratta.
-     */
     /**
      * {@inheritDoc}
      */

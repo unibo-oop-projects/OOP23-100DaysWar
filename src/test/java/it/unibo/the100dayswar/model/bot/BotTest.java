@@ -36,7 +36,7 @@ class BotTest {
 
     @Test
     void initializationTest() {
-        final int initialBalance = 1000;
+        final int initialBalance = 250;
         assertEquals(bot.getUnits(), Set.of(), 
             "The bot should not have any units at the beginning.");
         assertEquals(bot.getSoldiers(), Set.of(),
