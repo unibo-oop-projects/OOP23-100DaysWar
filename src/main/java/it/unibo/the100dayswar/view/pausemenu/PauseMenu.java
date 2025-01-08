@@ -149,7 +149,10 @@ public class PauseMenu extends JDialog {
     private void exitGame() {
         if (ExitWindowFromPauseMenu.exitDialog(this) 
                 && SaveWindow.saveDialog(this, SAVING_PATH)) { 
-            System.exit(0);
+            final Window[] windows = getWindows();
+            for (final Window window : windows) {
+                window.dispose();
+            }
         }
     }
 }
