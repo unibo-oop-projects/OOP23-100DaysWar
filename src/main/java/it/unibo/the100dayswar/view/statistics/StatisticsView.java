@@ -4,13 +4,13 @@ import it.unibo.the100dayswar.application.The100DaysWar;
 import it.unibo.the100dayswar.commons.utilities.impl.LoadPixelFont;
 import it.unibo.the100dayswar.model.player.api.Player;
 
-import javax.swing.JPanel;
-import javax.swing.border.TitledBorder;
-import javax.swing.JLabel;
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.border.TitledBorder;
 
 import java.awt.AlphaComposite;
 import java.awt.Color;
@@ -37,19 +37,49 @@ public class StatisticsView extends JPanel {
     private static final int COLUMNS = 2;
     private static final int HORIZONTAL_GAP = 10;
     private static final int VERTICAL_GAP = 10;
+
     private final DecimalFormat df;
     private final Map<Player, Map<String, JLabel>> playerLabels = new HashMap<>();
+    private final JLabel dayLabel;
 
     /**
      * Constructor of the statistics view.
      */
     public StatisticsView() {
         df = new DecimalFormat("#.##");
+
+        this.dayLabel = new JLabel("", JLabel.CENTER);
+        this.dayLabel.setFont(LoadPixelFont.getFont().deriveFont(TITLE_FONT_SIZE));
+        this.dayLabel.setAlignmentX(CENTER_ALIGNMENT);
+    }
+
+    /**
+     * Inizializza la view dopo la costruzione dell'oggetto.
+     */
+    public void initialize() {
+        postInitializeView();
+        addDayLabel();
         initializeView();
     }
 
     /**
-     * Initializes the layout and components of the view.
+     * Inizializza il layout (BoxLayout) dopo aver creato l'oggetto.
+     */
+    private void postInitializeView() {
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+    }
+
+    /**
+     * Aggiunge in cima la label che mostra il giorno corrente.
+     */
+    private void addDayLabel() {
+        updateDayLabel();
+        this.add(dayLabel);
+        this.add(Box.createRigidArea(new Dimension(0, 10)));
+    }
+
+    /**
+     * Inizializza i pannelli delle statistiche per ogni giocatore.
      */
     private void initializeView() {
         final List<Player> players = The100DaysWar.CONTROLLER.getStatisticController().getPlayers();
@@ -61,27 +91,22 @@ public class StatisticsView extends JPanel {
     }
 
     /**
-     * Post-initializes the view.
-     */
-    public void postInitializeView() {
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-    }
-
-    /**
-     * Creates a panel for displaying the statistics of a single player.
+     * Crea un pannello per le statistiche di un singolo player.
      *
      * @param player the player whose statistics are displayed.
      * @return a JPanel containing the player's statistics.
      */
     private JPanel createPlayerStatisticsPanel(final Player player) {
         final JPanel panel = new JPanel() {
+            private static final long serialVersionUID = 1L;
             private BufferedImage backgroundImage;
 
             {
                 try {
                     backgroundImage = ImageIO.read(getClass().getResource("/statistic/statistics_background.png"));
                 } catch (IOException e) {
-                    Logger.getLogger(getClass().getName()).log(java.util.logging.Level.SEVERE, e.getMessage());
+                    Logger.getLogger(getClass().getName())
+                          .log(java.util.logging.Level.SEVERE, e.getMessage());
                 }
             }
 
@@ -118,7 +143,6 @@ public class StatisticsView extends JPanel {
 
         labels.values().forEach(panel::add);
         playerLabels.put(player, labels);
-
         return panel;
     }
 
@@ -135,9 +159,19 @@ public class StatisticsView extends JPanel {
     }
 
     /**
+     * Aggiorna il testo della dayLabel con il giorno corrente.
+     */
+    private void updateDayLabel() {
+        final int currentDay = The100DaysWar.CONTROLLER.getGameInstance().getGameDay();
+        this.dayLabel.setText("Day: " + currentDay);
+    }
+
+    /**
      * Updates the view with the latest statistics for all players.
      */
     public void updateStatisticView() {
+        updateDayLabel();
+
         The100DaysWar.CONTROLLER.getStatisticController().updateStatistics();
         playerLabels.forEach((player, labels) -> {
             labels.get("Soldiers").setText("Soldiers: "

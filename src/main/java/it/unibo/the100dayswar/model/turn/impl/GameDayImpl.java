@@ -14,7 +14,7 @@ public class GameDayImpl implements GameDay {
     private static final long serialVersionUID = 1L;
 
     private static final int MAX_DAY = 100;
-    private static final int AMOUNT_IN_A_DAY = 100;
+    private static final int AMOUNT_IN_A_DAY = 50;
     private static final int INITIAL_DAY = 1;
     private final List<Observer<ResourceGenerator>> observers;
     private int day;
@@ -33,6 +33,7 @@ public class GameDayImpl implements GameDay {
     public void increaseDay() {
         if (this.day < MAX_DAY) {
             this.day++;
+            notifyObservers();
         }
     }
     /**

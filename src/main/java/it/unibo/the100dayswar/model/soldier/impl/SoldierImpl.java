@@ -13,7 +13,7 @@ import it.unibo.the100dayswar.model.unit.impl.UnitImpl;
  */
 public class SoldierImpl extends UnitImpl implements Soldier {
     private static final long serialVersionUID = 1L;
-    private static final int COST_TO_UPGRADE = 30;
+    private static final int COST_TO_UPGRADE = 75;
     private static final int MAX_LEVEL = 3;
     private static final int INITIAL_HEALTH = 100;
     private static final int INCREASE_HEALTH = 25;

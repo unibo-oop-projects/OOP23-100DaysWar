@@ -151,4 +151,11 @@ public interface Model {
      * @return the player who won the game
      */
     Player getWinner();
+
+    /**
+     * Gets the current game day.
+     * 
+     * @return the current game day
+     */
+    int getGameDay();
 }

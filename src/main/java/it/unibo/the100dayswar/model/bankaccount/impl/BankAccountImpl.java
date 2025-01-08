@@ -10,7 +10,7 @@ import it.unibo.the100dayswar.model.bankaccount.api.BankAccount;
  */
 public class BankAccountImpl implements BankAccount {
     private static final long serialVersionUID = 1L;
-    private static final int INITIAL_BALANCE = 1000;
+    private static final int INITIAL_BALANCE = 250;
     private static final Logger LOGGER = Logger.getLogger(BankAccountImpl.class.getName());
     private int balance;
     /** 

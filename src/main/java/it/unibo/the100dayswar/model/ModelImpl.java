@@ -79,12 +79,8 @@ public class ModelImpl implements Model {
     public ModelImpl(final Optional<String> path) {
         final GameLoader loader = path.isPresent() ? new GameLoaderImpl(path.get()) : new GameLoaderImpl();
         final Optional<GameData> data = loader.loadGame();
-
         if (data.isEmpty()) {
             throw new IllegalStateException("Data weren't laoded correctly");
-            /*
-             * TODO in questo caso possiamo lanciare una schermata di errore
-             */
         }
         this.mapManager = new MapManagerImpl(data.get().getMapManager());
         this.turnManager = data.get().getGameTurnManager();
@@ -98,8 +94,9 @@ public class ModelImpl implements Model {
     @Override
     public void buyTower(final TowerType type, final Cell position) {
         final Tower tower = factory.createTower(players.get(HUMAN_PLAYER), type, position);
-        players.get(HUMAN_PLAYER).buyUnit(tower);
+        getHumanPlayer().buyUnit(tower);
         updateMap(tower, List.of(mapManager));
+        tower.attach(mapManager);
     }
 
     /** 
@@ -108,7 +105,7 @@ public class ModelImpl implements Model {
     @Override
     public void buySoldier() {
         final Soldier soldier = factory.createSoldier(getHumanPlayer());
-        players.get(HUMAN_PLAYER).buyUnit(soldier);
+        getHumanPlayer().buyUnit(soldier);
         updateMap(soldier, List.of(mapManager));
         soldier.attach(mapManager);
     }
@@ -195,7 +192,7 @@ public class ModelImpl implements Model {
             .or(() -> mapManager.getPlayersCells().entrySet().stream()
                 .max((entry1, entry2) -> Integer.compare(entry1.getValue().size(), entry2.getValue().size()))
                 .map(Map.Entry::getKey))
-            .orElseThrow(() -> new IllegalStateException("No winner could be determined."));
+            .orElseThrow(() -> new IllegalStateException("No winner."));
     }
     /**
      * {@inheritDoc}
@@ -223,7 +220,7 @@ public class ModelImpl implements Model {
      */
     @Override
     public void upgradeUnit(final Unit unit) {
-        unit.upgrade();
+        getHumanPlayer().upgradeUnit(unit);
     }
 
     /**
@@ -292,6 +289,7 @@ public class ModelImpl implements Model {
      */
     @Override
     public GameStatistics getGameStatistics() {
+        gameStatistics.updateAllStatistics();
         return gameStatistics;
     }
 
@@ -320,5 +318,13 @@ public class ModelImpl implements Model {
      */
     private void updateMap(final Unit unit, final List<Observer<Pair<Unit, Cell>>> observers) {
         observers.forEach(o -> o.update(new Pair<>(unit, unit.getPosition())));
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getGameDay() {
+        return turnManager.getDay();
     }
 }

@@ -85,7 +85,7 @@ public class GameView extends JFrame {
 
         final MapView mapView = new MapView();
         final StatisticsView statisticsView = new StatisticsView();
-        statisticsView.postInitializeView();
+        statisticsView.initialize();
         final JoystickView joystickView = new JoystickView(mapView, statisticsView);
 
         mapView.setOpaque(false);

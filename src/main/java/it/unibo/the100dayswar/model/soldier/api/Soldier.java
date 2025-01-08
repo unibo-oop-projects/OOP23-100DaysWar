@@ -13,7 +13,7 @@ public interface Soldier extends Unit, Movable {
     /**
      * The cost to purchase a soldier.
      */
-    int DEFAULT_COST = 50;
+    int DEFAULT_COST = 100;
 
     /**
      * {@inheritDoc}

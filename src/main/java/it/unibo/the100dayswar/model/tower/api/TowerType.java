@@ -7,12 +7,12 @@ public enum TowerType {
     /**
      * Basic tower type, which has a price of 3.
      */
-    BASIC(3),
+    BASIC(50),
 
     /**
      * Advanced tower type, which has a price of 5.
      */
-    ADVANCED(5);    // TODO add others type
+    ADVANCED(200);    // TODO add others type
 
     /**
      * The price associated with the tower type.
