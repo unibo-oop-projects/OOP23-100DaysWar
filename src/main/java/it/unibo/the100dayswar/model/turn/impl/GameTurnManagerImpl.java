@@ -145,6 +145,8 @@ public class GameTurnManagerImpl implements GameTurnManager {
     public void stopTimer() {
         if (this.timer != null) {
             this.timer.cancel();
+            this.timer.purge();
+            this.timer = null;
         }
     }
 

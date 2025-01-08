@@ -16,6 +16,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import it.unibo.the100dayswar.application.The100DaysWar;
 import it.unibo.the100dayswar.commons.utilities.impl.IconLoader;
 import it.unibo.the100dayswar.commons.utilities.impl.LoadPixelFont;
 
@@ -143,6 +144,7 @@ public final class ExitWindow extends JDialog {
                 for (final var window : getWindows()) {
                     window.dispose();
                 }
+                terminateThreads();
             }
         });
 
@@ -154,6 +156,13 @@ public final class ExitWindow extends JDialog {
         });
 
         return buttonPanel;
+    }
+
+    /**
+     * Terminates all the threads that are running.
+     */
+    private void terminateThreads() {
+        The100DaysWar.CONTROLLER.getGameInstance().stopTimer();
     }
 
     /**

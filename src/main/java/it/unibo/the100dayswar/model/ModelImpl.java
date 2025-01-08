@@ -280,6 +280,14 @@ public class ModelImpl implements Model {
      * {@inheritDoc}
      */
     @Override
+    public void stopTimer() {
+        turnManager.stopTimer();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public Stream<Cell> getMapStream() {
         return mapManager.getMapAsAStream();
     }
