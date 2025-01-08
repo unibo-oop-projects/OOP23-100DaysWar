@@ -289,7 +289,6 @@ public class ModelImpl implements Model {
      */
     @Override
     public GameStatistics getGameStatistics() {
-        gameStatistics.updateAllStatistics();
         return gameStatistics;
     }
 
