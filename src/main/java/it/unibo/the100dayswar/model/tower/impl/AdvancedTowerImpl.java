@@ -15,10 +15,11 @@ public class AdvancedTowerImpl extends AbstractTower implements AdvancedTower {
     private static final int HEALTH_MULTYPLIER_ADVANCED = 4;
     private static final int UPGRADE_MULTYPLIER_ADVANCED = 2;
     private static final int DAMAGE_MULTYPLAYER = 75;
-    private static final int DAMAGE_DIVISOR = 100;
+    private static final int NORMALIZER = 2;
+    private static final int DAMAGE_DIVISOR = 100 * NORMALIZER;
 
-    private static final int ADVANCED_HEALTH = TowerType.ADVANCED.getPrice() * HEALTH_MULTYPLIER_ADVANCED;
-    private static final int ADVANCED_UPGRADE = TowerType.ADVANCED.getPrice() * UPGRADE_MULTYPLIER_ADVANCED;
+    private static final int ADVANCED_HEALTH = TowerType.ADVANCED.getPrice() * HEALTH_MULTYPLIER_ADVANCED / NORMALIZER;
+    private static final int ADVANCED_UPGRADE = TowerType.ADVANCED.getPrice() * UPGRADE_MULTYPLIER_ADVANCED / NORMALIZER;
     private static final int ADVANCED_DAMAGE = TowerType.ADVANCED.getPrice() * DAMAGE_MULTYPLAYER / DAMAGE_DIVISOR;
 
     /**
