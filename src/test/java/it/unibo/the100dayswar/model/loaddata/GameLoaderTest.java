@@ -57,7 +57,7 @@ class GameLoaderTest {
             mockBotPlayer,
             mockGameMapManager,
             mockGameTurnManager
-            );
+        );
 
     /**
      * Cleanup files after each test.
