@@ -23,7 +23,7 @@ public final class DiceAnimationFrame {
     private static final String RESOURCES = "dice/";
     private static final String DICE_GIF = RESOURCES + "dice.gif";
 
-    private static final int DURATION_MS = 5000;
+    private static final int DURATION_MS = 3500;
 
     /**
      * Private constructor to prevent instantiation.

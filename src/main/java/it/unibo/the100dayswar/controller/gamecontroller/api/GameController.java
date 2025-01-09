@@ -14,4 +14,9 @@ public interface GameController {
      * This method also checks the end of the game.
      */
     void skip();
+
+    /**
+     * Check if the game is over.
+     */
+    void checkGameOver();
 }

@@ -2,6 +2,7 @@ package it.unibo.the100dayswar.model.unit.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 import it.unibo.the100dayswar.commons.patterns.Observer;
 import it.unibo.the100dayswar.commons.utilities.impl.Pair;
@@ -135,7 +136,7 @@ public abstract class UnitImpl implements Unit {
     @Override
     public void downgrade() {
         if (this.level == 1) {
-            throw new IllegalStateException();
+            Logger.getLogger(UnitImpl.class.getName()).warning("Cannot downgrade the unit.");
         }
         this.level--;
     }

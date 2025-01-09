@@ -16,7 +16,8 @@ import javax.swing.SwingConstants;
 
 import it.unibo.the100dayswar.commons.utilities.impl.LoadPixelFont;
 import it.unibo.the100dayswar.view.backgroundpanel.BackgroundPanel;
-import it.unibo.the100dayswar.view.quit.StartMenuView;
+import it.unibo.the100dayswar.view.quit.ExitWindowFromPauseMenu;
+import it.unibo.the100dayswar.view.startmenu.StartMenuView;
 
 /**
  * Class that implements the pause menu window.

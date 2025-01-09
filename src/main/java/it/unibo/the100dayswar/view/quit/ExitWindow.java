@@ -1,4 +1,4 @@
-package it.unibo.the100dayswar.view.startmenu;
+package it.unibo.the100dayswar.view.quit;
 
 import java.awt.BorderLayout;
 import java.awt.Color;

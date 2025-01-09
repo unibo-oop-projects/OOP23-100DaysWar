@@ -1,5 +1,7 @@
 package it.unibo.the100dayswar.model.soldier.impl;
 
+import java.util.logging.Logger;
+
 import it.unibo.the100dayswar.model.cell.api.Cell;
 import it.unibo.the100dayswar.model.cell.impl.CellImpl;
 import it.unibo.the100dayswar.model.fight.impl.GenericBattleCommand;
@@ -73,7 +75,7 @@ public class SoldierImpl extends UnitImpl implements Soldier {
             final int increaseFactor = INCREASE_HEALTH * (this.getLevel() - 1);
             this.setHealth(this.currentHealth() + increaseFactor);
         } else {
-            throw new UnsupportedOperationException("Cannot upgrade this unit");
+            Logger.getLogger(SoldierImpl.class.getName()).warning("Cannot upgrade the soldier.");
         }
     }
 

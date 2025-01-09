@@ -13,7 +13,6 @@ import it.unibo.the100dayswar.model.unit.api.UnitFactory;
  * Class that implements the UnitFactory interface.
  */
 public class UnitFactoryImpl implements UnitFactory {
-
     /** 
      * {@inheritDoc}
      */

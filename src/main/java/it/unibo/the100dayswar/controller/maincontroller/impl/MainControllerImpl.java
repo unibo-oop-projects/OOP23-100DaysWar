@@ -25,10 +25,7 @@ import it.unibo.the100dayswar.controller.statisticscontoller.api.StatisticContro
 import it.unibo.the100dayswar.controller.statisticscontoller.impl.StatisticControllerImpl;
 import it.unibo.the100dayswar.model.Model;
 import it.unibo.the100dayswar.model.ModelImpl;
-import it.unibo.the100dayswar.model.player.api.Player;
-import it.unibo.the100dayswar.view.gameover.GameLoseView;
-import it.unibo.the100dayswar.view.gameover.GameWinView;
-import it.unibo.the100dayswar.view.quit.StartMenuView;
+import it.unibo.the100dayswar.view.startmenu.StartMenuView;
 
 
 /**
@@ -119,16 +116,16 @@ public class MainControllerImpl implements MainController {
      * {@inheritDoc}
      */
     @Override
-    public boolean saveGame(final String path) {
-       return this.getGameInstance().saveGame(path);
+    public void startNewGame(final String username) {
+        this.model = new ModelImpl(username);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void startNewGame(final String username) {
-        this.model = new ModelImpl(username);
+    public boolean saveGame(final String path) {
+       return this.getGameInstance().saveGame(path);
     }
 
     /**
@@ -157,31 +154,6 @@ public class MainControllerImpl implements MainController {
             return false;
         } finally {
             executor.shutdownNow();
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void checkGameOver() {
-        if (model.isOver()) {
-            displayGameOver(model.getWinner());
-        }
-    }
-
-    /**
-     * Display the game over message.
-     * 
-     * @param winner the winner of the game
-     */
-    private void displayGameOver(final Player winner) {
-        if (winner == null) {
-            throw new IllegalStateException("Game ended in a draw");
-        } else if (winner.equals(model.getHumanPlayer())) {
-            new GameWinView().initialize();
-        } else {
-            new GameLoseView().initialize();
         }
     }
 }

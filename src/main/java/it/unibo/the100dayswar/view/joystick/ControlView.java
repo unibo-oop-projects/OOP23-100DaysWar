@@ -12,8 +12,8 @@ import javax.swing.JPanel;
 import it.unibo.the100dayswar.application.The100DaysWar;
 import it.unibo.the100dayswar.view.map.MapView;
 import it.unibo.the100dayswar.view.pausemenu.PauseMenu;
+import it.unibo.the100dayswar.view.quit.ExitWindow;
 import it.unibo.the100dayswar.view.rules.RulesViewer;
-import it.unibo.the100dayswar.view.startmenu.ExitWindow;
 import it.unibo.the100dayswar.view.statistics.StatisticsView;
 
 /** 

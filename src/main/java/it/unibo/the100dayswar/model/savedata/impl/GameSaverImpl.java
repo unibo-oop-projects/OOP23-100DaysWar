@@ -29,7 +29,6 @@ public class GameSaverImpl implements GameSaver {
     public GameSaverImpl(final GameData gameData, final String customPath) {
         if (gameData == null) {
             LOGGER.log(Level.SEVERE, "Game data must be non-null");
-            throw new IllegalArgumentException("Game data must be non-null");
         }
         this.currentGameData = gameData;
         this.customPath = customPath;
@@ -67,7 +66,6 @@ public class GameSaverImpl implements GameSaver {
             LOGGER.log(Level.INFO, "Game saved successfully at " + path);
         } catch (IOException e) {
             LOGGER.log(Level.SEVERE, "Error during game serialization and saving at " + path, e);
-            throw new IOException("Error saving game at path: " + path, e);
         }
     }
 }

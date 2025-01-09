@@ -1,4 +1,4 @@
-package it.unibo.the100dayswar.view.pausemenu;
+package it.unibo.the100dayswar.view.quit;
 
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;

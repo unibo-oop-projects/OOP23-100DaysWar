@@ -80,7 +80,7 @@ public class ModelImpl implements Model {
         final GameLoader loader = path.isPresent() ? new GameLoaderImpl(path.get()) : new GameLoaderImpl();
         final Optional<GameData> data = loader.loadGame();
         if (data.isEmpty()) {
-            throw new IllegalStateException("Data weren't laoded correctly");
+            Logger.getLogger(ModelImpl.class.getName()).warning("The data are not loaded correctly");
         }
         this.mapManager = new MapManagerImpl(data.get().getMapManager());
         this.turnManager = data.get().getGameTurnManager();
@@ -136,7 +136,8 @@ public class ModelImpl implements Model {
         if (players.size() > HUMAN_PLAYER && players.get(HUMAN_PLAYER) instanceof HumanPlayer) {
             return (HumanPlayer) players.get(HUMAN_PLAYER);
         } else {
-            throw new IllegalStateException("The human player has not been added yet");
+            Logger.getLogger(ModelImpl.class.getName()).info("The human player has not been added yet");
+            return null;
         }
     }
 
@@ -148,7 +149,8 @@ public class ModelImpl implements Model {
         if (!players.isEmpty() && players.get(BOT_PLAYER) instanceof BotPlayer) {
             return (BotPlayer) players.get(BOT_PLAYER);
         } else {
-            throw new IllegalStateException("No bot player is present");
+            Logger.getLogger(ModelImpl.class.getName()).info("The bot player has not been added yet");
+            return null;
         }
     }
 
@@ -180,7 +182,7 @@ public class ModelImpl implements Model {
     @Override
     public Player getWinner() {
         if (!isOver()) {
-            throw new IllegalStateException("The game is not over yet.");
+            Logger.getLogger(ModelImpl.class.getName()).info("The game is not over yet");
         }
         return players.stream()
             .filter(player -> players.stream()
@@ -314,7 +316,7 @@ public class ModelImpl implements Model {
             return true;
         }
         LOGGER.log(Level.WARNING, "The unit is not a soldier");
-        throw new IllegalArgumentException("The unit is not a soldier");
+        return false;
     }
 
     /**

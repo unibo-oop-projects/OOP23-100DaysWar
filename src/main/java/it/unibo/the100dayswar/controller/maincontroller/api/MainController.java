@@ -56,6 +56,13 @@ public interface MainController {
     Model getGameInstance();
 
     /**
+     * Start a new game initializing the model.
+     * 
+     * @param username the username of the player
+     */
+    void startNewGame(String username);
+
+    /**
      * Save the current game.
      * 
      * @param path the path of the saving_file
@@ -66,13 +73,6 @@ public interface MainController {
      * saved in the default path.
      */
     boolean saveGame(String path);
-
-    /**
-     * Start a new game initializing the model.
-     * 
-     * @param username the username of the player
-     */
-    void startNewGame(String username);
 
     /**
      * Load a previous game initializing the model as the 
@@ -87,9 +87,4 @@ public interface MainController {
      * laoded following the default path.
      */
     boolean loadOldGame(String path);
-
-    /**
-     * Check if the game is over.
-     */
-    void checkGameOver();
 }
