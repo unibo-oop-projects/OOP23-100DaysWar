@@ -28,8 +28,8 @@ public class BattleSoldierSoldierImpl implements BattleSoldierSoldier {
             result.getSecond().setHealth(0);
 
         } else {
-            result.getFirst().setHealth(0);
-            result.getSecond().setHealth(0);
+            attacker.setHealth(0);
+            defender.setHealth(0);
         }
     }
     /**
