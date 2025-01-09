@@ -29,7 +29,7 @@ import it.unibo.the100dayswar.model.savedata.impl.GameDataImpl;
 import it.unibo.the100dayswar.model.savedata.impl.GameSaverImpl;
 import it.unibo.the100dayswar.model.soldier.api.Soldier;
 import it.unibo.the100dayswar.model.statistic.api.GameStatistics;
-import it.unibo.the100dayswar.model.statistic.impl.GameStatisticImpl;
+import it.unibo.the100dayswar.model.statistic.impl.GameStatisticsImpl;
 import it.unibo.the100dayswar.model.tower.api.Tower;
 import it.unibo.the100dayswar.model.tower.api.TowerType;
 import it.unibo.the100dayswar.model.unit.api.Unit;
@@ -65,7 +65,7 @@ public class ModelImpl implements Model {
         this.players = List.of(new SimpleBot(mapManager), new HumanPlayerImpl(namePlayer, mapManager.getPlayerSpawn()));
         this.turnManager = new GameTurnManagerImpl(players);
         this.mapManager.attach(turnManager);
-        this.gameStatistics = new GameStatisticImpl(players, mapManager);
+        this.gameStatistics = new GameStatisticsImpl(players, mapManager);
         gameStatistics.updateAllStatistics();
         this.turnManager.startTimer();
     }
@@ -85,7 +85,7 @@ public class ModelImpl implements Model {
         this.mapManager = new MapManagerImpl(data.get().getMapManager());
         this.turnManager = data.get().getGameTurnManager();
         this.players = List.of(new SimpleBot(data.get().getBotData()), data.get().getHumanData());
-        this.gameStatistics = new GameStatisticImpl(players, mapManager);
+        this.gameStatistics = new GameStatisticsImpl(players, mapManager);
     }
 
     /**

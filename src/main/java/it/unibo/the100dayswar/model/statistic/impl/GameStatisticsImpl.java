@@ -13,7 +13,7 @@ import java.util.ArrayList;
 /**
  * Implementation of GameStatistics.
  */
-public class GameStatisticImpl implements GameStatistics {
+public class GameStatisticsImpl implements GameStatistics {
     private static final long serialVersionUID = 1L;
 
     private final Map<Player, Integer> soldiers = new HashMap<>();
@@ -28,7 +28,7 @@ public class GameStatisticImpl implements GameStatistics {
      * @param players the list of players.
      * @param mapManager the map manager containing the map data.
      */
-    public GameStatisticImpl(final List<Player> players, final MapManager mapManager) {
+    public GameStatisticsImpl(final List<Player> players, final MapManager mapManager) {
         this.mapManager = mapManager;
         this.players = new ArrayList<>(players);
         players.forEach(player -> {
