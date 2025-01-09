@@ -2,7 +2,6 @@ package it.unibo.the100dayswar.model.tower.api;
 
 import it.unibo.the100dayswar.model.cell.api.Cell;
 import it.unibo.the100dayswar.model.player.api.Player;
-import it.unibo.the100dayswar.model.tower.impl.AbstractTower;
 
 /**
  * Interface that rapresent a TowerFactory.
@@ -17,5 +16,5 @@ public interface TowerFactory {
      * 
      * @return a new tower
      */
-    AbstractTower buildTower(Player owner, TowerType towerType, Cell position);
+    Tower buildTower(Player owner, TowerType towerType, Cell position);
 }
