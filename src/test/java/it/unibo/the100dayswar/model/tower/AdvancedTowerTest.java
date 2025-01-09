@@ -26,8 +26,8 @@ class AdvancedTowerTest {
      */
     @Test
     void testAdvancedTowerProperties() {
-        final int currentHealth = 400;
-        final int currentDamage = 75;
+        final int currentHealth = 200;
+        final int currentDamage = 37;
 
         assertEquals(TowerType.ADVANCED, mockAdvancedTower.getTowerType(), "Tower type should be ADVANCED");
         assertEquals(currentHealth, mockAdvancedTower.currentHealth(), "Advanced tower health should match formula");
@@ -40,8 +40,8 @@ class AdvancedTowerTest {
     @Test
     void testUpgradeAdvancedTower() {
         final int newLevel = 2;
-        final int newHealth = 800;
-        final int newDamage = 150;
+        final int newHealth = 400;
+        final int newDamage = 74;
 
         mockAdvancedTower.upgrade();
         assertEquals(newLevel, mockAdvancedTower.getLevel(), "Tower level should increase after upgrade");
