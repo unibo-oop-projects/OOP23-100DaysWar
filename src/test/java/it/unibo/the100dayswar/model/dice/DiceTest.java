@@ -22,9 +22,11 @@ class DiceTest {
     @Test
     void testDiceRollRange() {
         final Dice dice = new DiceImpl();
-        final int result = dice.roll();
 
-        assertTrue(result >= MIN && result <= MAX, "The result should be between 1 and 6");
+        for (int i = 0; i < REPETITIONS; i++){
+            final int result = dice.roll();
+            assertTrue(result >= MIN && result <= MAX, "The result should be between 1 and 6");
+        }
     }
 
     /**
