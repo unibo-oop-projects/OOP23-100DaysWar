@@ -17,7 +17,7 @@ import org.junit.jupiter.api.AfterEach;
  * Test suite for GameSaverImpl.
  */
 class GameSaverTest extends AbstractGameTest {
-    private static final String TEST_CUSTOM_PATH = generateSavePath("data");
+    private static final String TEST_CUSTOM_PATH = generateSavePath("test_data");
     private static final String DEFAULT_PATH = System.getProperty("user.home") + "/saved_game.ser";
 
     /**

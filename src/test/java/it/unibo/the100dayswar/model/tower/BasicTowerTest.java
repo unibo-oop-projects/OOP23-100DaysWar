@@ -34,7 +34,7 @@ class BasicTowerTest {
         assertEquals(currentDamage, mockBasicTower.getDamage(), "Basic tower damage should match formula");
     }
 
-     /**
+    /**
      * Tests the upgrade functionality of a BasicTower.
      */
     @Test
