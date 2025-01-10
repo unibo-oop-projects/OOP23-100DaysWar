@@ -23,7 +23,7 @@ class DiceTest {
     void testDiceRollRange() {
         final Dice dice = new DiceImpl();
 
-        for (int i = 0; i < REPETITIONS; i++){
+        for (int i = 0; i < REPETITIONS; i++) {
             final int result = dice.roll();
             assertTrue(result >= MIN && result <= MAX, "The result should be between 1 and 6");
         }
