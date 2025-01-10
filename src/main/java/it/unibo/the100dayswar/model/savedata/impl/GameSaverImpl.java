@@ -6,7 +6,7 @@ import java.io.ObjectOutputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import it.unibo.the100dayswar.model.savedata.api.GameData;
+import it.unibo.the100dayswar.model.gamedata.api.GameData;
 import it.unibo.the100dayswar.model.savedata.api.GameSaver;
 
 /**

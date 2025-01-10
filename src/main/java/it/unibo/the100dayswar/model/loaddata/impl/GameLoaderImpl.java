@@ -7,8 +7,8 @@ import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import it.unibo.the100dayswar.model.gamedata.api.GameData;
 import it.unibo.the100dayswar.model.loaddata.api.GameLoader;
-import it.unibo.the100dayswar.model.savedata.api.GameData;
 
 /**
  * Loads game data from a saved file.

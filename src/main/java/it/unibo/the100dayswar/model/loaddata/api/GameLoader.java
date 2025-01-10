@@ -2,7 +2,7 @@ package it.unibo.the100dayswar.model.loaddata.api;
 
 import java.util.Optional;
 
-import it.unibo.the100dayswar.model.savedata.api.GameData;
+import it.unibo.the100dayswar.model.gamedata.api.GameData;
 
 /**
  * Interface for loading game data from a saved file.
