@@ -19,7 +19,7 @@ public class DiceImpl implements Dice {
     private static final int FACES = 6;
 
     /**
-     * Rolls the die and returns an integer value between 1 and {@value #FACES}.
+     * Rolls the die and returns an integer value between 1 and FACES.
      *
      * @return the result of the die roll, an integer between 1 and 6 inclusive
      */
