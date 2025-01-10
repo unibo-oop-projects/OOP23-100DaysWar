@@ -9,7 +9,7 @@ import it.unibo.the100dayswar.model.tower.api.TowerType;
  * Class that implements a basic type of tower extending 
  * AbstractTower.
  */
-public class BasicTowerImpl extends AbstractTower implements BasicTower {
+public class BasicTowerImpl extends AbstractNormalTower implements BasicTower {
     private static final long serialVersionUID = 1L;
 
     private static final int HEALTH_MULTYPLIER_BASIC = 3;
