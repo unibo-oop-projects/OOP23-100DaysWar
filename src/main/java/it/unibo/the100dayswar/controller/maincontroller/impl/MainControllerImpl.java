@@ -125,7 +125,23 @@ public class MainControllerImpl implements MainController {
      */
     @Override
     public boolean saveGame(final String path) {
-       return this.getGameInstance().saveGame(path);
+        final ExecutorService executor = Executors.newSingleThreadExecutor();
+        final Callable<Boolean> task = () -> {
+            return this.getGameInstance().saveGame(path);
+        };
+
+        final Future<Boolean> future = executor.submit(task);
+        try {
+            return future.get(TIMEOUT, TimeUnit.SECONDS);
+        } catch (TimeoutException e) {
+            LOGGER.log(Level.SEVERE, "Save game operation timed out", e);
+            return false;
+        } catch (InterruptedException | ExecutionException e) {
+            LOGGER.log(Level.SEVERE, "Error during save game: " + e.getMessage(), e);
+            return false;
+        } finally {
+            executor.shutdownNow();
+        }
     }
 
     /**
